@@ -13,13 +13,13 @@ optimization (\ref{opt:alternate_opt}) to lie in the support $S$ instead of rang
 \end{definition}
 
 Our analysis then diverges from the now-standard ``primal-dual witness
-technique''~\cite{Wain:09a}. Primal-dual witness explicitly solves all the dual variables. Because our optimization is more complex, we do not solve the dual variables on $S$, we instead write the dual variables on $S^c$ as a function of the restricted regression \emph{residual}, which is implicitly a function of the dual variables on $S$.
+technique''~\cite{Wain:09a}. Primal-dual witness explicitly solves all the dual variables, but because our optimization is more complex, we do not solve the dual variables on $S$; we instead write the dual variables on $S^c$ as a function of the restricted regression \emph{residual}, which is implicitly a function of the dual variables on $S$.
 
 \begin{theorem} (Deterministic setting)
 \label{thm:deterministic}
-Let $\{\hat{d}_k, \hat{c}_k \}_{k \in S}$ be the minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
+Let $\{\hat{d}_k, \hat{c}_k, \hat{\mu} \}_{k \in S}$ be the minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
 Let $\hat{r} \coloneqq Y - \sum_{k \in S} (\Delta_k \hat{d}_k -
-\hat{c}_k \mathbf{1})$ be the restricted regression residual. For $k
+\hat{c}_k \mathbf{1}) - \hat{\mu}$ be the restricted regression residual. For $k
 \in \{1,...,p\}$, $\Delta_{k, j}$, the $j$-th column of $\Delta_k$, is the $n$-dimensional vector $\max( X_k - X_{k (j)} \mathbf{1}, 0)$. 
 Suppose for all $j$ and all $k\in S^c$, $\lambda_n > | \frac{1}{n}
 \hat{r}^\tran \Delta_{k,j}|$. Then $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
@@ -47,20 +47,22 @@ We use the following statistical setting:
 
 \begin{packed_enum}
 \item Let $\mathcal{X} = [-b, b]^p$. Let $F$ be a distribution supported and positive on $\mathcal{X}$. Let $X^{(1)},..., X^{(n)} $ be independent samples from $F$. 
-\item Let $Y' = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise.  Given $n$ samples $Y'^{(1)},...,Y'^{(n)}$, we input into our optimization $Y = Y' - \bar{Y}'$.
-\item Let $S \subset \{1,...,p\}$ denote the relevant variables, i.e.,
-  $f_0(X) = f_0(X_S)$, with $s \coloneqq |S|$. 
+\item Let $Y = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise. Let $Y^{(1)},...,Y^{(n)}$ be $n$ samples of $Y$.
+\item Let $s \leq p$ be a positive integer. Let $S = \{1,...,s\}$ denote the relevant variables, i.e.,
+  $f_0(X) = f_0(X_S)$.
+\item Let $f_{01},...,f_{0s} \coloneqq \argmin_{f_1,...,f_s} \{ \E(f_0(X) - \sum_{k=1}^s f_k(X_k) -\mu )^2 \,|\, \E[f_k(X_k)] = 0 \}$ where $\mu = \Ef(X)$.
 \end{packed_enum}
 
 Each of our statistical theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent.  \ A1': $\{ X_k \}_{k \in S}$ are independent.
-\item[A2:] $\|f_0\|_\infty \leq B$. \  A2': $f_0$ is convex,
+\item[A2:] $\|f_0\|_\infty \leq sB$ \  A2': $f_0$ is convex,
   twice-differentiable, $L$-Lipschitz, and $\trm{supp}(f_0) = S$.
 \item[A3:] Suppose $\epsilon$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$.
+\item[A4:] For all $k=1,...,s$, $\E(f_{0k}(X_k))^2 \geq \alpha$ for some positive constant $\alpha$.
 \end{packed_enum}
 
-We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3 to control the probability of false negatives.
+We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3, A4 to control the probability of false negatives.
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make

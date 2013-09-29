@@ -2,7 +2,8 @@
 
 We consider the following nonparametric regression problem
 \begin{equation}\nonumber
-          y_{i} = f(\bds{x}_{i}) + \epsilon_{i} = \sum_{k=1}^{p}f_{k}(x_{ki}) + \epsilon_{i} \quad i=1,2,\cdots,n
+          y_{i} = f(\bds{x}_{i}) + \epsilon_{i} = 
+                  \sum_{k=1}^{p}f_{k}(x_{ki}) + \epsilon_{i} \quad i=1,2,\cdots,n
 \end{equation}
 where $\bds{x}_{i}\in\mathbb{R}^{p}$ is the covariate, $y_{i}$ is the
 response and $\epsilon_{i}$ is mean zero noise. The regression function $f(\cdot)$ is the summation of 
@@ -21,16 +22,23 @@ characterized by the condition that the subgradient, which is a scalar, must
 increase monotonically. This observation leads to our optimization
 program:
 \begin{equation}\begin{split}\label{np}
-       &\min_{\bds{h},\bds{\beta}} \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl(y_{i}-\sum_{k=1}^{p}h_{ki}\Bigr)^{2} + \lambda\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty} \\
-       &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0,\; h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \ \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
+       &\min_{\bds{h},\bds{\beta},\mu} \ \frac{1}{2n}\sum_{i=1}^{n}
+                     \Bigl( y_{i}-\sum_{k=1}^{p}h_{ki} - \mu \Bigr)^{2} 
+                         + \lambda\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty} \\
+       &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0,\; h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), 
+                                 \ \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
 \end{split}\end{equation}
-Let $\{(1),(2),\ldots,(n)\}$ be a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$.  It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
-\begin{eqnarray}
-  \nonumber \forall j\geq{}i, &h_{k(j)}-h_{k(i)}  = \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) = \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})\\ \nonumber
-                                                                             & \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
-  \nonumber \forall j<i,         &h_{k(j)}-h_{k(i)} = \sum\limits_{t=j}^{i-1}(h_{k(t)}-h_{k(t+1)}) = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) \\ \nonumber
-                                                                             & \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}), 
-\end{eqnarray}
+Where $\mu \in \R$ is a mean parameter introduced because $f$ may not have zero-mean, and where $\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$.  It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
+\begin{align*}
+  \forall j\geq{}i, &h_{k(j)}-h_{k(i)}  = 
+            \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) = 
+            \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})\\ 
+      & \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
+  \forall j<i, &h_{k(j)}-h_{k(i)} =
+                \sum\limits_{t=j}^{i-1}(h_{k(t)}-h_{k(t+1)}) = 
+                \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) \\ 
+     & \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}), 
+\end{align*}
 The $\ell_\infty/\ell_1$ penalty
 $\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty}$ encourages group
 sparsity of the vectors $\bds{\beta}_{k\cdot}$, and thus performs
@@ -51,13 +59,15 @@ that approximates the graph with secant lines.
 %  chooses the inner piece-wise linear convex functions.}
 %\end{SCfigure}
 
-The SCAM optimization in (\ref{np}) is a quadratic program (QP) with $O(np)$ variables and $O(np)$ constraints. 
-Directly applying a QP solver would be computationally expensive for relatively large $n$ and $p$. However, notice that variables
+The SCAM optimization in (\ref{np}) is a quadratic program (QP) with $O(np)$ variables and $O(np)$ constraints. The optimal $\mu$ has a closed form solution of $\mu = \frac{1}{n}\sum_{i=1}^n Y_i$, which is easy to derive from the KKT theorem and the constraints that $\sum_i h_{ki} = 0$ for all $k$.
+Directly applying a QP solver for $\bds{h}, \bds{\beta}$ would be computationally expensive for relatively large $n$ and $p$. However, notice that variables
 in different feature dimensions are only coupled in the term $(y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block coordinate descent method,
 where in each step we solve the following QP subproblem for
 $\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the other variables fixed:
 \begin{equation}\begin{split}\nonumber
-       &\min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((y_{i}-\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} + \lambda\gamma_{k} \\
+       &\min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} 
+                       \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((y_{i}-\sum_{r\neq{k}}h_{ri}-\mu)-h_{ki}\Bigr)^{2} 
+                         + \lambda\gamma_{k} \\
         &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0, \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq\beta_{k(i)}\leq\gamma_{k} \ (\forall i).
 \end{split}\end{equation}
 The extra variable $\gamma_{k}$ is introduced to deal with the $\ell_{\infty}$ norm. This QP subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse structure, 
@@ -66,35 +76,34 @@ Empirically, we observe that the algorithm converges in only a few cycles. We al
 
 After optimization, the function estimator for any input data $\bds{x}_j$ is, according to (\ref{hyper}),
 \begin{equation}\nonumber
-      f(\bds{x}_j) = \sum_{k=1}^{p}f_k(x_{kj}) = \sum_{k=1}^{p}\max_{i} \{h_{ki}+\beta_{ki}(x_{kj}-x_{ki})\}.
+      f(\bds{x}_j) = \sum_{k=1}^{p}f_k(x_{kj})+\mu = \sum_{k=1}^{p}\max_{i} \{h_{ki}+\beta_{ki}(x_{kj}-x_{ki})\} + \mu.
 \end{equation} 
 
-
-%% Why hats here?  Turning them off (JDL)
-\def\hat#1{#1} 
 
 \subsection{Alternative Formulation}
 Optimization (\ref{np}) can be reformulated in terms of the 2nd derivatives. The alternative formulation replaces the ordering
 constraints $\beta_{k(i+1)} \geq \beta_{k(i)}$ with positivity
 constraints, which simplifies theoretical analysis.
-Define $\hat{d}_{k(i)}$ as the gradient increment:
-$\hat{d}_{k(1)} = \hat{\beta}_{k(1)}$, and $\hat{d}_{k(2)} =
-\hat{\beta}_{k(2)} - \hat{\beta}_{k(1)}$. The convexity constraint is
-equivalent to the constraint that $\hat{d}_{k(i)} \geq 0$ for all $i >
+Define $d_{k(i)}$ as the second derivative:
+$d_{k(1)} = \beta_{k(1)}$, and $d_{k(2)} =
+\beta_{k(2)} - \beta_{k(1)}$. The convexity constraint is
+equivalent to the constraint that $d_{k(i)} \geq 0$ for all $i >
 1$.
 
-It is easy to verify that $\hat{\beta}_{k(i)} = \sum_{j \leq i} \hat{d}_{k(i)}$ and 
+It is easy to verify that $\beta_{k(i)} = \sum_{j \leq i} d_{k(i)}$ and 
 \[
-\hat{f}_k(x_{k(i)}) = \hat{f}_k({x_{k(1)}}) +\hat{d}_{k(1)} ( x_{k(i)}
-- x_{k(1)}) + \hat{d}_{k(2)} ( x_{k(i)} - x_{k(2)}) + \cdots + \hat{d}_{k(i-1)} ( x_{k(i)} - x_{k(i-1)})
+f_k(x_{k(i)}) = f_k({x_{k(1)}}) +d_{k(1)} ( x_{k(i)}
+- x_{k(1)}) + d_{k(2)} ( x_{k(i)} - x_{k(2)}) + \cdots + d_{k(i-1)} ( x_{k(i)} - x_{k(i-1)})
 \]
 Define $\Delta(j, x_{ki}) = 0$ if $\trm{ord}(i) \leq j$, and
 $\Delta(j,x_{ki})= x_{ki} -
 x_{k(j)}$ otherwise, where $j$ ranges from $1$ to $n-1$.  Also define
 $\Delta(x_{ki}) = \{ \Delta(j, x_{ki}) \}_{j=1, \ldots ,n-1}$ as an
-$n-1$ dimensional vector. Then $\hat{f}_k(x_{ki}) = \Delta(x_{ki})^\tran \hat{d}_{k}$ where $\Delta(x_{ki}) \in \R^{n-1}$. Given $n$ samples $\{x_{ki}\}_{i=1}^n$, we can further define $\Delta_k \in \R^{n \times n-1}$ such that the $i$-th row is $\Delta(x_{ki})$. Finally, we reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
+$n-1$ dimensional vector. Then $f_k(x_{ki}) = \Delta(x_{ki})^\tran d_{k}$ where $\Delta(x_{ki}) \in \R^{n-1}$. Given $n$ samples $\{x_{ki}\}_{i=1}^n$, we can further define $\Delta_k \in \R^{n \times n-1}$ such that the $i$-th row is $\Delta(x_{ki})$. Finally, we reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
 \begin{align}
-\min_{\{d_k \in \R^{n-1}, c_k \in \R\}}& \frac{1}{2n} \Bigl\| Y - \sum_{k=1}^p ( \Delta_k d_k - c_k \mathbf{1}_n) \Bigr\|_2^2 + \lambda_n \sum_{k=1}^p \|d_k\|_1  & \label{opt:alternate_opt} \\
+\min_{d_k \in \R^{n-1}, c_k \in \R,\mu \in \R}& \frac{1}{2n} 
+               \Bigl\| Y - \sum_{k=1}^p ( \Delta_k d_k - c_k \mathbf{1}_n) -\mu \Bigr\|_2^2 
+               + \lambda_n \sum_{k=1}^p \|d_k\|_1  & \label{opt:alternate_opt} \\
 \trm{s.t. $\forall k$, }  & d_{k2}, \ldots , d_{k(n-1)} \geq 0 	\qquad &\trm{(convexity)} \nonumber \\ 
 	& c_k = \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k 	\qquad &\trm{(centering)} \nonumber 
 \end{align}
@@ -102,9 +111,7 @@ $\|d_k\|_1$ is not identical to $\|\bds{\beta}_{k\cdot}\|_{\infty}$, but it is e
 
 \begin{remark}
 \label{rem:bounded_lipschitz_constraints}
-For parts of our theoretical analysis, we will also impose onto (\ref{opt:alternate_opt}) a boundedness constraint $-B \mathbf{1}_n \leq \Delta_k d_k + c_k \mathbf{1}_n \leq B \mathbf{1}_n$ which constrains that $\|\hat{f}_k \|_\infty \leq B$, or a Lipschitz constraint $\|d_k\|_1 \leq L$ which constrains that $\hat{f}_k$ must be $L$-Lipschitz. We use these constraints only in the proof for technical reasons; we never need nor use these constraints in our experiments.
+For parts of our theoretical analysis, we will also impose onto (\ref{opt:alternate_opt}) a boundedness constraint $-B \mathbf{1}_n \leq \Delta_k d_k + c_k \mathbf{1}_n \leq B \mathbf{1}_n$ which constrains that $\|f_k \|_\infty \leq B$, or a Lipschitz constraint $\|d_k\|_1 \leq L$ which constrains that $f_k$ must be $L$-Lipschitz. We use these constraints only in the proof for technical reasons; we never need nor use these constraints in our experiments.
 \end{remark}
 
-%% turn the hat back on (JDL)
-\def\hat#1{\widehat{#1}}
 
