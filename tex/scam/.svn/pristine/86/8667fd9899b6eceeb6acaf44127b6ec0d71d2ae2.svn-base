@@ -1,0 +1,68 @@
+\begin{thebibliography}{10}
+
+\bibitem{cesa:99}
+Nicol\`{o} Cesa-Bianchi and G\'{a}bor Lugosi.
+\newblock On prediction of individual sequences.
+\newblock {\em The Annals of Statistics}, 27(6):1865--1894, 1999.
+
+\bibitem{fazel:02}
+Maryam Fazel.
+\newblock Matrix rank minimization with applications.
+\newblock Technical report, Stanford University, 2002.
+\newblock Doctoral Dissertation, Electrical Engineering Department.
+
+\bibitem{wisdom}
+D.~Marbach, J.~C. Costello, R.~K\"uffner, N.~Vega, R.~J. Prill, D.~M. Camacho,
+  K.~R. Allison, the DREAM5~Consortium, M.~Kellis, J.~J. Collins, and
+  G.~Stolovitzky.
+\newblock Wisdom of crowds for robust gene network inference.
+\newblock Submitted, 2012.
+
+\bibitem{Negahban:11}
+Sahan Negahban and Martin~J. Wainwright.
+\newblock Estimation of (near) low-rank matrices with noise and
+  high-dimensional scaling.
+\newblock {\em Annals of Statistics}, 39:1069--1097, 2011.
+
+\bibitem{Raskutti:10}
+Garvesh Raskutti, Martin~J. Wainwright, and Bin Yu.
+\newblock Minimax-optimal rates for sparse additive models over kernel classes
+  via convex programming.
+\newblock arxiv:1008.3654, 2010.
+
+\bibitem{Ravikumar:09}
+Pradeep Ravikumar, John Lafferty, Han Liu, and Larry Wasserman.
+\newblock Sparse additive models.
+\newblock {\em Journal of the Royal Statistical Society, Series B,
+  Methodological}, 71(5):1009--1030, 2009.
+
+\bibitem{recht:2010}
+Benjamin Recht, Maryam Fazel, and Pablo~A. Parrilo.
+\newblock Guaranteed minimum rank solutions to linear matrix equations via
+  nuclear norm minimization.
+\newblock {\em SIAM Review}, 52(3):471--501, 2010.
+
+\bibitem{Vershynin:cov}
+Roman Vershynin.
+\newblock How close is the sample covariance matrix to the actual covariance
+  matrix?
+\newblock arxiv:1004.3484, 2010.
+
+\bibitem{watson:92}
+G.~A. Watson.
+\newblock Characterization of the subdifferential of some matrix norms.
+\newblock {\em Linear Algebra and Applications}, 170:1039--1053, 1992.
+
+\bibitem{Yuan:07}
+Ming Yuan, Ali Ekici, Zhaosong Lu, and Renato Monteiro.
+\newblock Dimension reduction and coeffcient estimation in multivariate linear
+  regression.
+\newblock {\em J. R. Statist. Soc. B}, 69(3):329--346, 2007.
+
+\bibitem{grouplasso}
+Ming Yuan and Yi~Lin.
+\newblock Model selection and estimation in regression with grouped variables.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 68(1):49--67, 2006.
+
+\end{thebibliography}

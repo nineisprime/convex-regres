@@ -1,0 +1,21 @@
+\section{Analysis of Variable Selection Consistency}
+
+We will use the following statistical \textbf{setting}:
+
+\begin{packed_enum}
+\item Let $\mathcal{X} = [-b, b]^p$. Let $\mathcal{P}$ be a distribution on $\mathcal{X}$. Let $X^{(1)},..., X^{(n)} $ be independent samples from $\mathcal{P}$. 
+\item Let $Y' = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise.  Given $n$ samples $Y'^{(1)},...,Y'^{(n)}$, we input into our optimization $Y = Y' - \bar{Y}'$.
+\item Let $S \subset \{1,...,p\}$ denote the set of relevant variables, that is, $f_0(X) = f_0(X_S)$ and let $s \coloneqq |S|$. 
+\end{packed_enum}
+
+Each of our statistical theorems will use a subset of the following list of \textbf{assumptions}:
+\begin{packed_enum}
+\item[A1] Suppose that $X_S, X_{S^c}$ are independent.
+\item[A1'] Suppose A1 is true and $\{ X_k \}_{k \in S}$ are all independent. 
+\item[A2] Suppose that $\|f_0\|_\infty \leq B$.
+\item[A2'] Suppose that A2 is true and $f_0$ is convex, twice-differentaible, and $L$-$Lipschitz$.
+\item[A3] Suppose $\epsilon$ is mean-zero subgaussian, independent of $X$, with subgaussian scale $\sigma$.
+\end{packed_enum}
+
+
+

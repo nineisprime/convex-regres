@@ -1,0 +1,61 @@
+\begin{thebibliography}{10}
+
+\bibitem{Boyd04}
+S.~Boyd and L.~Vandenberghe.
+\newblock {\em Convex Optimization}.
+\newblock Cambridge University Press, 2004.
+
+\bibitem{Cule:10}
+M.~Cule, R.~Samworth, and M.~Stewart.
+\newblock Maximum likelihood estimation of a multi-dimensional log-concave
+  density (with discussion).
+\newblock {\em J. R. Stat. Soc. Ser. B, Stat. Methodol.}, 72:545--600, 2010.
+
+\bibitem{Golden:06}
+A.~Goldenshluger and A.~Zeevi.
+\newblock Recovering convex boundaries from blurred and noisy observations.
+\newblock {\em Ann. Statist}, 34:1375--1394, 2006.
+
+\bibitem{Guntu:12}
+A.~Guntuboyina.
+\newblock Optimal rates of convergence for convex set estimation from support
+  functions.
+\newblock {\em Annals of Statistics}, 40:385--411, 2012.
+
+\bibitem{Guntu:13}
+A.~Guntuboyina and B.~Sen.
+\newblock Covering numbers for convex functions.
+\newblock {\em IEEE Trans. Info. Theory}, 59:1957--1965, 2013.
+
+\bibitem{lafferty2008rodeo}
+J.~Lafferty and L.~Wasserman.
+\newblock Rodeo: sparse, greedy nonparametric regression.
+\newblock {\em The Annals of Statistics}, 36(1):28--63, 2008.
+
+\bibitem{Lele:92}
+A.~S. Lele, S.~R. Kulkarni, and A.~S. Willsky.
+\newblock Convex-polygon estimation from support-line measurements and
+  applications to target reconstruction from laser-radar data.
+\newblock {\em Journal of the Optical Society of America, Series A},
+  9:1693--1714, 1992.
+
+\bibitem{Prince:90}
+J.~L. Prince and A.~S. Willsky.
+\newblock Reconstructing convex sets from support line measurements.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  12:377--389, 1990.
+
+\bibitem{Ravikumar:09}
+P.~Ravikumar, J.~Lafferty, H.~Liu, and L.~Wasserman.
+\newblock Sparse additive models.
+\newblock {\em Journal of the Royal Statistical Society, Series B,
+  Methodological}, 71(5):1009--1030, 2009.
+
+\bibitem{Wain:09a}
+M.~Wainwright.
+\newblock Sharp thresholds for high-dimensional and noisy sparsity recovery
+  using $\ell_1$-constrained quadratic programming (lasso).
+\newblock {\em IEEE Transactions on Information Theory}, 55(5):2183--2202, May
+  2009.
+
+\end{thebibliography}

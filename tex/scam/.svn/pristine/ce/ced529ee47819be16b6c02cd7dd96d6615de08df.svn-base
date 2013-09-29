@@ -1,0 +1,45 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.7)
+The top-level auxiliary file: scam_nips.aux
+The style file: plain.bst
+Database file #1: local.bib
+You've used 11 entries,
+            2118 wiz_defined-function locations,
+            573 strings with 5903 characters,
+and the built_in function-call counts, 3605 in all, are:
+= -- 358
+> -- 200
+< -- 0
++ -- 79
+- -- 68
+* -- 276
+:= -- 649
+add.period$ -- 34
+call.type$ -- 11
+change.case$ -- 68
+chr.to.int$ -- 0
+cite$ -- 11
+duplicate$ -- 103
+empty$ -- 242
+format.name$ -- 68
+if$ -- 709
+int.to.chr$ -- 0
+int.to.str$ -- 11
+missing$ -- 7
+newline$ -- 59
+num.names$ -- 22
+pop$ -- 42
+preamble$ -- 1
+purify$ -- 56
+quote$ -- 0
+skip$ -- 71
+stack$ -- 0
+substring$ -- 240
+swap$ -- 7
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 44
+warning$ -- 0
+while$ -- 34
+width$ -- 13
+write$ -- 122

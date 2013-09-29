@@ -1,0 +1,31 @@
+\section{Analysis of Variable Selection Consistency}
+
+We divide our analysis into two parts: we first establish a sufficient \emph{deterministic} condition for sparsistency and then reason under a stochastic setting and argue that the deterministic conditions hold with high probability.
+
+\subsection{Deterministic Setting}
+
+
+
+\subsection{Probabilistic Setting}
+
+We will use the following statistical \textbf{setting}:
+
+\begin{packed_enum}
+\item Let $\mathcal{X} = [-b, b]^p$. Let $\mathcal{P}$ be a distribution on $\mathcal{X}$. Let $X^{(1)},..., X^{(n)} $ be independent samples from $\mathcal{P}$. 
+\item Let $Y' = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise.  Given $n$ samples $Y'^{(1)},...,Y'^{(n)}$, we input into our optimization $Y = Y' - \bar{Y}'$.
+\item Let $S \subset \{1,...,p\}$ denote the set of relevant variables, that is, $f_0(X) = f_0(X_S)$ and let $s \coloneqq |S|$. 
+\end{packed_enum}
+
+Each of our statistical theorems will use a subset of the following list of \textbf{assumptions}:
+\begin{packed_enum}
+\item[A1:] $X_S, X_{S^c}$ are independent. A1': $\{ X_k \}_{k \in S}$ are all independent.
+\item[A2:] $\|f_0\|_\infty \leq B$. A2': $f_0$ is convex, twice-differentaible, and $L$-$Lipschitz$.
+\item[A3:] Suppose $\epsilon$ is mean-zero subgaussian, independent of $X$, with subgaussian scale $\sigma$.
+\end{packed_enum}
+
+We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3 to control the probability of false positives.
+
+\begin{remark}
+We make very strong assumptions on the covariates in A1 in order to make a very weak assumptions on the true regression function $f_0$ in A2. In particular, we do not assume that $f_0$ is additive. [TODO: refer to correlated design experiment] Also, strong assumptions on the covariates are not uncommon in nonparametric variable selection analysis~\ref{lafferty2008rodeo}.
+\end{remark}
+

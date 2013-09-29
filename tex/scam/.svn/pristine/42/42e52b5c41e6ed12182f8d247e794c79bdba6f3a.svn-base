@@ -1,0 +1,44 @@
+\section{Optimization for Sparse Convex Additive Models}
+
+We consider the following nonparametric regression problem
+\begin{equation}\nonumber
+          y_{i} = h(\bds{x}_{i}) + \epsilon_{i} = \sum_{d=1}^{p}h_{d}(x_{di}) + \epsilon_{i} \quad (i=1,2,\cdots,n)
+\end{equation}
+where $\bds{x}_{i}\in\mathbb{R}^{p}$ is the covariate, $y_{i}$ is the response and $\epsilon_{i}$ is the noise. The regression function $h(\cdot)$ is the summation of 
+functions $h_{d}(\cdot)$ in each variable dimension. Without further assumptions, this is the Sparse Additive Model (SpAM). Here we impose an additional constraint that each $h_{d}(\cdot)$ is 
+an univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
+\begin{equation}\nonumber
+      h_{dj} \geq h_{di} + \beta_{di}(x_{dj}-x_{di}) \quad (\forall i,j)
+\end{equation}
+where $h_{di}\triangleq{}h_{d}(x_{di})$ and $\beta_{di}$ is the subgradient at point $x_{di}$. We need $O(n^2 p)$ constraints to impose the supporting hyperplane constraints, which is computationally expensive for large scale problems. We can in fact use only $O(np)$ constraints because we can characterize univariate convex functions by the simpler condition that the subgradient, which is a scalar, must increase monotonically. This observation leads to our optimization program:
+\begin{equation}\begin{split}\label{np}
+       &\min_{\bds{h},\bds{\beta}} \ \frac{1}{2n}\sum_{i=1}^{n}(y_{i}-\sum_{d=1}^{p}h_{di})^{2} + \lambda\sum_{d=1}^{p}\|\bds{\beta}_{d\cdot}\|_{\infty} \\
+       &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{di}=0, \ h_{d(i+1)} = h_{d(i)} + \beta_{d(i)}(x_{d(i+1)}-x_{d(i)}), \ \beta_{d(i+1)} \geq \beta_{d(i)} \ (\forall d, i)
+\end{split}\end{equation}
+Let $\{(1),(2),\cdots,(n)\}$ be a reordering of $\{1,2,\cdots,n\}$ such that $x_{d(1)}\leq{}x_{d(2)}\leq\cdots\leq{}x_{d(n)}$.  It is easy to verify that the constraints in (\ref{np}) satisfies the supporting hyperplane constraints, as
+\begin{eqnarray}
+  \nonumber \forall j\geq{}i, h_{d(j)}-h_{d(i)} & = \sum\limits_{t=i}^{j-1}(h_{d(t+1)}-h_{d(t)}) = \sum\limits_{t=i}^{j-1}\beta_{d(t)}(x_{d(t+1)}-x_{d(t)})\\ \nonumber
+                                                                             & \geq \beta_{d(i)}\sum\limits_{t=i}^{j-1}(x_{d(t+1)}-x_{d(t)}) = \beta_{d(i)}(x_{d(j)}-x_{d(i)}) \\
+  \nonumber \forall j<i,         h_{d(j)}-h_{d(i)} &= \sum\limits_{t=j}^{i-1}(h_{d(t)}-h_{d(t+1)}) = \sum\limits_{t=j}^{i-1}\beta_{d(t)}(x_{d(t)}-x_{d(t+1)}) \\ \nonumber
+                                                                             & \geq \beta_{d(i)}\sum\limits_{t=j}^{i-1}(x_{d(t)}-x_{d(t+1)}) = \beta_{d(i)}(x_{d(j)}-x_{d(i)}), 
+\end{eqnarray}
+We call the model (\ref{np}) Sparse Convex Additive Model (SCAM). Notice that if we replace $\beta_{d(i+1)} \geq \beta_{d(i)}$ with
+$\beta_{d(i+1)}=\beta_{d(i)}$, then it reduces to LASSO. We note also that SCAM uses the \emph{outer piece-wise linear function}; see Figure~\ref{fig:outer_approximation} for more detail.
+
+\begin{SCfigure}
+\label{fig:outer_approximation}
+\includegraphics[width=0.4\textwidth]{figs/outer_approximation.pdf}
+\caption{With the 5 sample points $(X_i, h(X_i))$ (shown in bold), the red and the blue convex function represent equivalent fits. SCAM in (\ref{np}) always chooses the red outer piece-wise linear convex functions.}
+\end{SCfigure}
+
+SCAM in (\ref{np}) is a quadratic program (QP) with $O(np)$ variables and $O(np)$ constraints. 
+Directly applying a QP solver would be computationally expensive for relatively large $n$ and $p$. However, notice that variables
+in different feature dimensions are only coupled in the term $(y_{i}-\sum_{d=1}^{p}h_{di})^{2}$. Hence we can apply the block coordinate descent method,
+where in each step we solve the following QP subproblem for $\{\bds{h}_{d\cdot},\bds{\beta}_{d\cdot}\}$ with other variables fixed:
+\begin{equation}\begin{split}\nonumber
+       &\min_{\bds{h}_{d\cdot},\bds{\beta}_{d\cdot},\gamma_{d}} \ \frac{1}{2n}\sum_{i=1}^{n}((y_{i}-\sum_{r\neq{d}}h_{ri})-h_{di})^{2} + \lambda\gamma_{d} \\
+        &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{di}=0, \ h_{d(i+1)} = h_{d(i)} + \beta_{d(i)}(x_{d(i+1)}-x_{d(i)}), \ \beta_{d(i+1)} \geq \beta_{d(i)}, \ -\gamma_{d}\leq\beta_{d(i)}\leq\gamma_{d} \ (\forall i).
+\end{split}\end{equation}
+The extra variable $\gamma_{d}$ is introduced to deal with the $\ell_{\infty}$ norm. This QP subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse structure, 
+which can be solved efficiently using optimization packages (e.g., MOSEK).  We cycle through all feature dimensions ($d$) from $1$ to $p$ multiple times until convergence.
+Empirically we observe that the algorithm converges in only a few cycles. We also implemented an ADMM solver for (\ref{np}), but found that it is not as efficient as this QP solver.

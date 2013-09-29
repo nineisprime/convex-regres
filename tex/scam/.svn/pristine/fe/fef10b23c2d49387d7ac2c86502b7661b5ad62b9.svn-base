@@ -1,0 +1,64 @@
+\section{Analysis of Variable Selection Consistency}
+
+We divide our analysis into two parts: we first establish a sufficient \emph{deterministic} condition for sparsistency and then reason under a stochastic setting and argue that the deterministic conditions hold with high probability.
+
+\subsection{Deterministic Setting}
+In our analysis, we will reason with the solution of optimization (\ref{opt:alternate_opt}) when we restricted $k$ to be only in the subset $S$ of relevant variables. This is a theoretical construct used only in the proof and we refer to it as the \emph{restricted regression}.\\
+
+\begin{theorem} (Deterministic) \\
+The following holds regardless of whether we impose the boundness and Lipschitz condition in optimization~\ref{opt:alternate_opt} or not. 
+
+Let $\{\hat{d}_k, \hat{c}_k \}_{k \in S}$ be the minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
+
+Let $\hat{r} \coloneqq Y - \sum_{k \in S} (\Delta_k \hat{d}_k - \hat{c}_k \mathbf{1})$ be the restricted regression residue. For $k \in \{1,...,p\}$, let $\Delta_{k, j}$ denote the $n$-dimensional vector $\max( X_k - X_{k (j)} \mathbf{1}, 0)$. \\
+
+Suppose for all $j,k$, $\lambda_n > | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|$, then $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
+\end{theorem}
+
+
+\subsection{Probabilistic Setting}
+
+We will use the following statistical \textbf{setting}:
+
+\begin{packed_enum}
+\item Let $\mathcal{X} = [-b, b]^p$. Let $\mathcal{P}$ be a distribution on $\mathcal{X}$. Let $X^{(1)},..., X^{(n)} $ be independent samples from $\mathcal{P}$. 
+\item Let $Y' = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise.  Given $n$ samples $Y'^{(1)},...,Y'^{(n)}$, we input into our optimization $Y = Y' - \bar{Y}'$.
+\item Let $S \subset \{1,...,p\}$ denote the set of relevant variables, that is, $f_0(X) = f_0(X_S)$ and let $s \coloneqq |S|$. 
+\end{packed_enum}
+
+Each of our statistical theorems will use a subset of the following list of \textbf{assumptions}:
+\begin{packed_enum}
+\item[A1:] $X_S, X_{S^c}$ are independent. A1': $\{ X_k \}_{k \in S}$ are all independent.
+\item[A2:] $\|f_0\|_\infty \leq B$. A2': $f_0$ is convex, twice-differentaible, and $L$-Lipschitz.
+\item[A3:] Suppose $\epsilon$ is mean-zero subgaussian, independent of $X$, with subgaussian scale $\sigma$.
+\end{packed_enum}
+
+We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3 to control the probability of false positives.
+
+\begin{remark}
+We make very strong assumptions on the covariates in A1 in order to make a very weak assumptions on the true regression function $f_0$ in A2. In particular, we do not assume that $f_0$ is additive. [TODO: refer to correlated design experiment] Also, strong assumptions on the covariates are not uncommon in nonparametric variable selection analysis~\ref{lafferty2008rodeo}.
+\end{remark}
+
+\begin{theorem} (Controlling False Positives) \\
+Suppose assumptions A1, A2, A3 hold. Suppose also that we run optimization~\ref{opt:alternate_opt} with the $B$-boundness constraint.
+
+Suppose $\lambda_n \geq c b (sB + \sigma) \sqrt{ \frac{s}{n} \log n \log (pn)}$, then with probability at least $ 1 - \frac{C}{n}$, for all $j,k$,
+\[
+\lambda_n >  | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|
+\]
+And therefore, any solution to the full regression (\ref{opt:alternate_opt}), with boundedness constraint, is zero on $S^c$.
+\end{theorem}
+
+
+
+\begin{theorem} (Controlling False Negatives)\\
+Suppose assumptions A1', A2', A3 hold. Suppose we run optimization~(\ref{opt:alternate_opt}) with both the $B$-boundedness and $L$-Lipschitz constraint. Suppose the true function $f_0$ depends on all $s$-variables. 
+
+Let $\ds \hat{f} = \{ \hat{d}_k, \hat{c}_k\}_{k\in S}$ be any solution to the \emph{restricted regression}.
+
+Suppose $n$ is large enough such that $c L \max \left(\lambda_n, b (B+\sigma)B\sigma \sqrt{\frac{1}{n^{4/5}} s^5 \log sn} \right) < C_{\trm{thresh}}(f_0)$.\\
+
+Then, with probability at least $1-\frac{C}{n}$, $\hat{f}_k = (\hat{d}_k, \hat{c}_k) \neq 0$ for all $k \in S$ and therefore, any solution to the full regression~(\ref{opt:alternate_opt}), with boundedness and Lipschitz constraint, is non-zero on $S$.
+\end{theorem}
+
+

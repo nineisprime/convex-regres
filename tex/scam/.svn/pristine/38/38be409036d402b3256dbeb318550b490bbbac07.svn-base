@@ -1,0 +1,95 @@
+\section{Introduction}
+
+
+We consider the problem of estimating a convex function of several
+variables from noisy values of the function at a finite sample of
+input points.  Recent work \cite{Guntu:12,Guntu:13} shows that the
+minimax rate for convex function estimation in $p$ dimensions is
+$n^{-4/(4+p)}$.  Loosely speaking, this shows that the
+geometric convexity constraint is statistically equivalent to
+requiring two derivatives of the function, and thus is
+subject to the same curse of dimensionality.
+However, if the function is sparse, with $s\ll p$ relevant variables,
+then the faster rate $n^{-4/(4+s)}$ may be achievable if the $s$
+variables can be identified.  To determine the relevant variables, we
+show that it suffices to estimate a sum of $p$ one-dimensional convex
+functions, leading to significant computational and statistical
+advantages.  In addition, we introduce algorithms and supporting
+statistical theory for a practical, effective approach to this
+variable selection problem.
+
+
+The sparse nonparametric regression problem is considered in
+\cite{lafferty2008rodeo}, where it is shown that computationally
+efficient, near minimax-optimal estimation is possible, but in ambient
+dimensions that scale only as $p = O(\log n)$.  This is in stark
+contrast to the exponential scaling $p = O\bigl(e^{n^c}\bigr)$ enjoyed
+by sparse linear models \cite{Wain:09a}.  Sparse additive models
+\cite{Ravikumar:09} provide a practical alternative to fully
+nonparametric function estimation.  But the additive assumption is
+limited.  In particular, the natural idea of first selecting the
+single variable effects, then the pairwise effects, and so on, does
+not in general lead to consistent variable selection.  In other words,
+the general nonparametric model is not additively faithful.
+Remarkably, the additional assumption of convexity does lead to
+additive faithfulness, as we show here.  In addition, we show that
+exponential scaling is achievable for sparse convex additive models.
+Thus, the geometric convexity constraint is quite different from the
+smoothness constraints imposed in traditional nonparametric
+regression.
+
+A key to our approach is the observation that least squares
+nonparametric estimation under convexity constraints is equivalent to
+a finite dimensional quadratic program.  Specifically, the infinite
+dimensional optimization 
+\begin{eqnarray}
+& \text{minimize} &\sum_{i=1}^n (Y_i - m(x_i))^2 \\
+& \text{subject to} & m:\reals^p\rightarrow\reals\ \text{is convex}
+\end{eqnarray}
+is precisely equivalent to the finite dimensional quadratic
+program 
+\begin{eqnarray}
+& \text{minimize}_{h, \beta} &\sum_{i=1}^n (Y_i - h_i)^2 \\
+& \text{subject to} & h_j \geq h_i + \beta_i^T (x_j-x_i),\; \text{for
+    all $i,j$}.
+\label{eq:outer}
+\end{eqnarray}
+See \cite{Boyd04}, Section 6.5.5.
+Here $h_i$ is the estimated function value $m(x_i)$, and the vectors
+$\beta_i \in \reals^d$ represent supporting hyperplanes to the
+epigraph of $m$.  Importantly, this finite dimensional quadratic program does
+not have tuning parameters for smoothing the function. Such parameters are the bane
+of nonparametric estimation.
+
+Estimation of convex functions arises naturally in several
+applications.  Examples include geometric programming \cite{Boyd04},
+computed tomography \cite{Prince:90}, target reconstruction
+\cite{Lele:92}, image analysis \cite{Golden:06} and circuit design
+\cite{Hannah:12}.  Other applications include queuing theory
+\cite{Chen:01} and economics, where it is of interest to estimate
+concave utility functions \cite{Pratt:68}.  See \cite{Lim:12} for
+other applications.  Beyond cases where the assumption of convexity is
+natural, we offer that the convexity assumption is attractive as a
+tractable, nonparamametric relaxation of the linear model.  In
+addition to the lack of tuning parameters, other than the
+regularization parameter $\lambda$ to control the level of sparsity,
+the global convexity leads to effective, scalable algorithms.  We
+demonstrate use of our approach on experiments with standard
+regression data sets, in a comparison with sparse linear models
+(lasso).
+
+%In the following section we give a high-level summary of our technical
+%results, including additive faithfulness, variable selection 
+%consistency, and high dimensional scaling.  In Section~X...
+
+\def\mathbf#1{\mbox{\boldmath $#1$}} 
+
+\textbf{Notation.} If
+$\mathbf{x}$ is a vector, we use $\mathbf{x}_{-k}$ to denote the
+vector with $k$-th coordinate removed. Let $\mathbf{v} \in \R^n$, then
+$v_{(1)}$ denotes the smallest coordinate of $\mathbf{v}$ in
+magnitude, and $v_{(j)}$ denotes the $j$-th smallest; $\mathbf{1}_n$
+is the all-ones vector of dimension $n$. If $X \in \R^p$ and $S \subset
+\{1,...,p\}$, then $X_S$ is the subvector of $X$ restricted to
+coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use
+$\bar{X}$ to denote empirical average.

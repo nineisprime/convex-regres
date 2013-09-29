@@ -1,0 +1,129 @@
+\section{Analysis of Variable Selection Consistency}
+
+We divide our analysis into two parts. We first establish a sufficient
+\emph{deterministic} condition for sparsistency.  We then consider the
+stochastic setting and argue that the deterministic conditions hold with high probability. 
+
+\subsection{Deterministic Setting}
+
+We follow Wainwright \cite{Wain:09a} and define a purely theoretical construct called \emph{restricted regression}.
+\begin{definition}
+In \emph{restricted regression}, we restrict the indices $k$ in
+optimization (\ref{opt:alternate_opt}) to lie in the support $S$ instead of ranging from $1,...,p$. 
+\end{definition}
+
+Our analysis then diverges from the now-standard ``primal-dual witness
+technique''~\cite{Wain:09a}. Primal-dual witness explicitly solve all the dual variables. Because our optimization is more complex, we write the dual variables on $S^c$ as a function the restricted regression \emph{residue}, which is implicitly a function of the dual variables on $S$; we do not solve the dual variables on $S$.
+
+\begin{theorem} (Deterministic setting)
+\label{thm:deterministic}
+Let $\{\hat{d}_k, \hat{c}_k \}_{k \in S}$ be the minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
+Let $\hat{r} \coloneqq Y - \sum_{k \in S} (\Delta_k \hat{d}_k -
+\hat{c}_k \mathbf{1})$ be the restricted regression residual. For $k
+\in \{1,...,p\}$, $\Delta_{k, j}$, the $j$-th column of $\Delta_k$, is the $n$-dimensional vector $\max( X_k - X_{k (j)} \mathbf{1}, 0)$. 
+Suppose for all $j$ and all $k\in S^c$, $\lambda_n > | \frac{1}{n}
+\hat{r}^\tran \Delta_{k,j}|$. Then $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
+\end{theorem}
+This result holds regardless of whether we impose the boundness and Lipschitz conditions in optimization~\ref{opt:alternate_opt}.
+The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix.
+
+\begin{remark}
+  The incoherence condition of \cite{Wain:09a} is implicitly encoded
+  in our condition on $\lambda_n, \hat{r}, \Delta_{k,j}$. We can
+  reconstruct the incoherence condition if we assume that the true
+  function $f_0$ is linear and that our fitted functions $\hat{f}_k$
+  are linear as well.
+\end{remark}
+
+Theorem~\ref{thm:deterministic} allows us to analyze false negative
+rates and false positive rates separately. To control false positives,
+we study when the condition $\lambda_n > | \frac{1}{n} \hat{r}^\tran
+\Delta_{k,j}|$ is fulfilled for all $j$ and all $k \in S^c$. To
+control false negatives, we study the restricted regression.
+
+\subsection{Probabilistic Setting}
+
+We use the following statistical setting:
+
+\begin{packed_enum}
+\item Let $\mathcal{X} = [-b, b]^p$. Let $F$ be a distribution supported and positive on $\mathcal{X}$. Let $X^{(1)},..., X^{(n)} $ be independent samples from $F$. 
+\item Let $Y' = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise.  Given $n$ samples $Y'^{(1)},...,Y'^{(n)}$, we input into our optimization $Y = Y' - \bar{Y}'$.
+\item Let $S \subset \{1,...,p\}$ denote the relevant variables, i.e.,
+  $f_0(X) = f_0(X_S)$, with $s \coloneqq |S|$. 
+\end{packed_enum}
+
+Each of our statistical theorems will use a subset of the following assumptions:
+\begin{packed_enum}
+\item[A1:] $X_S, X_{S^c}$ are independent.  \ A1': $\{ X_k \}_{k \in S}$ are independent.
+\item[A2:] $\|f_0\|_\infty \leq B$. \  A2': $f_0$ is convex,
+  twice-differentiable, $L$-Lipschitz, and $\trm{supp}(f_0) = S$.
+\item[A3:] Suppose $\epsilon$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$.
+\end{packed_enum}
+
+We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3 to control the probability of false negatives.
+
+\begin{remark}
+  We make strong assumptions on the covariates in A1 in order to make
+  very weak assumptions on the true regression function $f_0$ in
+  A2. In particular, we do not assume that $f_0$ is additive. Relaxing
+  these assumptions is an interesting direction for future work.
+  %Strong assumptions on the covariates are not uncommon in nonparametric
+  %variable selection analysis~\cite{lafferty2008rodeo}. 
+  %[TODO: refer to correlated design experiment].
+\end{remark}
+
+\begin{theorem} (Controlling false positives) 
+\label{thm:false_positive}
+Suppose assumptions A1, A2, A3 hold. Suppose also that we run optimization~\eqref{opt:alternate_opt} with the $B$-boundness constraint. Let $c,C$ be absolute constants.
+Suppose $\lambda_n \geq c b (sB + \sigma) \sqrt{ \frac{s}{n} \log n
+  \log (pn)}$.  Then with probability at least $ 1 - \frac{C}{n}$, for all $j,k$, $\lambda_n >  | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|$.
+Therefore, any solution to the full regression (\ref{opt:alternate_opt}), with boundedness constraint, is zero on $S^c$. 
+\end{theorem}
+
+The proof of Theorem~\ref{thm:false_positive} exploits independence of
+$\hat{r}$ and $\Delta_{k,j}$ from A1, and then uses concentration of
+measure results to argue that $| \frac{1}{n} \hat{r}^\tran
+\Delta_{k,j}|$ concentrates around zero at a desired rate. The fact
+that $\hat{r}$ is a centered vector is crucial to our proof, and our
+theory thus further illustrates the importance of imposing the
+centering constraints in optimization \eqref{opt:alternate_opt}. Our
+proof uses the concentration of the average of
+data sampled \emph{without} replacement
+\cite{serfling1974probability}, illustrating that the proof method is not a
+trivial application of existing techniques. The full proof of
+Theorem~\ref{thm:false_positive} is in
+Section~\ref{sec:false_positive_proof} of the Appendix.
+
+\begin{theorem} (Controlling false negatives)
+\label{thm:false_negative}
+Suppose assumptions A1', A2', A3 hold. Let $\ds \hat{f} = \{ \hat{d}_k, \hat{c}_k\}_{k\in S}$ be any solution to the restricted regression with both the $B$-boundedness and $L$-Lipschitz constraint. Let $c,C$ be absolute constants.
+Suppose $L \max \left(\lambda_n, b (B+\sigma)B\sigma \sqrt{\frac{s^5}{n^{4/5}} \log sn} \right) \rightarrow 0$.
+Then, for sufficiently large $n$, $\hat{f}_k = (\hat{d}_k, \hat{c}_k)
+\neq 0$ for all $k \in S$ with probability at least $1-\frac{C}{n}$.
+\end{theorem}
+
+This is a finite sample version of
+Theorem~\ref{thm:convex_faithful}. We need stronger assumptions in
+Theorem~\ref{thm:false_negative} to use our additive faithfulness
+result, Theorem~\ref{thm:convex_faithful}. We also include an extra
+Lipschitz constraint so that we can use existing covering number
+results \cite{Bronshtein:76}. Recent work
+\cite{Guntu:13} shows that the Lipschitz constraint
+is not required with more advanced empirical process theory
+techniques. We give the full proof of Theorem~\ref{thm:false_negative}
+in Section~\ref{sec:false_negative_proof} of the Appendix.
+
+Combining Theorem~\ref{thm:false_positive} and
+~\ref{thm:false_negative} and ignoring dependencies on $b,B,L,\sigma$,
+we have the following result.
+\begin{corollary}
+  Assume A1', A2', A3. Let $\lambda_n = \Theta\left( \sqrt{
+  \frac{s^3}{n} \log n \log (pn)} \right)$. Suppose $\lambda_n
+  \rightarrow 0$ and $\sqrt{\frac{s^5}{n^{4/5}} \log sn} \rightarrow
+  0$. Let $\hat{f_n}$ be a solution to (\ref{opt:alternate_opt}) with
+  boundedness and Lipschitz constraints. Then 
+  $\P( \trm{supp}(\hat{f_n}) = \trm{supp}(f_0) ) \rightarrow 1$.
+\end{corollary}
+The above corollary implies that sparsistency is achievable at the same exponential scaling of the ambient dimension $p = O(\exp(n^c)), c<1$ rate as parametric models. The cost of nonparametric modeling is reflected in the scaling with respect to $s$, which can only scale at $o(n^{4/25})$.
+
+%\textbf{Comparison with Related Work.} 

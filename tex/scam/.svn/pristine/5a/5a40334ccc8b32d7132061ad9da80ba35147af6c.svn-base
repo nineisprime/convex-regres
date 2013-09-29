@@ -1,0 +1,63 @@
+\section{Experiments}
+
+\subsection{Simulations}
+Support recovery result goes here ...
+
+\subsection{Boston housing data}
+We take the Boston housing data~\cite{?} as a real example. This data set
+contains 13 covariates, 506 samples and one response variable, which is
+the housing values in suburb of Boston. The data and detailed description
+can be found on the UCI website~\cite{?}. 
+
+
+We first use all $n=506$ samples (with normalization) to train SCAM, using
+a set of candidate $\{\lambda^{(t)}\}$ with $\lambda^{(1)}=0$ (no regularization). For each $\lambda^{(t)}$
+we obtain a vector $\|\bds{\beta}^{(t)}\|_{\infty}$ of dimension $p=13$. And non-zero
+elements in this vector indicates the variables selected using $\lambda^{(t)}$. 
+We then plot $\|\bds{\beta}^{(t)}\|_{\infty}$ versus the normalized
+norm $\frac{\|\bds{\beta}^{(t)}\|_{\infty,1}}{\|\bds{\beta}^{(1)}\|_{\infty,1}}$ in Figure \ref{SCAM}.
+As a comparison we plot the LASSO/LARS result in a similar way in Figure \ref{LASSO}.
+From the figure we observe that the first three variables selected by SCAM (corresponding to $\lambda^{(t)}=0.1$) 
+and LASSO are the same: LSTAT, RM and PTRATIO, which is consistent with previous findings~\cite{?}.
+We then refit SCAM with only these three variables without regularization, and plot the inferred additive
+functions in Figure \ref{Convex}. As can be seen, these functions contain clear nonlinear effects which cannot be captured
+by LASSO. The shapes of these functions are also in good agreement with those obtained by SpAM~\cite{?}.
+
+
+Next, in order to quantitatively  study the predictive performance, we run 10 times 5-fold cross validation, following
+the same procedure described above (training, variable selection and refitting), and plot the mean and standard
+deviation of the predictive MSE in Figure \ref{MSE}. Since for SCAM, the same $\lambda^{(t)}$ may lead to
+slightly different number of selected features in different folds and runs, the x-axis (average number of selected features)
+for SCAM is not necessarily an integer. Nevertheless, the figure clearly shows that SCAM has a much lower predictive MSE than LASSO. 
+We also compare the performance of SCAM with that of Additive Forward Regression (AFR) presented in~\cite{Xi}, and found that they are similar.
+The main advantages of SCAM compared with AFR and SpAM are 1) There are no other tuning parameters (such as bandwidth)
+besides $\lambda$. 2) SCAM is formulated as a convex program, which guarantees a global optimum.
+
+\begin{figure}[!htpb]
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/Additive}
+                 \caption{Variable selection result using SCAM.}
+                \label{SCAM}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/LASSO}
+                \caption{Variable selection result using LASSO.}
+                \label{LASSO}
+        \end{subfigure}\\
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/Convex}
+                \caption{Inferred additive convex functions by SCAM.}
+                \label{Convex}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/MSE}
+                 \caption{Predictive MSE of SCAM and LASSO.}
+                 \label{MSE}
+        \end{subfigure}
+        \caption{Results on Boston housing data.}\label{Boston}
+\end{figure}

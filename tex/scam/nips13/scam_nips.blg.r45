@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.7)
+The top-level auxiliary file: scam_nips.aux
+The style file: abbrv.bst
+Database file #1: local.bib
+Warning--I didn't find a database entry for "?"
+Warning--I didn't find a database entry for "Xi"
+Warning--empty year in Pratt:68
+You've used 13 entries,
+            2118 wiz_defined-function locations,
+            594 strings with 5808 characters,
+and the built_in function-call counts, 4189 in all, are:
+= -- 421
+> -- 172
+< -- 0
++ -- 68
+- -- 54
+* -- 301
+:= -- 706
+add.period$ -- 39
+call.type$ -- 13
+change.case$ -- 64
+chr.to.int$ -- 0
+cite$ -- 14
+duplicate$ -- 148
+empty$ -- 346
+format.name$ -- 54
+if$ -- 857
+int.to.chr$ -- 0
+int.to.str$ -- 13
+missing$ -- 15
+newline$ -- 68
+num.names$ -- 26
+pop$ -- 60
+preamble$ -- 1
+purify$ -- 53
+quote$ -- 0
+skip$ -- 96
+stack$ -- 0
+substring$ -- 336
+swap$ -- 14
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 48
+warning$ -- 1
+while$ -- 45
+width$ -- 15
+write$ -- 141
+(There were 3 warnings)

@@ -1,0 +1,114 @@
+\section{Experiments}
+\subsection{Simulations}
+We consider the following regression problem in our simulation
+\begin{equation}\nonumber
+         y_i = \bds{x}_{S,i}^{\top}\bds{Q}\bds{x}_{S,i} + \epsilon_i \quad (i=1,2,\cdots,n).
+\end{equation}
+Here $\bds{x}_{i}$ denotes data sample $i$ drawn from $\mathcal{N}(\bds{0},\bds{I}_{p})$, 
+$\bds{x}_{S,i}$ is a subset of $\bds{x}_i$ with dimension $|S|=5$, where $S$ represents the active feature set, and 
+$\epsilon_i$ is the additive noise drawn from $\mathcal{N}(0,1)$. 
+$\bds{Q}$ is a symmetric positive definite matrix of dimension $|S|\times{}|S|$. 
+Notice that if $\bds{Q}$ is diagonal, then the true function is convex additive; otherwise the true function is convex but not additive.
+For all the simulations in this section, we set $\lambda=4\sqrt{\frac{\log(np)}{n}}$.
+
+In the first simulation, we set $\bds{Q}=\bds{I}_{|S|}$ (the additive case), and choose $n=100, 200,\cdots,1000$ and $p=64,128,256,512$.
+For each $(n,p)$ combination, we generate $200$ independent data sets. For each data set we use SCAM to infer the model parameterized by
+$\bds{h}$ and $\bds{\beta}$ (see equation (\ref{np})) . If $\|\bds{\beta}_{k\cdot}\|_{\infty}<10^{-8}\ (\forall k\not\in{}S)$ and $\|\bds{\beta}_{k\cdot}\|_{\infty}>10^{-8}\ (\forall k\in{}S)$,
+then we declare correct support recovery. We then plot the probability of support recovery over the $200$ data sets in Figure \ref{Curve1}.
+We observe that SCAM can do variable selection well under this ideal case where the true function is convex additive.
+To give the reader a sense of the running speed, it takes SCAM $2$ minutes to run on one data set with $n=1000$ and $p=512$,
+on a MacBook with 2.3 GHz Intel Core i5 CPU and 4 GB memory.
+
+In the second simulation, we study the case in which the true function is convex but not additive. We generate four $\bds{Q}$ matrices plotted 
+in Figure \ref{Q}, where the diagonal elements are all $1$ and the off-diagonal elements are $0.5$ with probability $\alpha$ 
+($\alpha=0,0.2,0.5,1$ for the four cases). We fix $p=128$ and choose $n=100,200,\cdots,1000$. We again run the SCAM model
+on $200$ independently generated data sets and plot the probability of recovery in Figure \ref{Curve2}. From the result we see that SCAM
+can also do variable selection even if the true function is not additive (but still convex).
+
+\begin{figure}[!htpb]
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/Curve1}
+                 \caption{Additive model.}
+                \label{Curve1}
+        \end{subfigure}\\
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/Q}
+                \caption{Four $\bds{Q}$ matrices.}
+                \label{Q}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/Curve2}
+                \caption{Additive and non-additive models.}
+                \label{Curve2}
+        \end{subfigure}
+        \caption{Result of support recovery.}\label{Support}
+\end{figure}
+
+
+\subsection{Boston housing data}
+We take the Boston housing data as a real example. This data set
+contains 13 covariates, 506 samples and one response variable which is
+the housing values in suburbs of Boston. The data and detailed description
+can be found on the UCI Machine Learning Repository website~\verb+http://archive.ics.uci.edu/ml/datasets/Housing+. 
+
+We first use all $n=506$ samples (with normalization) to train SCAM, using
+a set of candidate $\{\lambda^{(t)}\}$ with $\lambda^{(1)}=0$ (no regularization). For each $\lambda^{(t)}$
+we obtain a subgradient matrix $\bds{\beta}^{(t)}$ with $p=13$ rows. And the non-zero
+rows in this matrix indicate the variables selected using $\lambda^{(t)}$. 
+We then plot $\|\bds{\beta}^{(t)}\|_{\infty}$ and row-wise mean of $\bds{\beta}^{(t)}$ versus the normalized
+norm $\frac{\|\bds{\beta}^{(t)}\|_{\infty,1}}{\|\bds{\beta}^{(1)}\|_{\infty,1}}$ in Figure \ref{SCAM} and \ref{SCAM1}.
+As a comparison we plot the LASSO/LARS result in a similar way in Figure \ref{LASSO}.
+From the figures we observe that the first three variables selected by SCAM
+and LASSO are the same: LSTAT, RM and PTRATIO, which is consistent with previous findings~\cite{SpAM:07}.
+The fourth variable selected by SCAM is TAX (with $\lambda^{(t)}=0.09$).
+We then refit SCAM with only these four variables without regularization, and plot the inferred additive
+functions in Figure \ref{Convex}. As can be seen, these functions contain clear nonlinear effects which cannot be captured
+by LASSO. The shapes of these functions are also in good agreement with those obtained by SpAM~\cite{SpAM:07}.
+
+Next, in order to quantitatively study the predictive performance, we run 10 times 5-fold cross validation, following
+the same procedure described above (training, variable selection and refitting), and plot the mean and standard
+deviation of the predictive Mean Squared Error (MSE) in Figure \ref{MSE}. Since for SCAM the same $\lambda^{(t)}$ may lead to
+slightly different number of selected features in different folds and runs, the values on the x-axis (average number of selected features)
+for SCAM are not necessarily integers. Nevertheless, the figure clearly shows that SCAM has a much lower predictive MSE than LASSO. 
+We also compare the performance of SCAM with that of Additive Forward Regression (AFR) presented in~\cite{Xi:09}, and found that they are similar.
+The main advantages of SCAM compared with AFR and SpAM are 1) There are no other tuning parameters (such as bandwidth)
+besides $\lambda$. 2) SCAM is formulated as a convex program, which guarantees a global optimum.
+
+\begin{figure}[!htpb]
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/Additive}
+                 \caption{Variable selection result using SCAM.}
+                \label{SCAM}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/Additive1}
+                 \caption{Variable selection result using SCAM.}
+                \label{SCAM1}
+        \end{subfigure}\\
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/LASSO}
+                \caption{Variable selection result using LASSO.}
+                \label{LASSO}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/MSE}
+                 \caption{Predictive MSE of SCAM and LASSO.}
+                 \label{MSE}
+        \end{subfigure}\\
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figs/Convex}
+                \caption{Inferred additive convex functions by SCAM.}
+                \label{Convex}
+        \end{subfigure}
+        \caption{Results on Boston housing data.}\label{Boston}
+\end{figure}

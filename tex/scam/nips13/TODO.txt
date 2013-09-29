@@ -1,0 +1,5 @@
+minx:
+
+- define notation "supp(f)", refine definition of coordinate "dependence"
+
+- 

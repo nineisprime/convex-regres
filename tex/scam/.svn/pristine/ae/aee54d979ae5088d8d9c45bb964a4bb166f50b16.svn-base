@@ -1,0 +1,202 @@
+\documentclass{article} % 
+\usepackage{nips13submit_e,times}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,subfigure}
+\usepackage{MnSymbol}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{custom_math, epstopdf}
+
+\bibliographystyle{plain}
+
+%\title{Additive Faithfulness, Variable Selection and Optimization for Convex Regression}
+\title{Variable Selection in Convex Function Estimation}
+
+
+
+\author{
+% Minhua Chen, Min Xu, John Lafferty
+David S.~Hippocampus\thanks{ Use footnote for providing further information
+about author (webpage, alternative address)---\emph{not} for acknowledging
+funding agencies.} \\
+Department of Computer Science\\
+Cranberry-Lemon University\\
+Pittsburgh, PA 15213 \\
+\texttt{hippo@cs.cranberry-lemon.edu} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\AND
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+(if needed)\\
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\pr}{Prob}
+\DeclareMathOperator{\cov}{Cov}
+\newcommand{\EE}[1]{\mathbb{E}({#1})}
+\def\llangle{<<}
+\def\rrlangle{>>}
+\def\interleave{|\kern-.25ex|\kern-.25ex|}
+\def\interleavesub{|\kern-.15ex|\kern-.15ex|}
+\newcommand{\nnorm}[1]{\interleave {#1} \interleave}
+\newcommand{\nnormsub}[1]{\interleavesub {#1} \interleavesub}
+\newcommand{\nNorm}[1]{\left|\kern-.25ex\left|\kern-.25ex\left| {#1}\right|\kern-.25ex\right|\kern-.25ex\right|}
+\newcommand{\norm}[1]{\left\|{#1}\right\|}
+%\newcommand{\trnorm}[1]{\norm{{#1}}_{\mathrm{tr}}}
+\newcommand{\trnorm}[1]{\norm{{#1}}_{*}}
+\newcommand{\spnorm}[1]{\norm{{#1}}_{\mathrm{sp}}}
+\newcommand{\frnorm}[1]{\norm{{#1}}_{\mathrm{F}}}
+%\newcommand{\trnnorm}[1]{\nnorm{{#1}}_{\mathrm{tr}}}
+\newcommand{\trnnorm}[1]{\nnorm{{#1}}_{*}}
+\newcommand{\spnnorm}[1]{\nnorm{{#1}}_{\mathrm{sp}}}
+\newcommand{\spnnormsub}[1]{\nnormsub{{#1}}_{\mathrm{sp}}}
+\newcommand{\frnnorm}[1]{\nnorm{{#1}}_{\mathrm{F}}}
+\newcommand{\Norm}[1]{\left\|{#1}\right\|}
+%\newcommand{\Trnorm}[1]{\Norm{{#1}}_{\mathrm{tr}}}
+\newcommand{\Trnorm}[1]{\Norm{{#1}}_{*}}
+\newcommand{\Spnorm}[1]{\Norm{{#1}}_{\mathrm{sp}}}
+\newcommand{\Frnorm}[1]{\Norm{{#1}}_{\mathrm{F}}}
+%\newcommand{\Trnnorm}[1]{\nNorm{{#1}}_{\mathrm{tr}}}
+\newcommand{\Trnnorm}[1]{\nNorm{{#1}}_{*}}
+\newcommand{\Spnnorm}[1]{\nNorm{{#1}}_{\mathrm{sp}}}
+\newcommand{\Frnnorm}[1]{\nNorm{{#1}}_{\mathrm{F}}}
+\newcommand{\colspan}[1]{\mathrm{colspan}\left({#1}\right)}
+
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheoremstyle{remark}{\topsep}{\topsep}%
+     {\normalfont}% Body font
+     {}           % Indent amount (empty = no indent, \parindent = para indent)
+     {\bfseries}  % Thm head font
+     {.}          % Punctuation after thm head
+     {.5em}       % Space after thm head (\newline = linebreak)
+     {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}}% Thm head spec
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{definition}{Definition}[section]
+
+%\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+\def\X{\mathcal{X}}
+\def\comma{\unskip,~}
+\def\truep{p^*}
+\def\div{\|\,}
+\long\def\comment#1{}
+\def\reals{{\mathbb R}}
+\def\P{{\mathbb P}}
+\def\E{{\mathbb E}}
+\def\Cov{\mathop{\text{Cov}}}
+\def\supp{\mathop{\text{supp}\kern.2ex}}
+\def\argmin{\mathop{\text{\rm arg\,min}}}
+\def\arginf{\mathop{\text{\rm arg\,inf}}}
+\def\argmax{\mathop{\text{\rm arg\,max}}}
+\let\tilde\widetilde
+\def\csd{${}^*$}
+\def\mld{${}^\dag$}
+\def\dos{${}^\ddag$}
+\def\W{\widetilde Y}
+\def\Z{\widetilde X}
+\let\hat\widehat
+\let\tilde\widetilde
+\def\given{{\,|\,}}
+\def\ds{\displaystyle}
+\def\bs{\backslash}
+\def\1{{(1)}}
+\def\2{{(2)}}
+\def\pn{{(n)}}
+\def\ip{{(i)}}
+\def\Xbar{\overline{X}}
+\def\except{\backslash}
+\def\npn{\mathop{\textit{NPN\,}}}
+\def\i{{(i)}}
+\def\cE{{\mathcal{C}}}
+\def\cM{{\mathcal{M}}}
+\def\cF{{\mathcal{F}}}
+\def\cP{{\mathcal{P}}}
+\def\cG{{\mathcal{G}}}
+\def\tr{\mathop{\text{tr}}}
+\long\def\comment#1{}
+\def\ti#1{#1}
+\def\titi#1{\textit{#1}}
+\def\cram{{\sc cram}}
+\def\spam{{\small\sc SpAM}}
+\def\diag{\mathop{\rm diag}}
+\def\ones{\mathbf{1}}
+\def\threebars{\mbox{$|\kern-.25ex|\kern-.25ex|$}}
+\def\fatnorm#1{\threebars #1 \threebars}
+\def\rank{\mathop{\rm rank}}
+\def\S{\mathcal{S}}
+\def\H{\mathcal{H}}
+\def\K{{K}}
+\def\rank{\mathop{\rm rank}}
+\def\half{{1/2}}
+\def\Y{\mathbb{Y}}
+\def\M{\mathbb{M}}
+\def\F{\mathbb{F}}
+\def\pinv{{-1}}
+%\def\ones{\mathds{1}}
+%\def\ones{1}
+\def\Res{Z}
+\def\Proj{P}
+\def\cN{{\mathcal N}}
+\def\cT{{\mathcal H}}
+\def\coloneqq{:=}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+\vskip10pt
+
+\input{introduction}
+\input{related_work}
+\input{summary}
+\input{additive_faithful}
+\input{optimization}
+\input{sparsistency}
+\input{experiments}
+\input{discussion}
+
+
+%\clearpage
+
+\bibliography{local}
+
+\end{document}

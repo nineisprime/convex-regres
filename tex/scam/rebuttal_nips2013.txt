@@ -1,0 +1,23 @@
+We thank the reviewers for their thoughtful reviews. We would like to point out that this paper is not solely theoretical; the scalable practical optimization algorithm we develop is also a major contribution.
+
+Reviewer 1:
+(1) Thanks for pointing out these references. We are aware of these prior works and thought that a comprehensive comparison is more appropriate for a journal version. 
+
+(2) Yes, with the L_inf bound on f^*, the alpha decays with s. We did not investigate this further because this paper studies how n can scale with p as both go to infinity; we think of s as a bounded quantity. The key contribution and the most interesting aspect of the theorem is that the ambient dimension can scale exponentially in n; the actual dimension s is usually very small in practice. This is definitely a point we would clarify in the future revisions.
+
+(3) E[f(X)|x_k] is a notational short-hand; it is not "an elementary mistake in math." Lemma 6.1 does not need or have the product distribution assumption; Proposition 6.1 uses it. Theorem 2.1 does assume that the distribution has a density; that was an oversight on our part. Please do let us know if there are other mistakes that you found.
+
+
+Reviewer 5:
+(1) The present version is not wrong. Uniqueness is obvious from the fact that the objective in Lemma 6.1 is a sum of squares and is therefore strongly convex in f_k(x_k) for every f_k(x_k). Do you have a counterexample in mind?
+
+(2) The claim of Theorem 4.3 is not nonsense; it requires that s does not tend to infinity but it is otherwise correct. If we assume that the covariates are independent, then any affine function have support identifiability (sparsistency) even if the ambient dimension p ~ exp(n^c) for c < 1; no additional separation assumptions are needed. 
+
+(3) Theorem 2.1 is only one of the main contributions of the paper. 
+
+(4) The result announced in the introduction is, as stated in the introduction, proved in the two references [5][6].
+
+
+Reviewer 7:
+(1) Thanks for pointing out the two references. We would definitely add these to a longer version of this paper. 
+

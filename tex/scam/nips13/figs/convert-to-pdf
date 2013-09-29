@@ -1,0 +1,1 @@
+fn="Convex"; ps2pdf $fn.eps; pdfcrop --margins=10 $fn; mv $fn-crop.pdf $fn.pdf

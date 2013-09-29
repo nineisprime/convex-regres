@@ -1,0 +1,21 @@
+\section{Discussion}
+
+We have introduced a framework for estimating high dimensional but
+sparse convex functions.  Because of the special properties of
+convexity, variable selection for convex functions enjoys additive
+faithfulness---it suffices to carry out variable selection over an
+additive model, in spite of the approximation error this introduces.
+Sparse convex additive models can be optimized using block coordinate
+quadratic programming, which we have found to be effective and
+scalable.  We established variable selection consistency results,
+allowing exponential scaling in the ambient dimension.  We expect
+that the technical assumptions we have used in these analyses can be
+weakened; this is one direction for future work.  Another interesting
+direction for building on this work is to allow for additive models that
+are a combination of convex and concave components.  If the
+convexity/concavity of each component function is known, this again
+yields a convex program.  The challenge is to develop a method to
+automatically detect the concavity or convexity pattern of the
+variables.
+
+

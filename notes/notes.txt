@@ -1,0 +1,15 @@
+9/27/2013
+
+EDIT NOTE:
+
+Right now, $\mathcal{C}_0[s,b,B,L]$ is the $\epsilon$-cover. 
+Need to replace _0 with _\epsilon
+
+Sometimes, \mathcal{C}^s[b,B,L] represent set of additive convex functions, 
+replace with C[s,b,B,L]
+
+
+9/25/2013
+
+* Correct proof mistakes in the Additive Faithfulness section.
+* Download and try ICML format.

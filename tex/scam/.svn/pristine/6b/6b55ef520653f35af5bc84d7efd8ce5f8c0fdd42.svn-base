@@ -1,0 +1,66 @@
+\section{Notations}
+For lower case letters, we use bold font $\mathbf{x}$ to denote a vector, $\mathbf{x}_{-k}$ to denote the vector with $k$-th coordinate removed. Let $\mathbf{v} \in \R^n$, then $v_{(1)}$ denotes the smallest coordinate of $\mathbf{v}$ in magnitude, $v_{(j)}$ denotes the $j$-th smallest. $\mathbf{1}_n$ is an all-ones vector of dimension $n$. If $X \in \R^p$ and $S \subset \{1,...,p\}$, then $X_S$ is a subvector of $X$ restricted to coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use $\bar{X}$ to denote empirical average.
+
+\section{Additive Faithfulness}
+
+The additive approximation may mark a relevant variable as irrelevant. Such mistakes are inherent to the approximation and may persist even with infinite samples. Lemma~\ref{lem:general_int_reduction} below gives us some examples of errors made by the additive approximations that minimize the $L_2$ distance.
+
+ \begin{lemma}
+\label{lem:general_int_reduction}
+Let $p$ be a probability distribution on $\mathbf{C}=[0,1]^s$ and let $X=(X_1,...,X_s) \sim p$. Let $f: \mathbf{C} \rightarrow \R$ be an integrable function and suppose WLOG that $\E f(X) = 0$.
+
+Let $\ds f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) |^2 \,:\, \forall k, \E f_k(X_k) = 0\}$. Then $f^*_k(x_k) = \E[ f(X) | x_k]$.
+\end{lemma}
+
+Lemma~\ref{lem:general_int_reduction} follows from the stationarity condition of the optimal solution. If $p$ is the uniform distribution, then $f^*_k(x_k) = \int_{\mathbf{x}_{-k}} f(x_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k}$. 
+
+\begin{example} We give two examples of additive errors under the uniform distribution.
+\[
+\trm{(Egg Carton)} \quad f(x_1, x_2) = \sin( 2\pi x_1) \sin( 2 \pi x_2) \qquad \trm{ for } (x_1, x_2) \in [0,1]^2
+\]
+For all $x_1$, $\int_{x_2} f(x_1, x_2) d x_2 = 0$ and also, for all $x_2$, $\int_{x_1} f(x_1, x_2) d x_1 = 0$. An additive approximation would set $f_1 = 0$ and $f_2 = 0$. 
+\[
+\trm{(Tilting Slope)} \quad f(x_1, x_2) = x_1 x_2 \qquad \trm{ for } x_1 \in [-1,1], x_2 \in [0,1]
+\]
+For all $x_2$, $\int_{x_1} f(x_1, x_2) d x_1 = 0$, therefore, we expect $f_2 = 0$ under the additive approximation. This function, for every fixed $x_2$, is a zero-intercept linear function of $x_1$ with slope exactly $x_2$.
+\end{example}
+
+\begin{figure}[htp]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		{\includegraphics[scale=0.4]{figs/sine_wave_funct2}}
+		\caption{Egg Carton}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		{\includegraphics[scale=0.4]{figs/tilting_slope_funct2}}
+		\caption{Tilting Slope}
+	\end{subfigure}	
+	
+\caption{Two examples of additively unfaithful functions. Relevant variables are zeroed out under an additive approximation because every ``slice'' of the function along those variables integrates to 0.}
+\end{figure}
+
+Because of the prevalence of additive models, it is important to understand the kind of functions for which the additive approximation accurately captures all the relevant variables, functions that satisfy what we call \emph{additive faithfulness}.
+
+\begin{definition}
+Let $\mathbf{C}=[0,1]^s$. $f:\mathbf{C}\rightarrow \R$. We say that $f$ \emph{depends on} coordinate $k$ if there exist $x'_k \neq x_k$ such that $f(x'_k, \mathbf{x}_{-k})$ and $f(x_k, \mathbf{x}_{-k})$ are different functions of $\mathbf{x}_{-k}$. 
+
+Let $p$ be a probability distribution on $\mathbf{C}$ and assume WLOG that $\E f(X) = 0$. Let $\ds f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) |^2 \,:\, \forall k, \E f_k(X_k) = 0\}$. We say that $f$ is \emph{additively faithful} under $p$ if $f^*_k = 0$ iff $f$ does not depend on coordinate $k$.
+\end{definition}
+
+Remarkably, for many distributions, a convex multivariate function can always be faithfully approximated by an additive function. 
+
+\begin{theorem}
+\label{thm:convex_faithful}
+Let $p$ be a product distribution on $C=[0,1]^s$ so that $X_1,...,X_s$ are all independent. If $f$ is convex and twice differentiable, then $f$ is additively faithful under $p$.
+\end{theorem}
+
+From Lemma~\ref{lem:general_int_reduction}, we know intuitively that the additive approximation zeroes out $k$ when, fixing $x_k$, every ``slice'' of $f$ integrates to zero. We prove Theorem~\ref{thm:convex_faithful} by showing that ``slices'' of convex functions which integrate to zero cannot be ``glued'' together while still maintaining convexity. We give the full proof in the appendix [TODO:where?]. 
+
+Theorem~\ref{thm:convex_faithful} plays an important role in our sparsistency analysis, in which we prove that the additive approximation is sparsistency \emph{even when the true function is not additive. }
+
+\begin{remark}
+We assumed twice differentiability in Theorem~\ref{thm:convex_faithful} to simplify the proof. We believe the smoothness condition is not necessary because every non-smooth convex function can be approximated arbitrarily well by a smooth one. 
+Also, without the product distribution assumption, a convex function may not be additively faithful. An arbitrarily shaped pdf $p$ may ``undo'' the convexity of $f$ so that the product $p(\mathbf{x})f(\mathbf{x})$ resembles an egg carton or a tilting slope.
+\end{remark}

@@ -1,0 +1,78 @@
+\section{Optimization for Sparse Convex Additive Models}
+
+We consider the following nonparametric regression problem
+\begin{equation}\nonumber
+          y_{i} = f(\bds{x}_{i}) + \epsilon_{i} = \sum_{k=1}^{p}f_{k}(x_{ki}) + \epsilon_{i} \quad (i=1,2,\cdots,n)
+\end{equation}
+where $\bds{x}_{i}\in\mathbb{R}^{p}$ is the covariate, $y_{i}$ is the response and $\epsilon_{i}$ is the noise. The regression function $f(\cdot)$ is the summation of 
+functions $f_{k}(\cdot)$ in each variable dimension. Without further assumptions, this is the Sparse Additive Model (SpAM). Here we impose an additional constraint that each $f_{k}(\cdot)$ is 
+an univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
+\begin{equation}\label{hyper}
+      h_{kj} \geq h_{ki} + \beta_{ki}(x_{kj}-x_{ki}) \quad (\forall i,j)
+\end{equation}
+where $h_{ki}\coloneqq f_{k}(x_{ki})$ and $\beta_{ki}$ is the subgradient at point $x_{ki}$. We need $O(n^2 p)$ constraints to impose the supporting hyperplane constraints, which is computationally expensive for large scale problems. We can in fact use only $O(np)$ constraints because we can characterize univariate convex functions by the simpler condition that the subgradient, which is a scalar, must increase monotonically. This observation leads to our optimization program:
+\begin{equation}\begin{split}\label{np}
+       &\min_{\bds{h},\bds{\beta}} \ \frac{1}{2n}\sum_{i=1}^{n}(y_{i}-\sum_{k=1}^{p}h_{ki})^{2} + \lambda\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty} \\
+       &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0, \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \ \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
+\end{split}\end{equation}
+Let $\{(1),(2),\cdots,(n)\}$ be a reordering of $\{1,2,\cdots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$.  It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
+\begin{eqnarray}
+  \nonumber \forall j\geq{}i, &h_{k(j)}-h_{k(i)}  = \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) = \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})\\ \nonumber
+                                                                             & \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
+  \nonumber \forall j<i,         &h_{k(j)}-h_{k(i)} = \sum\limits_{t=j}^{i-1}(h_{k(t)}-h_{k(t+1)}) = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) \\ \nonumber
+                                                                             & \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}), 
+\end{eqnarray}
+We call the model (\ref{np}) Sparse Convex Additive Model (SCAM). Notice that if we replace $\beta_{k(i+1)} \geq \beta_{k(i)}$ with
+$\beta_{k(i+1)}=\beta_{k(i)}$, then it reduces to LASSO. We note also that SCAM uses the \emph{outer piece-wise linear function}; see Figure~\ref{fig:outer_approximation} for more detail.
+
+\begin{SCfigure}
+\label{fig:outer_approximation}
+\includegraphics[width=0.4\textwidth]{figs/outer_approximation.pdf}
+\caption{With the 5 sample points $(X_i, h(X_i))$ (shown in bold), the red and the blue convex function represent equivalent fits. SCAM in (\ref{np}) always chooses the red outer piece-wise linear convex functions.}
+\end{SCfigure}
+
+SCAM in (\ref{np}) is a quadratic program (QP) with $O(np)$ variables and $O(np)$ constraints. 
+Directly applying a QP solver would be computationally expensive for relatively large $n$ and $p$. However, notice that variables
+in different feature dimensions are only coupled in the term $(y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence we can apply the block coordinate descent method,
+where in each step we solve the following QP subproblem for $\{\bds{h}_{d\cdot},\bds{\beta}_{d\cdot}\}$ with other variables fixed:
+\begin{equation}\begin{split}\nonumber
+       &\min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} \ \frac{1}{2n}\sum_{i=1}^{n}((y_{i}-\sum_{r\neq{k}}h_{ri})-h_{ki})^{2} + \lambda\gamma_{k} \\
+        &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0, \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq\beta_{k(i)}\leq\gamma_{k} \ (\forall i).
+\end{split}\end{equation}
+The extra variable $\gamma_{k}$ is introduced to deal with the $\ell_{\infty}$ norm. This QP subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse structure, 
+which can be solved efficiently using optimization packages (e.g., MOSEK: \verb+http://www.mosek.com/+).  We cycle through all feature dimensions ($k$) from $1$ to $p$ multiple times until convergence.
+Empirically we observe that the algorithm converges in only a few cycles. We also implemented an ADMM solver for (\ref{np}), but found that it is not as efficient as this QP solver.
+
+After optimization, the function estimator for any input data $\bds{x}_j$ is 
+\begin{equation}\nonumber
+      f(\bds{x}_j) = \sum_{k=1}^{p}f_k(x_{kj}) = \sum_{k=1}^{p}\max_{i} \{h_{ki}+\beta_{ki}(x_{kj}-x_{ki})\}
+\end{equation} 
+according to (\ref{hyper}).
+
+
+\subsection{Alternative Formulation}
+Optimization (\ref{np}) can be reformulated in terms of the second derivatives. The alternative formulation replaces the ordering constraints $\beta_{k(i+1)} \geq \beta_{k(i)}$ with postiveness constraints, which makes the theoretical analysis a lot simpler. 
+
+Let's define $\hat{d}_{k(i)}$ as the gradient increment. $\hat{d}_{k(1)} = \hat{\beta}_{k(1)}$, and $\hat{d}_{k(2)} = \hat{\beta}_{k(2)} - \hat{\beta}_{k(1)}$. The convexity constraint is equivalent to the constraint that $\hat{d}_{k(i)} \geq 0$ for all $i > 1$.
+
+It is easy to verify that $\hat{\beta}_{k(i)} = \sum_{j \leq i} \hat{d}_{k(i)}$ and 
+\[
+\hat{f}_k(x_{k(i)}) = \hat{f}_k({x_{k(1)}}) +\hat{d}_{k(1)} ( x_{k(i)} - x_{k(1)}) + \hat{d}_{k(2)} ( x_{k(i)} - x_{k(2)}) + ... + \hat{d}_{k(i-1)} ( x_{k(i)} - x_{k(i-1)})
+\]
+Define $\Delta(j, x_{ki}) = 0$ if $\trm{ord}(i) \leq j$, $x_{ki} - x_{k(j)}$ else, where $j$ ranges from $1$ to $n-1$ and define $\Delta(x_{ki}) = \{ \Delta(j, x_{ki}) \}_{j=1,...,n-1}$ as an $n-1$ dimensional vector.
+\[
+\trm{Then} \quad \hat{f}_k(x_{ki}) = \Delta(x_{ki})^\tran \hat{d}_{k}  \qquad \trm{where $\Delta(x_{ki}) \in \R^{n-1}$.}
+\]
+Given $n$ samples $\{x_{ki}\}_i$, we can further define $\Delta_k \in \R^{n \times n-1}$ such that the $i$-th row is $\Delta(x_{ki})$. Finally, we reformulate (\ref{np}) as an equivalent optimization program with only centering and positiveness constraints:
+
+\begin{align}
+\min_{\{d_k \in \R^{n-1}, c_k \in \R\}}& \frac{1}{2n} \| Y - \sum_{k=1}^p ( \Delta_k d_k - c_k \mathbf{1}_n) \|_2^2 + \lambda_n \sum_{k=1}^p \| d_k \|_1 & \label{opt:alternate_opt} \\
+\trm{s.t. $\forall k$, }  & d_{k2}, ..., d_{k(n-1)} \geq 0 	\qquad &\trm{(convexity)} \nonumber \\ 
+	& c_k = \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k 	\qquad &\trm{(centering)} \nonumber 
+\end{align}
+
+\begin{remark}
+\label{rem:bounded_lipschitz_constraints}
+For parts of our theoretical analysis, we will also impose onto (\ref{opt:alternate_opt}) a boundness constraint $-B \mathbf{1}_n \leq \Delta_k d_k + c_k \mathbf{1}_n \leq B \mathbf{1}_n$ which constrains that $\|\hat{f}_k \|_\infty \leq B$, or a Lipschitz constraint $\|d_k\|_1 \leq L$ which constrains that $\hat{f}_k$ must be $L$-Lipschitz. We never use these constraints in our experiments.
+\end{remark}
+
