@@ -28,7 +28,8 @@ program:
        &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0,\; h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), 
                                  \ \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
 \end{split}\end{equation}
-Where $\mu \in \R$ is a mean parameter introduced because $f$ may not have zero-mean, and where $\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$.  It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
+We introduce a mean parameter $\mu \in \R$ because $f$ may not have zero-mean. We can in fact solve $\mu$ explicitly here: the optimal $\mu = \frac{1}{n} \sum_{i=1}^n y_i = \bar{y}$ because of KKT and the constraints that $\sum_i h_{ki} = 0$.
+$\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$.  It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
 \begin{align*}
   \forall j\geq{}i, &h_{k(j)}-h_{k(i)}  = 
             \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) = 
@@ -66,8 +67,8 @@ where in each step we solve the following QP subproblem for
 $\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the other variables fixed:
 \begin{equation}\begin{split}\nonumber
        &\min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} 
-                       \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((y_{i}-\sum_{r\neq{k}}h_{ri}-\mu)-h_{ki}\Bigr)^{2} 
-                         + \lambda\gamma_{k} \\
+             \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((y_{i}-\bar{y}-\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} 
+                      + \lambda\gamma_{k} \\
         &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0, \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq\beta_{k(i)}\leq\gamma_{k} \ (\forall i).
 \end{split}\end{equation}
 The extra variable $\gamma_{k}$ is introduced to deal with the $\ell_{\infty}$ norm. This QP subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse structure, 
@@ -95,17 +96,33 @@ It is easy to verify that $\beta_{k(i)} = \sum_{j \leq i} d_{k(i)}$ and
 f_k(x_{k(i)}) = f_k({x_{k(1)}}) +d_{k(1)} ( x_{k(i)}
 - x_{k(1)}) + d_{k(2)} ( x_{k(i)} - x_{k(2)}) + \cdots + d_{k(i-1)} ( x_{k(i)} - x_{k(i-1)})
 \]
-Define $\Delta(j, x_{ki}) = 0$ if $\trm{ord}(i) \leq j$, and
-$\Delta(j,x_{ki})= x_{ki} -
-x_{k(j)}$ otherwise, where $j$ ranges from $1$ to $n-1$.  Also define
-$\Delta(x_{ki}) = \{ \Delta(j, x_{ki}) \}_{j=1, \ldots ,n-1}$ as an
-$n-1$ dimensional vector. Then $f_k(x_{ki}) = \Delta(x_{ki})^\tran d_{k}$ where $\Delta(x_{ki}) \in \R^{n-1}$. Given $n$ samples $\{x_{ki}\}_{i=1}^n$, we can further define $\Delta_k \in \R^{n \times n-1}$ such that the $i$-th row is $\Delta(x_{ki})$. Finally, we reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
+We can write this more compactly in matrix notations. First define $\Delta_{k(j)}(x_{ki}) = \max( x_{ki} - x_{k(j)}, 0)$. 
+\[
+\left[ \begin{array}{c}
+    f_k(x_{k1}) \\
+    ... \\
+    f_k(x_{kn}) \\
+\end{array} \right] =
+\left[ \begin{array}{ccc}
+    \Delta_{k(1)}(x_{k1}) & ... & \Delta_{k(n-1)}(x_{k1}) \\
+    ... & & \\
+    \Delta_{k(1)}(x_{kn}) & ... & \Delta_{k(n-1)}(x_{kn}) 
+\end{array} \right]
+\left[ \begin{array}{c}
+    d_{k(1)} \\
+    ... \\
+    d_{k(n-1)}
+\end{array} \right] \coloneqq \Delta_k d_k
+\]
+Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = \Delta_{k(j)}(x_{k(i)})$ and $d_k = (d_{k(1)} ,..., d_{k(n-1)})$. We can now reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
 \begin{align}
 \min_{d_k \in \R^{n-1}, c_k \in \R,\mu \in \R}& \frac{1}{2n} 
-               \Bigl\| Y - \sum_{k=1}^p ( \Delta_k d_k - c_k \mathbf{1}_n) -\mu \Bigr\|_2^2 
+       \Bigl\| Y - \bar{Y}\mathbf{1}_n - \sum_{k=1}^p ( \Delta_k d_k - c_k \mathbf{1}_n) \Bigr\|_2^2 
                + \lambda_n \sum_{k=1}^p \|d_k\|_1  & \label{opt:alternate_opt} \\
-\trm{s.t. $\forall k$, }  & d_{k2}, \ldots , d_{k(n-1)} \geq 0 	\qquad &\trm{(convexity)} \nonumber \\ 
-	& c_k = \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k 	\qquad &\trm{(centering)} \nonumber 
+\trm{s.t. $\forall k$, }  & d_{k(2)}, \ldots , d_{k(n-1)} \geq 0 	
+               \qquad &\trm{(convexity)} \nonumber \\ 
+	& c_k = \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k 	
+               \qquad &\trm{(centering)} \nonumber 
 \end{align}
 $\|d_k\|_1$ is not identical to $\|\bds{\beta}_{k\cdot}\|_{\infty}$, but it is easy to verify that $\|\bds{\beta}_{k\cdot}\|_{\infty} \leq \|d_k\|_1 \leq 2\|\bds{\beta}_{k\cdot}\|_{\infty}$.
 

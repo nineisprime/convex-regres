@@ -17,14 +17,16 @@ technique''~\cite{Wain:09a}. Primal-dual witness explicitly solves all the dual 
 
 \begin{theorem} (Deterministic setting)
 \label{thm:deterministic}
-Let $\{\hat{d}_k, \hat{c}_k, \hat{\mu} \}_{k \in S}$ be the minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
-Let $\hat{r} \coloneqq Y - \sum_{k \in S} (\Delta_k \hat{d}_k -
-\hat{c}_k \mathbf{1}) - \hat{\mu}$ be the restricted regression residual. For $k
-\in \{1,...,p\}$, $\Delta_{k, j}$, the $j$-th column of $\Delta_k$, is the $n$-dimensional vector $\max( X_k - X_{k (j)} \mathbf{1}, 0)$. 
+Let $\{\hat{d}_k, \hat{c}_k\}_{k \in S}$ be the minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
+Let $\hat{r} \coloneqq Y - \bar{Y}\mathbf{1}_n - \sum_{k \in S} (\Delta_k \hat{d}_k -
+\hat{c}_k \mathbf{1}_n)$ be the restricted regression residual. For $k
+\in \{1,...,p\}$, Let $\Delta_{k, j}$ be the $j$-th column of $\Delta_k$, i.e. the $n$-dimensional vector $\max( X_k - X_{k (j)} \mathbf{1}, 0)$. \\
+
 Suppose for all $j$ and all $k\in S^c$, $\lambda_n > | \frac{1}{n}
-\hat{r}^\tran \Delta_{k,j}|$. Then $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
+\hat{r}^\tran \Delta_{k,j}|$. Then $\hat{\mu}$ and $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
 \end{theorem}
-This result holds regardless of whether we impose the boundness and Lipschitz conditions in optimization~\ref{opt:alternate_opt}.
+
+This result holds regardless of whether we impose the boundedness and Lipschitz conditions in optimization~\ref{opt:alternate_opt}.
 The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix.
 
 \begin{remark}
@@ -46,11 +48,11 @@ control false negatives, we study the restricted regression.
 We use the following statistical setting:
 
 \begin{packed_enum}
-\item Let $\mathcal{X} = [-b, b]^p$. Let $F$ be a distribution supported and positive on $\mathcal{X}$. Let $X^{(1)},..., X^{(n)} $ be independent samples from $F$. 
-\item Let $Y = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise. Let $Y^{(1)},...,Y^{(n)}$ be $n$ samples of $Y$.
+\item Let $\mathcal{X} = [-b, b]^p$. Let $F$ be a distribution supported and positive on $\mathcal{X}$. Let $X^{(1)},..., X^{(n)} $ be iid samples from $F$.
+\item Let $Y = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise. Let $Y^{(1)},...,Y^{(n)}$ be iid samples.
 \item Let $s \leq p$ be a positive integer. Let $S = \{1,...,s\}$ denote the relevant variables, i.e.,
   $f_0(X) = f_0(X_S)$.
-\item Let $f_{01},...,f_{0s} \coloneqq \argmin_{f_1,...,f_s} \{ \E(f_0(X) - \sum_{k=1}^s f_k(X_k) -\mu )^2 \,|\, \E[f_k(X_k)] = 0 \}$ where $\mu = \Ef(X)$.
+\item Let $f_{01},...,f_{0s} \coloneqq \argmin_{f_1,...,f_s} \{ \E(f_0(X) - \sum_{k=1}^s f_k(X_k))^2 \,|\, \E[f_k(X_k)] = 0 \}$ where $\mu = \E f(X)$.
 \end{packed_enum}
 
 Each of our statistical theorems will use a subset of the following assumptions:
