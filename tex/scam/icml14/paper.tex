@@ -1,95 +1,17 @@
-\documentclass[pdftex]{article} 
-\usepackage{nips13submit_e,times}
-\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,caption,subcaption,sidecap}
-%\usepackage{MnSymbol}
-\usepackage{dsfont}
-\usepackage{graphicx}
-%\usepackage{pstricks}
-%\usepackage{custom_math, epstopdf}
-\usepackage{custom_math}
+\documentclass{article}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,caption,subcaption,sidecap,custom_math}
+\usepackage[hscale=0.7,vscale=0.8]{geometry}
 
-\bibliographystyle{abbrv}
+\bibliographystyle{plain}
 
-%\title{Additive Faithfulness, Variable Selection and Optimization for Convex Regression}
 \title{Variable Selection in Convex Function Estimation}
 
-
 \author{
-% Minhua Chen, Min Xu, John Lafferty
-David S.~Hippocampus\thanks{ Use footnote for providing further information
-about author (webpage, alternative address)---\emph{not} for acknowledging
-funding agencies.} \\
-Department of Computer Science\\
-Cranberry-Lemon University\\
-Pittsburgh, PA 15213 \\
-\texttt{hippo@cs.cranberry-lemon.edu} \\
-\And
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email} \\
-\AND
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email} \\
-\And
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email} \\
-\And
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email} \\
-(if needed)\\
+Min Xu, Minhua Chen, John Lafferty
 }
 
-% The \author macro works with any number of authors. There are two commands
-% used to separate the names and addresses of multiple authors: \And and \AND.
-%
-% Using \And between authors leaves it to \LaTeX{} to determine where to break
-% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
-% puts 3 of 4 authors names on the first line, and the last on the second
-% line, try using \AND instead of \And before the third author name.
 
-\newcommand{\fix}{\marginpar{FIX}}
-\newcommand{\new}{\marginpar{NEW}}
-\DeclareMathOperator{\rank}{rank}
-\DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator{\trace}{trace}
-\DeclareMathOperator{\pr}{Prob}
-\DeclareMathOperator{\cov}{Cov}
-\newcommand{\EE}[1]{\mathbb{E}({#1})}
-\def\llangle{<<}
-\def\rrlangle{>>}
-\def\interleave{|\kern-.25ex|\kern-.25ex|}
-\def\interleavesub{|\kern-.15ex|\kern-.15ex|}
-\newcommand{\nnorm}[1]{\interleave {#1} \interleave}
-\newcommand{\nnormsub}[1]{\interleavesub {#1} \interleavesub}
-\newcommand{\nNorm}[1]{\left|\kern-.25ex\left|\kern-.25ex\left| {#1}\right|\kern-.25ex\right|\kern-.25ex\right|}
-\newcommand{\norm}[1]{\left\|{#1}\right\|}
-%\newcommand{\trnorm}[1]{\norm{{#1}}_{\mathrm{tr}}}
-\newcommand{\trnorm}[1]{\norm{{#1}}_{*}}
-\newcommand{\spnorm}[1]{\norm{{#1}}_{\mathrm{sp}}}
-\newcommand{\frnorm}[1]{\norm{{#1}}_{\mathrm{F}}}
-%\newcommand{\trnnorm}[1]{\nnorm{{#1}}_{\mathrm{tr}}}
-\newcommand{\trnnorm}[1]{\nnorm{{#1}}_{*}}
-\newcommand{\spnnorm}[1]{\nnorm{{#1}}_{\mathrm{sp}}}
-\newcommand{\spnnormsub}[1]{\nnormsub{{#1}}_{\mathrm{sp}}}
-\newcommand{\frnnorm}[1]{\nnorm{{#1}}_{\mathrm{F}}}
-\newcommand{\Norm}[1]{\left\|{#1}\right\|}
-%\newcommand{\Trnorm}[1]{\Norm{{#1}}_{\mathrm{tr}}}
-\newcommand{\Trnorm}[1]{\Norm{{#1}}_{*}}
-\newcommand{\Spnorm}[1]{\Norm{{#1}}_{\mathrm{sp}}}
-\newcommand{\Frnorm}[1]{\Norm{{#1}}_{\mathrm{F}}}
-%\newcommand{\Trnnorm}[1]{\nNorm{{#1}}_{\mathrm{tr}}}
-\newcommand{\Trnnorm}[1]{\nNorm{{#1}}_{*}}
-\newcommand{\Spnnorm}[1]{\nNorm{{#1}}_{\mathrm{sp}}}
-\newcommand{\Frnnorm}[1]{\nNorm{{#1}}_{\mathrm{F}}}
-\newcommand{\colspan}[1]{\mathrm{colspan}\left({#1}\right)}
-
+% ENVIRONMENTS
 \numberwithin{equation}{section}
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
@@ -109,10 +31,11 @@ Address \\
 \newtheorem{assumption}{Assumption}[section]
 \newtheorem{definition}{Definition}[section]
 
-%\nipsfinalcopy % Uncomment for camera-ready version
+
 
 \begin{document}
 
+% John's macros
 \def\X{\mathcal{X}}
 \def\comma{\unskip,~}
 \def\truep{p^*}
@@ -180,6 +103,9 @@ Address \\
 \def\mathbf#1{\mbox{\boldmath $#1$}} 
 \def\bar#1{\overline{#1}}
 
+
+
+
 \maketitle
 
 \begin{abstract}
@@ -213,7 +139,5 @@ Address \\
 
 \newpage
 \input{appendix}
-
-
 
 \end{document}
