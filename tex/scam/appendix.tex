@@ -128,7 +128,7 @@ For $k \in \{1,...,p\}$, let $\Delta_{k, j}$ denote the $n$-dimensional vector $
 Let $\{\hat{d}_k, \hat{c}_k \}_{k \in S}$ be the minimizer of the restricted regression optimization program~\ref{opt:alternate_opt}. 
 Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
 
-Let $\hat{r} \coloneqq Y - \bar{Y} \mathbf{1}_n - \sum_{k \in S} (\Delta_k \hat{d}_k - \hat{c}_k \mathbf{1}_n) $ be the residue.
+Let $\hat{r} \coloneqq Y - \bar{Y} \mathbf{1}_n - \sum_{k \in S} (\Delta_k \hat{d}_k - \hat{c}_k \mathbf{1}_n) $ be the residual.
 
 Suppose for all $j=1,...,n, k\in S^c$, $\lambda_n > | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|$, then $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}.
 
@@ -153,10 +153,10 @@ First, note that by definition as solution of the restricted regression, for $k 
 Now, let us fix $k \in S^c$ and prove that $\hat{d}_k = 0, \hat{c}_k=0$ is an optimal solution. 
 
 \begin{align*}
-\partial d_k :& \qquad -\frac{1}{n} \Delta_k^\tran ( r_k - \Delta_k \d_k 
-       + \c_k \mathbf{1}) + \lambda \mathbf{u}_k  - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} \\
-\partial c_k: & \qquad -\frac{1}{n} \mathbf{1}^\tran ( \r_k - \Delta_k \d_k 
-       + \c_k \mathbf{1}) + \gamma_k
+\partial d_k :& \qquad -\frac{1}{n} \Delta_k^\tran ( r_k - \Delta_k d_k 
+       + c_k \mathbf{1}) + \lambda \mathbf{u}_k  - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} \\
+\partial c_k: & \qquad -\frac{1}{n} \mathbf{1}^\tran ( r_k - \Delta_k d_k 
+       + c_k \mathbf{1}) + \gamma_k
 \end{align*}
 In the derivatives, $\mathbf{u}$ is a $(n-1)$-vector whose first coordinate is $\partial | d_{k1}|$ and all other coordinates are 1.
 
@@ -197,7 +197,7 @@ Because we have strict inequality in the above equation, Lemma 1 from ~\cite{Wai
 \begin{theorem} 
 Suppose assumptions A1, A2, A3 hold. 
 
-Suppose $\lambda_n \geq c b (sB + \sigma) \sqrt{ \frac{s}{n} \log n \log (pn)}$, then with probability at least $ 1 - \frac{C}{n}$, for all $j,k$,
+Suppose $\lambda_n \geq c b (sB + \sigma) \sqrt{ \frac{s}{n} \log n \log (pn)}$, then with probability at least $ 1 - \frac{C}{n}$, for all $j=1,...,n,k \in S^c$,
 \[
 \lambda_n >  | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|
 \]
@@ -205,16 +205,25 @@ And therefore, the solution to the optimization~\ref{opt:alternate_opt} is zero 
 \end{theorem}
 
 \begin{proof}
-The key is to note that $\hat{r}$ and $\Delta_{k,j}$ are independent for all $k,j$ because $\hat{r}$ is only dependent on $X_{S}$.
+The key is to note that $\hat{r}$ and $\Delta_{k,j}$ are independent for all $k \in S^c,j=1,...,n$ because $\hat{r}$ is only dependent on $X_{S}$.
+
+We remind the reader that $\Delta_{k,j} = \max(X_k, - X_{k(j)} \mathbf{1}_n, 0)$. Because $\hat{r}$ is empirically centered,
+
+\begin{align*}
+\frac{1}{n} \hat{r}^\tran \Delta_{k,j} &= \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)}) 
+                                            - \frac{1}{n} \hat{r}^\tran X_{k(j)} \\
+                  &= \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)})
+\end{align*}
+Our goal in this proof is to bound $\frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)})$ from above.
 
 \textbf{Step 1.} We first get a high probability bound on $\| \hat{r} \|_\infty$. 
 
 \begin{align*}
-\hat{r}_i &= Y_i - \sum_{k \in S} \hat{f}_k (X_k^{(i)}) \\
-	&= f^*(X_S^{(i)}) + \epsilon_i - \bar{f^*} - \bar{\epsilon}- \sum_{k \in S} \hat{f}_k(X_k^{(i)}) \\
-	&=  f^*(X_S^{(i)}) - \bar{f^*} - \sum_{k \in S} \hat{f}_k(X_k^{(i)}) + \epsilon_i - \bar{\epsilon}
+\hat{r}_i &= Y_i - \bar{Y}_i -  \sum_{k \in S} \hat{f}_k (X_k^{(i)}) \\
+	&= f_0(X_S^{(i)}) + \epsilon_i - \bar{f_0} - \bar{\epsilon}- \sum_{k \in S} \hat{f}_k(X_k^{(i)}) \\
+	&=  f_0(X_S^{(i)}) - \bar{f_0} - \sum_{k \in S} \hat{f}_k(X_k^{(i)}) + \epsilon_i - \bar{\epsilon}
 \end{align*}
-Where $\bar{f^*} = \frac{1}{n} \sum_{i=1}^n f^*(X_S^{(i)})$ and likewise for $\bar{\epsilon}$.
+Where $\bar{f_0} = \frac{1}{n} \sum_{i=1}^n f_0(X_S^{(i)})$ and likewise for $\bar{\epsilon}$.
 
 $\epsilon_i$ is subgaussian with subgaussian norm $\sigma$. For a single $\epsilon_i$, we have that $P( |\epsilon_i| \geq t ) \leq C \exp( - c \frac{1}{\sigma^2} t^2)$. Therefore, with probability at least $1-\delta$, $|\epsilon_i| \leq \sigma\sqrt{ \frac{1}{c} \log \frac{C}{\delta}}$. 
 
@@ -222,9 +231,9 @@ By union bound, with probability at least $1-\delta$, $\max_i |\epsilon_i| \leq 
 
 Also, $|\bar{\epsilon}| \leq \sigma \sqrt{\frac{c}{n} \log \frac{C}{\delta}}$ with probability at least $1 - \delta$.
 
-We know that $|f^*(x)| \leq B$ and $|\hat{f}_k(x_k)| \leq B$ for all $k$. 
+We know that $|f_0(x)| \leq sB$ and $|\hat{f}_k(x_k)| \leq B$ for all $k$. 
 
-Then $|\bar{f^*}| \leq B$ as well, and $|f^*(X_S^{(i)}) - \bar{f^*} - \sum_{k \in S} \hat{f}_k(X_k^{(i)})| \leq 3s B$.
+Then $|\bar{f_0(x)}| \leq sB$ as well, and $|f^*(X_S^{(i)}) - \bar{f^*} - \sum_{k \in S} \hat{f}_k(X_k^{(i)})| \leq 3s B$.
 
 Therefore, taking an union bound, we have that with probability at least $1-\frac{C}{n}$, 
 \[
@@ -232,10 +241,10 @@ Therefore, taking an union bound, we have that with probability at least $1-\fra
 \]
 
 
-\textbf{Step 2.} We now bound $\frac{1}{n} \hat{r}^\tran \max( X, X_{(j)} \mathbf{1})$.
+\textbf{Step 2.} We now bound $\frac{1}{n} \hat{r}^\tran \max( X, X_{k(j)} \mathbf{1})$.
 
 \[
-\frac{1}{n} \hat{r}^\tran \max(X, X_{(j)} \mathbf{1}) = \frac{1}{n} \sum_{i=1}^n \hat{r}_i \max(X_i, X_{(j)}) = \frac{1}{n} \sum_{i=1}^n \hat{r}_i X_i \delta(ord(i) \geq j) + \frac{1}{n} X_{(j)} \mathbf{1}_A^\tran \hat{r}_A
+\frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)} \mathbf{1}) = \frac{1}{n} \sum_{i=1}^n \hat{r}_i \max(X_{ki}, X_{k(j)}) = \frac{1}{n} \sum_{i=1}^n \hat{r}_i X_{ki} \delta(ord(i) \geq j) + \frac{1}{n} X_{k(j)} \mathbf{1}_A^\tran \hat{r}_A
 \]
 
 Where $A = \{ i : ord(i) \geq j\}$ and $ord(i)$ is the order of sample $i$ where $(1)$ is the smallest element.
@@ -244,47 +253,47 @@ We will bound both terms.
 
 \textbf{Term 1.}
 \[
-\trm{Want to bound} \qquad F(X_1,...,X_n) \coloneqq \frac{1}{n}\sum_{i=1}^n \hat{r}_i X_i \delta(ord(i) \geq j) 
+\trm{Want to bound} \qquad F(X_{k1},...,X_{kn}) \coloneqq \frac{1}{n}\sum_{i=1}^n \hat{r}_i X_{ki} \delta(ord(i) \geq j) 
 \]
 
-First, we note that $X_i$ is bounded in the range $[-b,b]$. 
+First, we note that $X_{ki}$ is bounded in the range $[-b,b]$. 
 
-We claim then that $F$ is coordinatewise-Lipschitz. Let $X = (X_1, X_2,...,X_n)$ and $X' = (X'_1, X_2, ..., X_n)$ differ only on the first coordinate. 
+We claim then that $F$ is coordinatewise-Lipschitz. Let $X_k = (X_{k1}, X_{k2},...,X_{kn})$ and $X'_k = (X'_{k1}, X_{k2}, ..., X_{kn})$ differ only on the first coordinate. 
 
-The order of coordinate $i$ in $X$ and $X'$ can change by at most $1$ for $i \neq 1$. Therefore, of the $j-1$ terms of the series, at most 2 terms differ from $F(X)$ to $F(X')$. Therefore,
+The order of coordinate $i$ in $X_k$ and $X'_k$ can change by at most $1$ for $i \neq 1$. Therefore, of the $j-1$ terms of the series, at most 2 terms differ from $F(X_k)$ to $F(X'_k)$ and
 
-$$ | F(X_1, ..., X_n) - F(X'_1, ..., X_n) | \leq \frac{4 b \|\hat{r}\|_\infty}{n} $$
+$$ | F(X_{k1}, ..., X_{kn}) - F(X'_{k1}, ..., X'_{kn}) | \leq \frac{4 b \|\hat{r}\|_\infty}{n} $$
 
 By McDiarmid's inequality therefore, 
 \[
-P( | F(X) - \E F(X) | \geq t ) \leq C \exp( - c n\frac{t^2}{ (4 b \|\hat{r}\|_\infty)^2})
+P( | F(X_k) - \E F(X_k) | \geq t ) \leq C \exp( - c n\frac{t^2}{ (4 b \|\hat{r}\|_\infty)^2})
 \]
 
-By symmetry and the fact that $\hat{r}$ is centered, $\E F(X) = 0$.
+By symmetry and the fact that $\hat{r}$ is centered, $\E F(X_k) = 0$.
 
-We can fold the 4 into the constant $c$. With probability $1-\delta$, $|F(X)| \leq b \|\hat{r}\|_\infty \sqrt{   \frac{1}{cn} \log \frac{C}{\delta}}$. 
+We can fold the 4 into the constant $c$. With probability $1-\delta$, $|F(X_k)| \leq b \|\hat{r}\|_\infty \sqrt{   \frac{1}{cn} \log \frac{C}{\delta}}$. 
 
 \textbf{Term 2:}
 
 \[
-\trm{Want to bound}   \frac{1}{n} X_{(j)} \mathbf{1}_A^\tran \hat{r}_A
+\trm{Want to bound}   \frac{1}{n} X_{k(j)} \mathbf{1}_A^\tran \hat{r}_A
 \]
 
 $A$ is a random set and is probabilistically independent of $\hat{r}$.  $\mathbf{1}_A^\tran \hat{r}_A$ is the sum of a sample of $\hat{r}$ without replacement. Therefore, according to Serfling's theorem (Corollary~\ref{cor:serfling}), with probability at least $1-\delta$, $|\frac{1}{n} \mathbf{1}_A^\tran \hat{r}_A|$ is at most $\| \hat{r} \|_\infty \sqrt{ \frac{1}{cn} \log \frac{C}{\delta}}$.
 
-Since $|X_{(j)}|$ is at most $b$, we obtain that with probability at least $1-\delta$, $| \frac{1}{n} X_{(j)} \mathbf{1}_A^\tran \hat{r}_A| \leq b\| \hat{r} \|_\infty \sqrt{ \frac{1}{cn} \log \frac{C}{\delta}}$.
+Since $|X_{k(j)}|$ is at most $b$, we obtain that with probability at least $1-\delta$, $| \frac{1}{n} X_{k(j)} \mathbf{1}_A^\tran \hat{r}_A| \leq b\| \hat{r} \|_\infty \sqrt{ \frac{1}{cn} \log \frac{C}{\delta}}$.
 
 Now we put everything together.
 
 Taking union bound across $p$ and $n$, we have that with probability at least $1-\delta$, 
 
 \[
-| \frac{1}{n} \max(X, X_{(j)}\mathbf{1})^\tran \hat{r}| \leq b \|\hat{r}\|_\infty \sqrt{ \frac{1}{c} \frac{1}{n} \log \frac{np C }{\delta}}
+| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}| \leq b \|\hat{r}\|_\infty \sqrt{ \frac{1}{c} \frac{1}{n} \log \frac{np C }{\delta}}
 \]
 
 Taking union bound and substituting in the probabilistic bound on $\|\hat{r}\|_\infty$, we get that with probability at least $1-\frac{C}{n}$,
 
-$| \frac{1}{n} \max(X, X_{(j)}\mathbf{1})^\tran \hat{r}|$ is at most 
+$| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most 
 \[
  c b (sB + \sigma) \sqrt{ \frac{s}{n} \log n \log (pn) }
 \]

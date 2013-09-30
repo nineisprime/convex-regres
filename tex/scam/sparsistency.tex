@@ -6,13 +6,13 @@ stochastic setting and argue that the deterministic conditions hold with high pr
 
 \subsection{Deterministic Setting}
 
-We follow Wainwright \cite{Wain:09a} and define a purely theoretical construct called \emph{restricted regression}.
+We follow \cite{Wain:09a} and define the \emph{restricted regression} purely for theoretical purposes.
 \begin{definition}
 In \emph{restricted regression}, we restrict the indices $k$ in
 optimization (\ref{opt:alternate_opt}) to lie in the support $S$ instead of ranging from $1,...,p$. 
 \end{definition}
 
-Our analysis then diverges from the now-standard ``primal-dual witness
+Our analysis then differs from the now-standard ``primal-dual witness
 technique''~\cite{Wain:09a}. Primal-dual witness explicitly solves all the dual variables, but because our optimization is more complex, we do not solve the dual variables on $S$; we instead write the dual variables on $S^c$ as a function of the restricted regression \emph{residual}, which is implicitly a function of the dual variables on $S$.
 
 \begin{theorem} (Deterministic setting)
@@ -20,7 +20,7 @@ technique''~\cite{Wain:09a}. Primal-dual witness explicitly solves all the dual 
 Let $\{\hat{d}_k, \hat{c}_k\}_{k \in S}$ be the minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
 Let $\hat{r} \coloneqq Y - \bar{Y}\mathbf{1}_n - \sum_{k \in S} (\Delta_k \hat{d}_k -
 \hat{c}_k \mathbf{1}_n)$ be the restricted regression residual. For $k
-\in \{1,...,p\}$, Let $\Delta_{k, j}$ be the $j$-th column of $\Delta_k$, i.e. the $n$-dimensional vector $\max( X_k - X_{k (j)} \mathbf{1}, 0)$. \\
+\in \{1,...,p\}$, Let $\Delta_{k, j} \in R^n$ be the $j$-th column of $\Delta_k$, i.e. $\max( X_k - X_{k (j)} \mathbf{1}_n, 0)$. \\
 
 Suppose for all $j$ and all $k\in S^c$, $\lambda_n > | \frac{1}{n}
 \hat{r}^\tran \Delta_{k,j}|$. Then $\hat{\mu}$ and $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
@@ -48,14 +48,14 @@ control false negatives, we study the restricted regression.
 We use the following statistical setting:
 
 \begin{packed_enum}
-\item Let $\mathcal{X} = [-b, b]^p$. Let $F$ be a distribution supported and positive on $\mathcal{X}$. Let $X^{(1)},..., X^{(n)} $ be iid samples from $F$.
-\item Let $Y = f_0(X) + \epsilon$ where $f_0$ is the true function and $\epsilon$ is noise. Let $Y^{(1)},...,Y^{(n)}$ be iid samples.
-\item Let $s \leq p$ be a positive integer. Let $S = \{1,...,s\}$ denote the relevant variables, i.e.,
+\item Let $F$ be a distribution supported and positive on $\mathcal{X}=[-b,b]^p$. Let $X^{(1)},..., X^{(n)} \sim F$ be iid.
+\item Let $Y = f_0(X) + \epsilon$ where $\epsilon$ is zero-mean noise. Let $Y^{(1)},...,Y^{(n)}$ be iid.
+\item Let $S = \{1,...,s\}$ denote the relevant variables where $s\leq p$, i.e.,
   $f_0(X) = f_0(X_S)$.
-\item Let $f_{01},...,f_{0s} \coloneqq \argmin_{f_1,...,f_s} \{ \E(f_0(X) - \sum_{k=1}^s f_k(X_k))^2 \,|\, \E[f_k(X_k)] = 0 \}$ where $\mu = \E f(X)$.
+\item Let $f_{01},...,f_{0s} \coloneqq \argmin_{f_1,...,f_s} \{ \E(f_0(X) - \sum_{k=1}^s f_k(X_k))^2 \,|\, \E[f_k(X_k)] = 0 \}$.
 \end{packed_enum}
 
-Each of our statistical theorems will use a subset of the following assumptions:
+Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent.  \ A1': $\{ X_k \}_{k \in S}$ are independent.
 \item[A2:] $\|f_0\|_\infty \leq sB$ \  A2': $f_0$ is convex,
@@ -64,7 +64,7 @@ Each of our statistical theorems will use a subset of the following assumptions:
 \item[A4:] For all $k=1,...,s$, $\E(f_{0k}(X_k))^2 \geq \alpha$ for some positive constant $\alpha$.
 \end{packed_enum}
 
-We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3, A4 to control the probability of false negatives.
+We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3, A4 to control the probability of false negatives. The $\alpha$ in assumption A4 can be interpreted as the signal strength of the relevant variable detection problem.
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make
