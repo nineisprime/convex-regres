@@ -130,7 +130,7 @@ Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
 
 Let $\hat{r} \coloneqq Y - \bar{Y} \mathbf{1}_n - \sum_{k \in S} (\Delta_k \hat{d}_k - \hat{c}_k \mathbf{1}_n) $ be the residue.
 
-Suppose for all $j,k$, $\lambda_n > | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|$, then $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}.
+Suppose for all $j=1,...,n, k\in S^c$, $\lambda_n > | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|$, then $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}.
 
 Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
 \end{theorem}
@@ -153,15 +153,18 @@ First, note that by definition as solution of the restricted regression, for $k 
 Now, let us fix $k \in S^c$ and prove that $\hat{d}_k = 0, \hat{c}_k=0$ is an optimal solution. 
 
 \begin{align*}
-\partial d_k :& \qquad -\frac{1}{n} \Delta_k^\tran ( \hat{r}_k - \Delta_k \hat{d}_k + \hat{c}_k \mathbf{1}) + \lambda \mathbf{u}_k  - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} \\
-\partial c_k: & \qquad -\frac{1}{n} \mathbf{1}^\tran ( \hat{r}_k - \Delta_k d_k + c_k \mathbf{1}) + \gamma_k
+\partial d_k :& \qquad -\frac{1}{n} \Delta_k^\tran ( r_k - \Delta_k \d_k 
+       + \c_k \mathbf{1}) + \lambda \mathbf{u}_k  - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} \\
+\partial c_k: & \qquad -\frac{1}{n} \mathbf{1}^\tran ( \r_k - \Delta_k \d_k 
+       + \c_k \mathbf{1}) + \gamma_k
 \end{align*}
 In the derivatives, $\mathbf{u}$ is a $(n-1)$-vector whose first coordinate is $\partial | d_{k1}|$ and all other coordinates are 1.
 
-We now substitute in $\hat{d}_k = 0, \hat{c}_k=0$ and show that the duals can be set in a way to ensure that the derivatives are equal to 0.
+We now substitute in $d_k = \hat{d}_k = 0, c_k=\hat{c}_k=0, r_k = \hat{r}_k = \hat{r}$ and show that the duals can be set in a way to ensure that the derivatives are equal to 0.
 
 \begin{align*}
--\frac{1}{n} \Delta_k^\tran\hat{r} + \lambda \mathbf{u} - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} &= 0 \\
+-\frac{1}{n} \Delta_k^\tran\hat{r} + \lambda \mathbf{u} 
+           - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} &= 0 \\
 -\frac{1}{n} \mathbf{1}^\tran \hat{r} + \gamma_k & = 0 \\
 \end{align*}
 where $\mathbf{u}$ is 1 in every coordinate except the first, where it can take any value in $[-1,1]$.
