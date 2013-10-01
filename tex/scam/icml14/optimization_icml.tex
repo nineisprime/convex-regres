@@ -39,14 +39,16 @@ KKT conditions
 and the constraints $\sum_i h_{ki} = 0$.
 It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
 \begin{align*}
-  \forall j\geq{}i, &h_{k(j)}-h_{k(i)}  = 
-            \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) = 
-            \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})\\ 
-      & \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
-  \forall j<i, &h_{k(j)}-h_{k(i)} =
-                \sum\limits_{t=j}^{i-1}(h_{k(t)}-h_{k(t+1)}) = 
-                \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) \\ 
-     & \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}), 
+  \forall j\geq{}i,\; h_{k(j)}-h_{k(i)}  &= 
+            \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) \\
+      & = \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})\\ 
+      & \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) \\
+      & = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
+  \forall j<i,\;  h_{k(j)}-h_{k(i)} &=
+                \sum\limits_{t=j}^{i-1}(h_{k(t)}-h_{k(t+1)}) \\
+     &= \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) \\ 
+     & \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)})  \\
+     &= \beta_{k(i)}(x_{k(j)}-x_{k(i)}).
 \end{align*}
 The $\ell_\infty/\ell_1$ penalty
 $\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty}$ encourages group
@@ -68,11 +70,16 @@ reduces to the lasso.
 %  chooses the inner piece-wise linear convex functions.}
 %\end{SCfigure}
 
-The SCAM optimization in (\ref{np}) is a quadratic program (QP) with $O(np)$ variables and $O(np)$ constraints. The optimal $\mu$ has a closed form solution of $\mu = \frac{1}{n}\sum_{i=1}^n Y_i$, which is easy to derive from the KKT theorem and the constraints that $\sum_i h_{ki} = 0$ for all $k$.
-Directly applying a QP solver for $\bds{h}, \bds{\beta}$ would be computationally expensive for relatively large $n$ and $p$. However, notice that variables
-in different feature dimensions are only coupled in the term $(Y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block coordinate descent method,
-where in each step we solve the following QP subproblem for
-$\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the other variables fixed:
+The SCAM optimization in (\ref{np}) is a quadratic program (QP) with
+$O(np)$ variables and $O(np)$ constraints. 
+Directly applying a QP solver for $\bds{h},
+\bds{\beta}$ would be computationally expensive for relatively large
+$n$ and $p$. However, notice that variables in different feature
+dimensions are only coupled in the term
+$(Y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block
+coordinate descent method, where in each step we solve the following
+QP subproblem for $\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the
+other variables fixed:
 \begin{equation}\begin{split}\nonumber
        &\min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} 
              \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((Y_{i}-\bar{Y}-\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} 
