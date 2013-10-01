@@ -1,7 +1,15 @@
 9/30/2013
 
-TODO: correct the current subfigure fiasco in icml. additive_faithful.tex
+[x]: correct the current subfigure fiasco in icml. additive_faithful.tex
+[ ]: update appendix.tex
 
+We need to prove 
+Risk(missing-one additive) - Risk(full additive) > norm(missing component)
+
+Need assumptions:
+* Full independence
+* Must subtract out mean of f_0(X) from optimization
+* ...
 
 9/29/2013
 
