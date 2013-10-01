@@ -1,41 +1,15 @@
 
 \section{Additive Faithfulness}
 
-The additive approximation may mark a relevant variable as
-irrelevant. Such mistakes are inherent to the approximation and may
-persist even with infinite
-samples.  Lemma~\ref{lem:general_int_reduction} below provides
-examples of errors made by the additive approximations that minimize
-the $L_2$ distance.
+For general regression, additive approximation may result in a
+relevant variable being incorrectly marked as irrelevant. Such
+mistakes are inherent to the approximation and may persist even with
+infinite samples.  In this section we give
+examples of this phenomenon, and then show how the convexity
+assumption
+changes the behavior of the additive approximation.  We begin
+with a lemma that implies uniqueness of the additive regression function.
 
-
-\begin{lemma}
-\label{lem:general_int_reduction}
-Let $F$ be a product distribution on $\mathbf{C}=[0,1]^s$ with density function $p$ which is positive on $\mathbf{C}$. Let
-$X=(X_1,...,X_s) \sim F$. Let $f: \mathbf{C} \rightarrow \R$ be an
-integrable function and suppose, without loss of generality, that $\E f(X) = 0$.
-Let $\ds f^*_1,...,f^*_s \coloneqq \arg\min \{ \E \bigl( f(X) -
-\sum_{k=1}^s f_k(X_k) \bigr)^2 \,:\, \E f_k(X_k) = 0\}$. Then $f^*_k(x_k) = \E[ f(X) \given x_k]$ is unique.
-\end{lemma}
-
-Lemma~\ref{lem:general_int_reduction} follows from the stationarity
-condition of the optimal solution. If $F$ is the uniform distribution,
-then $f^*_k(x_k) = \int_{\mathbf{x}_{-k}} f(x_k, \mathbf{x}_{-k})
-d\mathbf{x}_{-k}$.
-
-\begin{example} We give two examples of additive unfaithfulness under
-  the uniform distribution. First, consider the following function:
-\[
-\trm{(egg carton)} \quad f(x_1, x_2) = \sin( 2\pi x_1) \sin( 2 \pi x_2) \qquad \trm{ for } (x_1, x_2) \in [0,1]^2
-\]
-For all $x_1$, $\int_{x_2} f(x_1, x_2) d x_2 = 0$ and also, for all
-$x_2$, $\int_{x_1} f(x_1, x_2) d x_1 = 0$. An additive approximation
-would set $f_1 = 0$ and $f_2 = 0$.  Next, consider the function
-\[
-\trm{(tilting slope)} \quad f(x_1, x_2) = x_1 x_2 \qquad \trm{ for } x_1 \in [-1,1],\; x_2 \in [0,1].
-\]
-For all $x_2$, $\int_{x_1} f(x_1, x_2) d x_1 = 0$, therefore, we expect $f_2 = 0$ under the additive approximation. This function, for every fixed $x_2$, is a zero-intercept linear function of $x_1$ with slope exactly $x_2$.
-\end{example}
 
 \begin{figure*}[htp]
 \vskip-10pt
@@ -54,8 +28,43 @@ For all $x_2$, $\int_{x_1} f(x_1, x_2) d x_1 = 0$, therefore, we expect $f_2 = 0
 \vskip-10pt
 \end{figure*}
 
-It is important to understand the kind of functions for which the
-additive approximation can accurately capture all of the relevant variables.
+
+\begin{lemma}
+\label{lem:general_int_reduction}
+Let $F$ be a product distribution on $\mathbf{C}=[0,1]^s$ with density function $p$ which is positive on $\mathbf{C}$. Let
+$X=(X_1,...,X_s) \sim F$. Let $f: \mathbf{C} \rightarrow \R$ be an
+integrable function and suppose, without loss of generality, that $\E f(X) = 0$.
+Let 
+\begin{equation}
+f^* \coloneqq \argmin_{f_1,\ldots, f_s} \Bigl\{ \E \bigl( f(X) -
+\sum_{k=1}^s f_k(X_k) \bigr)^2 \,:\, \E f_k(X_k) = 0\Bigr\}.
+\end{equation}
+Then $f^*_k(x_k) = \E[ f(X) \given x_k]$ is unique.
+\end{lemma}
+
+Lemma~\ref{lem:general_int_reduction} follows from the stationarity
+conditions of the optimal solution. If $F$ is the uniform distribution,
+then $f^*_k(x_k) = \int f(x_k, \mathbf{x}_{-k})
+d\mathbf{x}_{-k}$.
+
+\begin{example} We give two examples of additive unfaithfulness under
+  the uniform distribution. First, consider the following function:
+\[
+\trm{(egg carton)} \quad f(x_1, x_2) = \sin( 2\pi x_1) \sin( 2 \pi x_2)
+\]
+defined for $(x_1, x_2) \in [0,1]^2$.  Then
+$\int_{x_2} f(x_1, x_2) d x_2 = 0$ and
+$\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_1$ and $x_2$. An additive approximation
+would set $f_1 = 0$ and $f_2 = 0$.  Next, consider the function
+\[
+\trm{(tilting slope)} \quad f(x_1, x_2) = x_1 x_2
+\]
+defined for $x_1 \in [-1,1],\; x_2 \in [0,1]$.  In this case
+$\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_2$; therefore, we expect $f_2 = 0$ under the additive approximation. This function, for every fixed $x_2$, is a zero-intercept linear function of $x_1$ with slope $x_2$.
+\end{example}
+
+In order to exploit additive models, it is important to understand when the
+additive approximation accurately captures all of the relevant variables.
 We call this property \emph{additive faithfulness}.
 
 \begin{definition}
@@ -66,8 +75,10 @@ We call this property \emph{additive faithfulness}.
 
 Let $F$ be a probability distribution on $\mathbf{C}$ and
 assume without loss of generality that $\E f(X) = 0$. Let 
-$$\ds f^*_1,...,f^*_s \coloneqq \arg\min \Bigl\{ \E ( f(X) - \sum_{k=1}^s
-f_k(X_k) )^2 \,:\, \E f_k(X_k) = 0, \forall k\Bigr\}.$$
+\begin{equation}
+f^* \coloneqq \argmin_{f_1,\ldots, f_s} \Bigl\{ \E ( f(X) - \sum_{k=1}^s
+f_k(X_k) )^2 \,:\, \E f_k(X_k) = 0 \Bigr\}.
+\end{equation}
 We say that $f$ is \emph{additively faithful} under $F$ in case $f^*_k = 0$ iff $f$ does not depend on coordinate $k$. 
 \end{definition}
 % We can define the support $\trm{supp}(f) \coloneqq \{ k \,:\,
@@ -83,7 +94,7 @@ Let $F$ be a product distribution supported on $C=[0,1]^s$ with positive density
 
 We give the full proof in Section~\ref{sec:faithful_proof} of the
 Appendix, but pause here to provide some intuition. From
-Lemma~\ref{lem:general_int_reduction}, we know intuitively that the
+Lemma~\ref{lem:general_int_reduction}, we know that the
 additive approximation zeroes out $k$ when, fixing $x_k$, every
 ``slice'' of $f$ integrates to zero. We prove
 Theorem~\ref{thm:convex_faithful} by showing that ``slices'' of convex
@@ -91,9 +102,9 @@ functions that integrate to zero cannot be ``glued'' together while
 still maintaining convexity.
 
 Theorem~\ref{thm:convex_faithful} plays an important role in our
-sparsistency analysis, in which we prove that the additive
-approximation is variable selection consistent (or ``sparsistent'') \emph{even when the true function is not
-additive.}
+sparsistency analysis, where we show that the additive
+approximation is variable selection consistent (or ``sparsistent''), even when the true function is not
+additive.
 
 \begin{remark}
   We assume twice differentiability in

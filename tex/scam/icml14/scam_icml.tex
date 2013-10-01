@@ -53,9 +53,9 @@
 \numberwithin{equation}{section}
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{corollary}{Corollary}[section]
-\newtheorem{proposition}{Proposition}[section]
-\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
 \newtheoremstyle{remark}{\topsep}{\topsep}%
      {\normalfont}% Body font
      {}           % Indent amount (empty = no indent, \parindent = para indent)
@@ -64,10 +64,10 @@
      {.5em}       % Space after thm head (\newline = linebreak)
      {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}}% Thm head spec
 \theoremstyle{remark}
-\newtheorem{remark}{Remark}[section]
-\newtheorem{example}{Example}[section]
-\newtheorem{assumption}{Assumption}[section]
-\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{definition}[theorem]{Definition}
 
 
 
