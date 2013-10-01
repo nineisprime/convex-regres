@@ -1,11 +1,11 @@
 \section{Optimization for Sparse Convex Additive Models}
 
-We consider the following nonparametric regression problem
+We now consider the following nonparametric regression problem
 \begin{equation}\nonumber
-          y_{i} = f(\bds{x}_{i}) + \epsilon_{i} = 
+          Y_{i} = f(\bds{x}_{i}) + \epsilon_{i} = 
                   \sum_{k=1}^{p}f_{k}(x_{ki}) + \epsilon_{i} \quad i=1,2,\cdots,n
 \end{equation}
-where $\bds{x}_{i}\in\mathbb{R}^{p}$ is the covariate, $y_{i}$ is the
+where $\bds{x}_{i}\in\mathbb{R}^{p}$ is the covariate, $Y_{i}$ is the
 response and $\epsilon_{i}$ is mean zero noise. The regression function $f(\cdot)$ is the summation of 
 functions $f_{k}(\cdot)$ in each variable dimension.  
 We impose an additional constraint that each $f_{k}(\cdot)$ is 
@@ -23,12 +23,12 @@ increase monotonically. This observation leads to our optimization
 program:
 \begin{equation}\begin{split}\label{np}
        &\min_{\bds{h},\bds{\beta},\mu} \ \frac{1}{2n}\sum_{i=1}^{n}
-                     \Bigl( y_{i}-\sum_{k=1}^{p}h_{ki} - \mu \Bigr)^{2} 
+                     \Bigl( Y_{i}-\sum_{k=1}^{p}h_{ki} - \mu \Bigr)^{2} 
                          + \lambda\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty} \\
        &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0,\; h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), 
                                  \ \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
 \end{split}\end{equation}
-We introduce a mean parameter $\mu \in \R$ because $f$ may not have zero-mean. We can in fact solve $\mu$ explicitly here: the optimal $\mu = \frac{1}{n} \sum_{i=1}^n y_i = \bar{y}$ because of KKT and the constraints that $\sum_i h_{ki} = 0$.
+We introduce a mean parameter $\mu \in \R$ because $f$ may not have zero-mean. We can in fact solve $\mu$ explicitly here: the optimal $\mu = \frac{1}{n} \sum_{i=1}^n Y_i = \bar{Y}$ because of KKT and the constraints that $\sum_i h_{ki} = 0$.
 $\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$.  It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
 \begin{align*}
   \forall j\geq{}i, &h_{k(j)}-h_{k(i)}  = 
@@ -62,12 +62,12 @@ that approximates the graph with secant lines.
 
 The SCAM optimization in (\ref{np}) is a quadratic program (QP) with $O(np)$ variables and $O(np)$ constraints. The optimal $\mu$ has a closed form solution of $\mu = \frac{1}{n}\sum_{i=1}^n Y_i$, which is easy to derive from the KKT theorem and the constraints that $\sum_i h_{ki} = 0$ for all $k$.
 Directly applying a QP solver for $\bds{h}, \bds{\beta}$ would be computationally expensive for relatively large $n$ and $p$. However, notice that variables
-in different feature dimensions are only coupled in the term $(y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block coordinate descent method,
+in different feature dimensions are only coupled in the term $(Y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block coordinate descent method,
 where in each step we solve the following QP subproblem for
 $\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the other variables fixed:
 \begin{equation}\begin{split}\nonumber
        &\min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} 
-             \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((y_{i}-\bar{y}-\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} 
+             \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((Y_{i}-\bar{Y}-\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} 
                       + \lambda\gamma_{k} \\
         &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0, \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq\beta_{k(i)}\leq\gamma_{k} \ (\forall i).
 \end{split}\end{equation}
