@@ -9,7 +9,7 @@ where $\bds{x}_{i}\in\mathbb{R}^{p}$ is the covariate, $Y_{i}$ is the
 response and $\epsilon_{i}$ is mean zero noise. The regression function $f(\cdot)$ is the summation of 
 functions $f_{k}(\cdot)$ in each variable dimension.  
 We impose an additional constraint that each $f_{k}(\cdot)$ is 
-an univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
+a univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
 \begin{equation}\label{hyper}
       h_{kj} \geq h_{ki} + \beta_{ki}(x_{kj}-x_{ki}) \quad (\forall i,j)
 \end{equation}
@@ -21,15 +21,23 @@ constraints suffice, since univariate convex functions are
 characterized by the condition that the subgradient, which is a scalar, must
 increase monotonically. This observation leads to our optimization
 program:
-\begin{equation}\begin{split}\label{np}
-       &\min_{\bds{h},\bds{\beta},\mu} \ \frac{1}{2n}\sum_{i=1}^{n}
+\begin{equation}
+\begin{split}
+       \min_{\bds{h},\bds{\beta},\mu} & \;\; \frac{1}{2n}\sum_{i=1}^{n}
                      \Bigl( Y_{i}-\sum_{k=1}^{p}h_{ki} - \mu \Bigr)^{2} 
                          + \lambda\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty} \\
-       &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0,\; h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), 
-                                 \ \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
-\end{split}\end{equation}
-We introduce a mean parameter $\mu \in \R$ because $f$ may not have zero-mean. We can in fact solve $\mu$ explicitly here: the optimal $\mu = \frac{1}{n} \sum_{i=1}^n Y_i = \bar{Y}$ because of KKT and the constraints that $\sum_i h_{ki} = 0$.
-$\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$.  It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
+       \textrm{subject to} &\;\; h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \\
+                     & \;\; \sum_{i=1}^{n}h_{ki}=0,\\
+                     & \;\; \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
+\end{split}
+\label{np}
+\end{equation}
+Here $\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$.  We introduce a mean parameter $\mu \in \R$ because $f$ may not have
+zero mean. We can in fact solve for $\mu$ explicitly, as  
+$\mu = \frac{1}{n} \sum_{i=1}^n Y_i = \bar{Y}$ which follows from the
+KKT conditions
+and the constraints $\sum_i h_{ki} = 0$.
+It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
 \begin{align*}
   \forall j\geq{}i, &h_{k(j)}-h_{k(i)}  = 
             \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) = 
@@ -44,12 +52,12 @@ The $\ell_\infty/\ell_1$ penalty
 $\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty}$ encourages group
 sparsity of the vectors $\bds{\beta}_{k\cdot}$, and thus performs
 variable selection.  We refer to this framework as the sparse convex
-additive model (SCAM). Notice that if we replace $\beta_{k(i+1)} \geq
-\beta_{k(i)}$ with $\beta_{k(i+1)}=\beta_{k(i)}$, the optimization
-reduces to the lasso.  Note while one can use
+additive model (SCAM). While one can use
 supporting hyperplanes to the epigraph as in \eqref{eq:outer}, 
 SCAM uses the \emph{inner  piece-wise linear function}
-that approximates the graph with secant lines.
+that approximates the graph with secant lines. Notice that if we replace $\beta_{k(i+1)} \geq
+\beta_{k(i)}$ with $\beta_{k(i+1)}=\beta_{k(i)}$, the optimization
+reduces to the lasso.  
 
 
 %\begin{SCfigure}
