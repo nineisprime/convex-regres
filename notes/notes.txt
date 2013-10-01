@@ -1,3 +1,14 @@
+9/30/2013
+
+TODO: correct the current subfigure fiasco in icml. additive_faithful.tex
+
+
+9/29/2013
+
+We can either input de-meaned Y into the algorithm.
+Or we can add an additional centering term in the optimization
+
+
 9/27/2013
 
 EDIT NOTE:
@@ -7,6 +18,9 @@ Need to replace _0 with _\epsilon
 
 Sometimes, \mathcal{C}^s[b,B,L] represent set of additive convex functions, 
 replace with C[s,b,B,L]
+
+sparsistency.tex: called restricted regression --> called THE restricted
+					n-dimensional change, \mathbf{1}_n
 
 
 9/25/2013
