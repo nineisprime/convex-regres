@@ -309,6 +309,7 @@ $| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most
  \label{sec:false_negative_proof}
  
  We will use covering number and uniform convergence and will thus need to first introduce some notations. 
+ \subsubsection{Notation}
  
  Given samples $X^{(1)},...,X^{(n)}$, let $f, g$ be a function and $w$ be a $n$-dimensional random vector, then we denote $\| f - g + w \|_n^2 \coloneqq \frac{1}{n} \sum_{i=1}^n ( f(X^{(i)}) - g(X^{(i)}) + w_i )^2$.
 
@@ -323,6 +324,20 @@ Let $\mathcal{C}[s,b,B,L]$ be the set of additive functions with $s$ components 
 \mathcal{C}[s,b,B,L] \coloneqq \{ f : \R^s \rightarrow \R \,:\, f = \sum_{k=1}^s f_k(x_k), \, f_k \in \mathcal{C}[b,B,L] \}
 \]
  
+Define $f^{*s} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^s[b,B,L], \, \E f_k(X_k) = 0\}$.
+
+Define $f^{*(s-1)} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^{(s-1)}[b,B,L], \, \E f_k(X_k) = 0\}$, the optimal solution with only $s-1$ components.
+
+
+\subsubsection{Proof}
+
+\begin{lemma}
+
+\end{lemma}
+
+
+By Theorem~\ref{thm:convex_faithful}, $R_s(f^{*s}) - R_s(f^{*(s-1)}) \geq \alpha > 0$.
+
 
 We now restate the theorem in our newly defined notation.
  
@@ -339,11 +354,6 @@ Then, with probability at least $1-\frac{C}{n}$, $\hat{f}_k \neq 0$ for all $k =
 \begin{proof}
 Let us first sketch out the rough idea of the proof. We know that in the population setting, the best approximate additive function $f^{*s}$ has $s$ non-zero components. We also know that the empirical risk approaches the population risk uniformly. Therefore, it cannot be that the empirical risk minimizer maintains a zero component for all $n$; if that were true, then we can construct a feasible solution to the empirical risk optimization, based on $f^{*s}$, that achieves lower empirical risk. 
 
-Define $f^{*s} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^s[b,B,L], \E f_k(X_k) = 0\}$.
-
-Define $f^{*(s-1)} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^{(s-1)}[b,B,L], \E f_k(X_k) = 0\}$, the optimal solution with only $s-1$ components.
-
-By Theorem~\ref{thm:convex_faithful}, $R_s(f^*_s) - R_s(f^*_{(s-1)}) \geq \alpha > 0$.
 
 $f^{*s}$ is not directly a feasible solution to the empirical risk minimization program because it is not empirically centered. Given $n$ samples, $f^{*s} - \bar{f}^{*s}$ is a feasible solution where $\bar{f}^{*s} = \sum_{k=1}^s \bar{f}_k^{*s}$ and $\bar{f}_k^{*s} = \frac{1}{n} \sum_{i=1}^n f_k^{*s}(X^{(i)})$. 
 
@@ -359,11 +369,11 @@ Because each $f_k^{*s}$ is bounded by $B$, by Hoeffding inequality, with probabi
 	&\leq \| f_0 - f^{*s} \|_n + \|w\|_n \\
 \end{align*}
 
-$f_0 - f^{*s}$ is bounded by $2sB$ and $w_i$ is zero-mean subgaussian with scale $\sigma$. Therefore, $\|w\|_n$ is at most $c\sigma$ with probability at least $1-\frac{C}{n}$ for all $n > n_0$. 
+$\|f_0 - f^{*s}\|_n \leq \|f_0 - f^{*s}\|_\infty $ is bounded by $2sB$ and $w_i$ is zero-mean subgaussian with scale $\sigma$. Therefore, $\|w\|_n$ is at most $c\sigma$ with probability at least $1-\frac{C}{n}$ for all $n > n_0$. 
 
 So we derive that, with probability at least $1 -\frac{C}{n}$, for all $n > n_0$,
 \[
-|\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})|\leq 2csB(B+\sigma) \sqrt{\frac{1}{cn} \log sn}
+|\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| \leq 2csB(B+\sigma) \sqrt{\frac{1}{cn} \log sn}
 \]
 
 Suppose $\hat{f}$ has at most $s-1$ non-zero components. Then
