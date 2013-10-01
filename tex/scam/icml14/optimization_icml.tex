@@ -80,19 +80,28 @@ $(Y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block
 coordinate descent method, where in each step we solve the following
 QP subproblem for $\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the
 other variables fixed:
-\begin{equation}\begin{split}\nonumber
-       &\min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} 
+\begin{equation}
+\begin{split}\nonumber
+       \min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} &
              \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((Y_{i}-\bar{Y}-\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} 
                       + \lambda\gamma_{k} \\
-        &\ \textrm{s.t.} \ \sum_{i=1}^{n}h_{ki}=0, \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq\beta_{k(i)}\leq\gamma_{k} \ (\forall i).
-\end{split}\end{equation}
+        \textrm{such that} & \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}),\\
+        &\ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq\beta_{k(i)}\leq\gamma_{k}\\
+        &\  \sum_{i=1}^{n}h_{ki}=0, \ (\forall i).
+\end{split}
+\end{equation}
 The extra variable $\gamma_{k}$ is introduced to deal with the $\ell_{\infty}$ norm. This QP subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse structure, 
 which can be solved efficiently using optimization packages (e.g., MOSEK: \verb+http://www.mosek.com/+).  We cycle through all feature dimensions ($k$) from $1$ to $p$ multiple times until convergence.
 Empirically, we observe that the algorithm converges in only a few cycles. We also implemented an ADMM solver for (\ref{np}), but found that it is not as efficient as this QP solver.
 
 After optimization, the function estimator for any input data $\bds{x}_j$ is, according to (\ref{hyper}),
-\begin{equation}\nonumber
-      f(\bds{x}_j) = \sum_{k=1}^{p}f_k(x_{kj})+\mu = \sum_{k=1}^{p}\max_{i} \{h_{ki}+\beta_{ki}(x_{kj}-x_{ki})\} + \mu.
+\begin{equation}
+\begin{split}
+\nonumber
+      f(\bds{x}_j) & = \sum_{k=1}^{p}f_k(x_{kj})+\mu \\ 
+    & = \sum_{k=1}^{p}\max_{i} \{h_{ki}+\beta_{ki}(x_{kj}-x_{ki})\} +
+      \mu.
+\end{split}
 \end{equation} 
 
 
