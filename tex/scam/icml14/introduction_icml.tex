@@ -42,19 +42,25 @@ A key to our approach is the observation that least squares
 nonparametric estimation under convexity constraints is equivalent to
 a finite dimensional quadratic program.  Specifically, the infinite
 dimensional optimization 
-\begin{eqnarray}
-& \text{minimize} &\sum_{i=1}^n (Y_i - m(x_i))^2 \\
-& \text{subject to} & m:\reals^p\rightarrow\reals\ \text{is convex}
-\end{eqnarray}
+\begin{align}
+\begin{split}
+\text{minimize} & \quad \sum_{i=1}^n (Y_i - m(x_i))^2 \\
+\text{subject to} &  \quad m:\reals^p\rightarrow\reals\ \text{is
+  convex}
+\end{split}
+\end{align}
 is precisely equivalent to the finite dimensional quadratic
 program 
-\begin{eqnarray}
-& \text{minimize}_{h, \beta} &\sum_{i=1}^n (Y_i - h_i)^2 \\
-& \text{subject to} & h_j \geq h_i + \beta_i^T (x_j-x_i),\; \text{for
-    all $i,j$}.
+\begin{align}
+\begin{split}
 \label{eq:outer}
-\end{eqnarray}
-See \cite{Boyd04}, Section 6.5.5.
+\text{minimize}_{h, \beta} & \;\; \sum_{i=1}^n (Y_i - h_i)^2 \\
+\text{subject to} & \;\; h_j \geq h_i + \beta_i^T (x_j-x_i),\; \text{for
+    all $i,j$}.
+\end{split}
+\end{align}
+%\end{equation}
+%See \cite{Boyd04}, Section 6.5.5.
 Here $h_i$ is the estimated function value $m(x_i)$, and the vectors
 $\beta_i \in \reals^d$ represent supporting hyperplanes to the
 epigraph of $m$.  Importantly, this finite dimensional quadratic program does
@@ -73,7 +79,7 @@ natural, we offer that the convexity assumption is attractive as a
 tractable, nonparamametric relaxation of the linear model.  In
 addition to the lack of tuning parameters, other than the
 regularization parameter $\lambda$ to control the level of sparsity,
-the global convexity leads to effective, scalable algorithms.  We
+the global convexity assumption leads to effective, scalable algorithms.  We
 demonstrate use of our approach on experiments with standard
 regression data sets, in a comparison with sparse linear models
 (lasso).
@@ -86,10 +92,10 @@ regression data sets, in a comparison with sparse linear models
 
 \textbf{Notation.} If
 $\mathbf{x}$ is a vector, we use $\mathbf{x}_{-k}$ to denote the
-vector with $k$-th coordinate removed. Let $\mathbf{v} \in \R^n$, then
+vector with the $k$-th coordinate removed. If $\mathbf{v} \in \R^n$, then
 $v_{(1)}$ denotes the smallest coordinate of $\mathbf{v}$ in
 magnitude, and $v_{(j)}$ denotes the $j$-th smallest; $\mathbf{1}_n \in \R^n$
-is all ones. If $X \in \R^p$ and $S \subset
+is the all ones vector. If $X \in \R^p$ and $S \subset
 \{1,...,p\}$, then $X_S$ is the subvector of $X$ restricted to
-coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use
-$\bar{X}$ to denote empirical average.
+the coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use
+$\bar{X}$ to denote the empirical average.
