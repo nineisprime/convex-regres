@@ -51,7 +51,20 @@ Now, we verify that as a function of $x_k$, $\E[ f(X) | x_k] - \E f(X)$ has mean
  
  \end{proof}
  
- The next proposition, combined with the previous Lemma, proves Theorem~\ref{thm:convex_faithful}.
+Our reasoning actually proves something stronger. It proves the following lemma:
+
+\begin{lemma}
+\label{lem:additive_component}
+
+$f^*_k(x_k) = \E[ f(X) | x_k] - \mu^*$ is the unique optimal solution to 
+\[
+min_{f_k} \{ \E( f(X) - \E f(X) - \sum_{k'\neq k} f_{k'}(X_{k'}) - f_k (X_k))^2 \,:\, \E f_k(X_k) = 0 \}
+\]
+for \emph{any} set of component functions $\{ f_{k'} \}_{k'\neq k}$ that satisfies $\E f_{k'}(X_{k'}) = 0$.
+\end{lemma}
+
+
+ The next proposition, combined with Lemma~\ref{lem:int_reduction}, proves Theorem~\ref{thm:convex_faithful}.
  
  \begin{proposition}
 Let $F$ be a product distribution supported on $C=[0,1]^s$ with positive density $p > 0$. Let $f: C \rightarrow \R$ be a convex function, twice differentiable. 
@@ -118,8 +131,7 @@ So we have that for all $x_k, \mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, 
 
 \end{proof}
  
- 
- 
+
  
  
 
@@ -320,11 +332,11 @@ $| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most
  \label{sec:false_negative_proof}
  
  We will use covering number and uniform convergence and will thus need to first introduce some notations. 
- \subsubsection{Notation}
- 
+ \subsubsection{Notation} 
+
  Given samples $X^{(1)},...,X^{(n)}$, let $f, g$ be a function and $w$ be a $n$-dimensional random vector, then we denote $\| f - g + w \|_n^2 \coloneqq \frac{1}{n} \sum_{i=1}^n ( f(X^{(i)}) - g(X^{(i)}) + w_i )^2$.
 
-For a function $g : \R^s \rightarrow \R$, define $\hat{R}_s(g) \coloneqq \| f_0 + w - g \|_n^2$ as the objective of the \emph{restricted} regression and define $R_s(g) \coloneqq \E | f_0(X)  + w - g(X) |^2$ as the population risk.
+For a function $g : \R^s \rightarrow \R$, define $\hat{R}_s(g) \coloneqq \| f_0 + w - \bar{f_0 + w} - g \|_n^2$ as the objective of the \emph{restricted} regression and define $R_s(g) \coloneqq \E | f_0(X)  + w - \mu - g(X) |^2$ as the population risk, where $\bar{f_0 + w} = \frac{1}{n} \sum_i f_0(X^{(i)}) + w_i $ and $\mu = \E f_0(X)$. Note that we \emph{subtract} out the mean in the two risk definitions.
 
 For an additive function $g$, define $\rho_n(g) = \sum_{k=1}^s \| \partial g_k \|_\infty$. Because we always use the secant linear piece-wise function in our optimization program, we define $\ds \| \partial g_k\|_\infty \coloneqq \max_{i=1,...,n-1} |\frac{ g_k(X^{(i)}) - g_k(X^{(i+1)})}{ X^{(i)} - X^{(i+1)}}|$.
 
@@ -339,10 +351,11 @@ Define $f^{*s} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^s[b,B,L], \, \E f_k(
 
 Define $f^{*(s-1)} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^{(s-1)}[b,B,L], \, \E f_k(X_k) = 0\}$, the optimal solution with only $s-1$ components.
 
-
 \subsubsection{Proof}
+\label{sec:false_negative_proof_proof}
 
 \begin{lemma}
+\label{lem:minus_one_risk_increase}
 Suppose assumptions A1' and A4 hold. 
 
 Then $R(f^{*(s-1)}) - R(f^{*s}) \geq \alpha$, where $\alpha$ lower bounds the norm of the population optimal additive components as defined in assumpation A4.
@@ -350,13 +363,33 @@ Then $R(f^{*(s-1)}) - R(f^{*s}) \geq \alpha$, where $\alpha$ lower bounds the no
 
 \begin{proof}
 
+
+
 \begin{align*}
-R(f^{*(s-1)}) - R(f^{*s}) &= \E(f^{*(s-1)}(X) - f_0(X))^2 - \E(f^{*s}(X) - f_0(X))^2 \\
-    &= \E( f^{*(s-1)}(X) - f^{*s}(X) + f^{*s}(X) - f_0(X))^2 - \E(f^{*s}(X) - f_0(X))^2 \\
-    &= \E( f^{*(s-1)}(X) - f^{*s}(X))^2 - 2 \E[ (f^{*(s-1)}(X) - f^{*s}(X)) (f^{*s}(X) - f_0(X) ) ]
+R(f^{*(s-1)}) - R(f^{*s}) &= \E\Big(f^{*(s-1)}(X) - f_0(X) + \mu\Big)^2 
+                              - \E\Big(f^{*s}(X) - f_0(X) + \mu\Big)^2 \\
+    &= \E\Big( f^{*(s-1)}(X) - f^{*s}(X) + f^{*s}(X) - f_0(X) + \mu\Big)^2 
+                                 - \E\Big(f^{*s}(X) - f_0(X) + \mu\Big)^2 \\
+    &= \E\Big( f^{*(s-1)}(X) - f^{*s}(X)\Big)^2 
+                - 2 \E\Big[ (f^{*(s-1)}(X) - f^{*s}(X)) (f^{*s}(X) - (f_0(X)-\mu)) \Big]
 \end{align*}
 
+We will argue that all the components of the additive function $f^{*(s-)}$ are also in $f^{*s}$. Let us denote the components of $f^{*s} = \sum_{k=1}^s f_k^*$. We will now invoke Lemma~\ref{lem:additive_component}, which is valid because we assume $X_1,...,X_s$ are independent by assumption A1'. By Lemma~\ref{lem:additive_component}, if we set $f^*_k = 0$, the resulting additive function $\sum_{k'\neq k} f_{k'}^*$ minimizes the population risk subject to the constraint that $f_k = 0$. By definition, $f^{*s}$ is $\argmin_k \sum_{k'\neq k} f_{k'}^*$ and thus share components with $f^{*s}$.
 
+Therefore, there exist some $k$ such that $f^{*(s-1)} - f^{*s} = f^*_k$, and we can continue the bound
+\begin{align*}
+R(f^{*(s-1)}) - R(f^{*s}) &= \E f^*_k(X_k)^2 - 2 \E[ f^*_k(X_k) ( f^{*s}(X) - (f_0(X)-\mu) )] \\
+    &= \E f^*_k(X_k)^2 - 2 \E[ f^*_k(X_k) f^{*s} (X)] + 2 \E[ f^*_k(X_k) (f_0(X)-\mu) ] 
+\end{align*}
+
+\begin{align*}
+\E[ f^*_k(X_k) f^{*s} (X)]  &= \E\Big[ f^*_k (X_k) \E[ f^{*s} (X) \,|\, X_k ] \Big] = \E f^*_k(X_k)^2  \\
+\E[ f^*_k(X_k)(f_0(X) - \mu) ] &= \E\Big[ f^*_k(X_k) \E[ f_0(X) - \mu \,|\, X_k ] \Big] = \E f^*_k(X_k)^2 
+\end{align*}
+
+Where we used the fact that $\E f^*_{k'} (X_{k'}) = 0$ for all $k'$ and the fact that $\E[ f_0(X) - \mu \,|\, X_k] = f^*_k(X_k)$ (Lemma~\ref{lem:int_reduction}).
+
+Thus, $R(f^{*(s-1)}) - R(f^{*s}) \geq \E f^*_k(X_k)^2 \geq \alpha$ by Assumption A4.
 
 \end{proof}
 
@@ -398,6 +431,8 @@ So we derive that, with probability at least $1 -\frac{C}{n}$, for all $n > n_0$
 |\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| \leq 2csB(B+\sigma) \sqrt{\frac{1}{cn} \log sn}
 \]
 
+Now that we bounded the cost of approximating $f^{*s}$ with the empirically centered $f^{*s} - \bar{f}^{*s}$, we move on to the proof of the main result.
+
 Suppose $\hat{f}$ has at most $s-1$ non-zero components. Then
 \begin{align*}
 \hat{R}_s( \hat{f}) &\geq R_s(\hat{f}) - \tau_n \\
@@ -406,7 +441,8 @@ Suppose $\hat{f}$ has at most $s-1$ non-zero components. Then
 	&\geq \hat{R}_s(f^{*s}) + \alpha - 2 \tau_n \\
 	&\geq \hat{R}_s(f^{*s} - \bar{f}^{*s}) -\tau'_n + \alpha - 2\tau_n 
 \end{align*}
-Where $\tau_n$ is the deviation between empirical risk and true risk and $\tau'_n$ is the approximation error incurred by empirically sampling $f^{*s}$.
+The third line follows from Lemma~\ref{lem:minus_one_risk_increase}.
+$\tau_n$ is the deviation between empirical risk and true risk and $\tau'_n$ is the approximation error incurred by empirically sampling $f^{*s}$.
 
 Adding and subtracting $ \lambda_n \rho_n(f^{*s} - \bar{f}^{*s})$ and $ \lambda_n \rho_n(\hat{f})$, we arrive at the conclusion that
 \[
@@ -483,6 +519,7 @@ For a fixed $f'$, we have that, by definition
 \[
 \| f_0 + w - f' \|_n^2 = \| f_0 - f'\|_n^2 + 2 \langle w, f_0 - f'\rangle_n + \| w \|_n^2 \\
 \]
+
 Because $f_0(X^{(i)}) - f'^(X^{(i)})$ is bounded by $2sB$, $\| f_0 - f'\|_n^2$ is the empirical average of $n$ random variables bounded by $4(sB)^2$. 
 
 Using Hoeffding Inequality then, we know that the probability $| \| f_0 - f' \|_n^2 - \E(f_0(X) - f '(X))^2 | \geq t $ is at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
@@ -639,4 +676,13 @@ Let $f' \coloneqq = \sum_{k=1}^s f'_k$, then
 Therefore, a product of $s$ $\frac{\epsilon}{s}$-coverings of univariate functions induces an $\epsilon$-covering of the additive functions.
 \end{proof}
 
+
+
+
+% DO NOT CHANGE; RefTex variables -minx
  
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "icml14/scam_icml.tex" ***
+%%% End: ***
+
