@@ -9,34 +9,45 @@ We start with a lemma similar to Lemma~\ref{lem:general_int_reduction} and whose
 \label{lem:int_reduction}
 Let $F$ be a product distribution on $C=[0,1]^s$ with density function $p$. Let $f: C \rightarrow \R$ be a convex function. Suppose that $\E f(X) = 0$.
 
-Let $\ds f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$ 
+Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$ 
 
-Then $f^*_k(x_k) = \E[ f(X) \given x_k]$.
+Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
 \end{lemma}
  
  \begin{proof}
  
-Let $f^*_1,...,f^*_s$ be the minimizers as defined. It must be then that $f^*_k$ minimizes $\{ \E | f(X) - \sum_{k' \neq k} f^*_{k'} (X_{k'}) - f_k (X_k)|^2 \,:\, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
+Let $f^*_1,...,f^*_s, \mu^*$ be the minimizers as defined. 
 
-Fix $x_k$, we will show that the value $\E[ f(X) | x_k]$, for all $x_k$,  uniquely minimizes 
+We first show that the optimal $\mu^* = \E f(X)$ for any $f_1, ..., f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] = \E[ f(X) ]$.\\
+
+We now turn our attention toward the $f^*_k$'s. 
+
+It must be then that $f^*_k$ minimizes $\{ \E | f(X) - \mu^* - \sum_{k' \neq k} f^*_{k'} (X_{k'}) - f_k (X_k)|^2 \,:\, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
+
+Fix $x_k$, we will show that the value $\E[ f(X) | x_k] - \mu^*$, for all $x_k$,  uniquely minimizes 
 \[
 \min_{ f_k(x_k) } \int_{\mathbf{x}_{-k}} p(x) | f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k)|^2 d \mathbf{x}_{-k}.
 \]
-If this is true, then the function $x_k \mapsto \E[ f(X) \given x_k]$ is the unique $f^*_k(x_k)$ that minimizes the expected square error.
+It easily follows then that the function $x_k \mapsto \E[ f(X) \given x_k] - \mu^*$ is the unique $f^*_k$ that minimizes the expected square error.
 
 
 Take the derivative with respect to the value $f_k(x_k)$ and set it equal to zero, we get that
 \begin{align*}
-\int_{\mathbf{x}_{-k}} p(\mathbf{x}) f_k(x_k) d \mathbf{x}_{-k} &= \int_{\mathbf{x}_{-k}} p(\mathbf{x}) ( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) ) d \mathbf{x}_{-k} \\  
-   p(x_k) f_k(x_k) &= p(x_k) \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) ( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) ) d \mathbf{x}_{-k} \\
-f_k(x_k) &= \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(\mathbf{x}) d \mathbf{x}_{-k} 
+\int_{\mathbf{x}_{-k}} p(\mathbf{x}) f_k(x_k) d \mathbf{x}_{-k} &= 
+  \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
+      ( f(\mathbf{x})-\sum_{k' \neq k} f^*_{k'}(x_{k'})-\mu^*) d \mathbf{x}_{-k} \\  
+p(x_k) f_k(x_k) &= p(x_k) \int_{\mathbf{x}_{-k}} 
+       p(\mathbf{x}_{-k}) ( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})-\mu^*) 
+              d \mathbf{x}_{-k} \\
+f_k(x_k) &= \int_{\mathbf{x}_{-k}} 
+       p(\mathbf{x}_{-k}) (f(\mathbf{x}) -\mu^*) d \mathbf{x}_{-k} 
  \end{align*}
 Where the second line follows because $p(\mathbf{x}) = \prod_k p(x_k)$ by product distribution assumption. The third line follows because $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f^*_{k'}(x_{k'}) d\mathbf{x}_{-k} = 0$ for all $k' \neq k$ by the constraint that $\E[f^*_{k'}(X_{k'})] = 0$. 
 
-The square error objective is strongly convex. The second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ]$ is unique.
+The square error objective is strongly convex. The second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
 
 
-Now, we verify that as a function of $x_k$, $\E[ f(X) | x_k]$ has mean zero and is convex. The former is true because $\E f(X) = 0$; the latter is true because for every $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a convex function with respect to $x_k$ and therefore, $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}$ is still convex. 
+Now, we verify that as a function of $x_k$, $\E[ f(X) | x_k] - \E f(X)$ has mean zero and is convex. The former is clearly true; the latter is true because for every $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a convex function with respect to $x_k$ and therefore, $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}$ is still convex. 
  
  \end{proof}
  
@@ -45,24 +56,24 @@ Now, we verify that as a function of $x_k$, $\E[ f(X) | x_k]$ has mean zero and 
  \begin{proposition}
 Let $F$ be a product distribution supported on $C=[0,1]^s$ with positive density $p > 0$. Let $f: C \rightarrow \R$ be a convex function, twice differentiable. 
 
-Let $f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) - \sum_k f_k(X_k) |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$.
+Let $f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) -\E f(X) - \sum_k f_k(X_k) |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$.
 
 The following are equivalent:
 \begin{packed_enum}
 \item $f$ does not depends on coordinate $k$
-\item For all $x_k$, $\E[ f(X) | x_k] = 0$.
+\item For all $x_k$, $\E[ f(X) | x_k] = \E f(X) $.
 \end{packed_enum}
 \end{proposition}
 
 \begin{proof}
 
-The first condition trivially implies the second because $\E f(X) = 0$.
+The first condition trivially implies the second.
 
-Fix $k$. Suppose that, for all $x_k$, $\E[ f(X) | x_k] = 0$. 
+Fix $k$. Suppose that, for all $x_k$, $\E[ f(X) | x_k] = \E f(X)$. 
 
 By the assumption that , we know that, for all $x_k$,
 \begin{align*}
-p(x_k) \E[ f(X) | x_k ] &=  \int_{\mathbf{x}_{-k}} p(\mathbf{x_{-k}}) f(x_k,\mathbf{x}_{-k}) d \mathbf{x}_{-k} =0
+ \E[ f(X) | x_k ] &=  \int_{\mathbf{x}_{-k}} p(\mathbf{x_{-k}}) f(x_k,\mathbf{x}_{-k}) d \mathbf{x}_{-k} = \E f(X)
 \end{align*}
 
 For every $\mathbf{x}_{-k}$, we define the derivative
@@ -95,7 +106,7 @@ and
 \[
 \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) (f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k) d\mathbf{x}_{-k} = 0
 \]
-Since $f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k$ is a continuous function of $\mathbf{x}_{-k}$ and the density $p(\mathbf{x}_{-k})$ is, by assumption, non-zero on the support, we conclude that for all $x_k, f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k =0 $ necessarily and thus $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, \mathbf{x}_{-k}) + g(\mathbf{x}_{-k}) x_k$.
+Since $f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k$ is a continuous function of $\mathbf{x}_{-k}$ and the density $p(\mathbf{x}_{-k})$ is, by assumption, non-zero on the support, we conclude that for all $x_k, f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k =0 $ necessarily and thus for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, \mathbf{x}_{-k}) + g(\mathbf{x}_{-k}) x_k$.
 
 The Hessian of $f$ then (guaranteed to exist by assumption) has a zero on the $k$-th main diagonal entry. 
 
@@ -332,17 +343,28 @@ Define $f^{*(s-1)} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^{(s-1)}[b,B,L], 
 \subsubsection{Proof}
 
 \begin{lemma}
+Suppose assumptions A1' and A4 hold. 
 
+Then $R(f^{*(s-1)}) - R(f^{*s}) \geq \alpha$, where $\alpha$ lower bounds the norm of the population optimal additive components as defined in assumpation A4.
 \end{lemma}
 
+\begin{proof}
 
-By Theorem~\ref{thm:convex_faithful}, $R_s(f^{*s}) - R_s(f^{*(s-1)}) \geq \alpha > 0$.
+\begin{align*}
+R(f^{*(s-1)}) - R(f^{*s}) &= \E(f^{*(s-1)}(X) - f_0(X))^2 - \E(f^{*s}(X) - f_0(X))^2 \\
+    &= \E( f^{*(s-1)}(X) - f^{*s}(X) + f^{*s}(X) - f_0(X))^2 - \E(f^{*s}(X) - f_0(X))^2 \\
+    &= \E( f^{*(s-1)}(X) - f^{*s}(X))^2 - 2 \E[ (f^{*(s-1)}(X) - f^{*s}(X)) (f^{*s}(X) - f_0(X) ) ]
+\end{align*}
+
+
+
+\end{proof}
 
 
 We now restate the theorem in our newly defined notation.
  
 \begin{theorem} 
-Suppose assumptions A1', A2', A3 hold. Suppose $f_0$ depends on all $s$-variables. 
+Suppose assumptions A1', A2', A3, A4 hold. 
 
 Let $\ds \hat{f} \coloneqq \arg\min \{ \hat{R}_s(f) + \lambda_n \rho_n(f) \,:\, f \in \mathcal{C}^s[b,B,L], f_k \trm{ centered} \}$.
 

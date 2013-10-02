@@ -33,13 +33,16 @@ with a lemma that implies uniqueness of the additive regression function.
 \label{lem:general_int_reduction}
 Let $F$ be a product distribution on $\mathbf{C}=[0,1]^s$ with density function $p$ which is positive on $\mathbf{C}$. Let
 $X=(X_1,...,X_s) \sim F$. Let $f: \mathbf{C} \rightarrow \R$ be an
-integrable function and suppose, without loss of generality, that $\E f(X) = 0$.
+integrable function.
 Let 
 \begin{equation}
-f^* \coloneqq \argmin_{f_1,\ldots, f_s} \Bigl\{ \E \bigl( f(X) -
-\sum_{k=1}^s f_k(X_k) \bigr)^2 \,:\, \E f_k(X_k) = 0\Bigr\}.
+\begin{split}
+f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_s, \mu} \Bigl\{ \E \bigl( f(X) & -
+ \sum_{k=1}^s f_k(X_k) -\mu \bigr)^2 \\
+       & \,:\, \E f_k(X_k) = 0\Bigr\}.
+\end{split}
 \end{equation}
-Then $f^*_k(x_k) = \E[ f(X) \given x_k]$ is unique.
+Then $\mu^* = \E f(X)$ and $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and this solution is unique.
 \end{lemma}
 
 Lemma~\ref{lem:general_int_reduction} follows from the stationarity
@@ -76,8 +79,11 @@ We call this property \emph{additive faithfulness}.
 Let $F$ be a probability distribution on $\mathbf{C}$ and
 assume without loss of generality that $\E f(X) = 0$. Let 
 \begin{equation}
-f^* \coloneqq \argmin_{f_1,\ldots, f_s} \Bigl\{ \E ( f(X) - \sum_{k=1}^s
-f_k(X_k) )^2 \,:\, \E f_k(X_k) = 0 \Bigr\}.
+\begin{split}
+f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_s, \mu} \Bigl\{ 
+             \E ( f(X) &- \sum_{k=1}^s f_k(X_k) -\mu )^2 \\
+         &\,:\, \E f_k(X_k) = 0 \Bigr\}.
+\end{split}
 \end{equation}
 We say that $f$ is \emph{additively faithful} under $F$ in case $f^*_k = 0$ iff $f$ does not depend on coordinate $k$. 
 \end{definition}

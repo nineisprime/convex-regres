@@ -52,7 +52,7 @@ We use the following statistical setting:
 \item Let $Y = f_0(X) + \epsilon$ where $\epsilon$ is zero-mean noise. Let $Y^{(1)},...,Y^{(n)}$ be iid.
 \item Let $S = \{1,...,s\}$ denote the relevant variables where $s\leq p$, i.e.,
   $f_0(X) = f_0(X_S)$.
-\item Let $f_{01},...,f_{0s} \coloneqq \argmin_{f_1,...,f_s} \{ \E(f_0(X) - \sum_{k=1}^s f_k(X_k))^2 \,|\, \E[f_k(X_k)] = 0 \}$.
+\item Let $f^*_1,...,f^*_s \coloneqq \argmin_{f_1,...,f_s} \{ \E(f_0(X) - \sum_{k=1}^s f_k(X_k))^2 \,|\, \E[f_k(X_k)] = 0 \}$.
 \end{packed_enum}
 
 Each of our theorems will use a subset of the following assumptions:
@@ -61,7 +61,7 @@ Each of our theorems will use a subset of the following assumptions:
 \item[A2:] $\|f_0\|_\infty \leq sB$ \  A2': $f_0$ is convex,
   twice-differentiable, $L$-Lipschitz, and $\trm{supp}(f_0) = S$.
 \item[A3:] Suppose $\epsilon$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$.
-\item[A4:] For all $k=1,...,s$, $\E(f_{0k}(X_k))^2 \geq \alpha$ for some positive constant $\alpha$.
+\item[A4:] For all $k=1,...,s$, $\E(f^*_s(X_k))^2 \geq \alpha$ for some positive constant $\alpha$.
 \end{packed_enum}
 
 We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3, A4 to control the probability of false negatives. The $\alpha$ in assumption A4 can be interpreted as the signal strength of the relevant variable detection problem.
