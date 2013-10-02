@@ -36,8 +36,8 @@ Take the derivative with respect to the value $f_k(x_k)$ and set it equal to zer
 \int_{\mathbf{x}_{-k}} p(\mathbf{x}) f_k(x_k) d \mathbf{x}_{-k} &= 
   \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
       ( f(\mathbf{x})-\sum_{k' \neq k} f^*_{k'}(x_{k'})-\mu^*) d \mathbf{x}_{-k} \\  
-p(x_k) f_k(x_k) &= p(x_k) \int_{\mathbf{x}_{-k}} 
-       p(\mathbf{x}_{-k}) ( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})-\mu^*) 
+p(x_k) f_k(x_k) &= \int_{\mathbf{x}_{-k}} p(x_k)
+     p(\mathbf{x}_{-k}) ( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})-\mu^*) 
               d \mathbf{x}_{-k} \\
 f_k(x_k) &= \int_{\mathbf{x}_{-k}} 
        p(\mathbf{x}_{-k}) (f(\mathbf{x}) -\mu^*) d \mathbf{x}_{-k} 

@@ -115,18 +115,21 @@ equivalent to the constraint that $d_{k(i)} \geq 0$ for all $i >
 1$.
 
 It is easy to verify that $\beta_{k(i)} = \sum_{j \leq i} d_{k(i)}$ and 
-\[
-f_k(x_{k(i)}) = f_k({x_{k(1)}}) +d_{k(1)} ( x_{k(i)}
-- x_{k(1)}) + d_{k(2)} ( x_{k(i)} - x_{k(2)}) + \cdots + d_{k(i-1)} ( x_{k(i)} - x_{k(i-1)})
-\]
+\begin{equation}
+\begin{split}
+f_k(x_{k(i)}) = & f_k({x_{k(1)}}) +d_{k(1)} ( x_{k(i)} \\
+& - x_{k(1)}) + d_{k(2)} ( x_{k(i)} - x_{k(2)}) + \cdots  \\
+& + d_{k(i-1)} ( x_{k(i)} - x_{k(i-1)})
+\end{split}
+\end{equation}
 We can write this more compactly in matrix notations. First define $\Delta_{k(j)}(x_{ki}) = \max( x_{ki} - x_{k(j)}, 0)$. 
-\[
-\left[ \begin{array}{c}
-    f_k(x_{k1}) \\
-    ... \\
-    f_k(x_{kn}) \\
-\end{array} \right] =
-\left[ \begin{array}{ccc}
+
+
+\begin{equation*}
+\begin{split}
+&(f_k(x_{k1}) ,..., f_k(x_{kn}))^\tran = \Delta_k d_k \coloneqq \\
+\vspace{0.1in}
+&\left[ \begin{array}{ccc}
     \Delta_{k(1)}(x_{k1}) & ... & \Delta_{k(n-1)}(x_{k1}) \\
     ... & & \\
     \Delta_{k(1)}(x_{kn}) & ... & \Delta_{k(n-1)}(x_{kn}) 
@@ -135,17 +138,20 @@ We can write this more compactly in matrix notations. First define $\Delta_{k(j)
     d_{k(1)} \\
     ... \\
     d_{k(n-1)}
-\end{array} \right] \coloneqq \Delta_k d_k
-\]
+\end{array} \right] 
+\end{split}
+\end{equation*}
+
 Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = \Delta_{k(j)}(x_{k(i)})$ and $d_k = (d_{k(1)} ,..., d_{k(n-1)})$. We can now reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
 \begin{align}
-\min_{d_k \in \R^{n-1}, c_k \in \R,\mu \in \R}& \frac{1}{2n} 
-       \Bigl\| Y - \bar{Y}\mathbf{1}_n - \sum_{k=1}^p ( \Delta_k d_k - c_k \mathbf{1}_n) \Bigr\|_2^2 
-               + \lambda_n \sum_{k=1}^p \|d_k\|_1  & \label{opt:alternate_opt} \\
-\trm{s.t. $\forall k$, }  & d_{k(2)}, \ldots , d_{k(n-1)} \geq 0 	
-               \qquad &\trm{(convexity)} \nonumber \\ 
+\min_{d_k, c_k}& \frac{1}{2n} 
+       \Bigl\| Y - \bar{Y}\mathbf{1}_n - \sum_{k=1}^p 
+             ( \Delta_k d_k - c_k \mathbf{1}_n) \Bigr\|_2^2 \nonumber \\
+               & + \lambda_n \sum_{k=1}^p \|d_k\|_1   \label{opt:alternate_opt} \\
+\trm{s.t. }  & d_{k(2)}, \ldots , d_{k(n-1)} \geq 0  	
+               \qquad \trm{(convexity)} \nonumber \\ 
 	& c_k = \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k 	
-               \qquad &\trm{(centering)} \nonumber 
+               \qquad \trm{(centering)} \nonumber 
 \end{align}
 $\|d_k\|_1$ is not identical to $\|\bds{\beta}_{k\cdot}\|_{\infty}$, but it is easy to verify that $\|\bds{\beta}_{k\cdot}\|_{\infty} \leq \|d_k\|_1 \leq 2\|\bds{\beta}_{k\cdot}\|_{\infty}$.
 
