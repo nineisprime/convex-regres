@@ -416,7 +416,7 @@ Suppose assumptions A1', A2', A3, A4 hold.
 
 Let $\ds \hat{f} \coloneqq \arg\min \{ \hat{R}_s(f) + \lambda_n \rho_n(f) \,:\, f \in \mathcal{C}[s,b,B,L], f_k \trm{ centered} \}$.
 
-Suppose that $c s L \lambda_n \rightarrow 0$ and $c L b (B+\sigma)B\sigma \sqrt{\frac{1}{n^{4/5}} s^5 \log sn} \rightarrow 0$.
+Suppose that $c s L \lambda_n \rightarrow 0$ and $c L b (sB+\sigma)sB \sqrt{\frac{s}{n^{4/5}} \log sn} \rightarrow 0$.
 
 Then, for all large enough $n$, with probability at least $1-\frac{C}{n}$, $\hat{f}_k \neq 0$ for all $k =1,...,s$.
 \end{theorem}
@@ -477,7 +477,7 @@ Adding and subtracting $ \lambda_n \rho_n(f^{*s} - \bar{f}^{*s})$ and $ \lambda_
 Because we assume that we impose the Lipschitz constraint in our optimization, $\rho_n(\hat{f}), \rho_n(f^{*s} - \bar{f}^{*s})$ are at most $sL$ and so $|\lambda_n \rho_n(\hat{f}) - \lambda_n \rho_n(f^*_s)| \leq 2 sL \lambda_n$. 
 
 
-By Theorem~\ref{thm:uniform_risk_deviation}, we know that under the condition of the theorem, $\tau_n \leq  bLB\sigma(B+\sigma)\sqrt{ \frac{1}{cn^{4/5}} s^5 \log n}$.
+By Theorem~\ref{thm:uniform_risk_deviation}, we know that under the condition of the theorem, $\tau_n \leq  Lb (sB+\sigma) sB \sqrt{ \frac{s}{cn^{4/5}} \log n}$.
 
 
 $\tau'_n$, as shown above, is at most $2 (sB+\sigma) sB \sqrt{\frac{1}{cn} \log sn}$ with probability at least $1-\frac{C}{n}$ for $n > n_0$.
@@ -485,7 +485,7 @@ $\tau'_n$, as shown above, is at most $2 (sB+\sigma) sB \sqrt{\frac{1}{cn} \log 
 
 For $n$ large enough such that
 \[
-c s L \lambda_n < \alpha \trm{ and } bLB\sigma(B+\sigma) \sqrt{ \frac{1}{n^{4/5}} s^5 \log sn}) < \alpha
+c s L \lambda_n < \frac{\alpha}{2} \trm{ and } Lb sB (sB+\sigma) \sqrt{ \frac{s}{n^{4/5}} \log sn}) < \frac{\alpha}{4}
 \]
 we get that $\hat{R}_s(\hat{f}) + \lambda_n \rho_n(\hat{r}) > \hat{R}_s(f^*_s) + \lambda_n \rho_n(f^*_s)$, which is a contradiction since we assumed that $\hat{f}$ minimizes the regularized empirical risk.
 
@@ -497,7 +497,7 @@ we get that $\hat{R}_s(\hat{f}) + \lambda_n \rho_n(\hat{r}) > \hat{R}_s(f^*_s) +
 \label{thm:uniform_risk_deviation}
 For all $n > n_0$, we have that, with probability at least $1 - \frac{C}{n}$, 
 \[
-\sup_{f \in \mathcal{C}^s[b,B,L]} |\hat{R}_s(f) - R_s(f)| \leq B\sigma(B+\sigma)Lb\sqrt{ \frac{1}{cn^{4/5}} s^5 \log sn}
+\sup_{f \in \mathcal{C}^s[b,B,L]} |\hat{R}_s(f) - R_s(f)| \leq Lb(sB+\sigma)sB\sqrt{ \frac{s}{cn^{4/5}} \log sn}
 \]
 \end{theorem}
 
@@ -582,7 +582,7 @@ Therefore:
       - \langle \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n \\
 \end{align*}
 
-The first term, fully expanded, is $\frac{1}{n} \sum_{i=1}^n w_i (f_0(X^{(i)}) - \bar{f}_0 - f'(X^{(i)}))$. Since $w_i$ and $X^{(i)}$ are independent, we use the sub-Gaussian concentration inequality. Note that $|f_0(X^{(i)}) - \bar{f}_0 - f'(X^{(i)})| \leq 3sB$, and so $|\langle w, f_0 - \bar{f}_0 - f' \rangle| > t$ with probability at most $C \exp\big( - c n t^2 \frac{1}{\sigma^2 (sB)^2} \big)$.
+The first term, fully expanded, is $\frac{1}{n} \sum_{i=1}^n w_i (f_0(X^{(i)}) - \bar{f}_0 - f'(X^{(i)}))$. Since $w_i$ and $X^{(i)}$ are independent, we use the sub-Gaussian concentration inequality. Note that $|f_0(X^{(i)}) - \bar{f}_0 - f'(X^{(i)})| \leq 3sB$, and so $|\langle w, f_0 - \bar{f}_0 - f' \rangle_n | > t$ with probability at most $C \exp\big( - c n t^2 \frac{1}{\sigma^2 (sB)^2} \big)$.
 
 The second term, fully expanded, is $\bar{w} \bar{f'}$. $\bar{f'} \leq sB$ and so $|\bar{w}\bar{f'}| > t$ with probability at most $C \exp\big( - c n t^2 \frac{1}{\sigma^2(sB)^2} \big)$ as well.
 
@@ -594,36 +594,39 @@ The second term, fully expanded, is $\bar{w} \bar{f'}$. $\bar{f'} \leq sB$ and s
 
 Using sub-Exponential concentration, we know that $| \|w\|_n^2 - \E w^2 | \geq t$ with probability at most $C \exp( - c n \frac{1}{\sigma^2})$. 
 
-$\bar{w} \leq \sigma\frac{1}{cn}$ with probability at least $1-\frac{C}{n}$. 
+$\bar{w} \leq \sigma\sqrt{\frac{1}{cn}}$ with probability at least $1-\frac{C}{n}$. Thus, $| \bar{w}|^2 \leq \sigma^2 \frac{1}{cn}$ with high probability, has a second order effect, and can be safely ignored in the bound.
 
 \textbf{Step 3.3:} We now bound $\| f_0 - \bar{f}_0 - f'\|_n^2 - \E(f_0(X) - \mu - f'(X))^2$.
 
-Because $f_0(X^{(i)}) - f'^(X^{(i)})$ is bounded by $2sB$, $\| f_0 - f'\|_n^2$ is the empirical average of $n$ random variables bounded by $9(sB)^2$. 
+\begin{align*}
+\| f_0 - \bar{f}_0 - f'\|_n^2 &= \|f_0 -\mu+\mu - \bar{f}_0 - f'\|_n^2 \\
+      &= \| f_0 - \mu - f'\|_n^2 + 2 \langle \mu-\bar{f}_0, f_0 - \mu - f'\rangle_n 
+          + \|\mu - \bar{f}_0 \|_n^2 
+\end{align*}
 
-Using Hoeffding Inequality then, we know that the probability $\Big| \| f_0 -\mu - f' \|_n^2 - \E(f_0(X) - f '(X))^2 \Big| \geq t $ is at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
+Using similar reasoning as before, we know that $| \langle \mu-\bar{f}_0, f_0 - \mu - f'\rangle_n | \geq t $ with probability at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
 
-Consider now the term $2 \langle w, f_0 - f' \rangle_n \coloneqq \frac{2}{n} \sum_{i=1}^n w_i ( f_0(X^{(i)}) - f'(X^{(i)}))$. We note that $w_i$ and $X^{(i)}$ are independent, $w_i$ is subgaussian. 
+Likewise, $| \mu - \bar{f}_0 | \leq sB \sqrt{\frac{1}{cn}}$ with probability at least $1-\frac{C}{n}$. Thus, $| \mu - \bar{f}_0 |^2 \leq (sB)^2 \frac{1}{cn}$, has a second order effect, and can be safely ignored in the bound.
 
-The $n$-dimensional vector $\{ \frac{1}{n} ( f_0(X^{(i)}) - f'(X^{(i)})) \}_i$ has norm at most $\frac{sB}{\sqrt{n}}$. Therefore, $|2 \langle w, f_0 - f' \rangle_n | \geq t$ with probability at most $C \exp( - c n t^2 \frac{1}{\sigma^2(sB)^2})$. 
+Because $f_0(X^{(i)}) -\mu - f'^(X^{(i)})$ is bounded by $3sB$, $\| f_0 -\mu- f'\|_n^2$ is the empirical average of $n$ random variables bounded by $9(sB)^2$. 
 
-The last term $\| w \|_n^2 = \frac{1}{n} \sum_{i=1}^n w_i^2$. Using subexponential concentration, we know that $ |\| w \|_n^2 - \E|w|^2 | \geq t$ occurs with probability at most $C \exp( - c n \frac{1}{\sigma^2} )$ for $n$ larger than some $n_0$.
+Using Hoeffding Inequality then, we know that the probability $\Big| \| f_0 -\mu - f' \|_n^2 - \E(f_0(X) -\mu - f '(X))^2 \Big| \geq t $ is at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
 
-
-
-
-and applying union bound, we have that $\sup_{f' \in \mathcal{C}_\epsilon[s,b,B,L]} | \hat{R}_s(f') - R_s(f') | \geq t$ occurs with probability at most
+Applying union bound, we have that $\sup_{f' \in \mathcal{C}_\epsilon[s,b,B,L]} | \hat{R}_s(f') - R_s(f') | \geq t$ occurs with probability at most
 \[
-C \exp\big( s\left( \frac{bBLs}{\epsilon} \right)^{1/2} - c n t^2 \frac{1}{\sigma^2 (sB)^4} \big)
+C \exp\big( s\left( \frac{bBLs}{\epsilon} \right)^{1/2} - c n t^2 \frac{1}{\sigma^2(sB)^2 + (sB)^4} \big)
 \]
 for all $n > n_0$.
 
 Restating, we have that with probability at most $1- \frac{1}{n}$, the deviation is at most 
 \begin{align}
-\sqrt{ \frac{1}{cn} \sigma^2 (sB)^4 \left( \log Cn + s( \frac{bBLs}{\epsilon})^{1/2} \right)} \label{eqn:finite_cover_deviation}
+(sB+\sigma)sB\sqrt{ \frac{1}{cn} \left( \log Cn + s( \frac{bBLs}{\epsilon})^{1/2} \right)} \label{eqn:finite_cover_deviation}
 \end{align}
-Substituting in $\epsilon = \frac{bBLs}{n^{2/5}}$, expression~\ref{eqn:finite_cover_deviation} becomes $\sqrt{ \frac{1}{cn^{4/5}} \sigma^2 s^5 B^4 \log Cn}$.
+Substituting in $\epsilon = \frac{bBLs}{n^{2/5}}$, expression~\ref{eqn:finite_cover_deviation} can be upper bounded by $sB(\sigma+sB)\sqrt{ \frac{s}{cn^{4/5}} \log Cn}$.
 
-Expressions~\ref{eqn:approx_deviation1} and \ref{eqn:approx_deviation2} become $\sqrt{ \frac{(bBLs)^2}{cn^{4/5}}} (B+\sigma)$.
+Expressions~\ref{eqn:approx_deviation1} and \ref{eqn:approx_deviation2} from \textbf{Step 1} and \textbf{Step 2} become $\sqrt{ \frac{(bBLs)^2}{cn^{4/5}}} (sB+\sigma)$.
+
+We can arrive at the statement of the theorem by summing these up and absorbing any constants into the symbols $c$ and $C$.
 
 \end{proof}
  
