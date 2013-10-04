@@ -64,7 +64,14 @@ Each of our theorems will use a subset of the following assumptions:
 \item[A4:] For all $k=1,...,s$, $\E(f^*_s(X_k))^2 \geq \alpha$ for some positive constant $\alpha$.
 \end{packed_enum}
 
-We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3, A4 to control the probability of false negatives.
+We will use assumptions A1, A2, A3 to control the probability of false
+positives and the stronger assumptions A1', A2', A3, A4 to control the
+probability of false negatives.  Assumption A4 can be
+weakened so that the relevant functions satisfy
+$\E(f^*_s(X_k))^2 \geq \alpha_n$ for $\alpha_n$ decaying to zero 
+at an appropriate rate.
+
+
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make
