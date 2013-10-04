@@ -1,1 +1,89 @@
 \section{Related Work}
+
+Variable selection in general nonparametric regression or function
+estimation is a notoriously difficult problem.  
+Nonparametric regression is subject to the curse
+of dimensionality,
+and may be inaccurate even in moderate dimensions,
+without any additional assumptions.  But if the function is sparse, depending
+on only a few covariates, there is hope that by identifying
+the relevant variables one can effectively reduce the 
+dimension, and  estimate the function at the
+corresponding faster statistical rate of convergence.
+
+\citet{lafferty2008rodeo} develop a greedy procedure for
+adjusting bandwidths in a local linear regression estimator,
+and show that the procedure achieves the minimax rate
+as if the relevant variables were isolated in advance.
+But the method does not carry out explicit variable selection.
+Moreover, it only provably scales to dimensions $p$ that 
+grow logarithmically in the sample size $n$, so that $p = O(\log n)$.  Note that this
+is the opposite of the high dimensional scaling behavior
+known to hold for sparsity selection in linear models
+using $\ell_1$ penalization, where the sample size $n$
+is logarithmic in the dimension $p$. \citet{bertin:08}
+develop an optimization-based approach in
+the nonparametric setting, applying the lasso
+in a local linear model at each test point.  Here again,
+however, the method only scales as $p = O(\log n)$,
+the low-dimensional regime.
+An approximation theory approach to the same
+problem is presented in \cite{devore:11}, 
+using techniques based on hierarchical hashing schemes,
+similar to those used for ``junta'' problems \cite{mossel:04}.
+Here it is shown that the sample complexity scales as $n > \log p$ 
+if one adaptively selects the points on
+which the high-dimensional function is evaluated.
+
+\citet{dalalyan:12} give
+support for the intrinsic difficulty of variable
+selection in nonparametric regression, giving lower bounds 
+showing that sparsistency is not possible if $n < \log p$ or if $n <
+\exp s$, where $s$ is the number of relevant variables.
+Variable selection over kernel classes is studied
+by \citet{Kolch:10}.  
+
+Perhaps most closely related to the present work, is the framework
+studied by \cite{Raskutti:12} for sparse additive models, where sparse
+regression is considered under an additive assumption, with each
+component function belonging to an RKHS.  An advantage of working over
+an RKHS, in contrast to the other papers mentioned above, is that
+nonparametric regression with a sparsity-inducing regularization penalty can be
+formulated as a finite dimensional convex cone optimization.
+On the other hand, 
+smoothing parameters for the component Hilbert spaces
+must be chosen, leading to extra tuning parameters
+that are difficult to select in practice.  In addition, 
+the additive model must be assumed to
+be correct for sparsistent variable selection.
+
+An attraction of the convex function estimation framework we consider
+in this paper is that the additive model can be used for convenience,
+without assuming it to actually hold.  While nonparametric, the
+problem is naturally formulated using finite dimensional convex
+optimization, but with no additional tuning parameters.  As we show
+below, our method scales to high dimensions, with a dependence on the
+intrinsic dimension $s$ that scales polynomially, rather than
+exponentially as in the general case analyzed in \cite{dalalyan:12}.
+
+
+%* Laetitia Comminges, Arnak S. Dalalyan 
+%Tight conditions for consistency of variable selection 
+%In the context of high dimensionality. 
+%Ann. Statist, 40(5), 2667-2696, 2012 
+%
+%Comment: They estimate the coefficient of the regression function with respect to a Fourier basis and then threshold the estimated coefficients. They prove that sparsistency is achievable so long as $n > log p$ and $n > exp(s)$. They assume that the functions are smooth with respect to the Fourier basis. The fourier coefficients however seem difficult to estimate; it appears that the knowledge of the true density is required. They also provide 
+%
+%
+%* Bertin, K. and Lecu´e, G. (2008). Selection of variables 
+%and dimension reduction in high-dimensional non-parametric 
+%regression. Electron. J. Stat. 2 1224–1241 
+%
+%Comment: They assume Holder smoothness and use multiple L1 regularized local polynomial smoothing to detect the sparsity pattern. They require that $p < log n$.
+%
+%
+%* "Approximation of Functions of Few Variables in High Dimensions" 
+%by DeVore, Petrova and Wojtaszczyk. 
+%
+%Comment: They show that variable selection under a scaling of
+%
