@@ -1,15 +1,46 @@
 9/30/2013
 
 [x]: correct the current subfigure fiasco in icml. additive_faithful.tex
-[ ]: update appendix.tex
+[x]: don't say signal strength, say the "relevant variables" need to be sufficiently relevant.
 
-We need to prove 
-Risk(missing-one additive) - Risk(full additive) > norm(missing component)
+[ ]: read over Theorem 6.8 (uniform risk deviation) appendix.tex
+[ ]: add references to some more existing variable selection papers
+[ ]: elaborate deterministic condition proof
+[ ]: elaborate additive faithfulness proof
 
-Need assumptions:
-* Full independence
-* Must subtract out mean of f_0(X) from optimization
-* ...
+
+the following papers should be cited: 
+* Garvesh Raskutti, Martin J. Wainwright, and Bin Yu. 
+Minimax-optimal rates for sparse additive models over 
+kernel classes via convex programming. 
+J. Mach. Learn. Res., 13:389–427, 2012. 
+
+* Vladimir Koltchinskii and Ming Yuan. 
+Sparsity in multiple kernel learning. 
+Ann. Statist., 38 (6):3660–3695, 2010 
+Concerning variable selection in nonparametric regression, 
+besides the work of Lafferty and Wasserman cited in the 
+manuscript, the papers 
+
+
+
+* Laetitia Comminges, Arnak S. Dalalyan 
+Tight conditions for consistency of variable selection 
+in the context of high dimensionality. 
+Ann. Statist, 40(5), 2667-2696, 2012 
+
+Comment: They estimate the coefficient of the regression function with respect to a Fourier basis and then threshold the estimated coefficients. They prove that sparsistency is achievable so long as $n > log p$ and $n > exp(s)$. They assume that the functions are smooth with respect to the Fourier basis. The fourier coefficients however seem difficult to estimate; it appears that the knowledge of the true density is required.
+
+
+* Bertin, K. and Lecu´e, G. (2008). Selection of variables 
+and dimension reduction in high-dimensional non-parametric 
+regression. Electron. J. Stat. 2 1224–1241 
+
+* "Approximation of Functions of Few Variables in High Dimensions" 
+by DeVore, Petrova and Wojtaszczyk. 
+
+
+
 
 9/29/2013
 

@@ -26,7 +26,8 @@ It must be then that $f^*_k$ minimizes $\{ \E | f(X) - \mu^* - \sum_{k' \neq k} 
 
 Fix $x_k$, we will show that the value $\E[ f(X) | x_k] - \mu^*$, for all $x_k$,  uniquely minimizes 
 \[
-\min_{ f_k(x_k) } \int_{\mathbf{x}_{-k}} p(x) | f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k)|^2 d \mathbf{x}_{-k}.
+\min_{ f_k(x_k) } \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
+         \big| f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k)\big|^2 d \mathbf{x}_{-k}.
 \]
 It easily follows then that the function $x_k \mapsto \E[ f(X) \given x_k] - \mu^*$ is the unique $f^*_k$ that minimizes the expected square error.
 
@@ -47,6 +48,7 @@ Where the second line follows because $p(\mathbf{x}) = \prod_k p(x_k)$ by produc
 The square error objective is strongly convex. The second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
 
 
+
 Now, we verify that as a function of $x_k$, $\E[ f(X) | x_k] - \E f(X)$ has mean zero and is convex. The former is clearly true; the latter is true because for every $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a convex function with respect to $x_k$ and therefore, $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}$ is still convex. 
  
  \end{proof}
@@ -58,7 +60,8 @@ Our reasoning actually proves something stronger. It proves the following lemma:
 
 $f^*_k(x_k) = \E[ f(X) | x_k] - \mu^*$ is the unique optimal solution to 
 \[
-min_{f_k} \{ \E( f(X) - \E f(X) - \sum_{k'\neq k} f_{k'}(X_{k'}) - f_k (X_k))^2 \,:\, \E f_k(X_k) = 0 \}
+min_{f_k} \{ \E\Big( f(X) - \E f(X) - \sum_{k'\neq k} f_{k'}(X_{k'}) - f_k (X_k)\Big)^2 
+                    \,:\, \E f_k(X_k) = 0 \}
 \]
 for \emph{any} set of component functions $\{ f_{k'} \}_{k'\neq k}$ that satisfies $\E f_{k'}(X_{k'}) = 0$.
 \end{lemma}
@@ -84,10 +87,11 @@ The first condition trivially implies the second.
 
 Fix $k$. Suppose that, for all $x_k$, $\E[ f(X) | x_k] = \E f(X)$. 
 
-By the assumption that , we know that, for all $x_k$,
+Because we assume that $p(\mathbf{x}) = \prod_k p(x_k)$, we see that, for all $x_k$,
 \begin{align*}
  \E[ f(X) | x_k ] &=  \int_{\mathbf{x}_{-k}} p(\mathbf{x_{-k}}) f(x_k,\mathbf{x}_{-k}) d \mathbf{x}_{-k} = \E f(X)
 \end{align*}
+
 
 For every $\mathbf{x}_{-k}$, we define the derivative
 \[
@@ -577,6 +581,7 @@ Thus, with probability at least $1-\delta$, the deviation at most
 \[
 K \max\left( \sqrt{\frac{1}{cn} \log \frac{C}{\delta}},  \frac{1}{cn} \log \frac{C}{\delta} \right)
 \]
+
 
 \begin{corollary}
 Let $w_1,...,w_n$ be $n$ independent subgaussian random variables with subgaussian scale $\sigma$. 
