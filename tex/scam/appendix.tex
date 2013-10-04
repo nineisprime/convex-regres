@@ -27,7 +27,8 @@ It must be then that $f^*_k$ minimizes $\{ \E | f(X) - \mu^* - \sum_{k' \neq k} 
 Fix $x_k$, we will show that the value $\E[ f(X) | x_k] - \mu^*$, for all $x_k$,  uniquely minimizes 
 \[
 \min_{ f_k(x_k) } \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
-         \big| f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k)\big|^2 d \mathbf{x}_{-k}.
+         \big| f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k) -\mu^*\big|^2 
+                 d \mathbf{x}_{-k}.
 \]
 It easily follows then that the function $x_k \mapsto \E[ f(X) \given x_k] - \mu^*$ is the unique $f^*_k$ that minimizes the expected square error.
 
@@ -173,7 +174,7 @@ we can re-write the Lagrangian $L$, in term of just $d_k,c_k$, as the following.
         + \lambda \sum_{i=2}^n d_{ki} + \lambda|d_{k1}| 
         - \mu_k^\tran d_k + \gamma_k (c_k - \mathbf{1}_n^\tran\Delta_k d_k)
 \]
-where $r_k \coloneqq Y - \bar{Y}\mathbf{1}_n - \sum_{k' \in S, k' \neq k} (\Delta_{k'} d_{k'} - c_{k'} \mathbf{1}_n) $, and $\mu_k \in \R^n$ is a vector of dual variables where $\mu_{k,1} = 0$ and $\mu_{k,i} \geq 0$ for $i=2,...,n$.
+where $r_k \coloneqq Y - \bar{Y}\mathbf{1}_n - \sum_{k' \in S, k' \neq k} (\Delta_{k'} d_{k'} - c_{k'} \mathbf{1}_n) $, and $\mu_k \in \R^{n-1}$ is a vector of dual variables where $\mu_{k,1} = 0$ and $\mu_{k,i} \geq 0$ for $i=2,...,n-1$.
 
 First, note that by definition as solution of the restricted regression, for $k \in S$, $\hat{d}_k, \hat{c}_k$ satisfy stationarity with dual variables that satisfy complementary slackness. 
 
@@ -205,7 +206,7 @@ Suppose
 \[
 \lambda \mathbf{1} > |\frac{1}{n} \Delta_k^\tran\hat{r}|,
 \]
-then we easily see that the first coordinate of $\mathbf{u}_k$ can be set to some value in $(-1,1)$ and we can set $\mu_{k,i} > 0$ for $i=2,...,n$. 
+then we easily see that the first coordinate of $\mathbf{u}_k$ can be set to some value in $(-1,1)$ and we can set $\mu_{k,i} > 0$ for $i=2,...,n-1$. 
 
 Because we have strict inequality in the above equation, Lemma 1 from ~\cite{Wain:09a} show that all solutions must be zero on $S^c$.
 \end{proof}
@@ -240,14 +241,14 @@ We remind the reader that $\Delta_{k,j} = \max(X_k, - X_{k(j)} \mathbf{1}_n, 0)$
 \frac{1}{n} \hat{r}^\tran \Delta_{k,j} &= 
               \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)}\mathbf{1}_n) 
                                        - \frac{1}{n} \hat{r}^\tran \mathbf{1}_n X_{k(j)} \\
-                  &= \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)})
+                  &= \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)}\mathbf{1}_n)
 \end{align*}
 Our goal in this proof is to bound $\frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)})$ from above.
 
 \textbf{Step 1.} We first get a high probability bound on $\| \hat{r} \|_\infty$. 
 
 \begin{align*}
-\hat{r}_i &= Y_i - \bar{Y}_i -  \sum_{k \in S} \hat{f}_k (X_k^{(i)}) \\
+\hat{r}_i &= Y_i - \bar{Y} -  \sum_{k \in S} \hat{f}_k (X_k^{(i)}) \\
 	&= f_0(X_S^{(i)}) + \epsilon_i - \bar{f_0} - \bar{\epsilon}- 
                       \sum_{k \in S} \hat{f}_k(X_k^{(i)}) \\
 	&=  f_0(X_S^{(i)}) - \bar{f_0} - \sum_{k \in S} \hat{f}_k(X_k^{(i)}) 
@@ -341,7 +342,13 @@ $| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most
  We will use covering number and uniform convergence and will thus need to first introduce some notations. 
  \subsubsection{Notation} 
 
- Given samples $X^{(1)},...,X^{(n)}$, let $f, g$ be a function and $w$ be a $n$-dimensional random vector, then we denote $\| f - g + w \|_n^2 \coloneqq \frac{1}{n} \sum_{i=1}^n ( f(X^{(i)}) - g(X^{(i)}) + w_i )^2$. 
+ Given samples $X^{(1)},...,X^{(n)}$, let $f, g$ be a function and $w$ be a $n$-dimensional random vector, then we denote $\| f - g + w\|_n^2 \coloneqq \frac{1}{n} \sum_{i=1}^n ( f(X^{(i)}) - g(X^{(i)}) + w_i )^2$. We will also abuse notation and let $\| f + c \|_n^2 = \frac{1}{n} \sum_{i=1}^n (f(X^{(i)}) + c)^2$ if $c$ is a scalar.
+
+We let $\langle f, g \rangle_n \coloneqq \frac{1}{n} \sum_{i=1}^n f(X^{(i)}) g(X^{(i)})$. It then follows that:
+\begin{packed_enum}
+\item $\| f + g \|_n^2 = \|f\|_n^2 + 2 \langle f, g \rangle_n + \|g \|_n^2$
+\item $\langle f, g \rangle_n \leq \|f\|_n \| g \_n$
+\end{packed_enum}
 
 For a function $g : \R^s \rightarrow \R$, define $\hat{R}_s(g) \coloneqq \| f_0 + w - \bar{f_0} - \bar{w} - g \|_n^2$ as the objective of the \emph{restricted} regression and define $R_s(g) \coloneqq \E | f_0(X)  + w - \mu - g(X) |^2$ as the population risk, where $\bar{f_0} = \frac{1}{n} \sum_i f_0(X^{(i)})$ and $\bar{w} = \frac{1}{n}\sum_{i=1}^n w_i $ and $\mu = \E f_0(X)$. Note that we \emph{subtract} out the mean in the two risk definitions.
 
@@ -382,7 +389,7 @@ R(f^{*(s-1)}) - R(f^{*s}) &= \E\Big(f^{*(s-1)}(X) - f_0(X) + \mu\Big)^2
                 - 2 \E\Big[ (f^{*(s-1)}(X) - f^{*s}(X)) (f^{*s}(X) - (f_0(X)-\mu)) \Big]
 \end{align*}
 
-We will argue that all the components of the additive function $f^{*(s-)}$ are also in $f^{*s}$. Let us denote the components of $f^{*s} = \sum_{k=1}^s f_k^*$. We will now invoke Lemma~\ref{lem:additive_component}, which is valid because we assume $X_1,...,X_s$ are independent by assumption A1'. By Lemma~\ref{lem:additive_component}, if we set $f^*_k = 0$, the resulting additive function $\sum_{k'\neq k} f_{k'}^*$ minimizes the population risk subject to the constraint that $f_k = 0$. By definition, $f^{*s}$ is $\argmin_k \sum_{k'\neq k} f_{k'}^*$ and thus share components with $f^{*s}$.
+We will argue that all the components of the additive function $f^{*(s-1)}$ are also in $f^{*s}$. Let us denote the components of $f^{*s} = \sum_{k=1}^s f_k^*$. We will now invoke Lemma~\ref{lem:additive_component}, which is valid because we assume $X_1,...,X_s$ are independent by assumption A1'. By Lemma~\ref{lem:additive_component}, if we set $f^*_k = 0$, the resulting additive function $\sum_{k'\neq k} f_{k'}^*$ minimizes the population risk subject to the constraint that $f_k = 0$. By definition, $f^{*s}$ is $\argmin_k \sum_{k'\neq k} f_{k'}^*$ and thus share components with $f^{*s}$.
 
 Therefore, there exist some $k$ such that $f^{*(s-1)} - f^{*s} = f^*_k$, and we can continue the bound
 \begin{align*}
@@ -422,20 +429,21 @@ Let us first sketch out the rough idea of the proof. We know that in the populat
 
 \begin{align*}
 |\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| &\leq 
-               \| f_0 + w - \bar{f}_0 \mathbf{1}_n - \bar{w}\mathbf{1}_n 
-                     - f^{*s} + \bar{f}^{*s}\mathbf{1}_n \|_n^2  - \| y - f^{*s}\|_n^2 \\
-	&\leq 2\| f_0 + w - \bar{f}_0 \mathbf{1}_n - \bar{w} \mathbf{1}_n -f^{*s}\|_n 
-                \|\bar{f}^{*s} \mathbf{1}_n \|_n 
-                  + \|\bar{f}^{*s} \mathbf{1}_n \|_n^2 \\
-        &\leq 2 | \bar{f}^{*s} | \| f_0 + w 
-           - \bar{f}_0 \mathbf{1}_n - \bar{w} \mathbf{1}_n - f^{*s} \|_n + |\bar{f}^{*s}|^2 
+         \| f_0 + w - \bar{f}_0 - \bar{w}
+         - f^{*s} + \bar{f}^{*s} \|_n^2  - \| f_0 + w - \bar{f}_0 - \bar{w} - f^{*s}\|_n^2 \\
+   &\leq 2 \langle f_0 + w - \bar{f}_0 - \bar{w} - f^{*s}, \bar{f}^{*s} \rangle_n 
+         + \| \bar{f}^{*s} \|_n^2 \\
+   &\leq 2\| f_0 + w - \bar{f}_0 - \bar{w} -f^{*s}\|_n 
+                \|\bar{f}^{*s} \|_n 
+                  + \|\bar{f}^{*s} \|_n^2 \\
+   &\leq 2 | \bar{f}^{*s} | \| f_0 + w 
+           - \bar{f}_0 - \bar{w} - f^{*s} \|_n + |\bar{f}^{*s}|^2 
 \end{align*}
 
 Because each $f^{*s}$ is bounded by $sB$ and $\E f^{*s}(X) = 0$, by Hoeffding inequality, with probability at least $1-\frac{C}{n}$, $|\bar{f}^{*s}| \leq sB \sqrt{\frac{1}{cn} \log n}$. 
 
 \begin{align*}
-\| f_0 + w -\bar{f}_0\mathbf{1}_n 
-                       - \bar{w} \mathbf{1}_n - f^{*s} \|_n 
+\| f_0 + w -\bar{f}_0 - \bar{w} - f^{*s} \|_n 
 	\leq \| f_0 - f^{*s} \|_n + \|w\|_n + |\bar{f}_0| + |\bar{w}|\\
 \end{align*}
 
@@ -553,17 +561,44 @@ with probability at least $1-\frac{C}{n}$.
 
 For a fixed $f'$, we have that, by definition
 \begin{align*}
-\hat{R}_s (f') &= \| f_0 + w - \bar{f}_0\mathbf{1}_n - \bar{w} \mathbf{1}_n - f' \|_n^2\\
-     &= \| f_0  - \bar{f}_0\mathbf{1}_n - \bar{w}\mathbf{1}_n - f'\|_n^2 
-       + 2 \langle w, f_0 - \bar{f}_0\mathbf{1}_n -\bar{w}\mathbf{1}_n - f'\rangle_n 
-       + \| w \|_n^2 \\
+\hat{R}_s (f') &= \| f_0 + w - \bar{f}_0 - \bar{w} - f' \|_n^2\\
+      &= \|f_0 - \bar{f}_0 - f'\|_n^2 + 2 \langle w - \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n
+             + \| w - \bar{w}\|_n^2\\
 R_s(f') &= \E\big(f_0(X) + w - \mu - f'(X)\big)^2 \\
-     &= \E\big(f_0(X) - \mu - f'(X)\big)^2 + \E w^2  
+     &= \E\big(f_0(X) - \mu - f'(X)\big)^2 + \E w^2 
 \end{align*}
 
+Therefore:
+\begin{align*}
+\hat{R}_s(f') - R_s(f') = & \|f_0 -\bar{f}_0 - f'\|_n^2 - \E(f_0(X) - \mu - f'(X))^2 \\
+            &+ \|w - \bar{w}\|_n^2 - \E w^2 \\
+            &+ 2\langle w-\bar{w}, f_0 - \bar{f}_0 - f'\rangle_n
+\end{align*}
 
+\textbf{Step 3.1:} We first bound $2 \langle w - \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n$.
+\begin{align*}
+\langle w - \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n &=
+      \langle w, f_0 - \bar{f}_0 - f'\rangle_n 
+      - \langle \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n \\
+\end{align*}
 
-Because $f_0(X^{(i)}) - f'^(X^{(i)})$ is bounded by $3sB$, $\| f_0 - f'\|_n^2$ is the empirical average of $n$ random variables bounded by $9(sB)^2$. 
+The first term, fully expanded, is $\frac{1}{n} \sum_{i=1}^n w_i (f_0(X^{(i)}) - \bar{f}_0 - f'(X^{(i)}))$. Since $w_i$ and $X^{(i)}$ are independent, we use the sub-Gaussian concentration inequality. Note that $|f_0(X^{(i)}) - \bar{f}_0 - f'(X^{(i)})| \leq 3sB$, and so $|\langle w, f_0 - \bar{f}_0 - f' \rangle| > t$ with probability at most $C \exp\big( - c n t^2 \frac{1}{\sigma^2 (sB)^2} \big)$.
+
+The second term, fully expanded, is $\bar{w} \bar{f'}$. $\bar{f'} \leq sB$ and so $|\bar{w}\bar{f'}| > t$ with probability at most $C \exp\big( - c n t^2 \frac{1}{\sigma^2(sB)^2} \big)$ as well.
+
+\textbf{Step 3.2} We now bound $\| w - \bar{w} \|_n^2 - \E w^2$. 
+\begin{align*}
+\|w - \bar{w} \|_n^2 &= \|w\|_n^2 - 2 \langle w, \bar{w} \rangle_n + \|\bar{w}\|_n \\
+               &= \|w\|_n^2 - \bar{w}^2
+\end{align*}
+
+Using sub-Exponential concentration, we know that $| \|w\|_n^2 - \E w^2 | \geq t$ with probability at most $C \exp( - c n \frac{1}{\sigma^2})$. 
+
+$\bar{w} \leq \sigma\frac{1}{cn}$ with probability at least $1-\frac{C}{n}$. 
+
+\textbf{Step 3.3:} We now bound $\| f_0 - \bar{f}_0 - f'\|_n^2 - \E(f_0(X) - \mu - f'(X))^2$.
+
+Because $f_0(X^{(i)}) - f'^(X^{(i)})$ is bounded by $2sB$, $\| f_0 - f'\|_n^2$ is the empirical average of $n$ random variables bounded by $9(sB)^2$. 
 
 Using Hoeffding Inequality then, we know that the probability $\Big| \| f_0 -\mu - f' \|_n^2 - \E(f_0(X) - f '(X))^2 \Big| \geq t $ is at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
 
@@ -573,7 +608,10 @@ The $n$-dimensional vector $\{ \frac{1}{n} ( f_0(X^{(i)}) - f'(X^{(i)})) \}_i$ h
 
 The last term $\| w \|_n^2 = \frac{1}{n} \sum_{i=1}^n w_i^2$. Using subexponential concentration, we know that $ |\| w \|_n^2 - \E|w|^2 | \geq t$ occurs with probability at most $C \exp( - c n \frac{1}{\sigma^2} )$ for $n$ larger than some $n_0$.
 
-Collecting all these results and applying union bound, we have that $\sup_{f' \in \mathcal{C}_\epsilon[s,b,B,L]} | \hat{R}_s(f') - R_s(f') | \geq t$ occurs with probability at most
+
+
+
+and applying union bound, we have that $\sup_{f' \in \mathcal{C}_\epsilon[s,b,B,L]} | \hat{R}_s(f') - R_s(f') | \geq t$ occurs with probability at most
 \[
 C \exp\big( s\left( \frac{bBLs}{\epsilon} \right)^{1/2} - c n t^2 \frac{1}{\sigma^2 (sB)^4} \big)
 \]
@@ -712,7 +750,7 @@ For some absolute constant $C$.
 \begin{proof}
 Let $f = \sum_{k=1}^s f_k$ be a convex additive function. Let $\{ f'_k \}_{k=1,..,s}$ be $k$ functions from a $\frac{\epsilon}{s}$ $L_\infty$ covering of $\mathcal{C}[b,B,L]$. 
 
-Let $f' \coloneqq = \sum_{k=1}^s f'_k$, then 
+Let $f' \coloneqq \sum_{k=1}^s f'_k$, then 
 \[
 \| f' - f \|_{\infty} \leq \sum_{k=1}^s \| f_k - f'_k \|_\infty \leq s \frac{\epsilon}{s} \leq \epsilon
 \]
