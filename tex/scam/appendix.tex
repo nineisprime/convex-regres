@@ -340,7 +340,7 @@ $| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most
 
  Given samples $X^{(1)},...,X^{(n)}$, let $f, g$ be a function and $w$ be a $n$-dimensional random vector, then we denote $\| f - g + w \|_n^2 \coloneqq \frac{1}{n} \sum_{i=1}^n ( f(X^{(i)}) - g(X^{(i)}) + w_i )^2$.
 
-For a function $g : \R^s \rightarrow \R$, define $\hat{R}_s(g) \coloneqq \| f_0 + w - \bar{f_0 + w} - g \|_n^2$ as the objective of the \emph{restricted} regression and define $R_s(g) \coloneqq \E | f_0(X)  + w - \mu - g(X) |^2$ as the population risk, where $\bar{f_0 + w} = \frac{1}{n} \sum_i f_0(X^{(i)}) + w_i $ and $\mu = \E f_0(X)$. Note that we \emph{subtract} out the mean in the two risk definitions.
+For a function $g : \R^s \rightarrow \R$, define $\hat{R}_s(g) \coloneqq \| f_0 + w - \bar{f_0} - \bar{w} - g \|_n^2$ as the objective of the \emph{restricted} regression and define $R_s(g) \coloneqq \E | f_0(X)  + w - \mu - g(X) |^2$ as the population risk, where $\bar{f_0} = \frac{1}{n} \sum_i f_0(X^{(i)})$ and $\bar{w} = \frac{1}{n}\sum_{i=1}^n w_i $ and $\mu = \E f_0(X)$. Note that we \emph{subtract} out the mean in the two risk definitions.
 
 For an additive function $g$, define $\rho_n(g) = \sum_{k=1}^s \| \partial g_k \|_\infty$. Because we always use the secant linear piece-wise function in our optimization program, we define $\ds \| \partial g_k\|_\infty \coloneqq \max_{i=1,...,n-1} |\frac{ g_k(X^{(i)}) - g_k(X^{(i+1)})}{ X^{(i)} - X^{(i+1)}}|$.
 
@@ -355,9 +355,12 @@ Define $f^{*s} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^s[b,B,L], \, \E f_k(
 
 Define $f^{*(s-1)} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^{(s-1)}[b,B,L], \, \E f_k(X_k) = 0\}$, the optimal solution with only $s-1$ components.
 
+\textbf{Note:} By definition of the Lipschitz condition, $f_k \in \mathcal{C}[b,B,L]$ implies that $\| \partial f_k \|_\infty \leq L$. $f = \sum_k f_k \in \mathcal{C}[s,b,B,L]$ implies that $\rho_n(f) \leq sL$.
+
 \subsubsection{Proof}
 \label{sec:false_negative_proof_proof}
 
+We first start with a lemma that converts assumption A4 into a more easily applicable condition.
 \begin{lemma}
 \label{lem:minus_one_risk_increase}
 Suppose assumptions A1' and A4 hold. 
@@ -366,8 +369,6 @@ Then $R(f^{*(s-1)}) - R(f^{*s}) \geq \alpha$, where $\alpha$ lower bounds the no
 \end{lemma}
 
 \begin{proof}
-
-
 
 \begin{align*}
 R(f^{*(s-1)}) - R(f^{*s}) &= \E\Big(f^{*(s-1)}(X) - f_0(X) + \mu\Big)^2 
@@ -403,39 +404,48 @@ We now restate the theorem in our newly defined notation.
 \begin{theorem} 
 Suppose assumptions A1', A2', A3, A4 hold. 
 
-Let $\ds \hat{f} \coloneqq \arg\min \{ \hat{R}_s(f) + \lambda_n \rho_n(f) \,:\, f \in \mathcal{C}^s[b,B,L], f_k \trm{ centered} \}$.
+Let $\ds \hat{f} \coloneqq \arg\min \{ \hat{R}_s(f) + \lambda_n \rho_n(f) \,:\, f \in \mathcal{C}[s,b,B,L], f_k \trm{ centered} \}$.
 
-Suppose $n$ is large enough such that $c L \max \left(\lambda_n, b (B+\sigma)B\sigma \sqrt{\frac{1}{n^{4/5}} s^5 \log sn} \right) \rightarrow 0$.
+Suppose that $c s L \lambda_n \rightarrow 0$ and $c L b (B+\sigma)B\sigma \sqrt{\frac{1}{n^{4/5}} s^5 \log sn} \rightarrow 0$.
 
-Then, with probability at least $1-\frac{C}{n}$, $\hat{f}_k \neq 0$ for all $k =1,...,s$.
+Then, for all large enough $n$, with probability at least $1-\frac{C}{n}$, $\hat{f}_k \neq 0$ for all $k =1,...,s$.
 \end{theorem}
 
 \begin{proof}
 Let us first sketch out the rough idea of the proof. We know that in the population setting, the best approximate additive function $f^{*s}$ has $s$ non-zero components. We also know that the empirical risk approaches the population risk uniformly. Therefore, it cannot be that the empirical risk minimizer maintains a zero component for all $n$; if that were true, then we can construct a feasible solution to the empirical risk optimization, based on $f^{*s}$, that achieves lower empirical risk. 
 
 
-$f^{*s}$ is not directly a feasible solution to the empirical risk minimization program because it is not empirically centered. Given $n$ samples, $f^{*s} - \bar{f}^{*s}$ is a feasible solution where $\bar{f}^{*s} = \sum_{k=1}^s \bar{f}_k^{*s}$ and $\bar{f}_k^{*s} = \frac{1}{n} \sum_{i=1}^n f_k^{*s}(X^{(i)})$. 
+\textbf{Step 1:} $f^{*s}$ is not directly a feasible solution to the empirical risk minimization program because it is not empirically centered. Given $n$ samples, $f^{*s} - \bar{f}^{*s}$ is a feasible solution where $\bar{f}^{*s} = \sum_{k=1}^s \bar{f}_k^{*s}$ and $\bar{f}_k^{*s} = \frac{1}{n} \sum_{i=1}^n f_k^{*s}(X^{(i)})$. 
 
 \begin{align*}
-|\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| &\leq \| y - f^{*s} + \bar{f}^{*s} \|_n^2  - \| y - f^{*s}\|_n^2 \\
-	&\leq 2\|y-f^{*s}\|_n \|\bar{f}^{*s}\|_n + \|\bar{f}^{*s}\|_n^2 
+|\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| &\leq 
+               \| f_0 + w - \bar{f}_0 \mathbf{1}_n - \bar{w}\mathbf{1}_n 
+                     - f^{*s} + \bar{f}^{*s}\mathbf{1}_n \|_n^2  - \| y - f^{*s}\|_n^2 \\
+	&\leq 2\| f_0 + w - \bar{f}_0 \mathbf{1}_n - \bar{w} \mathbf{1}_n -f^{*s}\|_n 
+                \|\bar{f}^{*s} \mathbf{1}_n \|_n 
+                  + \|\bar{f}^{*s} \mathbf{1}_n \|_n^2 \\
+        &\leq 2 | \bar{f}^{*s} | \| f_0 + w 
+           - \bar{f}_0 \mathbf{1}_n - \bar{w} \mathbf{1}_n - f^{*s} \|_n + |\bar{f}^{*s}|^2 
 \end{align*}
 
-Because each $f_k^{*s}$ is bounded by $B$, by Hoeffding inequality, with probability at least $1-\frac{C}{n}$, $|\bar{f}_k^{*s}| \leq B\sqrt{\frac{1}{cn} \log n}$. By an union bound therefore, with probability at least $1-\frac{C}{n}$, $\|\bar{f}^{*s}\|_n \leq B\sqrt{\frac{1}{cn} \log sn}$.
+Because each $f^{*s}$ is bounded by $sB$ and $\E f^{*s}(X) = 0$, by Hoeffding inequality, with probability at least $1-\frac{C}{n}$, $|\bar{f}^{*s}| \leq sB \sqrt{\frac{1}{cn} \log n}$. 
 
 \begin{align*}
-\| y - f^{*s} \|_n &= \| f_0 + w - f^{*s} \|_n \\
-	&\leq \| f_0 - f^{*s} \|_n + \|w\|_n \\
+\| f_0 + w -\bar{f}_0\mathbf{1}_n 
+                       - \bar{w} \mathbf{1}_n - f^{*s} \|_n 
+	\leq \| f_0 - f^{*s} \|_n + \|w\|_n + |\bar{f}_0| + |\bar{w}|\\
 \end{align*}
 
 $\|f_0 - f^{*s}\|_n \leq \|f_0 - f^{*s}\|_\infty $ is bounded by $2sB$ and $w_i$ is zero-mean subgaussian with scale $\sigma$. Therefore, $\|w\|_n$ is at most $c\sigma$ with probability at least $1-\frac{C}{n}$ for all $n > n_0$. 
 
+$| \bar{f}_0 | \leq s B$ and $| \bar{w} | \leq c \sigma \sqrt{\frac{1}{n}}$ with probability at least $1-\frac{C}{n}$ by Chernoff bound.
+
 So we derive that, with probability at least $1 -\frac{C}{n}$, for all $n > n_0$,
 \[
-|\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| \leq 2csB(B+\sigma) \sqrt{\frac{1}{cn} \log sn}
+|\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| \leq 2c (sB+\sigma) sB \sqrt{\frac{1}{cn} \log n}
 \]
 
-Now that we bounded the cost of approximating $f^{*s}$ with the empirically centered $f^{*s} - \bar{f}^{*s}$, we move on to the proof of the main result.
+\textbf{Step 2:} Now that we bounded the cost of approximating $f^{*s}$ with the empirically centered $f^{*s} - \bar{f}^{*s}$, we move on to the proof of the main result.
 
 Suppose $\hat{f}$ has at most $s-1$ non-zero components. Then
 \begin{align*}
@@ -453,17 +463,20 @@ Adding and subtracting $ \lambda_n \rho_n(f^{*s} - \bar{f}^{*s})$ and $ \lambda_
 \hat{R}_s(\hat{f}) + \lambda_n \rho_n(\hat{f}) \geq \hat{R}_s(f^{*s} - \bar{f}^{*s}) + \lambda_n \rho_n(f^{*s} - \bar{f}^{*s}) - ( \lambda_n \rho_n(f^{*s} - \bar{f}^{*s}) + \lambda_n \rho_n(\hat{f}) ) -\tau'_n + \alpha - 2 \tau_n
 \]
 
-$\rho_n(\hat{f}), \rho_n(f^{*s} - \bar{f}^{*s})$ are at most $L$. By Theorem~\ref{thm:uniform_risk_deviation}, we know that under the condition of the theorem, $\tau_n \leq  bLB\sigma(B+\sigma)\sqrt{ \frac{1}{cn^{4/5}} s^5 \log n}$.
+Because we assume that we impose the Lipschitz constraint in our optimization, $\rho_n(\hat{f}), \rho_n(f^{*s} - \bar{f}^{*s})$ are at most $sL$ and so $|\lambda_n \rho_n(\hat{f}) - \lambda_n \rho_n(f^*_s)| \leq 2 sL \lambda_n$. 
 
-$|\lambda_n \rho_n(\hat{f}) - \lambda_n \rho_n(f^*_s)| \leq 2L \lambda_n$.
 
-$\tau'_n$, as shown above, is at most $2sB(B+\sigma) \sqrt{\frac{1}{cn} \log sn}$ with probability at least $1-\frac{C}{n}$ for $n > n_0$.
+By Theorem~\ref{thm:uniform_risk_deviation}, we know that under the condition of the theorem, $\tau_n \leq  bLB\sigma(B+\sigma)\sqrt{ \frac{1}{cn^{4/5}} s^5 \log n}$.
+
+
+$\tau'_n$, as shown above, is at most $2 (sB+\sigma) sB \sqrt{\frac{1}{cn} \log sn}$ with probability at least $1-\frac{C}{n}$ for $n > n_0$.
+
 
 For $n$ large enough such that
 \[
-c\max(L\lambda_n,  bLB\sigma(B+\sigma) \sqrt{ \frac{1}{n^{4/5}} s^5 \log sn}) < \alpha
+c s L \lambda_n < \alpha \trm{ and } bLB\sigma(B+\sigma) \sqrt{ \frac{1}{n^{4/5}} s^5 \log sn}) < \alpha
 \]
-we get that $\hat{R}_s(\hat{f}) + \lambda_n \rho_n(\hat{r}) > \hat{R}_s(f^*_s) + \lambda_n \rho_n(f^*_s)$, which is a contradiction.
+we get that $\hat{R}_s(\hat{f}) + \lambda_n \rho_n(\hat{r}) > \hat{R}_s(f^*_s) + \lambda_n \rho_n(f^*_s)$, which is a contradiction since we assumed that $\hat{f}$ minimizes the regularized empirical risk.
 
 \end{proof}
 
@@ -479,28 +492,44 @@ For all $n > n_0$, we have that, with probability at least $1 - \frac{C}{n}$,
 
 
 \begin{proof}
+This proof uses a standard covering number argument.
 
-Let $\mathcal{C}_\epsilon[s,b,B,L]$ be an $\epsilon$-cover of $\mathcal{C}[s,b,B,L]$. 
+Let $\mathcal{C}_\epsilon[s,b,B,L]$ be an $\epsilon$-cover of $\mathcal{C}[s,b,B,L]$ such that for all $f \in \mathcal{C}[s,b,B,L]$, there exists $f' \in \mathcal{C}_\epsilon[s,b,B,L]$ such that $\| f - f'\|_\infty \leq \epsilon$.
 
-For all $f \in \mathcal{C}^s[b,B,L]$,
+For all $f \in \mathcal{C}[s,b,B,L]$,
 \[
 \hat{R}_s(f) - R_s(f) = \hat{R}_s(f) - \hat{R}_s(f') + \hat{R}_s(f') - R_s(f') + R_s(f') - R_s(f)
 \]
 where $f' \in \mathcal{C}_\epsilon[s,b,B,L]$ and $\| f - f' \|_\infty \leq \epsilon$.\\
 
-Step 1. We first bound $\hat{R}_s(f) - \hat{R}_s(f')$.
+\textbf{Step 1.} We first bound $\hat{R}_s(f) - \hat{R}_s(f')$.
 
 \begin{align*}
-|\hat{R}_s(f) - \hat{R}_s(f')| &= |\| f_0 + w - f \|_n^2 - \| f_0 + w - f' \|_n^2| \\
-	&\leq 2 \langle f_0 + w , f' - f \rangle_n + \| f \|_n^2 - \| f' \|_n^2\\
-	&\leq 2 \| f_0 + w \|_n \| f' - f \|_n + ( \| f \|_n - \|f'\|_n)( \| f \|_n + \|f'\|_n)\\
+|\hat{R}_s(f) - \hat{R}_s(f')| &= |\| f_0 - \bar{f}_0 + w - \bar{w} - f \|_n^2 
+                                - \| f_0 - \bar{f}_0 + w -\bar{w} - f' \|_n^2| \\
+	&\leq 2 \langle f_0 - \bar{f}_0 + w -\bar{w}, f' - f \rangle_n 
+                            + \| f \|_n^2 - \| f' \|_n^2\\
+	&\leq 2 \| f_0 - \bar{f}_0 + w -\bar{w} \|_n \| f' 
+                   - f \|_n + ( \| f \|_n - \|f'\|_n)( \| f \|_n + \|f'\|_n)\\
 \end{align*}
 
-$\| f_0 + w \|_n \leq \| f_0 \|_n + \|w \|_n$. $\| w \|^2_n = \frac{1}{n}\sum_{i=1}^n w_i^2$ is the average of subexponential random variables. Therefore, for all $n$ larger than some absolute constant $n_0$, with probability at least $1-\frac{C}{n}$, $|\|w\|^2_n - \E|w|^2 | < \sigma^2 \sqrt{\frac{1}{cn} \log n}$. The absolute constant $n_0$ is determined so that for all $n > n_0$, $\sqrt{\frac{1}{cn} \log n} < 1$. 
+We now want to bound $\| f_0 - \bar{f}_0 + w -\bar{w} \|_n \leq \| f_0 \|_n  + \|w \|_n + |\bar{f}| + |\bar{w}|$.
 
-$\|f_0\|^2_n$ is the average of random variables bounded by $B^2$ and therefore, with probability at least $1-\frac{C}{n}$, $|\| f_0 \|^2_n - \E |f_0(X)|^2 | \leq B^2\sqrt{ \frac{1}{cn} \log n}$.
+$\| w \|^2_n = \frac{1}{n}\sum_{i=1}^n w_i^2$ is the average of subexponential random variables. Therefore, for all $n$ larger than some absolute constant $n_0$, with probability at least $1-\frac{C}{n}$, $|\|w\|^2_n - \E|w|^2 | < \sigma^2 \sqrt{\frac{1}{cn} \log n}$. The absolute constant $n_0$ is determined so that for all $n > n_0$, $\sqrt{\frac{1}{cn} \log n} < 1$. Since $\E w^2 \leq \sigma^2$, for all $n > n_0$, with probability at least $1 - \frac{C}{n}$, for some constant $c$, $\| w \|^2_n \leq c \sigma^2$.
 
-Since $\E|w|^2 \leq c\sigma^2$ and $\E| f_0(X)|^2 \leq B^2$, we have that for all $n \geq n_0$, with probability at least $1-\frac{C}{n}$, $\| f_0 + w \|_n \leq c(B+\sigma)$.
+By Chernoff bound and the fact that $\E w = 0$, we know that $|\bar{w}| \leq c \sigma \sqrt{\frac{1}{n}}$ with high probability.
+
+%$\|f_0\|^2_n$ is the average of random variables bounded by $s^2 B^2$ and therefore, with probability at least $1-\frac{C}{n}$, $|\| f_0 \|^2_n - \E f_0(X)^2 | \leq s^2B^2\sqrt{ \frac{1}{cn} \log n}$. Since $\E f_0(X)^2 \leq s^2B^2$, we have that, for all $n > n_0$, with probability at least $1-\frac{C}{n}$, for some constant $c$, $\| f_0 \|_n^2 \leq c s^2 B^2$.
+
+$\|f_0\|^2_n = \frac{1}{n} \sum_{i=1}^n f_0(X^{(i)})^2$. Since $f_0(X^{(i)})^2 \leq s^2 B^2$, $\|f_0\|^2_n \leq s^2 B^2$.
+
+$|\bar{f}_0| = | \frac{1}{n} \sum_{i=1}^n f_0(X^{(i)})| \leq s B$.
+
+Combining these together, We have that for all $n \geq n_0$, with probability at least $1-\frac{C}{n}$, $\| f_0 - \bar{f}_0 + w -\bar{w} \|^2_n \leq c ( s^2 B^2 +\sigma^2 )$, and so 
+
+\[
+\|f_0 - \bar{f}_0 + w -\bar{w} \|^2_n \leq c (sB + \sigma)
+\]
 
 $\| f' - f \|_\infty \leq \epsilon$ implies that $\| f' - f\|_n \leq \epsilon$. And therefore, $\| f \|_n - \|f'\|_n \leq \| f - f' \|_n \leq \epsilon$. 
 
@@ -508,25 +537,29 @@ $f,f'$ are all bounded by $sB$, and so $\|f \|_n, \| f' \|_n \leq sB$.
 
 Thus, we have that, for all $n > n_0$,
 \begin{align}
-|\hat{R}_s(f) - \hat{R}_s(f')| \leq \epsilon cs(B + \sigma) \label{eqn:approx_deviation1}
+|\hat{R}_s(f) - \hat{R}_s(f')| \leq \epsilon c( sB + \sigma ) \label{eqn:approx_deviation1}
 \end{align}
 with probability at least $1-\frac{C}{n}$.
 
-Now we bound $R_s(f') - R_s(f)$. The steps follow the bounds before, and we have that 
+\textbf{Step 2:} Now we bound $R_s(f') - R_s(f)$. The steps follow the bounds before, and we have that 
 \begin{align}
-|R_s(f') - R_s(f)| \leq \epsilon cs(B + \sigma) \label{eqn:approx_deviation2}
+|R_s(f') - R_s(f)| \leq \epsilon c(sB + \sigma) \label{eqn:approx_deviation2}
 \end{align}
 
-Lastly, we bound $\sup_{f' \in \mathcal{C}_0^s[b,B,L]} \hat{R}_s(f') - R_s(f')$. 
+\textbf{Step 3:} Lastly, we bound $\sup_{f' \in \mathcal{C}_\epsilon[s,b,B,L]} \hat{R}_s(f') - R_s(f')$. 
 
 For a fixed $f'$, we have that, by definition
-\[
-\| f_0 + w - f' \|_n^2 = \| f_0 - f'\|_n^2 + 2 \langle w, f_0 - f'\rangle_n + \| w \|_n^2 \\
-\]
+\begin{align*}
+\hat{R}_s (f') &= \| f_0 + w - \bar{f}_0\mathbf{1}_n - \bar{w} \mathbf{1}_n - f' \|_n^2\\
+     &= \| f_0  - \bar{f}_0\mathbf{1}_n - f'\|_n^2 
+       + 2 \langle w, f_0 - \bar{f}_0\mathbf{1}_n - f'\rangle_n + \| w \|_n^2 + |\bar{w}|\\
+R_s(f') &= \E\big(f_0(X) + w - \mu - f'(X)\big)^2 \\
+     &= \E\big(f_0(X) - \mu - f'(X)\big)^2 + \E w^2  
+\end{align*}
 
-Because $f_0(X^{(i)}) - f'^(X^{(i)})$ is bounded by $2sB$, $\| f_0 - f'\|_n^2$ is the empirical average of $n$ random variables bounded by $4(sB)^2$. 
+Because $f_0(X^{(i)}) - f'^(X^{(i)})$ is bounded by $3sB$, $\| f_0 - f'\|_n^2$ is the empirical average of $n$ random variables bounded by $9(sB)^2$. 
 
-Using Hoeffding Inequality then, we know that the probability $| \| f_0 - f' \|_n^2 - \E(f_0(X) - f '(X))^2 | \geq t $ is at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
+Using Hoeffding Inequality then, we know that the probability $\Big| \| f_0 -\mu - f' \|_n^2 - \E(f_0(X) - f '(X))^2 \Big| \geq t $ is at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
 
 Consider now the term $2 \langle w, f_0 - f' \rangle_n \coloneqq \frac{2}{n} \sum_{i=1}^n w_i ( f_0(X^{(i)}) - f'(X^{(i)}))$. We note that $w_i$ and $X^{(i)}$ are independent, $w_i$ is subgaussian. 
 
@@ -534,9 +567,9 @@ The $n$-dimensional vector $\{ \frac{1}{n} ( f_0(X^{(i)}) - f'(X^{(i)})) \}_i$ h
 
 The last term $\| w \|_n^2 = \frac{1}{n} \sum_{i=1}^n w_i^2$. Using subexponential concentration, we know that $ |\| w \|_n^2 - \E|w|^2 | \geq t$ occurs with probability at most $C \exp( - c n \frac{1}{\sigma^2} )$ for $n$ larger than some $n_0$.
 
-Collecting all these results and applying union bound, we have that $\sup_{f' \in \mathcal{C}_0^s[b,B,L]} | \hat{R}_s(f') - R_s(f') | \geq t$ occurs with probability at most
+Collecting all these results and applying union bound, we have that $\sup_{f' \in \mathcal{C}_\epsilon[s,b,B,L]} | \hat{R}_s(f') - R_s(f') | \geq t$ occurs with probability at most
 \[
-C \exp( s\left( \frac{bBLs}{\epsilon} \right)^{1/2} - c n t^2 \frac{1}{\sigma^2 (sB)^4} )
+C \exp\big( s\left( \frac{bBLs}{\epsilon} \right)^{1/2} - c n t^2 \frac{1}{\sigma^2 (sB)^4} \big)
 \]
 for all $n > n_0$.
 

@@ -60,20 +60,24 @@ Each of our theorems will use a subset of the following assumptions:
 \item[A1:] $X_S, X_{S^c}$ are independent.  \ A1': $\{ X_k \}_{k \in S}$ are independent.
 \item[A2:] $\|f_0\|_\infty \leq sB$ \  A2': $f_0$ is convex,
   twice-differentiable, $L$-Lipschitz, and $\trm{supp}(f_0) = S$.
-\item[A3:] Suppose $\epsilon$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$.
+\item[A3:] Suppose $\epsilon$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$, i.e. for all $t \in \R$, $\E e^{t \epsilon} \leq \E e^{\sigma^2 t^2 / 2}$.
 \item[A4:] For all $k=1,...,s$, $\E(f^*_s(X_k))^2 \geq \alpha$ for some positive constant $\alpha$.
 \end{packed_enum}
 
-We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3, A4 to control the probability of false negatives. The $\alpha$ in assumption A4 can be interpreted as the signal strength of the relevant variable detection problem.
+We will use assumptions A1, A2, A3 to control the probability of false positives and the stronger assumptions A1', A2', A3, A4 to control the probability of false negatives.
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make
   very weak assumptions on the true regression function $f_0$ in
   A2. In particular, we do not assume that $f_0$ is additive. Relaxing
-  these assumptions is an interesting direction for future work.
+  these assumptions is an interesting direction for future work. 
   %Strong assumptions on the covariates are not uncommon in nonparametric
   %variable selection analysis~\cite{lafferty2008rodeo}. 
   %[TODO: refer to correlated design experiment].
+\end{remark}
+
+\begin{remark}
+Assumption A4 ensures that the relevant variables are ``relevant enough''. Under A4, the population risk of an additive function with $s-1$ components is at least $\alpha$ larger than the population risk of the optimal additive function with $s$ components. Lemma~\ref{lem:minus_one_risk_increase} in section~\ref{sec:false_negative_proof} of the appendix.
 \end{remark}
 
 \begin{theorem} (Controlling false positives) 
@@ -100,8 +104,8 @@ Section~\ref{sec:false_positive_proof} of the Appendix.
 
 \begin{theorem} (Controlling false negatives)
 \label{thm:false_negative}
-Suppose assumptions A1', A2', A3 hold. Let $\ds \hat{f} = \{ \hat{d}_k, \hat{c}_k\}_{k\in S}$ be any solution to the restricted regression with both the $B$-boundedness and $L$-Lipschitz constraint. Let $c,C$ be absolute constants.
-Suppose $L \max \left(\lambda_n, b (B+\sigma)B\sigma \sqrt{\frac{s^5}{n^{4/5}} \log sn} \right) \rightarrow 0$.
+Suppose assumptions A1', A2', A3, A4 hold. Let $\ds \hat{f} = \{ \hat{d}_k, \hat{c}_k\}_{k\in S}$ be any solution to the restricted regression with both the $B$-boundedness and $L$-Lipschitz constraint. Let $c,C$ be absolute constants.
+Suppose $s L \lambda_n \rightarrow 0$ and $bL (B+\sigma)B\sigma \sqrt{\frac{s^5}{n^{4/5}} \log sn} \rightarrow 0$.
 Then, for sufficiently large $n$, $\hat{f}_k = (\hat{d}_k, \hat{c}_k)
 \neq 0$ for all $k \in S$ with probability at least $1-\frac{C}{n}$.
 \end{theorem}
@@ -121,8 +125,8 @@ Combining Theorem~\ref{thm:false_positive} and
 ~\ref{thm:false_negative} and ignoring dependencies on $b,B,L,\sigma$,
 we have the following result.
 \begin{corollary}
-  Assume A1', A2', A3. Let $\lambda_n = \Theta\left( \sqrt{
-  \frac{s^3}{n} \log n \log (pn)} \right)$. Suppose $\lambda_n
+  Assume A1', A2', A3, A4. Let $\lambda_n = \Theta\left( \sqrt{
+  \frac{s^3}{n} \log n \log (pn)} \right)$. Suppose $s \lambda_n
   \rightarrow 0$ and $\sqrt{\frac{s^5}{n^{4/5}} \log sn} \rightarrow
   0$. Let $\hat{f_n}$ be a solution to (\ref{opt:alternate_opt}) with
   boundedness and Lipschitz constraints. Then 
@@ -131,3 +135,11 @@ we have the following result.
 The above corollary implies that sparsistency is achievable at the same exponential scaling of the ambient dimension $p = O(\exp(n^c)), c<1$ rate as parametric models. The cost of nonparametric modeling is reflected in the scaling with respect to $s$, which can only scale at $o(n^{4/25})$.
 
 %\textbf{Comparison with Related Work.} 
+
+
+% DO NOT CHANGE; RefTex variables -minx
+ 
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "scam_icml.tex" ***
+%%% End: ***
