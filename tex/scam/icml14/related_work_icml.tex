@@ -1,13 +1,15 @@
 \section{Related Work}
 
 Variable selection in general nonparametric regression or function
-estimation is a notoriously difficult problem.  In even moderate
-dimensions, nonparametric regression is subject to the curse
-of dimensionality.  But if the function is sparse, depending
+estimation is a notoriously difficult problem.  
+Nonparametric regression is subject to the curse
+of dimensionality,
+and may be inaccurate even in moderate dimensions,
+without any additional assumptions.  But if the function is sparse, depending
 on only a few covariates, there is hope that by identifying
 the relevant variables one can effectively reduce the 
 dimension, and  estimate the function at the
-corresponding lower dimensional statistical rate of convergence.
+corresponding faster statistical rate of convergence.
 
 \citet{lafferty2008rodeo} develop a greedy procedure for
 adjusting bandwidths in a local linear regression estimator,
@@ -32,6 +34,7 @@ similar to those used for ``junta'' problems \cite{mossel:04}.
 Here it is shown that the sample complexity scales as $n > \log p$ 
 if one adaptively selects the points on
 which the high-dimensional function is evaluated.
+
 \citet{dalalyan:12} give
 support for the intrinsic difficulty of variable
 selection in nonparametric regression, giving lower bounds 
@@ -45,7 +48,7 @@ studied by \cite{Raskutti:12} for sparse additive models, where sparse
 regression is considered under an additive assumption, with each
 component function belonging to an RKHS.  An advantage of working over
 an RKHS, in contrast to the other papers mentioned above, is that
-regression with a sparsity-inducing regularization penalty can be
+nonparametric regression with a sparsity-inducing regularization penalty can be
 formulated as a finite dimensional convex cone optimization.
 On the other hand, 
 smoothing parameters for the component Hilbert spaces
@@ -54,16 +57,14 @@ that are difficult to select in practice.  In addition,
 the additive model must be assumed to
 be correct for sparsistent variable selection.
 
-An attraction of the convex function estimation
-framework we consider in this paper
-is that the additive model can be
-used for convenience, without assuming it
-to actually hold.  Moreover, our estimator has
-no tuning parameters.  As we show below,
-our method scales to high dimensions, with
-a dependence on the intrinsic dimension $s$ 
-that scales polynomially, rather than exponentially
-as in the general case analyzed in \cite{dalalyan:12}.
+An attraction of the convex function estimation framework we consider
+in this paper is that the additive model can be used for convenience,
+without assuming it to actually hold.  While nonparametric, the
+problem is naturally formulated using finite dimensional convex
+optimization, but with no additional tuning parameters.  As we show
+below, our method scales to high dimensions, with a dependence on the
+intrinsic dimension $s$ that scales polynomially, rather than
+exponentially as in the general case analyzed in \cite{dalalyan:12}.
 
 
 %* Laetitia Comminges, Arnak S. Dalalyan 
