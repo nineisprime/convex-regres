@@ -185,27 +185,27 @@ Now, let us fix $k \in S^c$ and prove that $\hat{d}_k = 0, \hat{c}_k=0$ is an op
 \partial c_k: & \qquad -\frac{1}{n} \mathbf{1}^\tran ( r_k - \Delta_k d_k 
        + c_k \mathbf{1}) + \gamma_k
 \end{align*}
-In the derivatives, $\mathbf{u}$ is a $(n-1)$-vector whose first coordinate is $\partial | d_{k1}|$ and all other coordinates are 1.
+In the derivatives, $\mathbf{u}_k$ is a $(n-1)$-vector whose first coordinate is $\partial | d_{k1}|$ and all other coordinates are 1.
 
 We now substitute in $d_k = \hat{d}_k = 0, c_k=\hat{c}_k=0, r_k = \hat{r}_k = \hat{r}$ and show that the duals can be set in a way to ensure that the derivatives are equal to 0.
 
 \begin{align*}
--\frac{1}{n} \Delta_k^\tran\hat{r} + \lambda \mathbf{u} 
+-\frac{1}{n} \Delta_k^\tran\hat{r} + \lambda \mathbf{u}_k 
            - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} &= 0 \\
 -\frac{1}{n} \mathbf{1}^\tran \hat{r} + \gamma_k & = 0 \\
 \end{align*}
-where $\mathbf{u}$ is 1 in every coordinate except the first, where it can take any value in $[-1,1]$.
+where $\mathbf{u}_k$ is 1 in every coordinate except the first, where it can take any value in $[-1,1]$.
 
 First, we observe that $\gamma_k = 0$ because $\hat{r}$ has empirical mean 0. All we need to prove then is that 
 \[
-\lambda \mathbf{u} - \mu_k = \frac{1}{n} \Delta_k^\tran \hat{r}.
+\lambda \mathbf{u}_k - \mu_k = \frac{1}{n} \Delta_k^\tran \hat{r}.
 \]
 
 Suppose
 \[
 \lambda \mathbf{1} > |\frac{1}{n} \Delta_k^\tran\hat{r}|,
 \]
-then we easily see that the first coordinate of $\mathbf{u}$ can be set to some value in $(-1,1)$ and we can set $\mu_{k,i} > 0$ for $i=2,...,n$. 
+then we easily see that the first coordinate of $\mathbf{u}_k$ can be set to some value in $(-1,1)$ and we can set $\mu_{k,i} > 0$ for $i=2,...,n$. 
 
 Because we have strict inequality in the above equation, Lemma 1 from ~\cite{Wain:09a} show that all solutions must be zero on $S^c$.
 \end{proof}
@@ -237,8 +237,9 @@ The key is to note that $\hat{r}$ and $\Delta_{k,j}$ are independent for all $k 
 We remind the reader that $\Delta_{k,j} = \max(X_k, - X_{k(j)} \mathbf{1}_n, 0)$. Because $\hat{r}$ is empirically centered,
 
 \begin{align*}
-\frac{1}{n} \hat{r}^\tran \Delta_{k,j} &= \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)}) 
-                                            - \frac{1}{n} \hat{r}^\tran X_{k(j)} \\
+\frac{1}{n} \hat{r}^\tran \Delta_{k,j} &= 
+              \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)}\mathbf{1}_n) 
+                                       - \frac{1}{n} \hat{r}^\tran \mathbf{1}_n X_{k(j)} \\
                   &= \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)})
 \end{align*}
 Our goal in this proof is to bound $\frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)})$ from above.
@@ -247,8 +248,10 @@ Our goal in this proof is to bound $\frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)}
 
 \begin{align*}
 \hat{r}_i &= Y_i - \bar{Y}_i -  \sum_{k \in S} \hat{f}_k (X_k^{(i)}) \\
-	&= f_0(X_S^{(i)}) + \epsilon_i - \bar{f_0} - \bar{\epsilon}- \sum_{k \in S} \hat{f}_k(X_k^{(i)}) \\
-	&=  f_0(X_S^{(i)}) - \bar{f_0} - \sum_{k \in S} \hat{f}_k(X_k^{(i)}) + \epsilon_i - \bar{\epsilon}
+	&= f_0(X_S^{(i)}) + \epsilon_i - \bar{f_0} - \bar{\epsilon}- 
+                      \sum_{k \in S} \hat{f}_k(X_k^{(i)}) \\
+	&=  f_0(X_S^{(i)}) - \bar{f_0} - \sum_{k \in S} \hat{f}_k(X_k^{(i)}) 
+                   + \epsilon_i - \bar{\epsilon}
 \end{align*}
 Where $\bar{f_0} = \frac{1}{n} \sum_{i=1}^n f_0(X_S^{(i)})$ and likewise for $\bar{\epsilon}$.
 
@@ -338,7 +341,7 @@ $| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most
  We will use covering number and uniform convergence and will thus need to first introduce some notations. 
  \subsubsection{Notation} 
 
- Given samples $X^{(1)},...,X^{(n)}$, let $f, g$ be a function and $w$ be a $n$-dimensional random vector, then we denote $\| f - g + w \|_n^2 \coloneqq \frac{1}{n} \sum_{i=1}^n ( f(X^{(i)}) - g(X^{(i)}) + w_i )^2$.
+ Given samples $X^{(1)},...,X^{(n)}$, let $f, g$ be a function and $w$ be a $n$-dimensional random vector, then we denote $\| f - g + w \|_n^2 \coloneqq \frac{1}{n} \sum_{i=1}^n ( f(X^{(i)}) - g(X^{(i)}) + w_i )^2$. 
 
 For a function $g : \R^s \rightarrow \R$, define $\hat{R}_s(g) \coloneqq \| f_0 + w - \bar{f_0} - \bar{w} - g \|_n^2$ as the objective of the \emph{restricted} regression and define $R_s(g) \coloneqq \E | f_0(X)  + w - \mu - g(X) |^2$ as the population risk, where $\bar{f_0} = \frac{1}{n} \sum_i f_0(X^{(i)})$ and $\bar{w} = \frac{1}{n}\sum_{i=1}^n w_i $ and $\mu = \E f_0(X)$. Note that we \emph{subtract} out the mean in the two risk definitions.
 
@@ -551,11 +554,14 @@ with probability at least $1-\frac{C}{n}$.
 For a fixed $f'$, we have that, by definition
 \begin{align*}
 \hat{R}_s (f') &= \| f_0 + w - \bar{f}_0\mathbf{1}_n - \bar{w} \mathbf{1}_n - f' \|_n^2\\
-     &= \| f_0  - \bar{f}_0\mathbf{1}_n - f'\|_n^2 
-       + 2 \langle w, f_0 - \bar{f}_0\mathbf{1}_n - f'\rangle_n + \| w \|_n^2 + |\bar{w}|\\
+     &= \| f_0  - \bar{f}_0\mathbf{1}_n - \bar{w}\mathbf{1}_n - f'\|_n^2 
+       + 2 \langle w, f_0 - \bar{f}_0\mathbf{1}_n -\bar{w}\mathbf{1}_n - f'\rangle_n 
+       + \| w \|_n^2 \\
 R_s(f') &= \E\big(f_0(X) + w - \mu - f'(X)\big)^2 \\
      &= \E\big(f_0(X) - \mu - f'(X)\big)^2 + \E w^2  
 \end{align*}
+
+
 
 Because $f_0(X^{(i)}) - f'^(X^{(i)})$ is bounded by $3sB$, $\| f_0 - f'\|_n^2$ is the empirical average of $n$ random variables bounded by $9(sB)^2$. 
 
@@ -596,10 +602,10 @@ Expressions~\ref{eqn:approx_deviation1} and \ref{eqn:approx_deviation2} become $
 \textbf{Sub-Exponential} random variable is the square of a subgaussian random variable\cite{vershynin2010introduction}.
 
 \begin{proposition} (Subexponential Concentration \cite{vershynin2010introduction})
-Let $X_1,...,X_N$ be zero-mean independent subexponential random variables with subexponential scale $K$. 
+Let $X_1,...,X_n$ be zero-mean independent subexponential random variables with subexponential scale $K$. 
 \[
-P( | \frac{1}{N} \sum_{i=1}^N X_i | \geq \epsilon) \leq
-	2 \exp \left[ -c N \min\left( \frac{\epsilon^2}{K^2}, \frac{\epsilon}{K} \right) \right]
+P( | \frac{1}{n} \sum_{i=1}^n X_i | \geq \epsilon) \leq
+	2 \exp \left[ -c n \min\left( \frac{\epsilon^2}{K^2}, \frac{\epsilon}{K} \right) \right]
 \]
 where $c > 0$ is an absolute constant.
 \end{proposition}
@@ -608,7 +614,7 @@ For uncentered subexponential random variables, we can use the following fact. I
 
 \textbf{Restating}. We can set
 \[
-c \min\left( \frac{\epsilon^2}{K^2}, \frac{\epsilon}{K} \right) = \frac{1}{N} \log \frac{1}{\delta}.
+c \min\left( \frac{\epsilon^2}{K^2}, \frac{\epsilon}{K} \right) = \frac{1}{n} \log \frac{1}{\delta}.
 \]
 Thus, with probability at least $1-\delta$, the deviation at most
 \[
@@ -666,7 +672,7 @@ P( | \frac{1}{N} S_n| \geq \epsilon) \leq 2 \exp( -2 N \epsilon^2 \frac{1}{(b-a)
 
 \end{corollary}
 
-A simple restatement. With probability at least $1- \delta$, the deviation $| \frac{1}{N} S_n$ is at most $ (b-a) \sqrt{ \frac{1}{2N} \log \frac{2}{\delta}}$.s
+A simple restatement. With probability at least $1- \delta$, the deviation $| \frac{1}{N} S_n|$ is at most $ (b-a) \sqrt{ \frac{1}{2N} \log \frac{2}{\delta}}$.
 
 \begin{proof}
 \[
