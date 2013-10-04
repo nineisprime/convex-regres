@@ -38,15 +38,15 @@ KKT conditions
 and the constraints $\sum_i h_{ki} = 0$.
 It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
 \begin{align*}
-  \forall j\geq{}i,\; h_{k(j)}-h_{k(i)}  &= 
+  \forall & j\geq{}i, \; h_{k(j)}-h_{k(i)}  = 
             \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) \\
-      & = \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})\\ 
-      & \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) \\
+      & = \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})
+       \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) \\
       & = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
-  \forall j<i,\;  h_{k(j)}-h_{k(i)} &=
+  \forall & j<i,\;  h_{k(j)}-h_{k(i)} =
                 \sum\limits_{t=j}^{i-1}(h_{k(t)}-h_{k(t+1)}) \\
-     &= \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) \\ 
-     & \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)})  \\
+     & = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) 
+     \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)})  \\
      &= \beta_{k(i)}(x_{k(j)}-x_{k(i)}).
 \end{align*}
 The $\ell_\infty/\ell_1$ penalty
@@ -142,7 +142,7 @@ We can write this more compactly in matrix notations. First define $\Delta_{k(j)
 \end{split}
 \end{equation*}
 
-Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = \Delta_{k(j)}(x_{k(i)})$ and $d_k = (d_{k(1)} ,..., d_{k(n-1)})$. We can now reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
+Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = \Delta_{k(j)}(x_{ki})$ and $d_k = (d_{k(1)} ,..., d_{k(n-1)})$. We can now reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
 \begin{align}
 \min_{d_k, c_k}& \frac{1}{2n} 
        \Bigl\| Y - \bar{Y}\mathbf{1}_n - \sum_{k=1}^p 
@@ -153,7 +153,7 @@ Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = \Delta_{k(
 	& c_k = \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k 	
                \qquad \trm{(centering)} \nonumber 
 \end{align}
-$\|d_k\|_1$ is not identical to $\|\bds{\beta}_{k\cdot}\|_{\infty}$, but it is easy to verify that $\|\bds{\beta}_{k\cdot}\|_{\infty} \leq \|d_k\|_1 \leq 2\|\bds{\beta}_{k\cdot}\|_{\infty}$.
+$\|d_k\|_1$ is not identical to $\|\bds{\beta}_{k\cdot}\|_{\infty}$, but it is easy to verify that $\|\bds{\beta}_{k\cdot}\|_{\infty} \leq \|d_k\|_1 \leq 4\|\bds{\beta}_{k\cdot}\|_{\infty}$.
 
 \begin{remark}
 \label{rem:bounded_lipschitz_constraints}
