@@ -1,22 +1,11 @@
 \section{Related Work}
 
 Variable selection in general nonparametric regression or function
-estimation is a notoriously difficult problem.  
-Nonparametric regression is subject to the curse
-of dimensionality,
-and may be inaccurate even in moderate dimensions,
-without any additional assumptions.  But if the function is sparse, depending
-on only a few covariates, there is hope that by identifying
-the relevant variables one can effectively reduce the 
-dimension, and  estimate the function at the
-corresponding faster statistical rate of convergence.
-
-\citet{lafferty2008rodeo} develop a greedy procedure for
+estimation is a notoriously difficult problem. \citet{lafferty2008rodeo} develop a greedy procedure for
 adjusting bandwidths in a local linear regression estimator,
 and show that the procedure achieves the minimax rate
 as if the relevant variables were isolated in advance.
-But the method does not carry out explicit variable selection.
-Moreover, it only provably scales to dimensions $p$ that 
+But the method only provably scales to dimensions $p$ that 
 grow logarithmically in the sample size $n$, so that $p = O(\log n)$.  Note that this
 is the opposite of the high dimensional scaling behavior
 known to hold for sparsity selection in linear models
@@ -35,7 +24,7 @@ Here it is shown that the sample complexity scales as $n > \log p$
 if one adaptively selects the points on
 which the high-dimensional function is evaluated.
 
-\citet{dalalyan:12} give
+\citet{dalalyan:12} show that the exponential scaling $p=O(\log n)$ is achievable if the underlying function is assumed to be smooth with respect to a Fourier basis. They also give
 support for the intrinsic difficulty of variable
 selection in nonparametric regression, giving lower bounds 
 showing that sparsistency is not possible if $n < \log p$ or if $n <
@@ -65,6 +54,17 @@ optimization, but with no additional tuning parameters.  As we show
 below, our method scales to high dimensions, with a dependence on the
 intrinsic dimension $s$ that scales polynomially, rather than
 exponentially as in the general case analyzed in \cite{dalalyan:12}.
+
+
+\textbf{Notation.} If
+$\mathbf{x}$ is a vector, we use $\mathbf{x}_{-k}$ to denote the
+vector with the $k$-th coordinate removed. If $\mathbf{v} \in \R^n$, then
+$v_{(1)}$ denotes the smallest coordinate of $\mathbf{v}$ in
+magnitude, and $v_{(j)}$ denotes the $j$-th smallest; $\mathbf{1}_n \in \R^n$
+is the all ones vector. If $X \in \R^p$ and $S \subset
+\{1,...,p\}$, then $X_S$ is the subvector of $X$ restricted to
+the coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use
+$\bar{X}$ to denote the empirical average. Given a random variable $X_k$ and a scalar $x_k$, we use $\E[\cdot \given x_k]$ as a shorthand for $\E[ \cdot \given X_k = x_k]$.
 
 
 %* Laetitia Comminges, Arnak S. Dalalyan 

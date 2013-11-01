@@ -7,7 +7,34 @@
 %\usepackage{xypic}
 %\xyoption{pdf}
 
-\begin{document}
+\begin{document}\
+
+\section{10/25/2013: Convex + Concave function}
+
+Now we consider variable selection for $h(x) = f(x) + g(x)$ where $f$ is convex and $g$ is concave.
+
+\subsection{Separation Approach}
+
+Here is one line of thought. We are given $h_i = h(x_i)$ for a bunch of sample points. Suppose we can learn the decomposition $f_i + g_i = h_i$, then we can use additive faithfulness to recover the relevant variables of $f$ and $g$.
+
+The separation may not be easy however. Perhaps the following optimization:
+
+\begin{align*}
+\min_{\beta, \theta}&\sum_{j=1}^p \Big( \|\beta_j\|_\infty + \| \theta_j\|_\infty \Big) \\
+ \trm{s.t. } & h_i = f_i + g_i \\
+ & f_i \geq f_{i'} + \theta_{i'}^\tran (x_i - x_{i'}) \\
+ & g_i \leq g_{i'} + \beta_{i'}^\tran (x_i - x_{i'}) 
+\end{align*}
+
+Of course, we have identifiability issues. There exist two sets of functions $\mathcal{F}$ and $\mathcal{G}$ such that for all $f \in \mathcal{F}$, there exist $g \in \mathcal{g}$ such that $f+g = h$. 
+
+The gradient penalty in the optimization program is then critical because it may let us learn a \textbf{sparse} $f,g$. 
+
+We emphasize that we do not attempt to do variable selection at all in the separation optimization, we only want to recover the values $f_i$ and $g_i$. The sparsity patterns of $\beta$ and $\theta$ are of no importance.
+
+
+\newpage
+
 \section{(7/26/2013)}
 
 Conditional Likelihood Maximization. We compute the marginalization

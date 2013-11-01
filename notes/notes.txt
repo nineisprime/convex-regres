@@ -20,8 +20,6 @@ Sparsity in multiple kernel learning.
 Ann. Statist., 38 (6):3660–3695, 2010 
 
 
-
-
 * Laetitia Comminges, Arnak S. Dalalyan 
 Tight conditions for consistency of variable selection 
 in the context of high dimensionality. 
@@ -34,13 +32,13 @@ Comment: They estimate the coefficient of the regression function with respect t
 and dimension reduction in high-dimensional non-parametric 
 regression. Electron. J. Stat. 2 1224–1241 
 
-Comment: They assume Holder smoothness and use multiple L1 regularized local polynomial smoothing to detect the sparsity pattern. They require that $d = log n$ as well.
+Comment: They assume Holder smoothness and use multiple L1 regularized local polynomial smoothing to detect the sparsity pattern. They require that $p < log n$.
 
 
 * "Approximation of Functions of Few Variables in High Dimensions" 
 by DeVore, Petrova and Wojtaszczyk. 
 
-Comment: They show that a scaling of $n > log p, n > exp(l)$ is possible if one adaptively selects the points on which the high-dimensional functions are evaluated.
+Comment: They show that variable selection under a scaling of $n > log p, n > exp(s)$ is possible if one adaptively selects the points on which the high-dimensional functions are evaluated.
 
 
 9/29/2013

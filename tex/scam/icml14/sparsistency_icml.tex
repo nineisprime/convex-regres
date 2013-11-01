@@ -52,15 +52,15 @@ We use the following statistical setting:
 \item Let $Y = f_0(X) + \epsilon$ where $\epsilon$ is zero-mean noise. Let $Y^{(1)},...,Y^{(n)}$ be iid.
 \item Let $S = \{1,...,s\}$ denote the relevant variables where $s\leq p$, i.e.,
   $f_0(X) = f_0(X_S)$.
-\item Let $f^*_1,...,f^*_s \coloneqq \argmin_{f_1,...,f_s} \{ \E(f_0(X) - \sum_{k=1}^s f_k(X_k))^2 \,|\, \E[f_k(X_k)] = 0 \}$.
+\item Let $f^*_1,...,f^*_s \coloneqq \argmin_{f_1,...,f_s} \{ \E\Big(f_0(X) -\E f_0(X) - \sum_{k=1}^s f_k(X_k)\Big)^2 \,|\, \E[f_k(X_k)] = 0 \}$.
 \end{packed_enum}
 
 Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent.  \ A1': $\{ X_k \}_{k \in S}$ are independent.
 \item[A2:] $\|f_0\|_\infty \leq sB$ \  A2': $f_0$ is convex,
-  twice-differentiable, $L$-Lipschitz, and $\trm{supp}(f_0) = S$.
-\item[A3:] Suppose $\epsilon$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$, i.e. for all $t \in \R$, $\E e^{t \epsilon} \leq \E e^{\sigma^2 t^2 / 2}$.
+  twice-differentiable, and $L$-Lipschitz.
+\item[A3:] Suppose $\epsilon$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$, i.e. for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
 \item[A4:] For all $k=1,...,s$, $\E(f^*_s(X_k))^2 \geq \alpha$ for some positive constant $\alpha$.
 \end{packed_enum}
 
@@ -84,7 +84,7 @@ at an appropriate rate.
 \end{remark}
 
 \begin{remark}
-Assumption A4 ensures that the relevant variables are ``relevant enough''. Under A4, the population risk of an additive function with $s-1$ components is at least $\alpha$ larger than the population risk of the optimal additive function with $s$ components. Lemma~\ref{lem:minus_one_risk_increase} in section~\ref{sec:false_negative_proof} of the appendix.
+Assumption A4 ensures that the relevant variables are ``relevant enough''. Under A4, the population risk of an additive function with $s-1$ components is at least $\alpha$ larger than the population risk of the optimal additive function with $s$ components. See lemma~\ref{lem:minus_one_risk_increase} in section~\ref{sec:false_negative_proof} of the appendix.
 \end{remark}
 
 \begin{theorem} (Controlling false positives) 
@@ -140,6 +140,9 @@ we have the following result.
   $\P( \trm{supp}(\hat{f_n}) = \trm{supp}(f_0) ) \rightarrow 1$.
 \end{corollary}
 The above corollary implies that sparsistency is achievable at the same exponential scaling of the ambient dimension $p = O(\exp(n^c)), c<1$ rate as parametric models. The cost of nonparametric modeling is reflected in the scaling with respect to $s$, which can only scale at $o(n^{4/25})$.
+
+\citet{dalalyan:12} have shown that under tradtional smoothness constraints, variable selection is achievable only if $n > O(e^s)$. It is interesting to observe that because of additive faithfulness, the convexity assumption enables a much better scaling of $n = O(\textrm{poly}(s))$, demonstrating that geometric constraints can be quite different from the previously studied smoothness conditions.
+
 
 %\textbf{Comparison with Related Work.} 
 

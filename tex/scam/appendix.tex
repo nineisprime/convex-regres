@@ -1,15 +1,14 @@
-\section*{Appendix}
+\section{Appendix}
 
 \subsection{Proof of Additive Faithfulness}
 \label{sec:faithful_proof}
 
-We start with a lemma similar to Lemma~\ref{lem:general_int_reduction} and whose proofs are identical.
+We start with a proof of Lemma~\ref{lem:general_int_reduction}. We restate the lemma here for convenience.
 
 \begin{lemma}
-\label{lem:int_reduction}
-Let $F$ be a product distribution on $C=[0,1]^s$ with density function $p$. Let $f: C \rightarrow \R$ be a convex function. Suppose that $\E f(X) = 0$.
+Let $F$ be a product distribution on $C=[0,1]^s$ with a positive density function $p$. Let $f: C \rightarrow \R$ be an integrable function. 
 
-Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$ 
+Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, \E f_k(X_k) = 0\}$ 
 
 Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
 \end{lemma}
@@ -18,7 +17,7 @@ Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and thi
  
 Let $f^*_1,...,f^*_s, \mu^*$ be the minimizers as defined. 
 
-We first show that the optimal $\mu^* = \E f(X)$ for any $f_1, ..., f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] = \E[ f(X) ]$.\\
+We first show that the optimal $\mu^* = \E f(X)$ for any $f_1, ..., f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] = \E[ f(X) ]$. \\
 
 We now turn our attention toward the $f^*_k$'s. 
 
@@ -49,8 +48,8 @@ Where the second line follows because $p(\mathbf{x}) = \prod_k p(x_k)$ by produc
 The square error objective is strongly convex. The second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
 
 
+Now, we note that as a function of $x_k$, $\E[ f(X) | x_k] - \E f(X)$ has mean zero and we thus finish the proof.
 
-Now, we verify that as a function of $x_k$, $\E[ f(X) | x_k] - \E f(X)$ has mean zero and is convex. The former is clearly true; the latter is true because for every $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a convex function with respect to $x_k$ and therefore, $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}$ is still convex. 
  
  \end{proof}
  
@@ -68,12 +67,30 @@ for \emph{any} set of component functions $\{ f_{k'} \}_{k'\neq k}$ that satisfi
 \end{lemma}
 
 
+The next lemma adapts Lemma~\ref{lem:general_int_reduction} to convex functions.
+
+\begin{lemma}
+\label{lem:int_reduction}
+Let $F$ be a product distribution on $C=[0,1]^s$ with positive density function $p$. Let $f: C \rightarrow \R$ be a convex function. 
+
+Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$ 
+
+Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
+\end{lemma}
+
+\begin{proof}
+The proof is identical to that of Lemma~\ref{lem:general_int_reduction}. We need only verify that $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ is convex.
+
+This is true because for every $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a convex function with respect to $x_k$ and therefore, $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}$ is still convex. 
+\end{proof}
+
  The next proposition, combined with Lemma~\ref{lem:int_reduction}, proves Theorem~\ref{thm:convex_faithful}.
  
- \begin{proposition}
+\begin{proposition}
+\label{prop:faithful_condition}
 Let $F$ be a product distribution supported on $C=[0,1]^s$ with positive density $p > 0$. Let $f: C \rightarrow \R$ be a convex function, twice differentiable. 
 
-Let $f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) -\E f(X) - \sum_k f_k(X_k) |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$.
+Let $f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) -\E f(X) - \sum_k f_k(X_k) |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
 
 The following are equivalent:
 \begin{packed_enum}
@@ -136,10 +153,6 @@ So we have that for all $x_k, \mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, 
 
 \end{proof}
  
-
- 
- 
-
  
  
  
@@ -219,8 +232,9 @@ Because we have strict inequality in the above equation, Lemma 1 from ~\cite{Wai
  \subsection{Proof of False Positive Control}
  \label{sec:false_positive_proof}
  
- We first restate the theorem for convenience.
- 
+\textbf{Note:} the symbols $c,C$ represent absolute constants. We will often abuse notation and ``absorb'' new absolute constants into $c, C$; the actual value of $c, C$ could thus vary from line to line.
+
+ We first restate the theorem for convenience. 
  
 \begin{theorem} 
 Suppose assumptions A1, A2, A3 hold. 
@@ -339,6 +353,8 @@ $| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most
  \subsection{Proof of False Negative Control}
  \label{sec:false_negative_proof}
  
+\textbf{Note:} the symbols $c,C$ represent absolute constants. We will often abuse notation and ``absorb'' new absolute constants into $c, C$; the actual value of $c, C$ could thus vary from line to line.
+
  We will use covering number and uniform convergence and will thus need to first introduce some notations. 
  \subsubsection{Notation} 
 
@@ -347,7 +363,7 @@ $| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most
 We let $\langle f, g \rangle_n \coloneqq \frac{1}{n} \sum_{i=1}^n f(X^{(i)}) g(X^{(i)})$. It then follows that:
 \begin{packed_enum}
 \item $\| f + g \|_n^2 = \|f\|_n^2 + 2 \langle f, g \rangle_n + \|g \|_n^2$
-\item $\langle f, g \rangle_n \leq \|f\|_n \| g \_n$
+\item $\langle f, g \rangle_n \leq \|f\|_n \| g \|_n$
 \end{packed_enum}
 
 For a function $g : \R^s \rightarrow \R$, define $\hat{R}_s(g) \coloneqq \| f_0 + w - \bar{f_0} - \bar{w} - g \|_n^2$ as the objective of the \emph{restricted} regression and define $R_s(g) \coloneqq \E | f_0(X)  + w - \mu - g(X) |^2$ as the population risk, where $\bar{f_0} = \frac{1}{n} \sum_i f_0(X^{(i)})$ and $\bar{w} = \frac{1}{n}\sum_{i=1}^n w_i $ and $\mu = \E f_0(X)$. Note that we \emph{subtract} out the mean in the two risk definitions.
@@ -681,7 +697,7 @@ Using the subexponential concentration inequality, we know that, with probabilit
 
 First, let $\delta = \frac{1}{n}$. Suppose $n$ is large enough such that $ \frac{1}{cn} \log Cn < 1$. Then, we have, with probability at least $1-\frac{1}{n}$,
 \begin{align*}
- \frac{1}{n} \sum_{i=1}^n w_i^2 &\leq c\sigma^2 (1+\sqrt{\frac{1}{cn} \log Cn}) \\
+ \frac{1}{n} \sum_{i=1}^n w_i^2 &\leq c\sigma^2 \Big(1+\sqrt{\frac{1}{cn} \log Cn}\Big) \\
 		&\leq 2 c \sigma^2
  \end{align*}
  

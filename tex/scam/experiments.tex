@@ -101,7 +101,7 @@ variables well.
 We next use the Boston housing data rather than simulated data. This data set
 contains 13 covariates, 506 samples and one response variable
 indicating housing values in suburbs of Boston. The data and detailed description
-can be found on the UCI Machine Learning Repository website~\verb+http://archive.ics.uci.edu/ml/datasets/Housing+. 
+can be found on the UCI Machine Learning Repository website~\footnote{\texttt{http://archive.ics.uci.edu/ml/datasets/Housing}}. 
 
 We first use all $n=506$ samples (with normalization) to train SCAM, using
 a set of candidate $\{\lambda^{(t)}\}$ with $\lambda^{(1)}=0$ (no regularization). For each $\lambda^{(t)}$
@@ -163,7 +163,7 @@ besides $\lambda$; 2) SCAM is formulated as a convex program, which guarantees a
 %\end{figure}
 
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \begin{center}
 \begin{tabular}{cccc}
 \hskip-20pt
@@ -209,4 +209,13 @@ predictive MSE & inferred functions from SCAM
 \end{center}
 \caption{Results on Boston housing data, showing regularization paths,
  MSE and fitted functions.}\label{Boston}
-\end{figure}
+\end{figure*}
+
+
+% DO NOT CHANGE; RefTex variables -minx
+ 
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex" ***
+%%% End: ***
+

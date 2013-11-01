@@ -7,7 +7,7 @@ We now consider the following nonparametric regression problem
 \end{equation}
 where $\bds{x}_{i}\in\mathbb{R}^{p}$ is the covariate, $Y_{i}$ is the
 response and $\epsilon_{i}$ is mean zero noise. The regression function $f(\cdot)$ is the summation of 
-functions $f_{k}(\cdot)$ in each variable dimension.  
+functions $f_{k}(\cdot)$ in each variable dimension and a scalar offset $\mu$.  
 We impose an additional constraint that each $f_{k}(\cdot)$ is 
 a univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
 \begin{equation}\label{hyper}
@@ -105,7 +105,7 @@ After optimization, the function estimator for any input data $\bds{x}_j$ is, ac
 
 
 \subsection{Alternative Formulation}
-Optimization (\ref{np}) can be reformulated in terms of the 2nd derivatives. The alternative formulation replaces the ordering
+Optimization (\ref{np}) can be reformulated in terms of the 2nd derivatives, a form which we analyze in our theoretical analysis. The alternative formulation replaces the ordering
 constraints $\beta_{k(i+1)} \geq \beta_{k(i)}$ with positivity
 constraints, which simplifies theoretical analysis.
 Define $d_{k(i)}$ as the second derivative:

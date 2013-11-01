@@ -18,23 +18,25 @@ advantages.  In addition, we introduce algorithms and supporting
 statistical theory for a practical, effective approach to this
 variable selection problem.
 
+The general sparse nonparametric regression problem is considered in \cite{lafferty2008rodeo}, where it is shown that computationally efficient, near minimax-optimal estimation is possible, but in ambient
+dimensions that scale only as $p = O(\log n)$ instead of $p=O\bigl(e^{n^c}\bigr)$ as enjoyed by sparse linear models. \citet{dalalyan:12} do achieve exponential scaling $p=O(e^n)$ under certain Fourier smoothness conditions but they show that variable selection is still hard in that the number of relevant variables $s$ must be less than $\log n$.
 
-The general sparse nonparametric regression problem is considered in
-\cite{lafferty2008rodeo}, where it is shown that computationally
-efficient, near minimax-optimal estimation is possible, but in ambient
-dimensions that scale only as $p = O(\log n)$.  This is in stark
-contrast to the exponential scaling $p = O\bigl(e^{n^c}\bigr)$ enjoyed
-by sparse linear models \cite{Wain:09a}.  Sparse additive models
-\cite{Ravikumar:09} provide a practical alternative to fully
+% The general sparse nonparametric regression problem is considered in
+% \cite{lafferty2008rodeo}, where it is shown that computationally
+% efficient, near minimax-optimal estimation is possible, but in ambient
+% dimensions that scale only as $p = O(\log n)$.  This is in stark
+% contrast to the exponential scaling $p = O\bigl(e^{n^c}\bigr)$ enjoyed
+% by sparse linear models \cite{Wain:09a}.  
+
+Approximating the regression function by a sum of one-dimensional functions, known as sparse additive models, \cite{Ravikumar:09} is a practical alternative to fully
 nonparametric function estimation.  But the additive assumption is
 limited.  In particular, the natural idea of first selecting the
 single variable effects, then the pairwise effects, and so on, does
 not in general lead to consistent variable selection.  In other words,
 the general nonparametric model is not additively faithful.
 Remarkably, the additional assumption of convexity does lead to
-additive faithfulness, as we show here.  In addition, we show that
-exponential scaling is achievable for sparse convex additive models.
-Thus, the geometric convexity constraint is quite different from the
+consistent variable selection, as we show here. In addition, we show that
+the scaling $p = O(\log n)$ and $n = O\big(\textrm{poly}(s)\big)$ is achievable for sparse convex additive models. Thus, the geometric convexity constraint is quite different from the
 smoothness constraints imposed in traditional nonparametric
 regression.
 
@@ -74,7 +76,9 @@ computed tomography \cite{Prince:90}, target reconstruction
 \cite{Hannah:12}.  Other applications include queuing theory
 \cite{Chen:01} and economics, where it is of interest to estimate
 concave utility functions \cite{Pratt:68}.  See \cite{Lim:12} for
-other applications.  Beyond cases where the assumption of convexity is
+other applications.  
+
+Beyond cases where the assumption of convexity is
 natural, we offer that the convexity assumption is attractive as a
 tractable, nonparamametric relaxation of the linear model.  In
 addition to the lack of tuning parameters, other than the
@@ -90,12 +94,3 @@ regression data sets, in a comparison with sparse linear models
 
 \def\mathbf#1{\mbox{\boldmath $#1$}} 
 
-\textbf{Notation.} If
-$\mathbf{x}$ is a vector, we use $\mathbf{x}_{-k}$ to denote the
-vector with the $k$-th coordinate removed. If $\mathbf{v} \in \R^n$, then
-$v_{(1)}$ denotes the smallest coordinate of $\mathbf{v}$ in
-magnitude, and $v_{(j)}$ denotes the $j$-th smallest; $\mathbf{1}_n \in \R^n$
-is the all ones vector. If $X \in \R^p$ and $S \subset
-\{1,...,p\}$, then $X_S$ is the subvector of $X$ restricted to
-the coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use
-$\bar{X}$ to denote the empirical average.
