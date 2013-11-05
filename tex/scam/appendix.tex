@@ -1,158 +1,157 @@
 \section{Appendix}
 
-\subsection{Proof of Additive Faithfulness}
-\label{sec:faithful_proof}
+% \subsection{Proof of Additive Faithfulness}
+% \label{sec:faithful_proof}
 
-We start with a proof of Lemma~\ref{lem:general_int_reduction}. We restate the lemma here for convenience.
+% We start with a proof of Lemma~\ref{lem:general_int_reduction}. We restate the lemma here for convenience.
 
-\begin{lemma}
-Let $F$ be a product distribution on $C=[0,1]^s$ with a positive density function $p$. Let $f: C \rightarrow \R$ be an integrable function. 
+% \begin{lemma}
+% Let $F$ be a product distribution on $C=[0,1]^s$ with a positive density function $p$. Let $f: C \rightarrow \R$ be an integrable function. 
 
-Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, \E f_k(X_k) = 0\}$ 
+% Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, \E f_k(X_k) = 0\}$ 
 
-Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
-\end{lemma}
+% Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
+% \end{lemma}
  
- \begin{proof}
+%  \begin{proof}
  
-Let $f^*_1,...,f^*_s, \mu^*$ be the minimizers as defined. 
+% Let $f^*_1,...,f^*_s, \mu^*$ be the minimizers as defined. 
 
-We first show that the optimal $\mu^* = \E f(X)$ for any $f_1, ..., f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] = \E[ f(X) ]$. \\
+% We first show that the optimal $\mu^* = \E f(X)$ for any $f_1, ..., f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] = \E[ f(X) ]$. \\
 
-We now turn our attention toward the $f^*_k$'s. 
+% We now turn our attention toward the $f^*_k$'s. 
 
-It must be then that $f^*_k$ minimizes $\{ \E | f(X) - \mu^* - \sum_{k' \neq k} f^*_{k'} (X_{k'}) - f_k (X_k)|^2 \,:\, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
+% It must be then that $f^*_k$ minimizes $\{ \E | f(X) - \mu^* - \sum_{k' \neq k} f^*_{k'} (X_{k'}) - f_k (X_k)|^2 \,:\, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
 
-Fix $x_k$, we will show that the value $\E[ f(X) | x_k] - \mu^*$, for all $x_k$,  uniquely minimizes 
-\[
-\min_{ f_k(x_k) } \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
-         \big| f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k) -\mu^*\big|^2 
-                 d \mathbf{x}_{-k}.
-\]
-It easily follows then that the function $x_k \mapsto \E[ f(X) \given x_k] - \mu^*$ is the unique $f^*_k$ that minimizes the expected square error.
-
-
-Take the derivative with respect to the value $f_k(x_k)$ and set it equal to zero, we get that
-\begin{align*}
-\int_{\mathbf{x}_{-k}} p(\mathbf{x}) f_k(x_k) d \mathbf{x}_{-k} &= 
-  \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
-      ( f(\mathbf{x})-\sum_{k' \neq k} f^*_{k'}(x_{k'})-\mu^*) d \mathbf{x}_{-k} \\  
-p(x_k) f_k(x_k) &= \int_{\mathbf{x}_{-k}} p(x_k)
-     p(\mathbf{x}_{-k}) ( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})-\mu^*) 
-              d \mathbf{x}_{-k} \\
-f_k(x_k) &= \int_{\mathbf{x}_{-k}} 
-       p(\mathbf{x}_{-k}) (f(\mathbf{x}) -\mu^*) d \mathbf{x}_{-k} 
- \end{align*}
-Where the second line follows because $p(\mathbf{x}) = \prod_k p(x_k)$ by product distribution assumption. The third line follows because $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f^*_{k'}(x_{k'}) d\mathbf{x}_{-k} = 0$ for all $k' \neq k$ by the constraint that $\E[f^*_{k'}(X_{k'})] = 0$. 
-
-The square error objective is strongly convex. The second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
+% Fix $x_k$, we will show that the value $\E[ f(X) | x_k] - \mu^*$, for all $x_k$,  uniquely minimizes 
+% \[
+% \min_{ f_k(x_k) } \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
+%          \big| f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k) -\mu^*\big|^2 
+%                  d \mathbf{x}_{-k}.
+% \]
+% It easily follows then that the function $x_k \mapsto \E[ f(X) \given x_k] - \mu^*$ is the unique $f^*_k$ that minimizes the expected square error.
 
 
-Now, we note that as a function of $x_k$, $\E[ f(X) | x_k] - \E f(X)$ has mean zero and we thus finish the proof.
+% Take the derivative with respect to the value $f_k(x_k)$ and set it equal to zero, we get that
+% \begin{align*}
+% \int_{\mathbf{x}_{-k}} p(\mathbf{x}) f_k(x_k) d \mathbf{x}_{-k} &= 
+%   \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
+%       ( f(\mathbf{x})-\sum_{k' \neq k} f^*_{k'}(x_{k'})-\mu^*) d \mathbf{x}_{-k} \\  
+% p(x_k) f_k(x_k) &= \int_{\mathbf{x}_{-k}} p(x_k)
+%      p(\mathbf{x}_{-k}) ( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})-\mu^*) 
+%               d \mathbf{x}_{-k} \\
+% f_k(x_k) &= \int_{\mathbf{x}_{-k}} 
+%        p(\mathbf{x}_{-k}) (f(\mathbf{x}) -\mu^*) d \mathbf{x}_{-k} 
+%  \end{align*}
+% Where the second line follows because $p(\mathbf{x}) = \prod_k p(x_k)$ by product distribution assumption. The third line follows because $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f^*_{k'}(x_{k'}) d\mathbf{x}_{-k} = 0$ for all $k' \neq k$ by the constraint that $\E[f^*_{k'}(X_{k'})] = 0$. 
+
+% The square error objective is strongly convex. The second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
+
+
+% Now, we note that as a function of $x_k$, $\E[ f(X) | x_k] - \E f(X)$ has mean zero and we thus finish the proof.
 
  
- \end{proof}
+%  \end{proof}
  
-Our reasoning actually proves something stronger. It proves the following lemma:
+% Our reasoning actually proves something stronger. It proves the following lemma:
 
-\begin{lemma}
-\label{lem:additive_component}
+% \begin{lemma}
+% \label{lem:additive_component}
 
-$f^*_k(x_k) = \E[ f(X) | x_k] - \mu^*$ is the unique optimal solution to 
-\[
-min_{f_k} \{ \E\Big( f(X) - \E f(X) - \sum_{k'\neq k} f_{k'}(X_{k'}) - f_k (X_k)\Big)^2 
-                    \,:\, \E f_k(X_k) = 0 \}
-\]
-for \emph{any} set of component functions $\{ f_{k'} \}_{k'\neq k}$ that satisfies $\E f_{k'}(X_{k'}) = 0$.
-\end{lemma}
+% $f^*_k(x_k) = \E[ f(X) | x_k] - \mu^*$ is the unique optimal solution to 
+% \[
+% min_{f_k} \{ \E\Big( f(X) - \E f(X) - \sum_{k'\neq k} f_{k'}(X_{k'}) - f_k (X_k)\Big)^2 
+%                     \,:\, \E f_k(X_k) = 0 \}
+% \]
+% for \emph{any} set of component functions $\{ f_{k'} \}_{k'\neq k}$ that satisfies $\E f_{k'}(X_{k'}) = 0$.
+% \end{lemma}
 
 
-The next lemma adapts Lemma~\ref{lem:general_int_reduction} to convex functions.
+% The next lemma adapts Lemma~\ref{lem:general_int_reduction} to convex functions.
 
-\begin{lemma}
-\label{lem:int_reduction}
-Let $F$ be a product distribution on $C=[0,1]^s$ with positive density function $p$. Let $f: C \rightarrow \R$ be a convex function. 
+% \begin{lemma}
+% \label{lem:int_reduction}
+% Let $F$ be a product distribution on $C=[0,1]^s$ with positive density function $p$. Let $f: C \rightarrow \R$ be a convex function. 
 
-Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$ 
+% Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$ 
 
-Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
-\end{lemma}
+% Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
+% \end{lemma}
 
-\begin{proof}
-The proof is identical to that of Lemma~\ref{lem:general_int_reduction}. We need only verify that $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ is convex.
+% \begin{proof}
+% The proof is identical to that of Lemma~\ref{lem:general_int_reduction}. We need only verify that $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ is convex.
 
-This is true because for every $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a convex function with respect to $x_k$ and therefore, $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}$ is still convex. 
-\end{proof}
+% This is true because for every $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a convex function with respect to $x_k$ and therefore, $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}$ is still convex. 
+% \end{proof}
 
- The next proposition, combined with Lemma~\ref{lem:int_reduction}, proves Theorem~\ref{thm:convex_faithful}.
+%  The next proposition, combined with Lemma~\ref{lem:int_reduction}, proves Theorem~\ref{thm:convex_faithful}.
  
-\begin{proposition}
-\label{prop:faithful_condition}
-Let $F$ be a product distribution supported on $C=[0,1]^s$ with positive density $p > 0$. Let $f: C \rightarrow \R$ be a convex function, twice differentiable. 
+% \begin{proposition}
+% \label{prop:faithful_condition}
+% Let $F$ be a product distribution supported on $C=[0,1]^s$ with positive density $p > 0$. Let $f: C \rightarrow \R$ be a convex function, twice differentiable. 
 
-Let $f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) -\E f(X) - \sum_k f_k(X_k) |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
+% Let $f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) -\E f(X) - \sum_k f_k(X_k) |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
 
-The following are equivalent:
-\begin{packed_enum}
-\item $f$ does not depends on coordinate $k$
-\item For all $x_k$, $\E[ f(X) | x_k] = \E f(X) $.
-\end{packed_enum}
-\end{proposition}
+% The following are equivalent:
+% \begin{packed_enum}
+% \item $f$ does not depends on coordinate $k$
+% \item For all $x_k$, $\E[ f(X) | x_k] = \E f(X) $.
+% \end{packed_enum}
+% \end{proposition}
 
-\begin{proof}
+% \begin{proof}
 
-The first condition trivially implies the second.
+% The first condition trivially implies the second.
 
-Fix $k$. Suppose that, for all $x_k$, $\E[ f(X) | x_k] = \E f(X)$. 
+% Fix $k$. Suppose that, for all $x_k$, $\E[ f(X) | x_k] = \E f(X)$. 
 
-Because we assume that $p(\mathbf{x}) = \prod_k p(x_k)$, we see that, for all $x_k$,
-\begin{align*}
- \E[ f(X) | x_k ] &=  \int_{\mathbf{x}_{-k}} p(\mathbf{x_{-k}}) f(x_k,\mathbf{x}_{-k}) d \mathbf{x}_{-k} = \E f(X)
-\end{align*}
-
-
-For every $\mathbf{x}_{-k}$, we define the derivative
-\[
-g(\mathbf{x}_{-k}) \coloneqq  \lim_{x_k \rightarrow 0^+} \frac{f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k})}{x_k}
-\]
-$g(\mathbf{x}_{-k})$ is well-defined by the assumption that $f$ is everywhere differentiable.
-
-We now describe two facts about $g$.
-
-Fact 1. By exchanging limit with the integral, which is valid by bounded convergence theorem, we reason that 
-\[
-\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) g(\mathbf{x}_{-k}) d \mathbf{x}_{-k} = 0
-\]
-
-Fact 2. Because $f$ is convex, $g(\mathbf{x}_{-k})$ is a component of the subgradient $\partial_{\mathbf{x}} f(0, \mathbf{x}_{-k})$. (the subgradient coincides with the gradient by assumption that $f$ is twice differentiable)
-
-Therefore, using the first order characterization of a convex function, we have
-\begin{align*}
-f(\mathbf{x}') &\geq f( \mathbf{x}) + \partial_{\mathbf{x}} f(\mathbf{x})^\tran (\mathbf{x}' - \mathbf{x}) \quad \trm{ for all } \mathbf{x}', \mathbf{x} \\
-f(x_k, \mathbf{x}_{-k}) &\geq f(0, \mathbf{x}_{-k}) + g(\mathbf{x}_{-k}) x_k \quad \trm{ for all } x_k, \mathbf{x}_{-k}
-\end{align*}
+% Because we assume that $p(\mathbf{x}) = \prod_k p(x_k)$, we see that, for all $x_k$,
+% \begin{align*}
+%  \E[ f(X) | x_k ] &=  \int_{\mathbf{x}_{-k}} p(\mathbf{x_{-k}}) f(x_k,\mathbf{x}_{-k}) d \mathbf{x}_{-k} = \E f(X)
+% \end{align*}
 
 
-For all $x_k, \mathbf{x}_{-k}$, 
-\[
-f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k \geq 0
-\]
-and
-\[
-\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) (f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k) d\mathbf{x}_{-k} = 0
-\]
-Since $f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k$ is a continuous function of $\mathbf{x}_{-k}$ and the density $p(\mathbf{x}_{-k})$ is, by assumption, non-zero on the support, we conclude that for all $x_k, f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k =0 $ necessarily and thus for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, \mathbf{x}_{-k}) + g(\mathbf{x}_{-k}) x_k$.
+% For every $\mathbf{x}_{-k}$, we define the derivative
+% \[
+% g(\mathbf{x}_{-k}) \coloneqq  \lim_{x_k \rightarrow 0^+} \frac{f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k})}{x_k}
+% \]
+% $g(\mathbf{x}_{-k})$ is well-defined by the assumption that $f$ is everywhere differentiable.
 
-The Hessian of $f$ then (guaranteed to exist by assumption) has a zero on the $k$-th main diagonal entry. 
+% We now describe two facts about $g$.
 
-By proposition 7.1.10 from Horn and Johnson~\cite{HJ90},  such a matrix is positive semidefinite if and only if the $k$-th row and column are also zero. (to prove this, one can first work with a 2 by 2 matrix and then use the fact that every principal submatrix of a PSD matrix must be PSD) 
+% Fact 1. By exchanging limit with the integral, which is valid by bounded convergence theorem, we reason that 
+% \[
+% \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) g(\mathbf{x}_{-k}) d \mathbf{x}_{-k} = 0
+% \]
 
-Since $k$-th row and column correspond precisely to the gradient of $g(\mathbf{x}_{-k})$, we conclude that $g$ must be a constant function. It follows therefore that $g = 0$ because it integrates to 0. 
+% Fact 2. Because $f$ is convex, $g(\mathbf{x}_{-k})$ is a component of the subgradient $\partial_{\mathbf{x}} f(0, \mathbf{x}_{-k})$. (the subgradient coincides with the gradient by assumption that $f$ is twice differentiable)
 
-So we have that for all $x_k, \mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, \mathbf{x}_{-k})$, which concludes our proof.
+% Therefore, using the first order characterization of a convex function, we have
+% \begin{align*}
+% f(\mathbf{x}') &\geq f( \mathbf{x}) + \partial_{\mathbf{x}} f(\mathbf{x})^\tran (\mathbf{x}' - \mathbf{x}) \quad \trm{ for all } \mathbf{x}', \mathbf{x} \\
+% f(x_k, \mathbf{x}_{-k}) &\geq f(0, \mathbf{x}_{-k}) + g(\mathbf{x}_{-k}) x_k \quad \trm{ for all } x_k, \mathbf{x}_{-k}
+% \end{align*}
 
-\end{proof}
- 
+
+% For all $x_k, \mathbf{x}_{-k}$, 
+% \[
+% f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k \geq 0
+% \]
+% and
+% \[
+% \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) (f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k) d\mathbf{x}_{-k} = 0
+% \]
+% Since $f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k$ is a continuous function of $\mathbf{x}_{-k}$ and the density $p(\mathbf{x}_{-k})$ is, by assumption, non-zero on the support, we conclude that for all $x_k, f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k =0 $ necessarily and thus for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, \mathbf{x}_{-k}) + g(\mathbf{x}_{-k}) x_k$.
+
+% The Hessian of $f$ then (guaranteed to exist by assumption) has a zero on the $k$-th main diagonal entry. 
+
+% By proposition 7.1.10 from Horn and Johnson~\cite{HJ90},  such a matrix is positive semidefinite if and only if the $k$-th row and column are also zero. (to prove this, one can first work with a 2 by 2 matrix and then use the fact that every principal submatrix of a PSD matrix must be PSD) 
+
+% Since $k$-th row and column correspond precisely to the gradient of $g(\mathbf{x}_{-k})$, we conclude that $g$ must be a constant function. It follows therefore that $g = 0$ because it integrates to 0. 
+
+% So we have that for all $x_k, \mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, \mathbf{x}_{-k})$, which concludes our proof.
+
+% \end{proof}
  
  
  
@@ -784,6 +783,6 @@ Therefore, a product of $s$ $\frac{\epsilon}{s}$-coverings of univariate functio
  
 %%% Local Variables: ***
 %%% mode:latex ***
-%%% TeX-master: "icml14/scam_icml.tex" ***
+%%% TeX-master: "paper.tex" ***
 %%% End: ***
 

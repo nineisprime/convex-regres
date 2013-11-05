@@ -82,7 +82,8 @@ other variables fixed:
 \begin{equation}
 \begin{split}\nonumber
        \min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} &
-             \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((Y_{i}-\bar{Y}-\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} 
+             \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((Y_{i}-\bar{Y}
+                -\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} 
                       + \lambda\gamma_{k} \\
         \textrm{such that} & \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}),\\
         &\ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq\beta_{k(i)}\leq\gamma_{k}\\
@@ -146,8 +147,8 @@ Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = \Delta_{k(
 \begin{align}
 \min_{d_k, c_k}& \frac{1}{2n} 
        \Bigl\| Y - \bar{Y}\mathbf{1}_n - \sum_{k=1}^p 
-             ( \Delta_k d_k - c_k \mathbf{1}_n) \Bigr\|_2^2 \nonumber \\
-               & + \lambda_n \sum_{k=1}^p \|d_k\|_1   \label{opt:alternate_opt} \\
+             ( \Delta_k d_k - c_k \mathbf{1}_n) \Bigr\|_2^2 
+               + \lambda_n \sum_{k=1}^p \|d_k\|_1   \label{opt:alternate_opt} \\
 \trm{s.t. }  & d_{k(2)}, \ldots , d_{k(n-1)} \geq 0  	
                \qquad \trm{(convexity)} \nonumber \\ 
 	& c_k = \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k 	
@@ -161,3 +162,49 @@ For parts of our theoretical analysis, we will also impose onto (\ref{opt:altern
 \end{remark}
 
 
+\subsection{Convex + Concave Functions}
+
+Although convex regression enjoys good properties from both statistical and optimization perspective, convexity can be too strong of a shape constraint for some nonparametric regression problems. We can in fact significantly relax the shape constraint in the same optimization framework by learning a regression function $f$ that is a sum of a convex and a concave functions. That is, there exist a convex function $g$ and a concave function $h$ such that $f = g + h$. 
+
+To learn a convex-plus-concave function, we need only modify the objective in optimization~\ref{np} to be
+\[
+\min_{h, g, \bds{\beta}, \bds{\theta}, \mu} 
+   \frac{1}{2n}\sum_{i=1}^{n}
+                     \Bigl( Y_{i}-\sum_{k=1}^{p} (h_{ki} + g_{ki}) - \mu \Bigr)^{2} 
+                         + \lambda\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty} 
+                         + \lambda\sum_{k=1}^{p}\|\bds{\theta}_{k\cdot}\|_{\infty}
+\]
+and add linear constraints to enforce the concavity of the $g_k$'s with $\bds{\theta}$ representing the secants of $g_k$. The optimization is still convex and efficient; the runtime is on the same order as that of convex additive regression. 
+
+Convex-plus-concavity is a much less stringent condition than convexity; as shown in Figure~\ref{fig:concavex}, it encompasses a variety of interestingly shaped functions. And because convex-plus-concave functions can be efficiently fitted without the need to tune a smoothing parameter, it is an attract alternative to the traditional smoothing kernel approach in nonparametric regression.
+
+Convex-plus-concave functions unfortunately do not inherit equally good additive faithfulness properties; the tilting slope example $f(x_1, x_2) = x_1 x_2 = \frac{1}{2}(x_1 + x_2)^2 - \frac{1}{2}(x_1^2 + x_2^2)$ is a concave-plus-convex function. 
+
+\begin{figure}[htp]
+\subfigure[$|x| - (x-0.1)^2$]{
+   \centering
+   {\includegraphics[width=0.3\textwidth]{concavex1.pdf}}
+}
+\subfigure[$0.5(x-0.3)^4 - x^2$]{
+   \centering
+   {\includegraphics[width=0.3\textwidth]{concavex2.pdf}}
+}
+\subfigure[$0.5 x^2 + 1 - x^4$]{
+   \centering
+   {\includegraphics[width=0.3\textwidth]{concavex3.pdf}}
+}
+\caption{Examples of one-dimensional concave-plus-convex functions.}
+\label{fig:concavex}
+\end{figure}
+
+% examples of convex + concave functions
+% no additive faithfulness
+% same optimization procedure.
+
+
+% DO NOT CHANGE; RefTex variables -minx
+
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex" ***
+%%% End: ***

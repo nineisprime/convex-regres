@@ -5,14 +5,23 @@
 \usepackage{subfigure}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{authblk}
 
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 
 \title{Variable Selection in Convex Function Estimation}
 
-\author{
-Min Xu, Minhua Chen, John Lafferty
-}
+%\author{
+%Min Xu, Minhua Chen, John Lafferty
+%}
+
+\author[1]{Min Xu}
+\author[2,3]{Minhua Chen}
+\author[2,3]{John Lafferty}
+
+\affil[1]{Machine Learning Department, Carnegie Mellon University}
+\affil[2]{Department of Statistics, University of Chicago}
+\affil[3]{Department of Computer Science, University of Chicago}
 
 
 % ENVIRONMENTS
@@ -127,10 +136,10 @@ Min Xu, Minhua Chen, John Lafferty
 \end{abstract}
 \vskip10pt
 
-\tableofcontents
+% \tableofcontents
 
 \input{introduction}
-%\input{related_work}
+\input{related_work}
 \input{summary}
 \input{additive_faithful}
 \input{optimization}
@@ -141,11 +150,12 @@ Min Xu, Minhua Chen, John Lafferty
 
 \clearpage
 
+%\bibliographystyle{plain}
 \bibliography{local}
 
 \newpage
 \input{appendix}
-\newpage
-\input{notes}
+%\newpage
+%\input{notes}
 
 \end{document}
