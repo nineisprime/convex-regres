@@ -138,7 +138,7 @@ We call this property \textbf{additive faithfulness}. We first formalize the int
 We say that $f$ \textbf{depends on} coordinate $k$ if, for all $x_k \in [0,1]$, the set 
 $\big\{ x'_k \in [0, 1] \,:\, f(x_k, \mathbf{x}_{-k}) = f(x'_k, \mathbf{x}_{-k}) 
 \trm{ for almost all  $\mathbf{x}_{-k}$} \big\}$ 
-has measure strictly less than 1.\\
+has probability strictly less than 1.\\
 
 Suppose we have the additive approximation:
 \begin{equation}
@@ -155,6 +155,8 @@ We say that $f$ is \textbf{additively faithful} under $F$ in case $f^*_k = 0$ if
 % is additively faith if $\trm{supp}(f) = \trm{supp}(f^*)$.
 
 Additive faithfulness is an attractive property because it implies that, in the population setting, the additive approximation yields consistent variable selection. Additive recall is a weaker condition but still useful: we can be sure that the additive approximation is conservative, that it does not exclude important variables.
+
+\subsection{Additive Faithfulness of Convex Functions}
 
 Remarkably, under a general class of distributions which we characterize below, convex multivariate functions has additive recall and under product distributions, convex functions are additively faithful.
 
@@ -186,19 +188,23 @@ Let $F$ be a product distribution supported on $C=[0,1]^s$ with positive density
 % We give the full proof in Section~\ref{sec:faithful_proof} of the
 % Appendix, but pause here to provide some intuition. 
 
-In the case of Theorem~\ref{thm:convex_faithful}, we can give some intuition: Lemma~\ref{lem:general_int_reduction}, we know that the
+We pause to give some intuition before we present the full proof: 
+suppose the underlying distribution is a product distribution for a second, 
+then we know from lemma~\ref{lem:general_int_reduction} that the
 additive approximation zeroes out $k$ when, fixing $x_k$, every
 ``slice'' of $f$ integrates to zero. We prove
 Theorem~\ref{thm:convex_faithful} by showing that ``slices'' of convex
 functions that integrate to zero cannot be ``glued'' together while
 still maintaining convexity.
 
-We give the proof of Theorem~\ref{thm:convex_recall}, which also proves one direction of Theorem~\ref{thm:convex_faithful}. The other direction of Theorem~\ref{thm:convex_faithful} is trivial to show.
+We give the proof of Theorem~\ref{thm:convex_recall}, which also proves one direction of Theorem~\ref{thm:convex_faithful}. The other direction of Theorem~\ref{thm:convex_faithful} is trivial.
 
 \begin{proof} (of Theorem~\ref{thm:convex_recall})\\
 Fix $k$. Using the result of Lemma~\ref{lem:general_int_reduction}, we need only show that for all $x_k$, $ \E[ f(X) - \sum_{k'} f_{k'}(X_{k'}) \given x_k] - \E f(X) = 0 $ implies that $f$ does not depend on coordinate $k$.\\
 
-By assumption, we know that there exist at least two disjoint closed intervals $R_0, R_1$ where $p(\mathbf{x}_{-k} \given x_k)$ is independent on $x_k$. That is, there exist density functions $\phi_0(\mathbf{x}_{-k})$ and $\phi_1(\mathbf{x}_{-k})$ such that $p(\mathbf{x}_{-k} \given x_k) = \phi_0(\mathbf{x}_{-k})$ for all $x_k \in R_0$ and $p(\mathbf{x}_{-k} \given x_k) = \phi_1(\mathbf{x}_{-k})$ for all $x_k \in R_1$.
+Let us assume that for all $x_k$, $ \E[ f(X) - \sum_{k'} f_{k'}(X_{k'}) \given x_k] - \E f(X) = 0 $.\\
+
+By the intermittent independence assumption, we know that there exists at least two disjoint closed intervals $R_0, R_1$ where $p(\mathbf{x}_{-k} \given x_k)$ is independent of $x_k$. That is, there exist density functions $\phi_0(\mathbf{x}_{-k})$ and $\phi_1(\mathbf{x}_{-k})$ such that $p(\mathbf{x}_{-k} \given x_k) = \phi_0(\mathbf{x}_{-k})$ for all $x_k \in R_0$ and $p(\mathbf{x}_{-k} \given x_k) = \phi_1(\mathbf{x}_{-k})$ for all $x_k \in R_1$.
 
 
 Let $x^0_k$ be an interior point of $R_0$. 
@@ -221,7 +227,9 @@ Now, we use $r(\mathbf{x}_{-k})$ as a short-hand for $\sum_{k'\neq k} f_{k'}(x_{
  &= 0
 \end{align*}
 
-Since $x^0_k$ is in the interior of $R_0$, we use the bounded convergence theorem and conclude that $\int_{\mathbf{x}_{-k}} \phi_0( \mathbf{x}_{-k}) g(\mathbf{x}_{-k}) = 0$ as well.
+The last equality follows because we assumed that $ \E[ f(X) - \sum_{k'} f_{k'}(X_{k'}) \given x_k] - \E f(X) = 0 $ for all $x_k$. \\
+
+Since $x^0_k$ is in the interior of $R_0$, and since the domain of $f$ is a compact set, we use the bounded convergence theorem and conclude that $\int_{\mathbf{x}_{-k}} \phi_0( \mathbf{x}_{-k}) g(\mathbf{x}_{-k}) = 0$ as well.\\
 
 We now note that $g(\mathbf{x}_{-k})$ is a component of the subgradient 
 $\partial_{\mathbf{x}} f(x^0_k, \mathbf{x}_{-k})$. 
@@ -237,13 +245,13 @@ Or, equivalently, for all $x_k, \mathbf{x}_{-k}$,
 f(x_k, \mathbf{x}_{-k}) - f(x^0_k, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) (x_k-x^0_k) \geq 0
 \]
 
-Now, for all $x_k \in R_0$, 
+Now, the critical observation we make is that, for all $x_k \in R_0$, 
 \[
 \int_{\mathbf{x}_{-k}} \phi_0(\mathbf{x}_{-k}) 
      \Big(f(x_k, \mathbf{x}_{-k}) - f(x^0_k, \mathbf{x}_{-k}) 
      - g(\mathbf{x}_{-k}) (x_k - x^0_k) \Big) d\mathbf{x}_{-k} = 0
 \]
-Since $\phi_0$ is positive by assumption, we conclude that for all $x_k \in R_0$, for all $\mathbf{x}_{-k}$, 
+Since $\phi_0$ is positive by assumption and the second term is non-negative, we conclude that the second term must be exactly zero, that is, for all $x_k \in R_0$, for all $\mathbf{x}_{-k}$, 
 $$
 f(x_k, \mathbf{x}_{-k}) = f(x^0_k, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) (x_k - x^0_k)
 $$

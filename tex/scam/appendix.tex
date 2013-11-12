@@ -404,7 +404,7 @@ R(f^{*(s-1)}) - R(f^{*s}) &= \E\Big(f^{*(s-1)}(X) - f_0(X) + \mu\Big)^2
                 - 2 \E\Big[ (f^{*(s-1)}(X) - f^{*s}(X)) (f^{*s}(X) - (f_0(X)-\mu)) \Big]
 \end{align*}
 
-We will argue that all the components of the additive function $f^{*(s-1)}$ are also in $f^{*s}$. Let us denote the components of $f^{*s} = \sum_{k=1}^s f_k^*$. We will now invoke Lemma~\ref{lem:additive_component}, which is valid because we assume $X_1,...,X_s$ are independent by assumption A1'. By Lemma~\ref{lem:additive_component}, if we set $f^*_k = 0$, the resulting additive function $\sum_{k'\neq k} f_{k'}^*$ minimizes the population risk subject to the constraint that $f_k = 0$. By definition, $f^{*s}$ is $\argmin_k \sum_{k'\neq k} f_{k'}^*$ and thus share components with $f^{*s}$.
+We will argue that all the components of the additive function $f^{*(s-1)}$ are also in $f^{*s}$. Let us denote the components of $f^{*s} = \sum_{k=1}^s f_k^*$. We will now invoke Corollary~\ref{cor:product_int_reduction}, which is valid because we assume $X_1,...,X_s$ are independent by assumption A1'. By Corollary~\ref{cor:product_int_reduction}, if we set $f^*_k = 0$, the resulting additive function $\sum_{k'\neq k} f_{k'}^*$ minimizes the population risk subject to the constraint that $f_k = 0$. By definition, $f^{*s}$ is $\argmin_k \sum_{k'\neq k} f_{k'}^*$ and thus share components with $f^{*s}$.
 
 Therefore, there exist some $k$ such that $f^{*(s-1)} - f^{*s} = f^*_k$, and we can continue the bound
 \begin{align*}
@@ -417,7 +417,7 @@ R(f^{*(s-1)}) - R(f^{*s}) &= \E f^*_k(X_k)^2 - 2 \E[ f^*_k(X_k) ( f^{*s}(X) - (f
 \E[ f^*_k(X_k)(f_0(X) - \mu) ] &= \E\Big[ f^*_k(X_k) \E[ f_0(X) - \mu \,|\, X_k ] \Big] = \E f^*_k(X_k)^2 
 \end{align*}
 
-Where we used the fact that $\E f^*_{k'} (X_{k'}) = 0$ for all $k'$ and the fact that $\E[ f_0(X) - \mu \,|\, X_k] = f^*_k(X_k)$ (Lemma~\ref{lem:int_reduction}).
+Where we used the fact that $\E f^*_{k'} (X_{k'}) = 0$ for all $k'$ and the fact that $\E[ f_0(X) - \mu \,|\, X_k] = f^*_k(X_k)$ (Lemma~\ref{lem:general_int_reduction}).
 
 Thus, $R(f^{*(s-1)}) - R(f^{*s}) \geq \E f^*_k(X_k)^2 \geq \alpha$ by Assumption A4.
 

@@ -104,8 +104,7 @@ theory thus further illustrates the importance of imposing the
 centering constraints in optimization \eqref{opt:alternate_opt}. Our
 proof uses the concentration of the average of
 data sampled \emph{without} replacement
-\cite{serfling1974probability}, illustrating that the proof method is not a
-trivial application of existing techniques. The full proof of
+\cite{serfling1974probability}. The full proof of
 Theorem~\ref{thm:false_positive} is in
 Section~\ref{sec:false_positive_proof} of the Appendix.
 
@@ -125,7 +124,8 @@ Lipschitz constraint so that we can use existing covering number
 results \cite{Bronshtein:76}. Recent work
 \cite{Guntu:13} shows that the Lipschitz constraint
 is not required with more advanced empirical process theory
-techniques. We give the full proof of Theorem~\ref{thm:false_negative}
+techniques; we leave the incorporation of this development as future work. 
+We give the full proof of Theorem~\ref{thm:false_negative}
 in Section~\ref{sec:false_negative_proof} of the Appendix.
 
 Combining Theorem~\ref{thm:false_positive} and
@@ -141,8 +141,9 @@ we have the following result.
 \end{corollary}
 The above corollary implies that sparsistency is achievable at the same exponential scaling of the ambient dimension $p = O(\exp(n^c)), c<1$ rate as parametric models. The cost of nonparametric modeling is reflected in the scaling with respect to $s$, which can only scale at $o(n^{4/25})$.
 
+\begin{remark}
 \citet{dalalyan:12} have shown that under tradtional smoothness constraints, variable selection is achievable only if $n > O(e^s)$. It is interesting to observe that because of additive faithfulness, the convexity assumption enables a much better scaling of $n = O(\textrm{poly}(s))$, demonstrating that geometric constraints can be quite different from the previously studied smoothness conditions.
-
+\end{remark}
 
 %\textbf{Comparison with Related Work.} 
 
@@ -151,5 +152,5 @@ The above corollary implies that sparsistency is achievable at the same exponent
  
 %%% Local Variables: ***
 %%% mode:latex ***
-%%% TeX-master: "scam_icml.tex" ***
+%%% TeX-master: "paper.tex" ***
 %%% End: ***
