@@ -1,3 +1,14 @@
+11/12/2013
+
+I want to implement the lasso optimization approach. 
+
+Let's first lay out some details
+* we need a matrix for each dimension. Can we store it compactly?
+* we need to re-adjust the response for each dimension. This seems reasonable
+* We need to project the latter n-2 coordinates to the positive plane.
+* We need to project the entire solution vector to the centered hyperplane. How do I do this?
+
+
 9/30/2013
 
 [x]: correct the current subfigure fiasco in icml. additive_faithful.tex

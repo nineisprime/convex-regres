@@ -35,6 +35,8 @@ while iter < maxit
     
     obj(iter) = 0.5*sum((y-h).^2,1);
     
+    
+    
     %=- verify stopping criteria -=
     criterion1 = norm(all_xb - all_prev_xb,'fro')/n;
     criterion2 = norm(S - h_mat, 'fro')/n;
@@ -48,6 +50,7 @@ while iter < maxit
     end
     
     if mod(iter,10)==0, 
+        [criterion1, criterion2, criterion3]
         disp(['   Iter ' num2str(iter) ' Obj ' num2str(obj(iter)) ' Score ' num2str(stop_score)]); 
         figure(999); subplot(2,1,1); plot(1:n,y,'ko',1:n,h,'r+');
         subplot(2,1,2); plot(max(abs(beta),[],2),'r.'); drawnow;

@@ -280,6 +280,10 @@ additive.
   one.  
 \end{remark}
 
+\begin{remark}
+With only intermittent independence assumption, it is difficult to prove the other direction of additive faithfulness, that is, if $f$ does not depend on coordinate $k$, then $f_k^*$ will be zero in the additive approximation. Consider as a conceptual example a 3D distribution over $(X_1, X_2, X_3)$; suppose $X_1, X_2$ are independent, and $f$ is only a function of $X_1, X_2$. We can then let $X_3 = f(X_1, X_2) - f^*_1(X_1) - f^*_2(X_2)$, that is, we let $X_3$ exactly capture the additive approximation error, then the best additive approximation of $f$ would have a component $f^*_3(X_3) = X_3$ even though $f$ does not depend on $X_3$. This is, of course, unlikely to occur in practice and we leave as future work analysis under reasonable assumptions that rules out such psychotic phenomenon. 
+\end{remark}
+
 % \begin{remark}
 % Without restrictions on the distribution, a convex
 %   function may not be additively faithful. Intuitively, an arbitrarily shaped
