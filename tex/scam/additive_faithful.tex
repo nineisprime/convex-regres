@@ -161,23 +161,26 @@ Additive faithfulness is an attractive property because it implies that, in the 
 Remarkably, under a general class of distributions which we characterize below, convex multivariate functions are additively faithful.
 
 \begin{definition}
-\label{defn:three-point}
-Let $p(\mathbf{x})$ be a density supported on $[0,1]^s$, $p$ satisfies the \emph{three-points property} if, for all $j$, and for all $\mathbf{x}_{-j}$:
-\begin{packed_enum}
-\item $\frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  = 0$ at $x_k = 0, x_k = 1$ and a third point $x_k^M \in (0,1)$.
-\item $\frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0$ at $x_k = 0, x_k = 1$.
-\end{packed_enum}
+\label{defn:boundary-point}
+Let $p(\mathbf{x})$ be a density supported on $[0,1]^s$, $p$ satisfies the \emph{boundary-points condition} if, for all $j$, and for all $\mathbf{x}_{-j}$:
+
+\[
+\frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
+\frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0
+\quad \trm{at } x_k = 0, x_k = 1
+\]
+
 \end{definition}
 
 
 
-The three-points property is a weak condition. For instance, it is satisfied when the density is flat at the boundary of support and has at least one peak in the interior of the support. More precisely, when the \emph{joint density} satisfies the properties that $\frac{\partial p(x_j,\mathbf{x}_{-j})}{\partial x_j} = 0$ at points $x_j = 0, x_j= 1$ and a third point $x_j^M \in (0,1)$ and $\frac{\partial^2 p(x_j, \mathbf{x}_{-j})}{\partial x_j^2} = 0$ at points $x_j = 0, x_j=1$. The three-points property is also trivially satisfied when $p$ is the density of any product distributions.
+The boundary-points condition is a weak condition. For instance, it is satisfied when the density is flat at the boundary of support, more precisely, when the \emph{joint density} satisfies the properties that $\frac{\partial p(x_j,\mathbf{x}_{-j})}{\partial x_j} =  \frac{\partial^2 p(x_j, \mathbf{x}_{-j})}{\partial x_j^2} = 0$ at points $x_j = 0, x_j=1$. The boundary-points property is also trivially satisfied when $p$ is the density of any product distributions.
 
 The following theorem is the main result of this section.
 
 \begin{theorem}
 \label{thm:convex_faithful}
-Let $p$ be a positive density supported on $C=[0,1]^s$ that satisfies the three-points property (definition~\ref{defn:three-point}). If $f$ is convex and twice differentiable, then $f$ is \emph{additively faithful} under $p$.
+Let $p$ be a positive density supported on $C=[0,1]^s$ that satisfies the boundary-points property (definition~\ref{defn:boundary-point}). If $f$ is convex and twice differentiable, then $f$ is \emph{additively faithful} under $p$.
 \end{theorem}
 
 % We give the full proof in Section~\ref{sec:faithful_proof} of the
@@ -220,7 +223,7 @@ p(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}  = 0
 p(\mathbf{x}_{-k} \given x_k) f''(x_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k}  = 0 
 \end{align}
 
-By the three-points property, we have that $p''(\mathbf{x}_{-k} \given x_k)$ and $p'(\mathbf{x}_{-k} \given x_k)$ are zero at $x_k = x_k^0 \equiv 0$. The integral equations reduce to the following then:
+By the boundary-points condition, we have that $p''(\mathbf{x}_{-k} \given x_k)$ and $p'(\mathbf{x}_{-k} \given x_k)$ are zero at $x_k = x_k^0 \equiv 0$. The integral equations reduce to the following then:
 \begin{align}
 & \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k} \given x^0_k) f'(x^0_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}= 0 \label{eqn:integral1b} \\
 & \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k} \given x^0_k) f''(x^0_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k} = 0
@@ -230,51 +233,26 @@ Because $f$ is convex, $f(x_k, \mathbf{x}_{-k})$ must be a convex function of $x
 
 The Hessian of $f$ at $(x^0_k, \mathbf{x}_{-k})$ then has a zero at the $k$-th main diagonal entry. A positive semidefinite matrix with a zero on the $k$-th main diagonal entry must have only zeros on the $k$-th row and column \footnote{ See proposition 7.1.10 of \citet{HJ90}}, which means that \emph{at all $\mathbf{x}_{-k}$, the gradient of $f'(x^0_k, \mathbf{x}_{-k})$ with respect to $\mathbf{x}_{-k}$ must be zero}.
 
-Therefore, $f'(x_k^0, \mathbf{x}_{-k})$ must be a constant. By equation~\ref{eqn:integral1b}, we conclude then that $f'(x_k^0, \mathbf{x}_{-k}) = 0$ for all $\mathbf{x}_{-k}$. We can use the same reasoning for the case where $x_k = x_k^1$ and deduce that $f'(x^1_k, \mathbf{x}_{-k}) = 0$ for all $\mathbf{x}_{-k}$. \\
+Therefore, $f'(x_k^0, \mathbf{x}_{-k})$ must be constant for all $\mathbf{x}_{-k}$. By equation~\ref{eqn:integral1b}, we conclude then that $f'(x_k^0, \mathbf{x}_{-k}) = 0$ for all $\mathbf{x}_{-k}$. We can use the same reasoning for the case where $x_k = x_k^1$ and deduce that $f'(x^1_k, \mathbf{x}_{-k}) = 0$ for all $\mathbf{x}_{-k}$. \\
 
-Now we apply the first-order condition of convex functions to the two points $(x^0_k, \mathbf{x}_{-k})$ and $(x^1_k, \mathbf{x}_{-k})$:
-
-\begin{align*}
-\forall \mathbf{x}_{-k}, f(x^1_k, \mathbf{x}_{-k}) & \leq f(x^0_k, \mathbf{x}_{-k}) 
-  + f'(x^0_k, \mathbf{x}_{-k}) ( x^1_k - x^0_k) \\ 
-f(x^1_k, \mathbf{x}_{-k}) &\leq f(x^0_k, \mathbf{x}_{-k}) \\
-\forall \mathbf{x}_{-k}, f(x^0_k, \mathbf{x}_{-k}) & \leq f(x^1_k, \mathbf{x}_{-k}) 
-  + f'(x^1_k, \mathbf{x}_{-k}) ( x^0_k - x^1_k) \\ 
-f(x^0_k, \mathbf{x}_{-k}) &\leq f(x^1_k, \mathbf{x}_{-k})
-\end{align*}
-
-We thus have that $f(x^0_k, \mathbf{x}_{-k}) = f(x^1_k, \mathbf{x}_{-k})$ for all $\mathbf{x}_{-k}$. By convexity of $f$, we know that for all $x_k \in (0,1)$, it must be that for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) \leq f(x^0_k, \mathbf{x}_k)$.\\
-
-We now use the middle point condition.
-
-At $x_k = x^M_k$, equation~\ref{eqn:integral1a} becomes:
-\begin{align}
-\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k} \given x^M_k) 
-  f'(x^M_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k} = 0 \label{eqn:integral1c}
-\end{align}
-
-Using the first order condition, we have that:
-\begin{align*}
-f(x^0_k, \mathbf{x}_{-k}) &\leq f(x^M_k, \mathbf{x}_{-k}) 
-+ f'(x^M_k, \mathbf{x}_{-k})(x^0_k - x^M_k)  \quad \Rightarrow \\
-\int_{\mathbf{x}_{-k}} p(\mathbf{x}_k \given x^M_0) 
-f(x^0_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k}  
-&\leq \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k} \given x^M_k)
-\big( f(x^M_k, \mathbf{x}_{-k}) 
-+ f'(x^M_k, \mathbf{x}_{-k})(x^0_k - x^M_k) \big) d\mathbf{x}_{-k} 
-\end{align*}
-
-By equation~\ref{eqn:integral1c} then, we have that $
-\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k} \given x_k) \big(f(x^0_k, \mathbf{x}_{-k}) -
- f(x^M_k, \mathbf{x}_{-k}) \big) d\mathbf{x}_{-k} \leq 0$
-
-However, we have previously argued that for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) \leq f(x^0_k, \mathbf{x}_{-k})$ for all $x_k \in (0,1)$. Since $p(\mathbf{x}_{-k} \given x_k) > 0$, it must be that $f(x^0_k, \mathbf{x}_{-k}) = f(x^M_k, \mathbf{x}_{-k})$ for all $\mathbf{x}_{-k}$.\\
-
-Thus, we have shown that for all $\mathbf{x}_{-k}$, 
+Because $f(x_k, \mathbf{x}_{-k})$ as a function of $x_k$ is convex, it must be that, for all $x_k \in (0,1)$ and for all $\mathbf{x}_{-k}$:
 \[
-f(x^0_k, \mathbf{x}_{-k}) = f(x^M_k, \mathbf{x}_{-k}) = f(x^1_k, \mathbf{x}_{-k})
+0 = f'(x_k^0, \mathbf{x}_{-k}) \leq f'(x_k, \mathbf{x}_{-k}) \leq 
+    f'(x_k^1, \mathbf{x}_{-k}) = 0
 \]
-This implies that $f(x_k, \mathbf{x}_{-k})$, as a convex function of $x_k$, must be a constant. This proves that $f$ does not depend on $x_k$. 
+
+Now we apply the first-order condition of convex functions to any two points $(x_k, \mathbf{x}_{-k})$ and $(x'_k, \mathbf{x}_{-k})$ where $x_k, x'_k \in [0,1]$:
+
+\begin{align*}
+\forall \mathbf{x}_{-k}, f(x'_k, \mathbf{x}_{-k}) & \leq f(x_k, \mathbf{x}_{-k}) 
+  + f'(x_k, \mathbf{x}_{-k}) ( x'_k - x_k) \\ 
+f(x'_k, \mathbf{x}_{-k}) &\leq f(x_k, \mathbf{x}_{-k}) \\
+\forall \mathbf{x}_{-k}, f(x_k, \mathbf{x}_{-k}) & \leq f(x'_k, \mathbf{x}_{-k}) 
+  + f'(x'_k, \mathbf{x}_{-k}) ( x_k - x'_k) \\ 
+f(x_k, \mathbf{x}_{-k}) &\leq f(x'_k, \mathbf{x}_{-k})
+\end{align*}
+
+We thus have that $f(x_k, \mathbf{x}_{-k}) = f(x'_k, \mathbf{x}_{-k})$ for all $\mathbf{x}_{-k}$ and all pairs $x_k, x'_k \in (0,1)$. This proves that $f$ does not depend on $x_k$.
 \end{proof}
 
 Theorem~\ref{thm:convex_faithful} plays an important role in our
