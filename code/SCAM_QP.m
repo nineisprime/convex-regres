@@ -1,3 +1,7 @@
+
+% OUTPUT:   beta is p--by--(n-1)
+%           z is p--by--n
+%
 function [beta,z,obj,Ln] = SCAM_QP(X,y,lambda,maxit,tol)
 [p,n] = size(X); z = zeros(p,n); Ln = zeros(p,1); beta = zeros(p,n-1);
 res = y - sum(z,1)'; iter = 0; obj = []; change = 1;
