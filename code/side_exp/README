@@ -1,0 +1,14 @@
+New Implementation of SCAM_MOSEK
+
+I attempted to eliminate the "beta" variables in optimization.
+Learn only function values "f" or "z". I enforced that the discrete 2nd derivative must be positive.
+
+The new optimization is strangely slower because it has about twice as fewer variables and it has only one equality constraint. It does sometimes find a better solution, i.e., a solution that lowers the objective. 
+
+MOSEK sometimes returns incorrect solution for the new optimization.
+
+Experiment:
+The code for the new optimization is "SCAM_MOSEK_f" in the "SCAM_QP.m" file. The script "variable_selection_script.m" contains the code that runs the comparison.
+
+Warning:
+
