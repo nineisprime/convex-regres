@@ -7,8 +7,192 @@
 %\usepackage{xypic}
 %\xyoption{pdf}
 
-\begin{document}\
+\begin{document}
 
+\section{2/7/2014}
+
+\subsection{Best Shape-Constrained Projection}
+
+Even if a function $f_0$ is non-zero, it may be possible that the best convex approximation is zero. But, it cannot be that the best convex approximation and the best concave approximation are both zero.
+
+\begin{theorem}
+Let $f_0: C \rightarrow \R$ be a function with a bounded Hessian; let $p$ be some distribution on $C$.
+Suppose 
+\[
+\argmin_{f \in \mathcal{C}_x \cup \mathcal{C}_v} 
+   \E (f_0(x) - f(x))^2  = 0
+\]
+ then $f_0 = 0$ necessarily.
+\end{theorem}
+
+\begin{proof}
+
+Suppose that the $\argmin_{f \in \mathcal{C}_x \cup \mathcal{C}_v} \E( f_0(x) - f(x))^2 = 0$, then it must be that 
+\[
+\argmin_{c \in \R} \E\Big( f_0(x) - c x^\tran x \Big)^2 = 0
+\]
+Since the optimal $c$ in the above optimization is 
+$c^* = \frac{\E[ f_0(x) x^\tran x ]}{\E (x^\tran x)^2 }$, 
+we have that $\E[ f_0(x) x^\tran x]=0$.
+
+We know that there exists a convex function $f'$ such that $f' = f_0 + r x^\tran c$ for some large $r > 0$. 
+
+By assumption and convexity of $f'$, it must be that 
+\[
+\argmin_{c \in \R} \E\Big( f_0(x) - c f'(x) \Big)^2 = 0
+\]
+We know by similar argument then that $\E[ f_0(x) f'(x) ] =0$. 
+
+However, $\E[ f_0(x) f'(x) ] = \E[f_0(x)^2 + r f_0(x) x^\tran x ] = \E[ f_0(x)^2]$. This is a contradiction. 
+
+\end{proof}
+
+Thus, if we tried both convex and concave projection and the solution is zero, then we can be sure that the original function is identically zero.
+
+The same argument applies if we consider the best single component approximation:
+\[
+\argmin_{f_k \in \mathcal{C}_x \cup \mathcal{C}_v} 
+\E\Big( f_0(x) - f_k(x_k) \Big)^2
+\]
+Because $\E[ f_0(x) x_k^2 ] = \E\Big[ \E[f_0(x) \given x_k] x_k^2\Big] 
+= \E[ f^*_k(x_k) x_k^2]$.
+Thus, we can apply the same argument and use $f^*_k(x_k)$ where needed.
+
+\newpage
+
+\section{1/23/2014}
+
+\subsection{Additive Faithfulness Case Study with Quadratic Function and Gaussian Distribution}
+
+We consider a quadratic function $f(x) = x^\tran H x + c^\tran x$ and a Gaussian distribution $X \sim N(0, \Sigma)$. 
+
+We then have a closed form for the additive approximation.
+\begin{itemize}
+\item If $f$ does not depend on $x_j$, then $f^*_j(x_j) = 0$.
+\item If $f$ depends on $x_j$, then, letting $H_j$ be the $j$-th row of $H$ and $\Sigma_j$ be the $j$-th row of $\Sigma$:
+\[
+f^*_j(x_j) = H_j^\tran \Sigma_j \frac{1}{\Sigma_{jj}} x_j^2 + c_j x_j
+\]
+
+\end{itemize}
+
+Let us assume $\Sigma_{jj} = 1$ for all $j$ and that $c=0$ for convenience. We then have two direct corollaries:
+
+\textbf{Corollary:} We have additive convexity if and only if $\trm{diag}(H \Sigma) \geq 0$.
+
+\textbf{Corollary:} We have additive faithfulness if and only if $\trm{diag}(H \Sigma) \neq 0$.
+
+As an example where additive convexity and additive faithfulness are violated. Let $H = [1, 2; 2, 5]$ and $\Sigma = [1, -c; -c, 1]$. For $c=0.5$, additive faithfulness is violated; for $c > 0.5$, additive convexity is violated.
+
+
+\begin{proof}
+We will show that the $f^*_j(x_j)$'s, so described, satisfy the KKT stationarity equations.
+\[
+f^*_j(x_j) = \E[ f(x) - \sum_{k \neq j} f^*_k(x_k) \given x_j ]  \qquad \trm{for all } j
+\]
+
+To prove this, we use the following conditional mean and conditional covariance property of the multivariate Gaussian distribution.
+\begin{align*}
+& \E[ x_k \given x_j ] = \Sigma_{jk} \Sigma_{jj}^{-1} x_j \\
+& \E[ x_k x_{k'} \given x_j] \trm{ is some constant for all $x_j$ } \\
+& \E[ x_k^2 \given x_j ] \trm{ is some constant for all $x_j$ } 
+\end{align*}
+\end{proof}
+
+Why can Gaussian distribution violate additive faithfulness? Because $\frac{\partial p( x_{-j} \given x_j) }{\partial x_j}$ is always large for some values of $x_{-j}$.
+
+\newpage
+
+\section{1/2/2014}
+
+\subsection{Convex-minus-Quadratic Estimation}
+
+Instead of estimating a convex-plus-concave function, it is theoretically sufficient to estimate a convex-minus-quadratic function. 
+
+\begin{theorem}
+Any function $h : \R^d \rightarrow \R$ with a bounded Hessian can be decomposed as $h(x) = f(x) - q(x)$ where $f(x)$ is convex and $q(x)$ is $c x^\tran x$ for some $c \geq 0$. 
+\end{theorem}
+
+\begin{proof}
+For large enough $c$, the Hessian of $h + c$ is a positive semidefinite. The function $f$ is thus convex.
+\end{proof}
+
+Convex-minus-quadratic functions are faster to learn. The optimization program has about twice as few variables. It is also possibly easier to analyze. \\
+
+\subsubsection{Implementation}
+
+For additive modeling, I use the following optimization program. There are two parameters $\lambda$ and $L$. 
+\begin{align*}
+\min_{f_1, ..., f_p} & \frac{1}{n} \sum_i 
+  \Big(y_i - \sum_j f_j(x_{ij}) + c_j x_{ij}^2 \Big)^2 + 
+  \lambda \sum_j \| \partial f_j - 2 c_j x_j^2 \|_\infty \\
+\trm{s.t. } & f_j \trm{ is convex} \\
+  & c_j \geq 0 \quad \trm{ and } \quad c_j \leq L
+\end{align*}
+
+The second $L$ parameter is necessary. A similar parameter is required in convex-plus-concave estimation as well, which I will explain in the next section. $L$ can be interpreted as a lower bound on the second derivative of the estimated regression function. We set $L=200$ in experiments.
+
+
+\textbf{Demonstration:} We estimate a one-dimensional function so that we can visualize the behavior of convex-minus-quadratic functions. We set $lambda = 0$. The result is in figure~\ref{fig:quad}.
+
+Here, $n=300$, the $SNR$ is about $0.6$ (high noise).  \\
+
+
+\begin{figure}[htp]
+\label{fig:quad}
+\centering
+\includegraphics[scale=0.6]{figs/convex_quad.png}
+\end{figure}
+
+\subsection{Tuning Parameters for Convex-plus-Concave Estimation}
+
+Convex-plus-concave estimation is not free of tuning parameters. Arbitrary sum of convex and concave functions can represent any function with a bounded Hessian.\\
+
+In Minhua's original SCCAM implementation, the objective is augmented with a square-penalty on the value of the gradients of $f$ and $g$, the convex and the concave functions. The penalty looks like $10^{-6} \| \trm{gradient} \|_2^2$. This penalty is not just for numerical stability; its magnitude affects the estimation. 
+
+\textbf{Demonstration:}
+
+The experimental set-up is the same as before. The result is in figure~\ref{fig:tuning}
+
+\begin{figure}[htp]
+\label{fig:tuning}
+\centering
+\includegraphics[scale=0.6]{figs/convex_concave_tune.png}
+\end{figure}
+
+As one can see, when the tuning parameter (the coefficient for the $\| \trm{gradient} \|_2^2$ penalty) is too small, the estimated function is fitting noise. When the tuning parameter is too large, the estimated function is too smooth.
+
+\subsection{Convex-Concave Separation}
+
+We study the problem of variable selection on a convex-plus-concave function $h$. The approach has two steps: 
+\begin{packed_enum}
+\item Learn \textbf{sparse non-additive} convex function $f$ and concave function $g$ such that $h = f + g$. This is the separation stage.
+\item Apply sparse additive model on $f$ and $g$.
+\end{packed_enum}
+
+Preliminary results are favorable. In our experiment, we let $p=30, n=300$. The true function is $h(x) = 2 x_1 x_2$ and uses only the first two variables. The SNR is $4$. $h$ is an example of a function that cannot be consistently estimated by additive modeling.
+
+We can indeed identify the correct variables by applying additive model on $f$ after separation.
+
+\begin{figure}[htp]
+\label{fig:after_separation}
+\centering
+\includegraphics[scale=0.6]{figs/scam_separation.png}
+\end{figure}
+
+Without separation however, the additive model indeed fails.
+
+
+\begin{figure}[htp]
+\label{fig:before_separation}
+\centering
+\includegraphics[scale=0.6]{figs/sccam_before_separation.png}
+\end{figure}
+
+
+\end{document}
+
+\newpage
 \section{10/25/2013: Convex + Concave function}
 
 Now we consider variable selection for $h(x) = f(x) + g(x)$ where $f$ is convex and $g$ is concave.

@@ -1,8 +1,8 @@
 % variable selection
 
 if (~exist('variable_selection_manual'))
-    p = 50; K = 5; s = 4; n = 400; sigma=0.2;
-    lambda = 0.5; mu = 0.05; maxiter = 1200;
+    p = 10; K = 5; s = 5; n = 1000; sigma=0.1;
+    lambda = 0.0001; mu = 0.05; maxiter = 1200;
 end
 
 beta_stars = randn(p,K);
@@ -27,10 +27,10 @@ noisy_Ys = Ys + noise;
 mean_Y = mean(noisy_Ys);
 noisy_Ys = noisy_Ys - mean_Y;
 
-lambda = lambda*sqrt(n);
-[beta,z,obj] = Piecewise_Infinity(Xs',noisy_Ys, lambda, mu, maxiter);
+%lambda = lambda*sqrt(n);
+%[beta,z,obj] = Piecewise_Infinity(Xs',noisy_Ys, lambda, mu, maxiter);
 
-
+[beta,z,obj] = SCAM_QP(Xs',noisy_Ys, lambda, maxiter, 1e-6);
 
 % beta is (p--by--n)
 %figure;
