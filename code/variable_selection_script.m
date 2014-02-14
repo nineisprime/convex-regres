@@ -1,8 +1,11 @@
 % variable selection
 
+% p, n, K, s are dimension, sample size, #linear pieces, #relevant variables respectively
+% sigma is the noise std
+
 if (~exist('variable_selection_manual'))
     p = 10; K = 5; s = 5; n = 1000; sigma=0.1;
-    lambda = 0.0001; mu = 0.05; maxiter = 1200;
+    lambda = 0.01; mu = 0.05; maxiter = 1200;
 end
 
 beta_stars = randn(p,K);
