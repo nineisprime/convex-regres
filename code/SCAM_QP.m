@@ -2,6 +2,9 @@
 % OUTPUT:   beta is p--by--(n-1)
 %           z is p--by--n
 %
+
+% can cause problem when lambda=0
+
 function [beta,z,obj,Ln] = SCAM_QP(X,y,lambda,maxit,tol)
 [p,n] = size(X); z = zeros(p,n); Ln = zeros(p,1); beta = zeros(p,n-1);
 
