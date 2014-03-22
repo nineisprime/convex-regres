@@ -27,6 +27,7 @@ while iter < maxit && change > tol
         %disp('old')
         [beta(d,:),z(d,:),Ln(d)] = SCAM_MOSEK(res,X(d,:),lambda);
 
+        
         %[Xd, ord] = sort(X(d,:));
         %'test'
         %diff_magn = norm(z(d,:)-z2(d,:))/norm(z(d,:));

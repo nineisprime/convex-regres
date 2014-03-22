@@ -1,3 +1,4 @@
+% Produces mesh-plot of egg carton and tilting slope
 
 x1 = (0:1:3e1)/3e1;
 x2 = (0:1:3e1)/3e1;
@@ -26,14 +27,16 @@ figure;
 mesh(x1,x2,Y);
 colormap(copper);
 
+% Verify that these are unfaithful via simulation
+
 n=5000;
-Xs = [rand(n,1), 2*rand(n,1)-1];
+Xs = [2*rand(n,1)-1, 2*rand(n,1)-1];
 Ys = Xs(:,1).*Xs(:,2);
 [beta,z,obj] = SCAM_QP(Xs', Ys, 0.001, 100, 1e-5);
 
 
 n=5000;
-Xs = [rand(n,1), rand(n,1)];
+Xs = [2*rand(n,1)-1, 2*rand(n,1)-1];
 Ys = sin(Xs(:,1)*(2*pi)).*sin(Xs(:,2)*(2*pi));
 [beta,z,obj] = SCAM_QP(Xs', Ys, 0.001, 100, 1e-5);
 

@@ -9,6 +9,263 @@
 
 \begin{document}
 
+\section{3/1/2014}
+
+This note analyzes SCAM where we penalize $\| f \|_\infty$ instead of $\| \partial f \|_\infty$.
+
+\subsection{Changes to Optimization}
+
+The optimization program must change. We modify two formulations of the optimization. The first is the formulation in which we use both $f$ and $\beta$ as variables.
+
+\begin{align*}
+\min_{h_k, \beta_k, \gamma_k} & \frac{1}{2n} \sum_{i=1}^n
+  \Big( y_i - \sum_{k' \neq k} h_{k' i} - h_{ki} \Big)^2 + \lambda \sum_k \| h_k \|_\infty \\
+\textrm{s.t. } & h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)} - x_{k(i)}) \\
+  & \beta_{k(i+1)} \geq \beta_{k(i)}, \mathbf{1} h_k = 0
+\end{align*}
+
+Of course, the $\lambda \| h_k \|_\infty$ penalty can be replaced by $\lambda \gamma_k$ and linear inequalities involving $\gamma_k$.\\
+
+Now we reformulate the optimization program that is in term of the discretized second derivative $d_k$.
+\begin{align*}
+\min_{d_k} &\frac{1}{2n} \| Y - \sum_{k=1}^p \Delta_k d_k \|_2^2 
+    + \lambda \sum_{k=1}^p \| \Delta_k d_k \|_\infty \\
+\textrm{s.t. } & d_{k(2)}, ..., d_{k(n-1)} \geq 0 \\
+& \mathbf{1}_n^\tran \Delta_k d_k = 0 \quad \forall k
+\end{align*}
+
+\subsection{Subgradient analysis}
+
+We take the subgradient of the optimization program with $d_k$.
+
+First, we note that the subgradient of the sup-norm $\partial \| x \|_\infty$ at $x=0$ is $\{ z : \sum_i z_i = 1 \}$.
+
+We fix one dimension $k$, let $Y' = Y - \sum_{k' \neq k} \Delta_{k'} d_{k'}$.
+
+The Lagrangian form of the optimization is
+\[
+\mathcal{L}(d_k, v, \gamma) =
+  \frac{1}{2n} \| Y' -  \Delta_k d_k \|_2^2 + \lambda \| \Delta_k d_k \|_\infty
+  - \sum_{i=2}^{n-1} v_i d_{ki} + \gamma \mathbf{1}_n^\tran \Delta_k d_k
+\]
+with the constraint that $v_i \geq 0$ for all $i$. 
+
+We want to find under what conditions does the solution $d_k = 0$ satisfy the KKT conditions.
+
+\[
+\partial_{d_k} \mathcal{L} = 
+  \frac{1}{n} \Delta_k^\tran ( Y' - \Delta_k d_k) + \lambda \Delta_k^\tran z 
+  - v + \gamma \mathbf{1}_n^\tran \Delta_k
+\]
+
+where $z \in \partial \| \Delta_k d_k \|_\infty$.
+
+If we evaluate the subgradient at $d_k = 0$, then we have that
+\[
+\partial_{d_k} \mathcal{L} \Big|_{d_k=0} = \frac{1}{n} \Delta_k^\tran Y' + \lambda \Delta_k^\tran z - v + \gamma \mathbf{1}_n^\tran \Delta_k
+\]
+where $\| z \|_1 \leq 1$. \\
+
+We want to argue that $d_k = 0$ is an optimal solution. If $d_k = 0$, then complementary slackness and primal feasibility are obvious satisfied. We need only verify stationarity and dual feasibility then.\\
+
+Let us take a brief digression and understand the $\Delta_k$ matrix a little bit more. $\Delta_k$ is $n \times n-1$. Each row corresponds to sample $i$; each column corresponds to an order $(j)$. Each entry $(i,j)$ is $[ X_{ki} - X_{k(j)}]_+$.  Let us reorder the samples so that the $i$-th sample is the $i$-smallest sample. \\
+
+We will construct $\gamma = 0$, and $z = (0, 0, ..., a)$ for some $0 < a < 1$. (coordinates of $z$ correspond to the new sample ordering) We then just need to show that
+\begin{align*}
+\frac{1}{n} \Delta_k^\tran Y' + \lambda \Delta_k^\tran z &\geq 0 \\
+\frac{1}{n} \sum_{i > j} (X_{ki} - X_{kj}) Y'_i + \lambda (X_{kn} - X_{kj})a &\geq 0 \quad 
+   \textrm{for each } j \\
+\frac{1}{n} \sum_{i > j} \sum_{j < i' \leq i} \mathsf{gap}_{i'} Y'_i 
+    + \lambda (X_{kn} - X_{kj})a &\geq 0 \\
+\frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \sum_{i \geq i'} Y'_i 
+    + \lambda (X_{kn} - X_{kj})a &\geq 0 \\
+\frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran Y' 
+   + \lambda (X_{kn} - X_{kj})a &\geq 0 
+\end{align*}
+
+Where $\mathsf{gap}_i = X_{ki} - X_{k,i-1}$. (with respect to ordered indices) The notation $\mathbf{1}_{i':n}$ is a vector that is one on the last $i'$ to $n$ coordinates and zero elsewhere.
+
+Suppose we show that $\frac{1}{n} \mathbf{1}_{i:n}^\tran Y'$ is on the order of $O( \frac{1}{\sqrt{n}})$, then we would be done. Here, we will need to bound $\| Y' \|_\infty$.
+
+\subsection{False Negative Analysis}
+
+Before we begin, we keep in mind that the analysis should be flexible and should be easy to modify to accomodate the following:
+\begin{enumerate}
+\item choice of norm in the penalty
+\item with or without a Lipschitz constraint, boundedness constraint
+\end{enumerate}
+
+\subsubsection{Preliminary}
+We start with the definitions. Let $y = (y_1, ..., y_n)$ and $y_i = f_0(x_i) + w_i$. We assume $f_0$ to be convex. \footnote{We can probably relax this assumption to be a little bit more general.} We assume that all $x_i \in [-b, b]^s$ \\
+
+Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_L \equiv \{ f \in \mathcal{C}^1 \,:\, \| \partial f \|_\infty \leq L \}$ denote the set of $L$-Lipschitz univariate convex functions. \\
+
+Define $\mathcal{C}^s$ as the set of convex additive functions
+\[
+\mathcal{C}^s \equiv \{ f \,:\, f = \sum_{k=1}^s f_k, \,
+   f_k \in \mathcal{C}^1 \}
+\]
+We will also define classes of bounded and Lipschitz convex additive functions. 
+\begin{align*}
+\mathcal{C}^s_B &= \{ f \in \mathcal{C}^s \,:\, 
+  \| f \|_\infty \leq B \} \\
+\mathcal{C}^s_L &= \{ f \in \mathcal{C}^s \,:\, 
+f = \sum_{k=1}^s f_k, \, \| \partial f_k \|_\infty \leq L \}
+\end{align*}
+
+Let $f^*(x) = \sum_{k=1}^s f^*_k(x_k)$ be the population risk minimizer:
+\[
+f^* = \arg\min_{f \in \mathcal{C}^s} \E \Big( f_0(X) - f^*(X) \Big)^2
+\]
+
+We let $B$ be an upper bound on $\|f_0\|_\infty$ and $\| f^* \|_\infty$ and let $L$ be an upper bound on $\| \partial_{x_k} f_0 \|_\infty$ and $\| \partial f^*_k \|_\infty$.
+
+In the finite sample context where we have $n$ samples $x_1, ..., x_n$, we will abuse notation and let $y, f_0, f^*, w$ denote their de-meaned counterpart, that is, $f_0$ is an $n$-dimensional vector whose coordinate $i$ is $f_0(x_i) - \frac{1}{n} \sum_i f_0(x_i)$. 
+
+We define $\hat{f}$ as the empirical risk minimizer:
+\[
+\hat{f} = \arg\min \{ \| y - f \|_n^2 + \lambda \sum_{k=1}^s \| f_k \|_\infty 
+    \,:\, f \in \mathcal{C}^s_L, \mathbf{1}_n^\tran f_k = 0 \}
+\]
+
+We also define $\hat{f}^*$ as the noiseless empirical risk minimizer:
+\[
+\hat{f}^* = \arg\min \{ \| f_0 - f \|_n^2 \,:\, 
+f \in \mathcal{C}^s_L, \mathbf{1}_n^\tran f_k = 0\}
+\]
+
+\subsubsection{Proof}
+
+We start from the definition.
+
+\begin{align*}
+\| y - \hat{f} \|_n^2 + \lambda \sum_{k=1}^s \| \hat{f}_k \|_\infty &\leq
+  \| y - \hat{f}^* \|_n^2 + \lambda \sum_{k=1}^s \| \hat{f}^*_k \|_\infty \\
+\| f_0 + w - \hat{f} \|_n^2 + \lambda \sum_{k=1}^s \Big( \| \hat{f}_k \|_\infty - 
+    \| \hat{f}^*_k \|_\infty \Big) &\leq \|f_0 + w - \hat{f}^* \|_n^2 \\
+\| f_0 - \hat{f} \|_n^2 + 2\langle w, f_0 - \hat{f} \rangle_n 
+     +  \lambda \sum_{k=1}^s \Big( \| \hat{f}_k \|_\infty - 
+    \| \hat{f}^*_k \|_\infty \Big) &\leq \| f_0 - \hat{f}^* \|_n^2 + 
+    2 \langle w, f_0 - \hat{f}^* \rangle \\
+\|f_0 - \hat{f} \|_n^2 - \| f_0 - \hat{f}^* \|_n^2 + 
+    \lambda \sum_{k=1}^s \Big( \| \hat{f}_k \|_\infty - 
+    \| \hat{f}^*_k \|_\infty \Big) &\leq 2 \langle w, \hat{f} - \hat{f}^* \rangle
+\end{align*}
+
+
+
+\newpage
+
+\section{2/15/2014}
+
+The two step procedure for variable selection:
+
+\begin{enumerate}
+\item Jointly convex approximation:\\ $\{f^c_k\}_{k=1,..,p} = \arg\min_{f_k \in \mathcal{C}_x} \mathbb{E}\Big( f(X) - \sum_{k=1}^p f_k(X_k) \Big)^2$
+\item Separate concave post-processing, for each $k=1,...,p$: \\
+$f^v_k = \arg\min_{f_k \in \mathcal{C}_v} 
+    \mathbb{E}\Big( f(X) - \sum_{k' \neq k} f^c_{k'}(X_{k'}) - f_k(X_k) \Big)^2$
+\end{enumerate}
+
+We consider as irrelevant any $k$ where $f^c_k = 0$ and $f^v_k = 0$.\\
+
+\textbf{Claim:} Let $f : C \rightarrow \R$ where $C = [0,1]^p$. Suppose $p(x)$ is a positive density on $C$ and that it satisfies the boundary-points condition.
+
+Suppose $f(x)$ and $\nabla f(x)$ are continuous and for all $k$, that $\partial_{x_k} p(x \given x_k)$ and $\partial^2_{x_k} p(x \given x_k)$ are also continuous as functions on $C$.
+
+
+Then, the two step procedure is faithful, that is, $f^c_k = 0$ and $f^v_k =0$ implies that $\partial_{x_k} f(x) = 0$.\\
+
+\begin{proof}
+We focus on a specific $k$ and suppose that $f^c_k$ and $f^v_k$ are both $0$.\\
+
+We now invoke proposition~\ref{prop:shape_approx_univariate} by letting $g(x) = f(x) - \sum_{k'\neq k} f^c_{k'}(x_{k'})$. It is easy to verify that derivative continuity requirements on $g$ and $p(x \given x_k)$ are all met. We can therefore conclude that $g^*_k(x) = \E[ f(X) - \sum_{k'\neq k} f^c_{k'}(X_{k'}) \given x_k] = 0$.
+
+We now use corollary~\ref{cor:faithfulness_extension} by letting $\phi(x_{-k}) = \sum_{k'\neq k} f^c_{k'}(x_{k'})$. We therefore derive that $\partial_{x_k} f(x) = 0$ and thus prove faithfulness.
+
+\end{proof}
+
+\subsection{Analysis}
+
+To prove the faithfulness of this procedure, we use the following extension of additive faithfulness.
+
+\begin{corollary} 
+\label{cor:faithfulness_extension}
+Suppose $p(x)$ is a positive density on $[0,1]^p$ and it satisfies the boundary-points condition.
+
+For any function $\phi(X_{-k})$ that does not depend on $X_k$:
+ \begin{align*}
+f^*_k(x_k) &= \arg\min_{f_k} \mathbb{E} \Big( f(X) 
+           - \phi(X_{-k}) - f_k(X_k) \Big)^2 
+      = \mathbb{E}\Big[ f(X) - \phi(X_{-k}) \,|\, x_k\Big] 
+\end{align*}
+We have that $ f^*_k = 0 \Rightarrow \partial_{x_k} f(x) = 0$.
+\end{corollary}
+
+\begin{proof}
+Identical to the proof of additive faithfulness.
+\end{proof}
+
+We also use the following form of the shape-constrained projection theorem.
+
+\begin{proposition}
+\label{prop:shape_approx_univariate}
+Let $C \subset \R^p$ be a compact set and let $g : C \rightarrow \R$. Let $p(x)$ be a positive density on $C$ and suppose $\E g(X) = 0$.
+
+
+Suppose that $\partial_{x_k} g(x)$, $\partial_{x_k} p( x \given x_k)$, and $\partial^2_{x_k} p( x \given x_k )$ are all continuous as functions on $C$. Suppose that $\partial^2_{x_k} g(x) \geq 0$.
+
+
+Let $f^c_k(x_k) = \arg\min_{f_k \in \mathcal{C}_x} \E \Big( g(X) - f_k(X_k) \Big)^2$ and 
+$f^v_k(x_k) = \arg\min_{f_k \in \mathcal{C}_v} \E \Big( g(X) - f_k(X_k) \Big)^2$ be the best convex and concave univariate approximation respectively.
+
+Then, $f^c_k = 0$ and $f^v_k = 0$ iff $g^*_k(x_k) = \E[ g(X) \given x_k ] = 0$.
+\end{proposition}
+
+\begin{proof}
+
+
+First, we will establish that $g^*_k(x_k)$ is twice differentiable and that $\partial^2_{x_k} g^*_k(x_k)$ is lower bounded. 
+
+\begin{align*}
+g^*_k(x_k) &= \E[ g(X) \given x_k] \\
+  &= \int_{x_{-k}} g(x) p(x \given x_k) \\
+\partial^2_{x_k} g^*_k(x_k) &= \int_{x_{-k}} g''(x) p(x \given x_k) +
+  2 g'(x) p'(x \given x_k) + g(x) p''(x \given x_k) dx_{-k} 
+\end{align*}
+
+The first term $g''(x) p(x \given x_k)$ is strictly positive. By assumption, the remaining terms are continuous and hence bounded on a compact set. $\partial^2_{x_k} g^*_k(x_k)$ is therefore lower bounded.\\
+
+Before proceeding, we also note that because $\E g(X) = 0$, it must be that $\E g^*_k(X_k) = 0$.
+
+Now suppose $f^x_k = 0$ and $f^v_k = 0$. Let $\sigma_k^2$ denote $\E X_k^2$. Then 
+\[
+\arg\min_{c \in \mathbb{R}} \mathbb{E}\Big( g(X) - c (X_k^2-\sigma_k^2) \Big)^2 = 0
+\]
+Since optimal $c^* = \frac{\mathbb{E} [ g(X) (X_k^2-\sigma_k^2) ]}{\mathbb{E}[ X_k^2 ]}$, 
+we know $\mathbb{E} [ g(X) X_k^2 ] = 
+\mathbb{E} \Big[ \mathbb{E}[ g(X) \,|\, X_k] X_k^2 \Big] = 0$.\\
+
+Because $\partial^2_{x_k} g^*_k(x_k)$ is lower bounded, for large enough $\alpha$, $g^*_k(x_k) + \alpha (x_k^2 - \sigma_k^2)$ has a non-negative second derivative and thus is convex. Then
+\[
+\arg\min_{c \in \mathbb{R}} \mathbb{E}\Big( g(X) 
+       - c (g^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2)) \Big)^2 = 0
+\]
+Again, $c^* = \frac{\mathbb{E}[g(X)\big( 
+            g^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2) \big)]}{\mathbb{E}
+        \big( g^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2) \big)^2} = 0$, so
+\begin{align*}
+\mathbb{E}[ g(X) \big( g^*_k(X_k) + \alpha X_k^2 \big) ] &= 
+\mathbb{E}[ g(X) g^*_k(X_k) ] \\
+& = \mathbb{E}\Big[ \mathbb{E}[g(X) | X_k]  g^*_k(X_k) \Big] \\
+& = \mathbb{E} g^*_k(X_k)^2 = 0
+\end{align*}
+Therefore, $g^*_k(x_k) = 0$.
+
+\end{proof}
+
+
+\newpage
 \section{2/7/2014}
 
 \subsection{Best Shape-Constrained Projection}
