@@ -1,0 +1,35 @@
+\section{Estimation Procedure}
+\label{sec:acdc}
+
+Theorem~\ref{thm:acdc_faithful} suggest a two stage procedure for variable selection in convex regression--first learning a sparse convex additive model and then, on the residual, separately learning an univariate concave function for each of the dimensions. 
+
+More precisely, given samples $(\mathbf{x}_1, y_1), ..., (\mathbf{x}_n, y_n)$, we perform the following procedure, which we refer to as AC/DC (additively convex / decoupled concave):
+\begin{enumerate}
+\item Compute: 
+\begin{equation}
+\label{eqn:scam}
+\hat{f}_1, ..., \hat{f}_p = \argmin_{f_1,...,f_p \in \mathcal{C}^1} 
+   \frac{1}{n} \sum_{i=1}^n \Big(y_i - \sum_{k=1}^p f_k(x_{ki}) \Big)^2 
+       + \lambda \sum_{k=1}^p \| f_k \|_\infty
+\end{equation}
+\item Compute, for each $k$ such that $\| \hat{f}_k \| = 0$:
+\begin{equation}
+\label{eqn:dc}
+\hat{g}_k = \argmin_{g_k \in \mathcal{C}^1} 
+   \frac{1}{n} \sum_{i=1}^n \Big( y_i - \sum_{k'} \hat{f}_{k'}(x_{k'i}) 
+    - g_k(x_{ki})\Big)^2 
+      + \lambda \| g_k \|_\infty
+\end{equation}
+\item Output as the set of relevant variables: 
+$\{ k \,:\, \| \hat{f}_k \|_\infty > 0 
+  \textrm{ or } \| \hat{g}_k \|_\infty > 0 \}$ 
+\end{enumerate}
+
+We added an $\ell_\infty/\ell_1$ penalty in equation~\ref{eqn:scam} and the $\ell_\infty$ penalty in equation~\ref{eqn:dc} to encourage sparsisty. There are other forms of penalty that can also produce sparse estimates such as a penalty on the derivative of each of the component functions; we find the form we use to be convenient both for theoretical analysis and implementation.
+
+% DO NOT CHANGE; RefTex variables -minx
+ 
+%%% Local Variables: ***
+%%% mode:latex ***
+%%% TeX-master: "paper.tex" ***
+%%% End: ***

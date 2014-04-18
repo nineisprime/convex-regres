@@ -1,19 +1,16 @@
-\section{Optimization for Sparse Convex Additive Models}
+\section{Optimization}
 
-We now consider the following nonparametric regression problem
-\begin{equation}\nonumber
-          Y_{i} = f(\bds{x}_{i}) + \epsilon_{i} = 
-                  \sum_{k=1}^{p}f_{k}(x_{ki}) + \mu + \epsilon_{i} \quad i=1,2,\cdots,n
-\end{equation}
-where $\bds{x}_{i}\in\mathbb{R}^{p}$ is the covariate, $Y_{i}$ is the
-response and $\epsilon_{i}$ is mean zero noise. The regression function $f(\cdot)$ is the summation of 
+We describe in detail the optimization algorithm for the additive convex regression stage, the second decoupled concave regression stage follows almost identical procedure. 
+
+We let $\bds{x}_{i}\in\mathbb{R}^{p}$ be the covariate, $Y_{i}$ be the
+response and $\epsilon_{i}$ be the mean zero noise. The regression function $f(\cdot)$ we estimate is the summation of 
 functions $f_{k}(\cdot)$ in each variable dimension and a scalar offset $\mu$.  
 We impose an additional constraint that each $f_{k}(\cdot)$ is 
-a univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
+an univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
 \begin{equation}\label{hyper}
-      h_{kj} \geq h_{ki} + \beta_{ki}(x_{kj}-x_{ki}) \quad (\forall i,j)
+      f_{kj} \geq f_{ki} + \beta_{ki}(x_{kj}-x_{ki}) \quad (\forall i,j)
 \end{equation}
-where $h_{ki}\coloneqq f_{k}(x_{ki})$ and $\beta_{ki}$ is the
+where $f_{ki}\coloneqq f_{k}(x_{ki})$ and $\beta_{ki}$ is the
 subgradient at point $x_{ki}$. We apparently need $O(n^2 p)$ constraints to
 impose the supporting hyperplane constraints, which is computationally
 expensive for large scale problems.  In fact, only $O(np)$
@@ -24,41 +21,31 @@ program:
 \begin{equation}
 \begin{split}
        \min_{\bds{h},\bds{\beta},\mu} & \;\; \frac{1}{2n}\sum_{i=1}^{n}
-                     \Bigl( Y_{i}-\sum_{k=1}^{p}h_{ki} - \mu \Bigr)^{2} 
-                         + \lambda\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty} \\
-       \textrm{subject to} &\;\; h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \\
-                     & \;\; \sum_{i=1}^{n}h_{ki}=0,\\
+                     \Bigl( Y_{i}-\sum_{k=1}^{p}f_{ki} - \mu \Bigr)^{2} 
+                         + \lambda\sum_{k=1}^{p}\|\bds{f}_{k\cdot}\|_{\infty} \\
+       \textrm{subject to} &\;\; f_{k(i+1)} = f_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \\
+                     & \;\; \sum_{i=1}^{n}f_{ki}=0,\\
                      & \;\; \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
 \end{split}
 \label{np}
 \end{equation}
-Here $\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$. We can solve for $\mu$ explicitly, as  
+Here $\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$. 
+
+We can solve for $\mu$ explicitly, as  
 $\mu = \frac{1}{n} \sum_{i=1}^n Y_i = \bar{Y}$ which follows from the
 KKT conditions
-and the constraints $\sum_i h_{ki} = 0$.
+and the constraints $\sum_i f_{ki} = 0$.
 It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
 \begin{align*}
-  \forall & j\geq{}i, \; h_{k(j)}-h_{k(i)}  = 
-            \sum\limits_{t=i}^{j-1}(h_{k(t+1)}-h_{k(t)}) \\
-      & = \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})
-       \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) \\
-      & = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
-  \forall & j<i,\;  h_{k(j)}-h_{k(i)} =
-                \sum\limits_{t=j}^{i-1}(h_{k(t)}-h_{k(t+1)}) \\
+  \forall & j\geq i, \; f_{k(j)}-f_{k(i)}  = \sum\limits_{t=i}^{j-1}(f_{k(t+1)}-f_{k(t)}) \\
+   &= \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})
+   \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) 
+  = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
+  \forall & j<i,\;  f_{k(j)}-f_{k(i)} =
+                \sum\limits_{t=j}^{i-1}(f_{k(t)}-f_{k(t+1)}) \\
      & = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) 
-     \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)})  \\
-     &= \beta_{k(i)}(x_{k(j)}-x_{k(i)}).
+     \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}).
 \end{align*}
-The $\ell_\infty/\ell_1$ penalty
-$\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty}$ encourages group
-sparsity of the vectors $\bds{\beta}_{k\cdot}$, and thus performs
-variable selection.  We refer to this framework as the sparse convex
-additive model (SCAM). While one can use
-supporting hyperplanes to the epigraph as in \eqref{eq:outer}, 
-SCAM uses the \emph{inner  piece-wise linear function}
-that approximates the graph with secant lines. Notice that if we replace $\beta_{k(i+1)} \geq
-\beta_{k(i)}$ with $\beta_{k(i+1)}=\beta_{k(i)}$, the optimization
-reduces to the lasso.  
 
 
 %\begin{SCfigure}
@@ -69,7 +56,7 @@ reduces to the lasso.
 %  chooses the inner piece-wise linear convex functions.}
 %\end{SCfigure}
 
-The SCAM optimization in (\ref{np}) is a quadratic program (QP) with
+The sparse convex additive model optimization in (\ref{np}) is a quadratic program (QP) with
 $O(np)$ variables and $O(np)$ constraints. 
 Directly applying a QP solver for $\bds{h},
 \bds{\beta}$ would be computationally expensive for relatively large
@@ -78,16 +65,30 @@ dimensions are only coupled in the term
 $(Y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block
 coordinate descent method, where in each step we solve the following
 QP subproblem for $\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the
-other variables fixed:
+other variables fixed. We present the one-block optimization in matrix notation:
+\begin{align*}
+\min_{ \bds{f}_k, \bds{\beta}_k, \gamma_k}& \frac{1}{2n} \| \bds{r}_{\mh k} - \bds{f}_k \|_2^2 
+     + \lambda \gamma_k \\
+ \textrm{s.t. } & P \bds{f}_k = \diag(P \bds{x}_k)  \bds{\beta}_k \\
+   & D \bds{\beta}_k \leq 0 ,
+   \quad -\gamma_k \mathbf{1}_n \leq \bds{f}_k \leq \gamma_k \mathbf{1}_n,
+   \quad \mathbf{1}_n^\tran \bds{f}_k = 0
+\end{align*}
+
+where $\bds{f}_k \in \R^n$ and equals $(f_{k1}, ..., f_{kn})$, $\bds{\beta}_k \in \R^{n-1}$ and equals $(\beta_{k1}, ..., \beta_{k(n-1)})$. $\bds{r}_{\mh k} \in \R^n$ is the residual vector: $\bds{r}_{\mh k}(i) = Y_i - \bar{Y} - \sum_{k' \neq k} f_{k' i}$. $\bds{x}_k \in \R^n$ and equals $(x_{k1}, ..., x_{kn})$. \\
+
+$P \in \R^{(n-1) \times n}$ is a permutation matrix where the $i'$-th row $P_{i' \cdot}$ is all zero except $-1$ at the $(i')$-th smallest coordinate of $\bds{x}_k$ and $1$ at the $(i'+1)$-th smallest coordinate of $\bds{x}_k$. $D \in \R^{(n-2) \times (n-1)}$ is another permutation matrix where the $i'$-th row is all zero except $1$ at position $i'$ and $-1$ at position $i'+1$. $\diag( v )$ for a vector $v$ is a diagonal matrix whose diagonal entries are $v$.
+
 \begin{equation}
-\begin{split}\nonumber
+\label{eqn:opt_1d}
+\begin{split}
        \min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} &
              \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((Y_{i}-\bar{Y}
-                -\sum_{r\neq{k}}h_{ri})-h_{ki}\Bigr)^{2} 
+                -\sum_{r\neq{k}}f_{ri})-f_{ki}\Bigr)^{2} 
                       + \lambda\gamma_{k} \\
-        \textrm{such that} & \ h_{k(i+1)} = h_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}),\\
-        &\ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq\beta_{k(i)}\leq\gamma_{k}\\
-        &\  \sum_{i=1}^{n}h_{ki}=0, \ (\forall i).
+        \textrm{such that} & \ f_{k(i+1)} = f_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}),\\
+        &\ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq f_{ki}\leq\gamma_{k}\\
+        &\  \sum_{i=1}^{n}f_{ki}=0, \ (\forall i).
 \end{split}
 \end{equation}
 The extra variable $\gamma_{k}$ is introduced to deal with the $\ell_{\infty}$ norm. This QP subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse structure, 
@@ -99,10 +100,12 @@ After optimization, the function estimator for any input data $\bds{x}_j$ is, ac
 \begin{split}
 \nonumber
       f(\bds{x}_j) & = \sum_{k=1}^{p}f_k(x_{kj})+\mu \\ 
-    & = \sum_{k=1}^{p}\max_{i} \{h_{ki}+\beta_{ki}(x_{kj}-x_{ki})\} +
+    & = \sum_{k=1}^{p}\max_{i} \{f_{ki}+\beta_{ki}(x_{kj}-x_{ki})\} +
       \mu.
 \end{split}
 \end{equation} 
+
+The univariate concave function estimation is a straightforward modification of optimization~\ref{eqn:opt_1d}. We need only modify one linear inequality constraint to enforce that the subgradients must be non-increasing: $\beta_{k(i+1)} \leq \beta_{k(i)}$.
 
 
 \subsection{Alternative Formulation}
@@ -115,92 +118,70 @@ $d_{k(1)} = \beta_{k(1)}$, and $d_{k(2)} =
 equivalent to the constraint that $d_{k(i)} \geq 0$ for all $i >
 1$.
 
-It is easy to verify that $\beta_{k(i)} = \sum_{j \leq i} d_{k(i)}$ and 
-\begin{equation}
-\begin{split}
-f_k(x_{k(i)}) = & f_k({x_{k(1)}}) +d_{k(1)} ( x_{k(i)} \\
-& - x_{k(1)}) + d_{k(2)} ( x_{k(i)} - x_{k(2)}) + \cdots  \\
-& + d_{k(i-1)} ( x_{k(i)} - x_{k(i-1)})
-\end{split}
-\end{equation}
-We can write this more compactly in matrix notations. First define $\Delta_{k(j)}(x_{ki}) = \max( x_{ki} - x_{k(j)}, 0)$. 
-
-
+It is easy to verify that $\beta_{k(i)} = \sum_{j \leq i} d_{k(j)}$ and 
+\begin{align*}
+f_k(x_{k(i)}) = & f_k(x_{k(i-1)}) + \beta_{k(i-1)}(x_{k(i)} - x_{k(i-1)}) \\
+ =& f_k(x_{k1}) + \sum_{j < i} \beta_{k(j)} (x_{k(j)} - x_{k(j-1)}) \\
+ =& f_k(x_{k1}) + \sum_{j < i} \sum_{j' \leq j} d_{k(j')} (x_{k(j)} - x_{k(j-1)})\\
+ =& f_k(x_{k1}) + \sum_{j' < i} d_{k(j')} \sum_{i > j \geq j'} (x_{k(j)} - x_{k(j-1)}) \\
+ =& f_k(x_{k1}) + \sum_{j' < i} d_{k(j')} (x_{k(i)} - x_{k(j')})
+\end{align*}
+We can write this more compactly in matrix notations.
 \begin{equation*}
 \begin{split}
-&(f_k(x_{k1}) ,..., f_k(x_{kn}))^\tran = \Delta_k d_k \coloneqq \\
-\vspace{0.1in}
-&\left[ \begin{array}{ccc}
-    \Delta_{k(1)}(x_{k1}) & ... & \Delta_{k(n-1)}(x_{k1}) \\
+\left[ \begin{array}{c}
+f_k(x_{k1}) \\
+... \\
+f_k(x_{kn}) 
+\end{array} \right] =
+\left[ \begin{array}{ccc}
+    |x_{k1} - x_{k(1)}|_+ & ... & |x_{k1} - x_{k(n-1)}|_+ \\
     ... & & \\
-    \Delta_{k(1)}(x_{kn}) & ... & \Delta_{k(n-1)}(x_{kn}) 
+    |x_{kn} - x_{k(1)}|_+ & ... & |x_{kn} - x_{k(n-1)}|_+ 
 \end{array} \right]
 \left[ \begin{array}{c}
     d_{k(1)} \\
     ... \\
     d_{k(n-1)}
 \end{array} \right] 
++ c_k \equiv \Delta_k d_k + c_k
 \end{split}
 \end{equation*}
 
-Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = \Delta_{k(j)}(x_{ki})$ and $d_k = (d_{k(1)} ,..., d_{k(n-1)})$. We can now reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
-\begin{align}
-\min_{d_k, c_k}& \frac{1}{2n} 
-       \Bigl\| Y - \bar{Y}\mathbf{1}_n - \sum_{k=1}^p 
-             ( \Delta_k d_k - c_k \mathbf{1}_n) \Bigr\|_2^2 
-               + \lambda_n \sum_{k=1}^p \|d_k\|_1   \label{opt:alternate_opt} \\
-\trm{s.t. }  & d_{k(2)}, \ldots , d_{k(n-1)} \geq 0  	
-               \qquad \trm{(convexity)} \nonumber \\ 
-	& c_k = \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k 	
-               \qquad \trm{(centering)} \nonumber 
-\end{align}
-$\|d_k\|_1$ is not identical to $\|\bds{\beta}_{k\cdot}\|_{\infty}$, but it is easy to verify that $\|\bds{\beta}_{k\cdot}\|_{\infty} \leq \|d_k\|_1 \leq 4\|\bds{\beta}_{k\cdot}\|_{\infty}$.
 
-\begin{remark}
-\label{rem:bounded_lipschitz_constraints}
-For parts of our theoretical analysis, we will also impose onto (\ref{opt:alternate_opt}) a boundedness constraint $-B \mathbf{1}_n \leq \Delta_k d_k + c_k \mathbf{1}_n \leq B \mathbf{1}_n$ which constrains that $\|f_k \|_\infty \leq B$, or a Lipschitz constraint $\|d_k\|_1 \leq L$ which constrains that $f_k$ must be $L$-Lipschitz. We use these constraints only in the proof for technical reasons; we never need nor use these constraints in our experiments.
-\end{remark}
+Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = |x_{ki} - x_{k(j)}|_+$, $d_k = (d_{k(1)} ,..., d_{k(n-1)})$, and $c_k = f_k(x_{k1})$. 
 
-
-
-\subsection{Convex-plus-concave Functions}
-
-Although convex regression enjoys good properties from both statistical and optimization perspective, convexity can be too strong of a shape constraint for some nonparametric regression problems. We can in fact significantly relax the shape constraint in the same optimization framework by learning a regression function $f$ that is a sum of a convex and a concave functions. That is, there exist a convex function $g$ and a concave function $h$ such that $f = g + h$. 
-
-To learn a convex-plus-concave function, we need only modify the objective in optimization~\ref{np} to be
+Because $f_k$ has to be centered, $c_k = - \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k$, therefore:
 \[
-\min_{h, g, \bds{\beta}, \bds{\theta}, \mu} 
-   \frac{1}{2n}\sum_{i=1}^{n}
-                     \Bigl( Y_{i}-\sum_{k=1}^{p} (h_{ki} + g_{ki}) - \mu \Bigr)^{2} 
-                         + \lambda\sum_{k=1}^{p}\|\bds{\beta}_{k\cdot}\|_{\infty} 
-                         + \lambda\sum_{k=1}^{p}\|\bds{\theta}_{k\cdot}\|_{\infty}
+\Delta_k d_k + c_k \mathbf{1}_n = 
+   \Delta_k d_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\tran \Delta_k d_k = 
+   \bar{\Delta}_k d_k 
 \]
-and add linear constraints to enforce the concavity of the $g_k$'s with $\bds{\theta}$ representing the secants of $g_k$. The optimization is still convex and efficient; the runtime is on the same order as that of convex additive regression. 
+where $\bar{\Delta}_k \equiv \Delta_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\tran \Delta_k$ is $\Delta_k$ with the mean of each column subtracted.
 
-Convex-plus-concavity is a much less stringent condition than convexity; as shown in Figure~\ref{fig:concavex}, it encompasses a variety of interestingly shaped functions. And because convex-plus-concave functions can be efficiently fitted without the need to tune a smoothing parameter, it is an attract alternative to the traditional smoothing kernel approach in nonparametric regression.
+We can now reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
+\begin{align}
+\min_{d_k}& \frac{1}{2n} 
+       \Bigl\| Y - \sum_{k=1}^p 
+              \bar{\Delta}_k d_k \Bigr\|_2^2 
+               + \lambda_n \sum_{k=1}^p \|\bar{\Delta}_k d_k \|_\infty   
+     \label{opt:alternate_opt} \\
+\trm{s.t. }  & d_{k(2)}, \ldots , d_{k(n-1)} \geq 0  	
+               \qquad \trm{(convexity)} \nonumber 
+\end{align}
 
-Convex-plus-concave functions unfortunately do not inherit equally good additive faithfulness properties; the tilting slope example $f(x_1, x_2) = x_1 x_2 = \frac{1}{2}(x_1 + x_2)^2 - \frac{1}{2}(x_1^2 + x_2^2)$ is a concave-plus-convex function. 
+The decoupled concave postprocessing stage optimization is again similar. Suppose $\hat{d}_k$'s are the output of optimization~\ref{opt:alternate_opt}, define $\hat{r} = Y - \sum_{k=1}^p \bar{\Delta}_k \hat{d}_k$. 
+\begin{align}
+\textrm{for all}&\textrm{ $k$ such that $\hat{d}_k = 0$: }  \nonumber \\
+  \min_{d_k} & 
+      \frac{1}{2n} \Bigl \| \hat{r} - \bar{\Delta}_k d_k \Bigr \|_2^2
+      + \lambda_n \| \bar{\Delta}_k d_k \|_\infty 
+      \label{opt:alternate_opt_concave}\\
+ \trm{s.t.} & d_{k(2)}, \ldots, d_{k(n-1)} \leq 0 \qquad \trm{(concavity)} \nonumber
+\end{align}
 
-\begin{figure}[htp]
-\subfigure[$|x| - (x-0.1)^2$]{
-   \centering
-   {\includegraphics[width=0.3\textwidth]{concavex1.pdf}}
-}
-\subfigure[$0.5(x-0.3)^4 - x^2$]{
-   \centering
-   {\includegraphics[width=0.3\textwidth]{concavex2.pdf}}
-}
-\subfigure[$0.5 x^2 + 1 - x^4$]{
-   \centering
-   {\includegraphics[width=0.3\textwidth]{concavex3.pdf}}
-}
-\caption{Examples of one-dimensional concave-plus-convex functions.}
-\label{fig:concavex}
-\end{figure}
+\textbf{Note:} in sparsistency analysis, we assume that an upper bound $L$ to the Lipschitz smoothness of the true function $f_0$ is known and that we constrain our estimate $\hat{f}$ to obey the same Lipschitz condition, that is, each $\hat{f}_k$ must be $L$-Lipschitz. This Lipschitz constraint can be easily added to our optimization program. In optimization~\ref{opt:alternate_opt}, we can enforce the Lipschitz condition by adding two constraints: $d_{k(1)} \geq - L$ and $\sum_{j=2}^{n-1} d_{k(j)} \leq L$. We emphasize that we use the Lipschitz constraint only in our theoretical analysis; all of our experiments do not impose any Lipschitz condition.
 
-% examples of convex + concave functions
-% no additive faithfulness
-% same optimization procedure.
 
 
 % DO NOT CHANGE; RefTex variables -minx

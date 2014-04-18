@@ -7,6 +7,8 @@
 \usepackage{hyperref}
 \usepackage{authblk}
 
+\usepackage{yhmath}
+
 \bibliographystyle{plainnat}
 
 \title{Variable Selection in Convex Function Estimation}
@@ -47,6 +49,9 @@
 
 
 \begin{document}
+
+% min's macros
+\mathchardef\mh="2D
 
 % John's macros
 \def\X{\mathcal{X}}
@@ -142,6 +147,7 @@
 \input{related_work}
 \input{summary}
 \input{additive_faithful}
+\input{estimation}
 \input{optimization}
 \input{sparsistency}
 \input{experiments}

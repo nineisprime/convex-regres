@@ -7,6 +7,8 @@
 %\usepackage{xypic}
 %\xyoption{pdf}
 
+\mathchardef\mh="2D
+
 \begin{document}
 
 \section{3/1/2014}
@@ -87,6 +89,48 @@ Where $\mathsf{gap}_i = X_{ki} - X_{k,i-1}$. (with respect to ordered indices) T
 
 Suppose we show that $\frac{1}{n} \mathbf{1}_{i:n}^\tran Y'$ is on the order of $O( \frac{1}{\sqrt{n}})$, then we would be done. Here, we will need to bound $\| Y' \|_\infty$.
 
+$Y'_i = Y_i - \hat{f}(X_i) = f_0(X_i) + w_i - \hat{f}(X_i)$. Both $f_0(X_i)$ and $\hat{f}(X_i)$ are bounded by $2 sLb$. 
+
+For a single $w_i$, we know that with probability at least $1-\delta$, $|w_i| \leq \mathbf{c} \sigma \sqrt{ \log \frac{2}{\delta} }$. Therefore, taking an union bound and setting $\delta = 1/n$, we have that $\max_i |w_i| \leq \mathbf{c} \sigma \sqrt{\log n} $ with probability at least $1 - \frac{1}{n}$. 
+
+Putting this together, $\| Y' \|_\infty \leq \mathbf{c}(sLb + \sigma\sqrt{\log n}) \leq
+ \mathbf{c} sLb \sigma\sqrt{\log n}$.\\
+
+Now, we also need to bound the mean of $Y'$: 
+
+\begin{align*}
+&\frac{1}{n} \sum_{i=1}^n f_0(X_i) + w_i - \hat{f}(X_i) \\
+=& \frac{1}{n} \sum_{i=1}^n f_0(X_i) + w_i 
+\end{align*}
+The first mean $\frac{1}{n} \sum_{i=1}^n f_0(X_i)$ is the average of $n$ bounded zero-mean random variables since $| f_0(X_i) | \leq 2 s L b$. Therefore, the first term is at most $ sLb \sqrt{\frac{1}{n} \log \frac{2}{\delta}$ with probability at least $1-\delta$.
+
+The second mean is the average of $n$ subgaussian random variables with subgaussian scale $\sigma$. Therefore, the second term is at most $\sigma\sqrt{\frac{1}{n} \log \frac{2}{\delta}}$.
+
+The mean of $Y'$ is therefore at most $\mathbf{c} (sLb + \sigma) \sqrt{ \frac{1}{n} \log n}$ with probability at least $1 - \frac{1}{n}$. 
+
+
+By Serfling and union bound, with probability at least $1-\frac{1}{n}$, we have that the deviation for all $i$
+\begin{align*}
+\Big| \frac{1}{n} \mathbf{1}_{i:n}^\tran Y' \Big| &\leq \mathbf{c} sLb\sigma \sqrt{\log n} 
+\sqrt{\frac{1}{n} \log 2np} + \mathbf{c} (sLb + \sigma) \sqrt{\frac{1}{n} \log np}\\
+  &\leq \mathbf{c} sLb \sigma \sqrt{\frac{1}{n} \log n \log np }
+\end{align*}
+
+Plugging this in and plugging in $\lambda > \mathbf{c} sLb \sigma \sqrt{
+  \frac{1}{n} \log n \log np}$, we have that:
+
+\begin{align*}
+\frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran Y' 
+   + \lambda (X_{kn} - X_{kj})a &\geq 
+ \lambda (X_{kn} - X_{kj}) a 
+    - \sum_{i'>j}\mathsf{gap}_{i'} \mathbf{c} sLb\sigma \sqrt{\frac{1}{n} \log n \log np} \\
+&\geq \lambda (X_{kn} - X_{kj}) a - (X_{kn} - X_{kj}) 
+    \mathbf{c} s Lb \sigma \sqrt{\frac{1}{n} \log n \log np} \\
+&\geq 0 
+\end{align*}
+    
+
+\newpage
 \subsection{False Negative Analysis}
 
 Before we begin, we keep in mind that the analysis should be flexible and should be easy to modify to accomodate the following:
@@ -95,17 +139,24 @@ Before we begin, we keep in mind that the analysis should be flexible and should
 \item with or without a Lipschitz constraint, boundedness constraint
 \end{enumerate}
 
+\subsubsection{Notation}
+
+Where $f : \R^p \rightarrow \R$, we let $\| f \|_P \equiv \E f(X)^2 $.
+
+
 \subsubsection{Preliminary}
 We start with the definitions. Let $y = (y_1, ..., y_n)$ and $y_i = f_0(x_i) + w_i$. We assume $f_0$ to be convex. \footnote{We can probably relax this assumption to be a little bit more general.} We assume that all $x_i \in [-b, b]^s$ \\
 
-Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_L \equiv \{ f \in \mathcal{C}^1 \,:\, \| \partial f \|_\infty \leq L \}$ denote the set of $L$-Lipschitz univariate convex functions. \\
+\begin{itemize}
 
-Define $\mathcal{C}^s$ as the set of convex additive functions
+\item Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_L \equiv \{ f \in \mathcal{C}^1 \,:\, \| \partial f \|_\infty \leq L \}$ denote the set of $L$-Lipschitz univariate convex functions. \\
+
+\item Define $\mathcal{C}^s$ as the set of convex additive functions
 \[
 \mathcal{C}^s \equiv \{ f \,:\, f = \sum_{k=1}^s f_k, \,
    f_k \in \mathcal{C}^1 \}
 \]
-We will also define classes of bounded and Lipschitz convex additive functions. 
+\item We will also define classes of bounded and Lipschitz convex additive functions. 
 \begin{align*}
 \mathcal{C}^s_B &= \{ f \in \mathcal{C}^s \,:\, 
   \| f \|_\infty \leq B \} \\
@@ -113,30 +164,88 @@ We will also define classes of bounded and Lipschitz convex additive functions.
 f = \sum_{k=1}^s f_k, \, \| \partial f_k \|_\infty \leq L \}
 \end{align*}
 
-Let $f^*(x) = \sum_{k=1}^s f^*_k(x_k)$ be the population risk minimizer:
+\item Let $f^*(x) = \sum_{k=1}^s f^*_k(x_k)$ be the population risk minimizer:
 \[
-f^* = \arg\min_{f \in \mathcal{C}^s} \E \Big( f_0(X) - f^*(X) \Big)^2
+f^* = \arg\min_{f \in \mathcal{C}^s} \| f_0 - f^* \|_P^2
 \]
 
-We let $B$ be an upper bound on $\|f_0\|_\infty$ and $\| f^* \|_\infty$ and let $L$ be an upper bound on $\| \partial_{x_k} f_0 \|_\infty$ and $\| \partial f^*_k \|_\infty$.
+\item We let $B$ be an upper bound on $\|f_0\|_\infty$ and $\| f^* \|_\infty$ and let $L$ be an upper bound on $\| \partial_{x_k} f_0 \|_\infty$ and $\| \partial f^*_k \|_\infty$.
 
-In the finite sample context where we have $n$ samples $x_1, ..., x_n$, we will abuse notation and let $y, f_0, f^*, w$ denote their de-meaned counterpart, that is, $f_0$ is an $n$-dimensional vector whose coordinate $i$ is $f_0(x_i) - \frac{1}{n} \sum_i f_0(x_i)$. 
-
-We define $\hat{f}$ as the empirical risk minimizer:
+\item We define $\hat{f}$ as the empirical risk minimizer:
 \[
 \hat{f} = \arg\min \{ \| y - f \|_n^2 + \lambda \sum_{k=1}^s \| f_k \|_\infty 
     \,:\, f \in \mathcal{C}^s_L, \mathbf{1}_n^\tran f_k = 0 \}
 \]
 
-We also define $\hat{f}^*$ as the noiseless empirical risk minimizer:
+\item We also define $\hat{f}^*$ as the noiseless empirical risk minimizer:
 \[
 \hat{f}^* = \arg\min \{ \| f_0 - f \|_n^2 \,:\, 
 f \in \mathcal{C}^s_L, \mathbf{1}_n^\tran f_k = 0\}
 \]
 
-\subsubsection{Proof}
+\item For $k \in \{1,...,s\}$, define $g^*_k$ to be decoupled concave population risk minimizer
+\[
+g^*_k \equiv \min_{g_k \in \mh \mathcal{C}} \| f_0 - f^*_{-k} - g_k \|_P^2
+\]
+In our proof, we will analyze $g^*_k$ for $k$'s such that $f^*_k = 0$. 
 
-We start from the definition.
+\item Also, we define the noiseless empirical version:
+\[
+\hat{g}^*_k \equiv \min_{g_k \in \mh \mathcal{C}_L} \| f_0 - f^*_{-k} - g_k \|_n^2
+\]
+
+\item Likewise, we define the empirical version
+\[
+\hat{g}_k \equiv \min_{g_k \in \mh \mathcal{C}_L} \| y - \hat{f} - g_k \|_n^2
+\]
+By the definition of the ACDC procedure, $\hat{g}_k$ exist only for $k$ that have zero in their convex additive approximation.
+
+\end{itemize}
+
+\newpage
+\subsubsection{Proof outline}
+
+
+The \textbf{final step} is to show the following:
+\begin{align*}
+\| f_0 - \hat{f} \|_P & \approx \| f_0 - f^* \|_P \\
+\| f_0 - f^* - \hat{g}_k \|_P & \approx \| f_0 - f^* - g^*_k \|_P \quad \trm{for all $k \in \{1,...,s\}$ where $f^*_k = 0$}
+\end{align*}
+where the difference is a term that decreases with $n$.
+
+Suppose $\hat{f}_k = 0$ and $f^*_k \neq k$, then for large enough $n$, there must be a contradiction because $\| f_0 - f^* \|_P > \| f_0 - f^{*(s-1)} \|_P$. We would have a contradiction.
+
+Suppose $f^*_k = 0$, then $g^*_k \neq 0$. We would have another contradiction.
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+Concavity, \textbf{removing} sample-dependent convex fucntions.\\
+
+For arbitrary function $g$, we have the following:
+\begin{align*}
+\| f_0 - \hat{f} - g \|_n = \| f_0 - \hat{f} + f^* - f^* - g \|_n 
+   & \leq \| f_0 - f^* -g \|_n
+       + \| \hat{f} - f^* \|_n \\
+   &\geq \| f_0 - f^* - g \|_n - \| \hat{f} - f^* \|_n 
+\end{align*}
+
+Therefore:
+\begin{align*}
+\| f_0 - f^* - g \|_n^2 - 2 \| f_0 - f^* - g\|_n \| \hat{f} - f^* \|_n \leq
+  \| f_0 - \hat{f} - g \|_n^2 \leq
+  \| f_0 - f^* -g \|_n^2 + 2 \| f_0 - f^* - g \|_n \| \hat{f} - f^* \|_n 
+\end{align*}
+
+The radius of approximation is $2 \| f_0 - f^* - g \|_n \| \hat{f} - f^* \|_n$, which we need to upper bound. $\| f_0 - f^* - g \|_n \leq \mathbf{c} sLb$. 
+
+
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+
+We \textbf{start} from the definition. We don't need to force $y$ to be zero-mean.
 
 \begin{align*}
 \| y - \hat{f} \|_n^2 + \lambda \sum_{k=1}^s \| \hat{f}_k \|_\infty &\leq
@@ -152,10 +261,319 @@ We start from the definition.
     \| \hat{f}^*_k \|_\infty \Big) &\leq 2 \langle w, \hat{f} - \hat{f}^* \rangle
 \end{align*}
 
+The $\| f_0 - \hat{f} \|_n^2 - \| f_0 - \hat{f}^* \|_n^2$ term is always positive. We want to lower bound the second term with a negative quantity.
+
+One way to proceed:
+$\| \hat{f}^*_k \|_\infty \leq 2bL$. And because $\hat{f}^*$ minimizes 
+
+\textbf{Note:}
+The $\hat{f}^*$ here could be any function that does depend on the noise. The advantage of having $\hat{f}^*$ is that $\| f_0 - \hat{f} \|_n^2 - \| f_0 - \hat{f}^* \|_n^2 \geq \| \hat{f} - \hat{f}^* \|_n^2$.
+
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+\textbf{Continuation from start}.
+Taking the \textbf{start} derivation and instead of comparing against $\hat{f}^*$, we will instead compare against $f^*$ (de-meaned).
+
+Since the samples $X_1, ..., X_n$ are clear from context, we denote $\bar{f}^*$ as $\frac{1}{n} \sum_{i=1}^n f^*(X_i)$. 
+
+All parts still work and we get down to the following inequality:
+\begin{align*}
+\| f_0 - \hat{f} \|_n^2 - \|f_0 - f^* + \bar{f}^* \|_n^2 &\leq 
+      2 | \langle w, \hat{f} - f^* + \bar{f}^* \rangle | + \lambda 2sLb \\
+  &\leq \mathbf{c} (sLb)^2 \sigma \sqrt{ \frac{1}{n} \log 4n } + 
+   \lambda 2 s L b
+\end{align*}
+with probability at least $1-\frac{1}{n}$.\\
+
+
+We use the \emph{centering effect} analysis. Since with high probability ($1-\frac{1}{n}$) 
+\[
+\|f_0 - \hat{f}\|_n^2 - 
+  \Big( \|f_0 - f^*\|_n^2 + \mathbf{c} (sLb)^2 \frac{1}{n} \log 4n \Big) \leq 
+\|f_0 - \hat{f} \|_n^2 - \|f_0 - f^* + \bar{f}^*\|_n^2
+\]
+Therefore, with probability at least $1-\frac{2}{n}$,
+\begin{align*}
+\|f_0 - \hat{f}\|_n^2 - \|f_0 -f^*\|_n^2 &\leq \mathbf{c}(sLb)^2 \frac{1}{n} \log 4n
+      + \mathbf{c} (sLb)^2 \sigma \sqrt{\frac{1}{n} \log 4n } + \lambda 2 sLb \\
+ &\leq \mathbf{c} (Lb)^2\sigma \sqrt{\frac{s^4}{n} \log 4n} + \lambda 2 sLb
+\end{align*}
+
+
+Now, we use the the \emph{uniform convergence} result. With probability at least $1-\frac{3}{n}$
+
+\begin{align*}
+\| f_0 - \hat{f}\|_P^2 - \| f_0 - f^*\|_P^2 & \leq
+   \mathbf{c} (Lb)^2 \sigma \sqrt{\frac{s^4}{n} \log 4n} + \lambda 2 s Lb +
+   \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log 2n} \\
+ &\leq \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log 4n} + \lambda 2 s Lb
+\end{align*}
+
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+\textbf{f convergence}.
+
+Here, our goal is to bound $\| \hat{f} - f^* \|_n^2$.
+
+Since $f^* = \arg\min_{f \in \mathcal{C}^s} \| f_0 - f \|_P^2$, we have that
+\begin{align*}
+\|f^* - \hat{f} \|_P^2 &\leq \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 \\
+ &\leq \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log 4n} + \lambda 2s Lb
+\end{align*}
+
+Now, by \emph{uniform convergence} again, we have:
+
+\[
+\| f^* - \hat{f} \|_n^2 \leq \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log 4n} + 
+      \mathbf{c} \lambda s L b
+\]
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+\textbf{Centering Effect}
+
+Here, we bound the difference of $\| f_0 - f^* + \bar{f}^* \|_n^2$ and $\| f_0 - f^* \|_n^2$.
+
+\begin{align*}
+\| f_0 - f^* + \bar{f}^* \|_n^2 &= \| f_0 - f^* \|_n^2 
+    + 2 \langle f_0 - f^*, \bar{f}^* \rangle + \bar{f}^{*2} \\
+  &= \| f_0 - f^* \|_n^2 + 2 \bar{f}^* \langle f_0 - f^*, \mathbf{1} \rangle_n + 
+    \bar{f}^{*2} \\
+  &= \| f_0 - f^* \|_n^2 + 2 \bar{f}^* \bar{f}_0 - \bar{f}^{*2}
+\end{align*}
+
+
+$\bar{f}^* = \frac{1}{n} \sum_{i=1}^n f^*(X_i)$ is the average of $n$ bounded mean-zero random variables and therefore, with probability at least $1-\delta$, $| \bar{f}^* | \leq 4 s L b \sqrt{ \frac{1}{n} \log \frac{2}{\delta} }$.
+
+The same reasoning likewise applies to $\bar{f}_0 = \frac{1}{n} \sum_{i=1}^n f_0(X_i)$.
+
+Taking a union bound and letting $\delta = \frac{1}{n}$, we have that, with probability at least $1- \frac{1}{n}$, 
+
+\begin{align*}
+| \bar{f}^* | | \bar{f}_0 | &\leq \mathbf{c} (sLb)^2 \frac{1}{n} \log 4 n \\
+\bar{f}^{*2} &\leq \mathbf{c} (sLb)^2 \frac{1}{n} \log 4 n
+\end{align*}
+
+Therefore, with probability $1-\frac{1}{n}$,
+\[
+\|f_0 - f^*\|_n^2 - \mathbf{c} (sLb)^2 \frac{1}{n} \log 4 n \leq
+    \| f_0 - f^* + \bar{f}^* \|_n^2 \leq 
+\|f_0 - f^*\|_n^2 + \mathbf{c} (sLb)^2 \frac{1}{n} \log 4 n
+\]
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+\textbf{Denoising}
+
+Here we outline how to bound $\langle w, \hat{f} - \hat{f}^* \rangle$ where $\hat{f}^*$ can be any function that doesn't depend on $w$.
+
+We suppose that both $\hat{f}, \hat{f}^*s \in \mathcal{C}^s_L$.
+
+By Bronshtein, we know that:
+\begin{align*}
+\log N_\infty(\epsilon, \mathcal{C}_L^1) &= C bL \epsilon^{-1/2} \\
+\log N_\infty(\epsilon, \mathcal{C}_L^s) &= C sbL s^{1/2} \epsilon^{-1/2} 
+\end{align*}
+
+Clearly, the covering number would not change if we center the set $\mathcal{C}_L^s$ around $\hat{f}^*$, call this $\mathcal{G}$. The difference $\hat{f} - \hat{f}^* \in \mathcal{G}$
+
+For all $h \in \mathcal{G}$:
+\begin{align*}
+|\langle w, h \rangle_n | &= |\langle w, h - h_\epsilon \rangle_n | 
+     + |\langle w, h_\epsilon \rangle_n | \\
+ &\leq \frac{1}{n} \| w \|_1  \epsilon + |\langle w, h_\epsilon \rangle_n \| 
+\end{align*}
+
+Therefore
+\[
+\sup_{g \in \mathcal{G}} | \langle w, h \rangle_n | \leq 
+      \frac{1}{n} \|w\|_1 \epsilon + 
+      \sup_{h_\epsilon \in \mathcal{G}_\epsilon} | \langle w, h_\epsilon \rangle_n |
+\]
+
+The final goal is to show that $\sup_{h \in \mathcal{G}} | \langle w, h \rangle_n | \leq 
+\textrm{constants} \cdot \sqrt{\frac{1}{n^{4/5}}}$.
+
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+\textbf{Chaining}.
+
+Our goal is to give a precise bound for $\sup_{h \in \mathcal{G}} | \langle w, h \rangle|$.
+
+We first restate the chaining theorem. Suppose $\| g \|_n \leq R$ for all $g \in \mathcal{G}$. 
+
+Suppose $\epsilon > \frac{1}{\sqrt{n}}\sigma \mathbf{c} \int_0^R \sqrt{ \log N_2(t, \mathcal{G}) }dt \vee R $. 
+Then we have that
+\[
+P\Big( \sup_{g \in \mathcal{G}} \langle w, g \rangle_n \geq \epsilon \Big) \leq
+  4 \exp \Big( - \frac{ n \epsilon^2}{ \mathbf{c} R^2 \sigma^2} \Big)
+\]
+In our case, $R \leq sLb$.
+
+Restated, we have that, with probablity at least $1-\delta$,
+\[
+\sup_{g \in \mathcal{G}} | \langle w, g \rangle_n | \leq 
+   \mathbf{c} sLb \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta}} + 
+      \Big( \int_0^R \sqrt{\log N_2(t, \mathcal{G})}dt \vee R \Big)\, 
+       \mathbf{c} \sigma \sqrt{\frac{1}{n}} 
+\]
+
+Now we evaluate the integral. Since $N_2(t, \mathcal{G}) \leq N_\infty(t, \mathcal{G})$, we know that $\sqrt{\log N_2(t, \mathcal{G})} \leq \sqrt{C s^{1.5} b L} t^{-1/4}$.
+
+\begin{align*}
+\int_0^R \sqrt{\log N_2(t, \mathcal{G})} dt &\leq 
+      \sqrt{C s^{1.5} b L} \int_0^R t^{-1/4} dt \\ 
+ &= \sqrt{C s^{1.5} b L} \, \frac{4}{3} R^{3/4} \\
+ &= \sqrt{C s^{1.5} b L} \, \mathbf{c} (sLb)^{3/4} \\
+ &\leq \mathbf{c} (s b L)^2
+\end{align*}
+
+Coming back, we have, with probability at least $1-\delta$,
+\begin{align*}
+\sup_{g \in \mathcal{G}} | \langle w, g \rangle | &\leq 
+    \mathbf{c} sLb \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} } + 
+    \mathbf{c} (sLb)^2 \sigma \sqrt{ \frac{1}{n} } \\
+ &\leq \mathbf{c} (sLb)^2\sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }
+\end{align*}
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+\textbf{Uniform convergence}:
+
+The goal is to bound 
+$\sup_{f \in \mathcal{C}^s_L} \Big| \| f_0 - f \|^2_n - \|f_0 - f \|^2_P\Big|$. \\
+
+Again, let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s_L - f_0$. 
+
+First, note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s b L$.
+
+Because $\| h \|_n = \| h - h_\epsilon + h_\epsilon \|_n$, we have that
+\begin{align*}
+\|h_\epsilon \|_n - \| h - h_\epsilon \|_n &\leq 
+    \| h \|_n \leq \|h_\epsilon \|_n + \| h - h_\epsilon \|_n \\
+\|h_\epsilon \|_n - \epsilon &\leq 
+    \| h \|_n \leq \|h_\epsilon \|_n + \epsilon  \\
+\| h_\epsilon \|^2_n - 8 \epsilon (s L b)  &\leq \| h  \|^2_n  \leq
+   \| h_\epsilon \|_n^2 + 8 \epsilon (s L b) 
+\end{align*}
+where we used the fact that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$ and $ \| h_\epsilon \|_n \leq \| h_\epsilon \|_\infty \leq 4 s L b$.
+
+
+And likewise:
+\begin{align*}
+\| h_\epsilon \|^2_P - 8 \epsilon (s L b)  &\leq \| h  \|^2_P \leq
+   \| h_\epsilon \|_P^2 + 8 \epsilon (s L b)
+\end{align*} 
+
+Therefore, 
+\begin{align*}
+\sup_{h \in \mathcal{G}}  \Big| \|h\|^2_n - \|h\|^2_P \Big| \leq 
+\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| 
+        + \epsilon (16 sLb)
+\end{align*}
+
+Since $\| h_\epsilon \|_n^2 = \frac{1}{n} \sum_{i=1}^n h_\epsilon(X_i)^2$ is an average of bounded random variables, we have by Union Bound and Hoeffding Inequality that, with probability at most $1 - \delta$,
+\begin{align*}
+\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| &\leq
+  (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+        + \log N_\infty(\epsilon, \mathcal{C}_L^s) \big) } \\
+&\leq (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+        + C s^{1.5} Lb \epsilon^{-1/2}   \big) }
+\end{align*}
+
+We will set $\epsilon = \frac{1}{n^{2/5}} (C s^{0.5} L b)^2$ and $\delta = \frac{1}{n}$. 
+Therefore:
+\begin{align*}
+\sup_{h_\epsilon} \Big|  \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| &\leq
+   (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+        + s n^{1/5}  \big) } \\
+  &\leq (8Lb)^2 \sqrt{ \frac{s^5}{cn^{4/5}} \log 2n }
+\end{align*}
+And
+\begin{align*}
+\sup_{h \in \mathcal{G}}  \Big| \|h\|^2_n - \|h\|^2_P \Big| &\leq 
+\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| 
+        + \frac{1}{n^{2/5}} C^2 s^2 (Lb)^3 \\
+  &\leq (8Lb)^2 \sqrt{ \frac{s^5}{c n^{4/5}} \log 2 n}
+     + (CLb)^2 \sqrt{ \frac{s^4}{n^{4/5}} } \\
+  &\leq \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log 2n}
+\end{align*}
+
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+\textbf{Concavity start}.
+
+We start from the very beginning, where $\hat{g}_k$ is defined as $\min_{g_k \in \mathcal{C}^1_L} \| y - \hat{f} - g_k \|_n^2 + \lambda \| g_k \|_\infty$.
+
+\begin{align*}
+\| y - \hat{f} - \hat{g}_k \|_n^2 + \lambda \| \hat{g} \|_\infty &\leq
+   \| y - \hat{f} - g^*_k \|_n^2 + \lambda \| g^* \|_\infty \\
+\| y - \hat{f} - \hat{g}_k \|_n^2 &\leq \| y - \hat{f} - g^*_k \|_n^2 + \lambda 2 Lb \\
+ &\\
+\| f_0 - \hat{f} - \hat{g}_k + w\|_n^2 & \leq \| f_0 - \hat{f} - g^*_k + w \|_n^2 
+   +\lambda 2 Lb \\
+\| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 -\hat{f} - g^*_k\|_n^2 &\leq
+   2 \langle w, \hat{g}_k - g^*_k \rangle_n + \lambda 2Lb
+\end{align*}
+
+Using the chaining result, setting $s=1$, we have, with probability at least $1-\delta$,
+\begin{align*}
+\| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 - \hat{f} - g^*_k \|_n^2 &\leq
+  \mathbf{c} (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb
+\end{align*}
+
+Setting $\delta = 1/n$, using \emph{uniform convergence}, we have
+\begin{align*}
+\| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &\leq
+  \mathbf{c} (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log 4n }+ \lambda 2 Lb +
+  \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log 2n } \\
+ &\leq \mathbf{c}(Lb)^3 \sigma \sqrt{\frac{s^5}{n^{4/5}} \log 4n} + \lambda 2 Lb
+\end{align*}
+
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+Now comes \textbf{concavity removal version 2}.
+
+The goal is to bound radius of approximation between $\| f_0 - \hat{f} - g^*_k \|_P^2$ and $\| f_0 - f^* - g^*_k \|_P^2$ and likewise for $\hat{g}_k$.
+
+\begin{align*}
+\| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 &\leq 
+    \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle
+   + 2 \langle f_0 - f^*, g^*_k \rangle \\
+ &\leq \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log 4n} + \lambda 2 sLb + 
+    2 | \langle \hat{f} - f^*, g^*_k \rangle |  \\
+ &\leq  \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log 4n} + \lambda 2 sLb + 
+    2 \| \hat{f} - f^* \|_P \| g^*_k \|_P \\
+&\leq  \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log 4n} + \lambda 2 sLb +
+   \mathbf{c} 2Lb \sqrt{ (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log 4n} + \lambda 2sLb} 
+\end{align*}
+
+The same bound likewise holds for $\hat{g}_k$.
+
+\rule{5cm}{0.4pt}
+\vspace{0.2in}
+
+
+
+
+
+
 
 
 \newpage
-
 \section{2/15/2014}
 
 The two step procedure for variable selection:

@@ -1,226 +1,111 @@
 \section{Appendix}
-
-% \subsection{Proof of Additive Faithfulness}
-% \label{sec:faithful_proof}
-
-% We start with a proof of Lemma~\ref{lem:general_int_reduction}. We restate the lemma here for convenience.
-
-% \begin{lemma}
-% Let $F$ be a product distribution on $C=[0,1]^s$ with a positive density function $p$. Let $f: C \rightarrow \R$ be an integrable function. 
-
-% Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, \E f_k(X_k) = 0\}$ 
-
-% Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
-% \end{lemma}
- 
-%  \begin{proof}
- 
-% Let $f^*_1,...,f^*_s, \mu^*$ be the minimizers as defined. 
-
-% We first show that the optimal $\mu^* = \E f(X)$ for any $f_1, ..., f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] = \E[ f(X) ]$. \\
-
-% We now turn our attention toward the $f^*_k$'s. 
-
-% It must be then that $f^*_k$ minimizes $\{ \E | f(X) - \mu^* - \sum_{k' \neq k} f^*_{k'} (X_{k'}) - f_k (X_k)|^2 \,:\, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
-
-% Fix $x_k$, we will show that the value $\E[ f(X) | x_k] - \mu^*$, for all $x_k$,  uniquely minimizes 
-% \[
-% \min_{ f_k(x_k) } \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
-%          \big| f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k) -\mu^*\big|^2 
-%                  d \mathbf{x}_{-k}.
-% \]
-% It easily follows then that the function $x_k \mapsto \E[ f(X) \given x_k] - \mu^*$ is the unique $f^*_k$ that minimizes the expected square error.
-
-
-% Take the derivative with respect to the value $f_k(x_k)$ and set it equal to zero, we get that
-% \begin{align*}
-% \int_{\mathbf{x}_{-k}} p(\mathbf{x}) f_k(x_k) d \mathbf{x}_{-k} &= 
-%   \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
-%       ( f(\mathbf{x})-\sum_{k' \neq k} f^*_{k'}(x_{k'})-\mu^*) d \mathbf{x}_{-k} \\  
-% p(x_k) f_k(x_k) &= \int_{\mathbf{x}_{-k}} p(x_k)
-%      p(\mathbf{x}_{-k}) ( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})-\mu^*) 
-%               d \mathbf{x}_{-k} \\
-% f_k(x_k) &= \int_{\mathbf{x}_{-k}} 
-%        p(\mathbf{x}_{-k}) (f(\mathbf{x}) -\mu^*) d \mathbf{x}_{-k} 
-%  \end{align*}
-% Where the second line follows because $p(\mathbf{x}) = \prod_k p(x_k)$ by product distribution assumption. The third line follows because $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f^*_{k'}(x_{k'}) d\mathbf{x}_{-k} = 0$ for all $k' \neq k$ by the constraint that $\E[f^*_{k'}(X_{k'})] = 0$. 
-
-% The square error objective is strongly convex. The second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
-
-
-% Now, we note that as a function of $x_k$, $\E[ f(X) | x_k] - \E f(X)$ has mean zero and we thus finish the proof.
-
- 
-%  \end{proof}
- 
-% Our reasoning actually proves something stronger. It proves the following lemma:
-
-% \begin{lemma}
-% \label{lem:additive_component}
-
-% $f^*_k(x_k) = \E[ f(X) | x_k] - \mu^*$ is the unique optimal solution to 
-% \[
-% min_{f_k} \{ \E\Big( f(X) - \E f(X) - \sum_{k'\neq k} f_{k'}(X_{k'}) - f_k (X_k)\Big)^2 
-%                     \,:\, \E f_k(X_k) = 0 \}
-% \]
-% for \emph{any} set of component functions $\{ f_{k'} \}_{k'\neq k}$ that satisfies $\E f_{k'}(X_{k'}) = 0$.
-% \end{lemma}
-
-
-% The next lemma adapts Lemma~\ref{lem:general_int_reduction} to convex functions.
-
-% \begin{lemma}
-% \label{lem:int_reduction}
-% Let $F$ be a product distribution on $C=[0,1]^s$ with positive density function $p$. Let $f: C \rightarrow \R$ be a convex function. 
-
-% Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq \arg\min \{ \E | f(X) - \sum_{k=1}^s f_k(X_k) - \mu |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0\}$ 
-
-% Then $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and $\mu^* = \E f(X)$ and this solution is unique.
-% \end{lemma}
-
-% \begin{proof}
-% The proof is identical to that of Lemma~\ref{lem:general_int_reduction}. We need only verify that $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ is convex.
-
-% This is true because for every $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a convex function with respect to $x_k$ and therefore, $\int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) f(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}$ is still convex. 
-% \end{proof}
-
-%  The next proposition, combined with Lemma~\ref{lem:int_reduction}, proves Theorem~\ref{thm:convex_faithful}.
- 
-% \begin{proposition}
-% \label{prop:faithful_condition}
-% Let $F$ be a product distribution supported on $C=[0,1]^s$ with positive density $p > 0$. Let $f: C \rightarrow \R$ be a convex function, twice differentiable. 
-
-% Let $f^*_1,...,f^*_s \coloneqq \arg\min \{ \E | f(X) -\E f(X) - \sum_k f_k(X_k) |^2 \,:\, \forall k, f_k \trm{ convex }, \E f_k(X_k) = 0 \}$.
-
-% The following are equivalent:
-% \begin{packed_enum}
-% \item $f$ does not depends on coordinate $k$
-% \item For all $x_k$, $\E[ f(X) | x_k] = \E f(X) $.
-% \end{packed_enum}
-% \end{proposition}
-
-% \begin{proof}
-
-% The first condition trivially implies the second.
-
-% Fix $k$. Suppose that, for all $x_k$, $\E[ f(X) | x_k] = \E f(X)$. 
-
-% Because we assume that $p(\mathbf{x}) = \prod_k p(x_k)$, we see that, for all $x_k$,
-% \begin{align*}
-%  \E[ f(X) | x_k ] &=  \int_{\mathbf{x}_{-k}} p(\mathbf{x_{-k}}) f(x_k,\mathbf{x}_{-k}) d \mathbf{x}_{-k} = \E f(X)
-% \end{align*}
-
-
-% For every $\mathbf{x}_{-k}$, we define the derivative
-% \[
-% g(\mathbf{x}_{-k}) \coloneqq  \lim_{x_k \rightarrow 0^+} \frac{f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k})}{x_k}
-% \]
-% $g(\mathbf{x}_{-k})$ is well-defined by the assumption that $f$ is everywhere differentiable.
-
-% We now describe two facts about $g$.
-
-% Fact 1. By exchanging limit with the integral, which is valid by bounded convergence theorem, we reason that 
-% \[
-% \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) g(\mathbf{x}_{-k}) d \mathbf{x}_{-k} = 0
-% \]
-
-% Fact 2. Because $f$ is convex, $g(\mathbf{x}_{-k})$ is a component of the subgradient $\partial_{\mathbf{x}} f(0, \mathbf{x}_{-k})$. (the subgradient coincides with the gradient by assumption that $f$ is twice differentiable)
-
-% Therefore, using the first order characterization of a convex function, we have
-% \begin{align*}
-% f(\mathbf{x}') &\geq f( \mathbf{x}) + \partial_{\mathbf{x}} f(\mathbf{x})^\tran (\mathbf{x}' - \mathbf{x}) \quad \trm{ for all } \mathbf{x}', \mathbf{x} \\
-% f(x_k, \mathbf{x}_{-k}) &\geq f(0, \mathbf{x}_{-k}) + g(\mathbf{x}_{-k}) x_k \quad \trm{ for all } x_k, \mathbf{x}_{-k}
-% \end{align*}
-
-
-% For all $x_k, \mathbf{x}_{-k}$, 
-% \[
-% f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k \geq 0
-% \]
-% and
-% \[
-% \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k}) (f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k) d\mathbf{x}_{-k} = 0
-% \]
-% Since $f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k$ is a continuous function of $\mathbf{x}_{-k}$ and the density $p(\mathbf{x}_{-k})$ is, by assumption, non-zero on the support, we conclude that for all $x_k, f(x_k, \mathbf{x}_{-k}) - f(0, \mathbf{x}_{-k}) - g(\mathbf{x}_{-k}) x_k =0 $ necessarily and thus for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, \mathbf{x}_{-k}) + g(\mathbf{x}_{-k}) x_k$.
-
-% The Hessian of $f$ then (guaranteed to exist by assumption) has a zero on the $k$-th main diagonal entry. 
-
-% By proposition 7.1.10 from Horn and Johnson~\cite{HJ90},  such a matrix is positive semidefinite if and only if the $k$-th row and column are also zero. (to prove this, one can first work with a 2 by 2 matrix and then use the fact that every principal submatrix of a PSD matrix must be PSD) 
-
-% Since $k$-th row and column correspond precisely to the gradient of $g(\mathbf{x}_{-k})$, we conclude that $g$ must be a constant function. It follows therefore that $g = 0$ because it integrates to 0. 
-
-% So we have that for all $x_k, \mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k}) = f(0, \mathbf{x}_{-k})$, which concludes our proof.
-
-% \end{proof}
- 
  
  
  \subsection{Proof of the Deterministic Condition for Sparsistency}
  \label{sec:deterministic_proof}
  
- We restate Theorem~\ref{thm:deterministic} first for convenience.
+We restate Theorem~\ref{thm:deterministic} first for convenience. 
  
 \begin{theorem} 
-The following holds regardless of whether we impose the boundedness and smoothness condition in optimization~\ref{opt:alternate_opt} or not.
+The following holds regardless of whether we impose the Lipschitz condition in optimization~\ref{opt:alternate_opt} and optimization~\ref{opt:alternate_opt_concave}.
 
-For $k \in \{1,...,p\}$, let $\Delta_{k, j}$ denote the $n$-dimensional vector $\max( X_k - X_{k (j)} \mathbf{1}, 0)$. 
+Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. 
+Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. \\
 
-Let $\{\hat{d}_k, \hat{c}_k \}_{k \in S}$ be the minimizer of the restricted regression optimization program~\ref{opt:alternate_opt}. 
-Let $\hat{d}_k = 0$ and $ \hat{c}_k = 0$ for $k \in S^c$.
+Suppose for all $k\in S^c$, for all $i=1,...,n$, $\lambda_n > | \frac{1}{2n}
+\hat{r}^\tran \mathbf{1}_{(i:n)}|$ where $\mathbf{1}_{(i:n)}$ is 1 on the coordinates of the $i$-th largest to the $n$-th largest entries of $X_k$ and 0 elsewhere.\\
 
-Let $\hat{r} \coloneqq Y - \bar{Y} \mathbf{1}_n - \sum_{k \in S} (\Delta_k \hat{d}_k - \hat{c}_k \mathbf{1}_n) $ be the residual.
-
-Suppose for all $j=1,...,n, k\in S^c$, $\lambda_n > | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|$, then $\hat{d}_k, \hat{c}_k$ for $k=1,...,p$ is an optimal solution to the full regression \ref{opt:alternate_opt}.
-
-Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
+Then the following are true:
+\begin{enumerate}
+\item Let $\hat{d}_k = 0$ for $k \in S^c$, then \{$\hat{d}_k\}_{k=1,...,p}$ is an optimal solution to optimization~\ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
+\item For all $k \in S^c$, the solution to optimization~\ref{opt:alternate_opt_concave} must be 0 and must be unique.
+\end{enumerate}
 \end{theorem}
 
-\begin{proof}
-We will omit the boundedness and smoothness constraints in our proof here. It is easy to add those in and check that the result of the theorem still holds.
 
-We will show that with $\hat{d}_k, \hat{c}_k$ as constructed, we can set the dual variables to satisfy complementary slackness and stationary conditions: $\nabla_{d_k, c_k} L(\hat{d})  = 0$ for all $k$.\\ 
+\begin{proof} 
+We will omit the Lipschitz constraint in our proof here. It is easy to add that in and check that the result of the theorem still holds.\\
 
-we can re-write the Lagrangian $L$, in term of just $d_k,c_k$, as the following.
+We first consider the first item in the conclusion of the theorem.
+
+We will show that with $\{\hat{d}_k\}_{k=1,..,p}$ as constructed, we can set the dual variables to satisfy complementary slackness and stationary conditions: $\nabla_{d_k} \mathcal{L}(\hat{d})  = 0$ for all $k$.\\ 
+
+The Lagrangian is
+\begin{equation}
+\label{eqn:full_lagrange}
+\mathcal{L}( \{ d_k \}, \nu) = 
+  \frac{1}{2n} \Big\| 
+    Y - \sum_{k=1}^p  \bar{\Delta}_k d_k  \Big\|_2^2 + 
+    \lambda \sum_{k=1}^p \| \bar{\Delta}_k d_k \|_\infty -
+    \sum_{k=1}^p \sum_{i=1}^{n-1} \nu_{ki} d_{ki} 
+\end{equation}
+with the constraint that $\nu_{ki} \geq 0$ for all $k,i$.
+
+Because $\{\hat{d}_k\}_{k \in S}$ is by definition the optimal solution of the restricted regression, it is a consequence that stationarity holds for $k \in S$, that is, $\partial_{ \{ d_k \}_{k \in S} } \mathcal{L}(d) = 0$, and that the dual variables $\nu_k$ for $k \in S$ satisfy complementary slackness.
+
+We now verify that stationarity holds also for $k \in S^c$. We fix one dimension $k \in S^c$ and let $\hat{r} = Y - \sum_{k' \in S} \bar{\Delta}_{k'} \hat{d}_{k'}$. 
+
+The Lagrangian form of the optimization, in term of just $d_k$, is
 \[
-\min_{d_k, c_k}  \frac{1}{2n} \| r_k - \Delta_k d_k + c_k \mathbf{1} \|_2^2 
-        + \lambda \sum_{i=2}^n d_{ki} + \lambda|d_{k1}| 
-        - \mu_k^\tran d_k + \gamma_k (c_k - \mathbf{1}_n^\tran\Delta_k d_k)
+\mathcal{L}(d_k, \nu_k) =
+  \frac{1}{2n} \big\| Y - \sum_{k' \in S} \bar{\Delta}_{k'} d_{k'} 
+  -  \bar{\Delta}_k d_k \big\|_2^2 
+   + \lambda \| \bar{\Delta}_k d_k\|_\infty
+  - \sum_{i=2}^{n-1} \nu_{ki} d_{ki}
 \]
-where $r_k \coloneqq Y - \bar{Y}\mathbf{1}_n - \sum_{k' \in S, k' \neq k} (\Delta_{k'} d_{k'} - c_{k'} \mathbf{1}_n) $, and $\mu_k \in \R^{n-1}$ is a vector of dual variables where $\mu_{k,1} = 0$ and $\mu_{k,i} \geq 0$ for $i=2,...,n-1$.
+with the constraint that $v_i \geq 0$ for all $i$. 
 
-First, note that by definition as solution of the restricted regression, for $k \in S$, $\hat{d}_k, \hat{c}_k$ satisfy stationarity with dual variables that satisfy complementary slackness. 
+The derivative of the Lagrangian is:
+\begin{align*}
+\partial_{d_k} \mathcal{L}(d_k) =  -\frac{1}{n} \bar{\Delta}_k^\tran ( Y - \sum_{k'\in S} \bar{\Delta}_{k'} d_{k'}  - \bar{\Delta}_k d_k )
+        + \lambda \bar{\Delta}_k^\tran \mathbf{u}
+      - \nu_k
+\end{align*}
+where $\mathbf{u}$ is the subgradient of $\| \bar{\Delta}_k d_k \|_\infty$, an $n$-vector such that $\| \mathbf{u}_T \|_1 = 1$ where $T = \{ i \,:\,  (\bar{\Delta}_k d_k)_i = \| \bar{\Delta}_k d_k \|_\infty \}$.
 
-Now, let us fix $k \in S^c$ and prove that $\hat{d}_k = 0, \hat{c}_k=0$ is an optimal solution. 
+We now substitute in $d_{k'} = \hat{d}_{k'}$ for $k' \in S$, $d_k = 0$ for $k \in S$, and $r = \hat{r}$ and show that the duals can be set in a way to ensure that the derivatives are equal to 0.
 
 \begin{align*}
-\partial d_k :& \qquad -\frac{1}{n} \Delta_k^\tran ( r_k - \Delta_k d_k 
-       + c_k \mathbf{1}) + \lambda \mathbf{u}_k  - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} \\
-\partial c_k: & \qquad -\frac{1}{n} \mathbf{1}^\tran ( r_k - \Delta_k d_k 
-       + c_k \mathbf{1}) + \gamma_k
+\partial_{d_k} \mathcal{L}(\hat{d}_k) = -\frac{1}{n} \bar{\Delta}_k^\tran\hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u}
+           - \nu_k = 0 
 \end{align*}
-In the derivatives, $\mathbf{u}_k$ is a $(n-1)$-vector whose first coordinate is $\partial | d_{k1}|$ and all other coordinates are 1.
+where $\| \mathbf{u} \| \leq 1$ and $\nu_k \geq 0$. It clear that to show stationarity, we only need to show that $-\frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u} \geq 0$ hwere the inequality is element-wise.
 
-We now substitute in $d_k = \hat{d}_k = 0, c_k=\hat{c}_k=0, r_k = \hat{r}_k = \hat{r}$ and show that the duals can be set in a way to ensure that the derivatives are equal to 0.
+Let us reorder the samples so that the $i$-th sample is the $i$-smallest sample. \\
+
+We will construct $\gamma = 0$, and $\mathbf{u} = (-a, 0, ..., a)$ for some $0 < a < 1/2$. (coordinates of $\mathbf{u}$ correspond to the new sample ordering) We then just need to show that
+\begin{align*}
+- \frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u} &\geq 0 \quad \Leftrightarrow \\
+- \frac{1}{n} \Delta_k^\tran \hat{r} + \lambda \Delta_k^\tran \mathbf{u} &\geq 0 \quad \Leftrightarrow\\
+- \frac{1}{n} \sum_{i > j} (X_{ki} - X_{kj}) \hat{r}_i + \lambda (X_{kn} - X_{kj})a &\geq 0 \quad 
+   \textrm{for each } j \\
+- \frac{1}{n} \sum_{i > j} \sum_{j < i' \leq i} \mathsf{gap}_{i'} \hat{r}_i 
+    + \lambda (X_{kn} - X_{kj})a &\geq 0 \\
+- \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \sum_{i \geq i'} \hat{r}_i 
+    + \lambda (X_{kn} - X_{kj})a &\geq 0 \\
+- \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{(i':n)}^\tran \hat{r} 
+   + \lambda (X_{kn} - X_{kj})a &\geq 0 
+\end{align*}
+where $\mathsf{gap}_i = X_{ki} - X_{k,i-1}$. If $\frac{1}{2n} |\mathbf{1}_{(i:n)}^\tran \hat{r}| \leq \lambda a$ for all $i=1,...,n$, then we have that:
 
 \begin{align*}
--\frac{1}{n} \Delta_k^\tran\hat{r} + \lambda \mathbf{u}_k 
-           - \mu_k - \gamma_k \Delta_k^\tran \mathbf{1} &= 0 \\
--\frac{1}{n} \mathbf{1}^\tran \hat{r} + \gamma_k & = 0 \\
+- \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran \hat{r}
+   + \lambda (X_{kn} - X_{kj})a &\geq 0 \quad \Leftrightarrow \\
+- \sum_{i' > j} \mathsf{gap}_{i'} \lambda a + \lambda (X_{kn} - X_{kj}) a &\geq 0\\
+- (X_{kn} - X_{kj}) \lambda a + \lambda (X_{kn} - X_{kj}) a &\geq 0
 \end{align*}
-where $\mathbf{u}_k$ is 1 in every coordinate except the first, where it can take any value in $[-1,1]$.
 
-First, we observe that $\gamma_k = 0$ because $\hat{r}$ has empirical mean 0. All we need to prove then is that 
+The second item in the theorem concerning optimization~\ref{opt:alternate_opt_concave} is proven in exactly the same way. 
+
+The Lagrangian of optimization~\ref{opt:alternate_opt_concave} is:
 \[
-\lambda \mathbf{u}_k - \mu_k = \frac{1}{n} \Delta_k^\tran \hat{r}.
+\mathcal{L}_{\trm{cave}}(d_k, \nu_k) = 
+  \frac{1}{2n} \big\| \hat{r} - \bar{\Delta}_k d_k \big \|_2^2 + 
+  \lambda \| \bar{\Delta}_k d_k \|_\infty + \sum_{k=1}^p \sum_{i=1}^{n-1} \nu_{ki} d_{ki}
 \]
 
-Suppose
-\[
-\lambda \mathbf{1} > |\frac{1}{n} \Delta_k^\tran\hat{r}|,
-\]
-then we easily see that the first coordinate of $\mathbf{u}_k$ can be set to some value in $(-1,1)$ and we can set $\mu_{k,i} > 0$ for $i=2,...,n-1$. 
+The exact same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT conditions sufficient for optimality.
 
-Because we have strict inequality in the above equation, Lemma 1 from ~\cite{Wain:09a} show that all solutions must be zero on $S^c$.
 \end{proof}
  
  
@@ -235,422 +120,503 @@ Because we have strict inequality in the above equation, Lemma 1 from ~\cite{Wai
 
  We first restate the theorem for convenience. 
  
-\begin{theorem} 
-Suppose assumptions A1, A2, A3 hold. 
 
-Suppose $\lambda_n \geq c b (sB + \sigma) \sqrt{ \frac{s}{n} \log n \log (pn)}$, then with probability at least $ 1 - \frac{C}{n}$, for all $j=1,...,n,k \in S^c$,
+\begin{theorem} 
+Suppose assumptions A1-A4 hold. 
+
+Suppose $\lambda_n \geq \mathbf{c} s Lb \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
 \[
-\lambda_n >  | \frac{1}{n} \hat{r}^\tran \Delta_{k,j}|
+\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)} \Big|
 \]
-And therefore, the solution to the optimization~\ref{opt:alternate_opt} is zero on $S^c$.
+
+And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from optimization~\ref{opt:alternate_opt}, and the DC solution $\hat{g}_k$, from optimization~\ref{opt:alternate_opt_concave} are zero. 
 \end{theorem}
 
 \begin{proof}
 The key is to note that $\hat{r}$ and $\Delta_{k,j}$ are independent for all $k \in S^c,j=1,...,n$ because $\hat{r}$ is only dependent on $X_{S}$.
 
-We remind the reader that $\Delta_{k,j} = \max(X_k, - X_{k(j)} \mathbf{1}_n, 0)$. Because $\hat{r}$ is empirically centered,
+Fix $j$ and $i$. $\hat{r}^\tran \mathbf{1}_{(i':n)}$ is then the sum of $n-i'+1$ random coordinates of $\hat{r}$. We will then use Serfling's theorem on the concentration of measure of sampling without replacement. (corollary~\ref{cor:serfling}) We must first bound $\| \hat{r} \|_\infty$ and $\frac{1}{n} \sum_{i=1}^n \hat{r}_i$ before we can use Serfling's results however.\\
+
+\textbf{Step 1}: Bounding $\| \hat{r} \|_\infty$. 
+
+$\hat{r}_i = f_0(x_i) + w_i - \hat{f}(x_i)$ where $\hat{f}(x_i) = \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ is the convex additive function outputted by the restricted regression.
+
+Both $f_0(x_i)$ and $\hat{f}(x_i)$ are coordinate-wise $L$-Lipschitz and therefore are bounded by $2 sLb$. 
+
+Because $w_i$ is subgaussian, $|w_i| \leq \mathbf{c} \sigma \sqrt{\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq \mathbf{c} \sigma \sqrt{ \log \frac{2}{\delta}}$ with probability at most $1 - n \delta$.
+
+We now put this together and take another union bound across all $j$ and all $i'$:
+\begin{align*}
+\| \hat{r} \|_\infty &\leq \mathbf{c} (sLb + \sigma \sqrt{ \log \frac{2}{\delta}}) \\
+      &\leq \mathbf{c} sLb \sigma \sqrt{\log \frac{2}{\delta}}
+\end{align*}
+with probability at least $1 - n^2 p \delta$. We supposed that both $sLb \geq 2$ and $\sigma\sqrt{\log \frac{2}{\delta}} \geq 2$.
+
+\textbf{Step 2}: Bounding $| \frac{1}{n} \hat{r}^\tran \mathbf{1} |$. 
 
 \begin{align*}
-\frac{1}{n} \hat{r}^\tran \Delta_{k,j} &= 
-              \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)}\mathbf{1}_n) 
-                                       - \frac{1}{n} \hat{r}^\tran \mathbf{1}_n X_{k(j)} \\
-                  &= \frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)}\mathbf{1}_n)
+\frac{1}{n} \hat{r}^\tran \mathbf{1} &= 
+    \frac{1}{n} \sum_{i=1}^n f_0(x_i) + w_i - \hat{f}(x_i) \\
+  &= \frac{1}{n} \sum_{i=1}^n f_0(x_i) + w_i \quad \trm{ ($\hat{f}$ is centered)}
 \end{align*}
-Our goal in this proof is to bound $\frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)})$ from above.
 
-\textbf{Step 1.} We first get a high probability bound on $\| \hat{r} \|_\infty$. 
+Because $|f_0(x_i)| \leq sLb$, the first term $| \frac{1}{n} \sum_{i=1}^n f_0(x_i)|$ is at most $2 sLb \sqrt{\frac{1}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$ by Hoeffding Inequality.
+
+Because $w_i$ is subgaussian, the second term $|\frac{1}{n} \sum_{i=1}^n w_i|$ is at most $2 \sigma \sqrt{ \frac{1}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$.
+
+Taking an union bound, we have that 
 
 \begin{align*}
-\hat{r}_i &= Y_i - \bar{Y} -  \sum_{k \in S} \hat{f}_k (X_k^{(i)}) \\
-	&= f_0(X_S^{(i)}) + \epsilon_i - \bar{f_0} - \bar{\epsilon}- 
-                      \sum_{k \in S} \hat{f}_k(X_k^{(i)}) \\
-	&=  f_0(X_S^{(i)}) - \bar{f_0} - \sum_{k \in S} \hat{f}_k(X_k^{(i)}) 
-                   + \epsilon_i - \bar{\epsilon}
+| \frac{1}{n} \hat{r}^\tran \mathbf{1}| &\leq 2 sLb \sqrt{\frac{1}{n} \log \frac{2}{\delta}} + 2 \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} \\
+  &\leq \mathbf{c} sLb \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} 
 \end{align*}
-Where $\bar{f_0} = \frac{1}{n} \sum_{i=1}^n f_0(X_S^{(i)})$ and likewise for $\bar{\epsilon}$.
+with probability at least $1-2\delta$.\\
 
-$\epsilon_i$ is subgaussian with subgaussian norm $\sigma$. For a single $\epsilon_i$, we have that $P( |\epsilon_i| \geq t ) \leq C \exp( - c \frac{1}{\sigma^2} t^2)$. Therefore, with probability at least $1-\delta$, $|\epsilon_i| \leq \sigma\sqrt{ \frac{1}{c} \log \frac{C}{\delta}}$. 
+\textbf{Step 3}: We now apply Serfling's theorem.
 
-By union bound, with probability at least $1-\delta$, $\max_i |\epsilon_i| \leq \sigma \sqrt{ \frac{1}{c} \log \frac{2nC}{\delta}}$.
-
-Also, $|\bar{\epsilon}| \leq \sigma \sqrt{\frac{c}{n} \log \frac{C}{\delta}}$ with probability at least $1 - \delta$.
-
-We know that $|f_0(x)| \leq sB$ and $|\hat{f}_k(x_k)| \leq B$ for all $k$. 
-
-Then $|\bar{f_0(x)}| \leq sB$ as well, and $|f^*(X_S^{(i)}) - \bar{f^*} - \sum_{k \in S} \hat{f}_k(X_k^{(i)})| \leq 3s B$.
-
-Therefore, taking an union bound, we have that with probability at least $1-\frac{C}{n}$, 
+Serfling's theorem states that with probability at least $1 - \delta$:
 \[
-\| \hat{r} \|_\infty \leq (3 s B + c\sigma\sqrt{\log n}) 
+\Big
+|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)}\Big| \leq
+   2\| \hat{r} \|_\infty \sqrt{ \frac{1}{n} \log \frac{2}{\delta}} + 
+   \Big|\frac{1}{n} \hat{r}^\tran \mathbf{1} \Big|
 \]
 
-
-\textbf{Step 2.} We now bound $\frac{1}{n} \hat{r}^\tran \max( X, X_{k(j)} \mathbf{1})$.
-
-\[
-\frac{1}{n} \hat{r}^\tran \max(X_k, X_{k(j)} \mathbf{1}) = \frac{1}{n} \sum_{i=1}^n \hat{r}_i \max(X_{ki}, X_{k(j)}) = \frac{1}{n} \sum_{i=1}^n \hat{r}_i X_{ki} \delta(ord(i) \geq j) + \frac{1}{n} X_{k(j)} \mathbf{1}_A^\tran \hat{r}_A
-\]
-
-Where $A = \{ i : ord(i) \geq j\}$ and $ord(i)$ is the order of sample $i$ where $(1)$ is the smallest element.
-
-We will bound both terms.
-
-\textbf{Term 1.}
-\[
-\trm{Want to bound} \qquad F(X_{k1},...,X_{kn}) \coloneqq \frac{1}{n}\sum_{i=1}^n \hat{r}_i X_{ki} \delta(ord(i) \geq j) 
-\]
-
-First, we note that $X_{ki}$ is bounded in the range $[-b,b]$. 
-
-We claim then that $F$ is coordinatewise-Lipschitz. Let $X_k = (X_{k1}, X_{k2},...,X_{kn})$ and $X'_k = (X'_{k1}, X_{k2}, ..., X_{kn})$ differ only on the first coordinate. 
-
-The order of coordinate $i$ in $X_k$ and $X'_k$ can change by at most $1$ for $i \neq 1$. Therefore, of the $j-1$ terms of the series, at most 2 terms differ from $F(X_k)$ to $F(X'_k)$ and
-
-$$ | F(X_{k1}, ..., X_{kn}) - F(X'_{k1}, ..., X'_{kn}) | \leq \frac{4 b \|\hat{r}\|_\infty}{n} $$
-
-By McDiarmid's inequality therefore, 
-\[
-P( | F(X_k) - \E F(X_k) | \geq t ) \leq C \exp( - c n\frac{t^2}{ (4 b \|\hat{r}\|_\infty)^2})
-\]
-
-By symmetry and the fact that $\hat{r}$ is centered, $\E F(X_k) = 0$.
-
-We can fold the 4 into the constant $c$. With probability $1-\delta$, $|F(X_k)| \leq b \|\hat{r}\|_\infty \sqrt{   \frac{1}{cn} \log \frac{C}{\delta}}$. 
-
-\textbf{Term 2:}
-
-\[
-\trm{Want to bound}   \frac{1}{n} X_{k(j)} \mathbf{1}_A^\tran \hat{r}_A
-\]
-
-$A$ is a random set and is probabilistically independent of $\hat{r}$.  $\mathbf{1}_A^\tran \hat{r}_A$ is the sum of a sample of $\hat{r}$ without replacement. Therefore, according to Serfling's theorem (Corollary~\ref{cor:serfling}), with probability at least $1-\delta$, $|\frac{1}{n} \mathbf{1}_A^\tran \hat{r}_A|$ is at most $\| \hat{r} \|_\infty \sqrt{ \frac{1}{cn} \log \frac{C}{\delta}}$.
-
-Since $|X_{k(j)}|$ is at most $b$, we obtain that with probability at least $1-\delta$, $| \frac{1}{n} X_{k(j)} \mathbf{1}_A^\tran \hat{r}_A| \leq b\| \hat{r} \|_\infty \sqrt{ \frac{1}{cn} \log \frac{C}{\delta}}$.
-
-Now we put everything together.
-
-Taking union bound across $p$ and $n$, we have that with probability at least $1-\delta$, 
-
-\[
-| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}| \leq b \|\hat{r}\|_\infty \sqrt{ \frac{1}{c} \frac{1}{n} \log \frac{np C }{\delta}}
-\]
-
-Taking union bound and substituting in the probabilistic bound on $\|\hat{r}\|_\infty$, we get that with probability at least $1-\frac{C}{n}$,
-
-$| \frac{1}{n} \max(X_k, X_{k(j)}\mathbf{1})^\tran \hat{r}|$ is at most 
-\[
- c b (sB + \sigma) \sqrt{ \frac{s}{n} \log n \log (pn) }
-\]
+Taking an union bound across previous events, we have that with probability at least $1 - 3n^2 p \delta$, for all $j \in S^c$, for all $i'=1,...,n$:
+\begin{align*}
+\Big|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)} \Big| &\leq
+  \mathbf{c} sLb \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} 
+\end{align*}
+Setting $\delta = \frac{1}{n^3 p}$ gives the desired result.
 
 \end{proof}
 
  
  
- 
- 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%
+%%
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
  
  \subsection{Proof of False Negative Control}
  \label{sec:false_negative_proof}
  
 \textbf{Note:} the symbols $c,C$ represent absolute constants. We will often abuse notation and ``absorb'' new absolute constants into $c, C$; the actual value of $c, C$ could thus vary from line to line.
 
- We will use covering number and uniform convergence and will thus need to first introduce some notations. 
+ We first introduce notations.
  \subsubsection{Notation} 
+\label{sec:false_negative_proof_notations}
 
- Given samples $X^{(1)},...,X^{(n)}$, let $f, g$ be a function and $w$ be a $n$-dimensional random vector, then we denote $\| f - g + w\|_n^2 \coloneqq \frac{1}{n} \sum_{i=1}^n ( f(X^{(i)}) - g(X^{(i)}) + w_i )^2$. We will also abuse notation and let $\| f + c \|_n^2 = \frac{1}{n} \sum_{i=1}^n (f(X^{(i)}) + c)^2$ if $c$ is a scalar.
+Let $f : \mathbb{R}^s \rightarrow \R$, we denote $\| f \|_P \equiv \E f(X)^2$. \\
+Given samples $X_1,...,X_n$, we denote $\| f \|_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i)^2$ and $\langle f, g \rangle_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i) g(X_i)$. \\
 
-We let $\langle f, g \rangle_n \coloneqq \frac{1}{n} \sum_{i=1}^n f(X^{(i)}) g(X^{(i)})$. It then follows that:
-\begin{packed_enum}
-\item $\| f + g \|_n^2 = \|f\|_n^2 + 2 \langle f, g \rangle_n + \|g \|_n^2$
-\item $\langle f, g \rangle_n \leq \|f\|_n \| g \|_n$
-\end{packed_enum}
+Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_L \equiv \{ f \in \mathcal{C}^1 \,:\, \| \partial f \|_\infty \leq L \}$ denote the set of $L$-Lipschitz univariate convex functions. \\
 
-For a function $g : \R^s \rightarrow \R$, define $\hat{R}_s(g) \coloneqq \| f_0 + w - \bar{f_0} - \bar{w} - g \|_n^2$ as the objective of the \emph{restricted} regression and define $R_s(g) \coloneqq \E | f_0(X)  + w - \mu - g(X) |^2$ as the population risk, where $\bar{f_0} = \frac{1}{n} \sum_i f_0(X^{(i)})$ and $\bar{w} = \frac{1}{n}\sum_{i=1}^n w_i $ and $\mu = \E f_0(X)$. Note that we \emph{subtract} out the mean in the two risk definitions.
+Define $\mathcal{C}^s$ as the set of convex additive functions and $\mathcal{C}^s_L$ likewise as the set of $L$-Lipschitz convex additive functions.
+\begin{align*}
+\mathcal{C}^s &\equiv \{ f \,:\, f = \sum_{k=1}^s f_k, \,
+   f_k \in \mathcal{C}^1 \} \\
+\mathcal{C}^s_L &\equiv \{ f \in \mathcal{C}^s \,:\, 
+f = \sum_{k=1}^s f_k, \, \| \partial f_k \|_\infty \leq L \}
+\end{align*}
 
-For an additive function $g$, define $\rho_n(g) = \sum_{k=1}^s \| \partial g_k \|_\infty$. Because we always use the secant linear piece-wise function in our optimization program, we define $\ds \| \partial g_k\|_\infty \coloneqq \max_{i=1,...,n-1} |\frac{ g_k(X^{(i)}) - g_k(X^{(i+1)})}{ X^{(i)} - X^{(i+1)}}|$.
-
-Let $\mathcal{C}[b,B,L]$ be the set of 1 dimensional convex functions on $[-b,b]$ that are bounded by $B$ and $L$-Lipschitz.
-
-Let $\mathcal{C}[s,b,B,L]$ be the set of additive functions with $s$ components each of which is in $\mathcal{C}[b,B,L]$. 
+Let $f^*(x) = \sum_{k=1}^s f^*_k(x_k)$ be the population risk minimizer:
 \[
-\mathcal{C}[s,b,B,L] \coloneqq \{ f : \R^s \rightarrow \R \,:\, f = \sum_{k=1}^s f_k(x_k), \, f_k \in \mathcal{C}[b,B,L] \}
+f^* = \arg\min_{f \in \mathcal{C}^s} \| f_0 - f^* \|_P^2
 \]
- 
-Define $f^{*s} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^s[b,B,L], \, \E f_k(X_k) = 0\}$.
 
-Define $f^{*(s-1)} = \arg\min \{ R_s(f) \,|\, f \in \mathcal{C}^{(s-1)}[b,B,L], \, \E f_k(X_k) = 0\}$, the optimal solution with only $s-1$ components.
+We let $L$ be an upper bound on $\| \partial_{x_k} f_0 \|_\infty$ and $\| \partial f^*_k \|_\infty$. Since $f_0, f^*$ are supported on $[-b, b]^s$, it follows that $\| f_0 \|_\infty, \|f^* \|_\infty \leq s L b$.
 
-\textbf{Note:} By definition of the Lipschitz condition, $f_k \in \mathcal{C}[b,B,L]$ implies that $\| \partial f_k \|_\infty \leq L$. $f = \sum_k f_k \in \mathcal{C}[s,b,B,L]$ implies that $\rho_n(f) \leq sL$.
+We define $\hat{f}$ as the empirical risk minimizer:
+\[
+\hat{f} = \arg\min \Big \{ \| y - f \|_n^2 + \lambda \sum_{k=1}^s \| f_k \|_\infty 
+    \,:\, f \in \mathcal{C}^s_L, \mathbf{1}_n^\tran f_k = 0 \Big \}
+\]
+
+For $k \in \{1,...,s\}$, define $g^*_k$ to be decoupled concave population risk minimizer
+\[
+g^*_k \equiv \argmin_{g_k \in \mh \mathcal{C}^1} \| f_0 - f^* - g_k \|_P^2 
+\]
+In our proof, we will analyze $g^*_k$ for $k$'s such that $f^*_k = 0$. Likewise, we define the empirical version:
+\[
+\hat{g}_k \equiv \argmin \Big\{ \| f_0 - \hat{f} - g_k \|_n^2 \,:\, g_k \in \mh \mathcal{C}^1_L \,, \mathbf{1}_n^\tran g_k = 0 \Big\}
+\]
+By the definition of the ACDC procedure, $\hat{g}_k$ exist only for $k$ that have zero in their convex additive approximation.
+
 
 \subsubsection{Proof}
-\label{sec:false_negative_proof_proof}
+ 
+By additive faithfulness of the ACDC procedure, it is necessary that $f^*_k \neq 0$ or $g^*_k \neq 0$ for all $k \in S$. \\
 
-We first start with a lemma that converts assumption A4 into a more easily applicable condition.
+
+Intuitively, we would like to show the following:
+\begin{align*}
+\| f_0 - \hat{f} \|_P & \approx \| f_0 - f^* \|_P \\
+\| f_0 - f^* - \hat{g}_k \|_P & \approx \| f_0 - f^* - g^*_k \|_P 
+       \quad \trm{for all $k \in S$ where $f^*_k = 0$}
+\end{align*}
+where the difference is a term that decreases with $n$.
+
+Suppose $\hat{f}_k = 0$ and $f^*_k \neq 0$, then, when $n$ is large enough, there must exist a contradiction because the population risk of $f^*$, $\| f_0 - f^* \|_P$, is strictly larger than the population risk of the best approximation whose $k$-th component is constrained to be zero. 
+
+Suppose $f^*_k = 0$, then $g^*_k \neq 0$. When $n$ is large enough, $\hat{g}_k$ must not be zero or we would have another contradiction. \\
+
+
+\begin{theorem}
+\label{thm:convex_consistent}
+Let $\hat{f}$ be the minimizer of the restricted regression with $\lambda \leq \mathbf{c} sLb\sqrt{ \frac{1}{n} \log^2 np}$.
+
+Then, with probability at least $1-\delta$,
+\begin{align}
+\|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
+&\leq \mathbf{c} (Lb)^3\sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{np}{\delta}}
+\end{align}
+
+\end{theorem}
+
+
+\begin{proof}
+
+\textbf{Step 1.} We start from the definition. 
+
+\begin{align*}
+\| y - \hat{f} \|_n^2 + \lambda \sum_{k=1}^s \| \hat{f}_k \|_\infty &\leq
+  \| y - f^* + \bar{f}^* \|_n^2 + \lambda \sum_{k=1}^s \| f^*_k - \bar{f}^* \|_\infty 
+\end{align*}
+We plug in $y = f_0 + w$:
+\begin{align*}
+\| f_0 + w - \hat{f} \|_n^2 + \lambda \sum_{k=1}^s \Big( \| \hat{f}_k \|_\infty - 
+    \| f^*_k - \bar{f}^*_k \|_\infty \Big) &\leq \|f_0 + w - f^* + \bar{f}^* \|_n^2 \\
+\| f_0 - \hat{f} \|_n^2 + 2\langle w, f_0 - \hat{f} \rangle_n 
+     +\lambda \sum_{k=1}^s \Big( \| \hat{f}_k \|_\infty - \|f^*_k -\bar{f}^*_k\|_\infty \Big) 
+    &\leq \| f_0 - f^* + \bar{f}^* \|_n^2 + 
+    2 \langle w, f_0 - f^* + \bar{f}^* \rangle \\
+\|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 + 
+    \lambda \sum_{k=1}^s \Big( \| \hat{f}_k \|_\infty - 
+ \| f^*_k - \bar{f}^*_k \|_\infty \Big) &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle
+\end{align*}
+
+The middle term can be bounded with the fact that $\|f^*_k - \bar{f}^*_k \|_\infty \leq 4Lb$ because $f^*_k$ as is $L$-Lipschitz and supported on $[-b, b]$. 
+
+\begin{align*}
+\|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s L b 
+\end{align*}
+
+Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from the LHS. With probability at least $1 - \delta$:
+\begin{align}
+\label{eqn:first_step_inequality}
+\|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s L b + \mathbf{c}(sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
+\end{align}
+
+[TOOD: at this point, we still have to choose a value for $\lambda$]\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% Step 2
+%%
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Step 2.} We upper bound $2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle$ with theorem~\ref{thm:chaining}.\\ 
+
+Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s_L\}$ as the set of convex additive functions centered around the function $f^* - \bar{f}^*$. Then, $\| h \|_n \leq \| h \|_\infty \leq 4sLb$ for all $h \in \mathcal{G}$.\\
+
+According to theorem~\ref{thm:chaining}, for all $\epsilon > \frac{1}{\sqrt{n}}\sigma \mathbf{c} \int_0^R \sqrt{ \log N_2(t, \mathcal{G}) }dt \vee R$,
+\[
+P\Big( \sup_{h \in \mathcal{G}} \langle w, h \rangle_n \geq \epsilon \Big) \leq
+  4 \exp \Big( - \frac{ n \epsilon^2}{ \mathbf{c} R^2 \sigma^2} \Big)
+\]
+where $R = 4sLb$ for our purpose.
+
+Restated, we have that, with probablity at least $1-\delta$,
+\[
+\sup_{h \in \mathcal{G}} | \langle w, h \rangle_n | \leq 
+   \mathbf{c} R \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta}} + 
+      \Big( \int_0^R \sqrt{\log N_2(t, \mathcal{G})}dt \vee R \Big)\, 
+       \mathbf{c} \sigma \sqrt{\frac{1}{n}} 
+\]
+
+Now we evaluate the integral. Since $N_{\|\cdot\|_n}(t, \mathcal{G}) \leq N_\infty(t, \mathcal{G})$, we know that $\sqrt{\log N_{\|\cdot\|_n}(t, \mathcal{G})} \leq \sqrt{C s^{1.5} b L} t^{-1/4}$.
+
+\begin{align*}
+\int_0^R \sqrt{\log N_{\|\cdot\|_n}(t, \mathcal{G})} dt &\leq 
+      \sqrt{C s^{1.5} b L} \int_0^R t^{-1/4} dt \\ 
+ &= \sqrt{C s^{1.5} b L} \, \frac{4}{3} R^{3/4} \\
+ &= \sqrt{C s^{1.5} b L} \, \mathbf{c} (sLb)^{3/4} \\
+ &\leq \mathbf{c} (s b L)^2
+\end{align*}
+
+Coming back, we have, with probability at least $1-\delta$,
+\begin{align*}
+\sup_{h \in \mathcal{G}} | \langle w, h \rangle | &\leq 
+    \mathbf{c} sLb \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} } + 
+    \mathbf{c} (sLb)^2 \sigma \sqrt{ \frac{1}{n} } \\
+ &\leq \mathbf{c} (sLb)^2\sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }
+\end{align*}
+
+Plugging this result into equation~\ref{eqn:first_step_inequality} and using an union bound, we get, with probability at least $1 - 2\delta$:
+\begin{align}
+\|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
+   &\leq \mathbf{c} (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
+   + \lambda 4 s L b + \mathbf{c}(sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
+\|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
+   &\leq \mathbf{c} (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
+   + \lambda 4 s L b    \label{eqn:second_step_inequality}
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Step 3.
+%%
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Step 3.} We continue from equation~\ref{eqn:second_step_inequality}, use lemma~\ref{lem:uniform_convergence}, use another union bound, with probability at least $1-3\delta$,
+
+\begin{align}
+\|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
+   &\leq \mathbf{c} (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
+ +\lambda 4 s L b + \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+    \nonumber \\
+&\leq \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}} + \lambda 4 sLb
+\end{align}
+
+Substituting in $\lambda \leq \mathbf{c} sLb \sqrt{\frac{1}{n} \log^2 np}$ and we get the desired result.
+
+\end{proof}
+ 
+%% End of "No False Negative" proof for the f's
+
+
+
+
+
+
+\begin{theorem}
+\label{thm:concave_consistent}
+Let $\hat{g}_k$ denote the minimizer of the concave postprocessing with $\lambda \leq \mathbf{c} sLb \sqrt{\frac{1}{n} \log^2 np}$.\\
+
+Suppose $n$ is large enough such that $(Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta} } \leq 1$.\\
+
+Then, with probability at least $1- s\delta$, for all $k=1,...,s$:\\
+\[
+\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  \mathbf{c}(Lb)^{2.5} \sigma^{0.5} \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
+\]
+\end{theorem}
+
+\begin{proof}
+The proof proceeds almost identically to that of theorem~\ref{thm:convex_consistent} because convex and concave functions have the same covering number.
+
+\textbf{Step 1.} We start from the definition of $\hat{g}_k$:
+\begin{align*}
+\| y - \hat{f} - \hat{g}_k \|_n^2 + \lambda \| \hat{g} \|_\infty &\leq
+   \| y - \hat{f} - g^*_k \|_n^2 + \lambda \| g^* \|_\infty \\
+\| y - \hat{f} - \hat{g}_k \|_n^2 &\leq \| y - \hat{f} - g^*_k \|_n^2 + \lambda 2 Lb \\
+ &\\
+\| f_0 - \hat{f} - \hat{g}_k + w\|_n^2 & \leq \| f_0 - \hat{f} - g^*_k + w \|_n^2 
+   +\lambda 2 Lb \\
+\| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 -\hat{f} - g^*_k\|_n^2 &\leq
+   2 \langle w, \hat{g}_k - g^*_k \rangle_n + \lambda 2Lb
+\end{align*}
+
+Using the chaining result (theorem~\ref{thm:chaining}), setting $s=1$, we have, with probability at least $1-\delta$,
+\begin{align*}
+\| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 - \hat{f} - g^*_k \|_n^2 &\leq
+  \mathbf{c} (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb
+\end{align*}
+
+Using the uniform convergence result (lemma~\ref{lem:uniform_convergence}), we have, with probability at least $1-2\delta$:
+\begin{align*}
+\| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &\leq
+  \mathbf{c} (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb +
+  \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log \frac{2}{\delta} } \\
+ &\leq \mathbf{c}(Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log \frac{4}{\delta}}+ \lambda 2 Lb
+\end{align*}
+
+Plugging in $\lambda \leq \sqrt{ \frac{1}{n} \log^2 np}$:
+\begin{align*}
+\| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
+\leq \mathbf{c}(Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log \frac{4}{\delta}}+ 
+    2Lb \sqrt{\frac{1}{n} \log^2 np}\\
+\| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
+\leq \mathbf{c}(Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} \\
+\end{align*}
+
+\textbf{Step 2.} The goal is to bound the quality of approximation between $\| f_0 - \hat{f} - g^*_k \|_P^2$ and $\| f_0 - f^* - g^*_k \|_P^2$ and likewise for $\hat{g}_k$.
+
+\begin{align*}
+\| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 &\leq 
+    \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle
+   + 2 \langle f_0 - f^*, g^*_k \rangle \\
+ &\leq \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} + 
+    2 | \langle \hat{f} - f^*, g^*_k \rangle |  \\
+ &\leq  \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} +
+    2 \| \hat{f} - f^* \|_P \| g^*_k \|_P \\
+&\leq  \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} +
+   \mathbf{c}(Lb) \sqrt{(Lb)^3\sigma \sqrt{ 
+                   \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} }\\
+&\leq  \mathbf{c}(Lb) \sqrt{(Lb)^3\sigma \sqrt{ 
+                   \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} }\\
+\end{align*}
+
+The same bound likewise holds for $\hat{g}_k$.
+
+\textbf{Step 3.} Collecting the results from Step 1 and Step 2, we have, with probability at least $1-2\delta$:
+\begin{align*}
+\| f_0 - f^* - \hat{g}_k \|_P^2 - \|f_0 - f^* - g^*_k \|_P^2 \leq
+   \mathbf{c}(Lb)^{2.5} \sigma^{0.5} 
+     \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
+\end{align*}
+
+Taking an union bound across $k=1,...,s$ dimensions completes the result.
+
+\end{proof}
+
+
+
+
+
+
+
+
+\subsubsection{Support Lemmas}
+
+%%%%%%%%%%
+%% Uniform convergence lemma
+%%
+%%
+%%
+%%
+%%%%%%%%%%%%%%%%%%%%
+
 \begin{lemma}
-\label{lem:minus_one_risk_increase}
-Suppose assumptions A1' and A4 hold. 
+\label{lem:uniform_convergence}
+With probability at least $1-\delta$:
+\begin{align*}
+\sup_{f \in \mathcal{C}^s_L} \Big| \| f_0 - f \|^2_n - \|f_0 - f \|^2_P\Big| \leq
+   \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+\end{align*}
 
-Then $R(f^{*(s-1)}) - R(f^{*s}) \geq \alpha$, where $\alpha$ lower bounds the norm of the population optimal additive components as defined in assumpation A4.
 \end{lemma}
 
 \begin{proof}
+Let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s_L - f_0$. Note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s b L$.\\
 
+For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-cover of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.\\
+
+Because $\| h \|_n = \| h - h_\epsilon + h_\epsilon \|_n$, we have that
 \begin{align*}
-R(f^{*(s-1)}) - R(f^{*s}) &= \E\Big(f^{*(s-1)}(X) - f_0(X) + \mu\Big)^2 
-                              - \E\Big(f^{*s}(X) - f_0(X) + \mu\Big)^2 \\
-    &= \E\Big( f^{*(s-1)}(X) - f^{*s}(X) + f^{*s}(X) - f_0(X) + \mu\Big)^2 
-                                 - \E\Big(f^{*s}(X) - f_0(X) + \mu\Big)^2 \\
-    &= \E\Big( f^{*(s-1)}(X) - f^{*s}(X)\Big)^2 
-                - 2 \E\Big[ (f^{*(s-1)}(X) - f^{*s}(X)) (f^{*s}(X) - (f_0(X)-\mu)) \Big]
+\|h_\epsilon \|_n - \| h - h_\epsilon \|_n &\leq 
+    \| h \|_n \leq \|h_\epsilon \|_n + \| h - h_\epsilon \|_n \\
+\|h_\epsilon \|_n - \epsilon &\leq 
+    \| h \|_n \leq \|h_\epsilon \|_n + \epsilon  \\
+\| h_\epsilon \|^2_n - 8 \epsilon (s L b)  &\leq \| h  \|^2_n  \leq
+   \| h_\epsilon \|_n^2 + 8 \epsilon (s L b) 
+\end{align*}
+where we used the fact that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$ and $ \| h_\epsilon \|_n \leq \| h_\epsilon \|_\infty \leq 4 s L b$.
+
+
+And likewise:
+\begin{align*}
+\| h_\epsilon \|^2_P - 8 \epsilon (s L b)  &\leq \| h  \|^2_P \leq
+   \| h_\epsilon \|_P^2 + 8 \epsilon (s L b)
+\end{align*} 
+
+Therefore, 
+\begin{align*}
+\sup_{h \in \mathcal{G}}  \Big| \|h\|^2_n - \|h\|^2_P \Big| \leq 
+\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| 
+        + \epsilon (16 sLb)
 \end{align*}
 
-We will argue that all the components of the additive function $f^{*(s-1)}$ are also in $f^{*s}$. Let us denote the components of $f^{*s} = \sum_{k=1}^s f_k^*$. We will now invoke Corollary~\ref{cor:product_int_reduction}, which is valid because we assume $X_1,...,X_s$ are independent by assumption A1'. By Corollary~\ref{cor:product_int_reduction}, if we set $f^*_k = 0$, the resulting additive function $\sum_{k'\neq k} f_{k'}^*$ minimizes the population risk subject to the constraint that $f_k = 0$. By definition, $f^{*s}$ is $\argmin_k \sum_{k'\neq k} f_{k'}^*$ and thus share components with $f^{*s}$.
-
-Therefore, there exist some $k$ such that $f^{*(s-1)} - f^{*s} = f^*_k$, and we can continue the bound
+Since $\| h_\epsilon \|_n^2 = \frac{1}{n} \sum_{i=1}^n h_\epsilon(X_i)^2$ is an average of bounded random variables, we have by Union Bound and Hoeffding Inequality that, with probability at most $1 - \delta$,
 \begin{align*}
-R(f^{*(s-1)}) - R(f^{*s}) &= \E f^*_k(X_k)^2 - 2 \E[ f^*_k(X_k) ( f^{*s}(X) - (f_0(X)-\mu) )] \\
-    &= \E f^*_k(X_k)^2 - 2 \E[ f^*_k(X_k) f^{*s} (X)] + 2 \E[ f^*_k(X_k) (f_0(X)-\mu) ] 
+\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| &\leq
+  (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+        + \log N_\infty(\epsilon, \mathcal{C}_L^s) \big) } \\
+&\leq (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+        + C s^{1.5} Lb \epsilon^{-1/2}   \big) }
 \end{align*}
 
-\begin{align*}
-\E[ f^*_k(X_k) f^{*s} (X)]  &= \E\Big[ f^*_k (X_k) \E[ f^{*s} (X) \,|\, X_k ] \Big] = \E f^*_k(X_k)^2  \\
-\E[ f^*_k(X_k)(f_0(X) - \mu) ] &= \E\Big[ f^*_k(X_k) \E[ f_0(X) - \mu \,|\, X_k ] \Big] = \E f^*_k(X_k)^2 
-\end{align*}
-
-Where we used the fact that $\E f^*_{k'} (X_{k'}) = 0$ for all $k'$ and the fact that $\E[ f_0(X) - \mu \,|\, X_k] = f^*_k(X_k)$ (Lemma~\ref{lem:general_int_reduction}).
-
-Thus, $R(f^{*(s-1)}) - R(f^{*s}) \geq \E f^*_k(X_k)^2 \geq \alpha$ by Assumption A4.
-
-\end{proof}
-
-
-We now restate the theorem in our newly defined notation.
- 
-\begin{theorem} 
-Suppose assumptions A1', A2', A3, A4 hold. 
-
-Let $\ds \hat{f} \coloneqq \arg\min \{ \hat{R}_s(f) + \lambda_n \rho_n(f) \,:\, f \in \mathcal{C}[s,b,B,L], f_k \trm{ centered} \}$.
-
-Suppose that $c s L \lambda_n \rightarrow 0$ and $c L b (sB+\sigma)sB \sqrt{\frac{s}{n^{4/5}} \log sn} \rightarrow 0$.
-
-Then, for all large enough $n$, with probability at least $1-\frac{C}{n}$, $\hat{f}_k \neq 0$ for all $k =1,...,s$.
-\end{theorem}
-
-\begin{proof}
-Let us first sketch out the rough idea of the proof. We know that in the population setting, the best approximate additive function $f^{*s}$ has $s$ non-zero components. We also know that the empirical risk approaches the population risk uniformly. Therefore, it cannot be that the empirical risk minimizer maintains a zero component for all $n$; if that were true, then we can construct a feasible solution to the empirical risk optimization, based on $f^{*s}$, that achieves lower empirical risk. 
-
-
-\textbf{Step 1:} $f^{*s}$ is not directly a feasible solution to the empirical risk minimization program because it is not empirically centered. Given $n$ samples, $f^{*s} - \bar{f}^{*s}$ is a feasible solution where $\bar{f}^{*s} = \sum_{k=1}^s \bar{f}_k^{*s}$ and $\bar{f}_k^{*s} = \frac{1}{n} \sum_{i=1}^n f_k^{*s}(X^{(i)})$. 
-
-\begin{align*}
-|\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| &\leq 
-         \| f_0 + w - \bar{f}_0 - \bar{w}
-         - f^{*s} + \bar{f}^{*s} \|_n^2  - \| f_0 + w - \bar{f}_0 - \bar{w} - f^{*s}\|_n^2 \\
-   &\leq 2 \langle f_0 + w - \bar{f}_0 - \bar{w} - f^{*s}, \bar{f}^{*s} \rangle_n 
-         + \| \bar{f}^{*s} \|_n^2 \\
-   &\leq 2\| f_0 + w - \bar{f}_0 - \bar{w} -f^{*s}\|_n 
-                \|\bar{f}^{*s} \|_n 
-                  + \|\bar{f}^{*s} \|_n^2 \\
-   &\leq 2 | \bar{f}^{*s} | \| f_0 + w 
-           - \bar{f}_0 - \bar{w} - f^{*s} \|_n + |\bar{f}^{*s}|^2 
-\end{align*}
-
-Because each $f^{*s}$ is bounded by $sB$ and $\E f^{*s}(X) = 0$, by Hoeffding inequality, with probability at least $1-\frac{C}{n}$, $|\bar{f}^{*s}| \leq sB \sqrt{\frac{1}{cn} \log n}$. 
-
-\begin{align*}
-\| f_0 + w -\bar{f}_0 - \bar{w} - f^{*s} \|_n 
-	\leq \| f_0 - f^{*s} \|_n + \|w\|_n + |\bar{f}_0| + |\bar{w}|\\
-\end{align*}
-
-$\|f_0 - f^{*s}\|_n \leq \|f_0 - f^{*s}\|_\infty $ is bounded by $2sB$ and $w_i$ is zero-mean subgaussian with scale $\sigma$. Therefore, $\|w\|_n$ is at most $c\sigma$ with probability at least $1-\frac{C}{n}$ for all $n > n_0$. 
-
-$| \bar{f}_0 | \leq s B$ and $| \bar{w} | \leq c \sigma \sqrt{\frac{1}{n}}$ with probability at least $1-\frac{C}{n}$ by Chernoff bound.
-
-So we derive that, with probability at least $1 -\frac{C}{n}$, for all $n > n_0$,
-\[
-|\hat{R}_s(f^{*s} - \bar{f}^{*s}) - \hat{R}_s(f^{*s})| \leq 2c (sB+\sigma) sB \sqrt{\frac{1}{cn} \log n}
-\]
-
-\textbf{Step 2:} Now that we bounded the cost of approximating $f^{*s}$ with the empirically centered $f^{*s} - \bar{f}^{*s}$, we move on to the proof of the main result.
-
-Suppose $\hat{f}$ has at most $s-1$ non-zero components. Then
-\begin{align*}
-\hat{R}_s( \hat{f}) &\geq R_s(\hat{f}) - \tau_n \\
-	&\geq R_s(f^{*(s-1)}) - \tau_n \\
-	&\geq R_s(f^{*s}) + \alpha - \tau_n \\
-	&\geq \hat{R}_s(f^{*s}) + \alpha - 2 \tau_n \\
-	&\geq \hat{R}_s(f^{*s} - \bar{f}^{*s}) -\tau'_n + \alpha - 2\tau_n 
-\end{align*}
-The third line follows from Lemma~\ref{lem:minus_one_risk_increase}.
-$\tau_n$ is the deviation between empirical risk and true risk and $\tau'_n$ is the approximation error incurred by empirically sampling $f^{*s}$.
-
-Adding and subtracting $ \lambda_n \rho_n(f^{*s} - \bar{f}^{*s})$ and $ \lambda_n \rho_n(\hat{f})$, we arrive at the conclusion that
-\[
-\hat{R}_s(\hat{f}) + \lambda_n \rho_n(\hat{f}) \geq \hat{R}_s(f^{*s} - \bar{f}^{*s}) + \lambda_n \rho_n(f^{*s} - \bar{f}^{*s}) - ( \lambda_n \rho_n(f^{*s} - \bar{f}^{*s}) + \lambda_n \rho_n(\hat{f}) ) -\tau'_n + \alpha - 2 \tau_n
-\]
-
-Because we assume that we impose the Lipschitz constraint in our optimization, $\rho_n(\hat{f}), \rho_n(f^{*s} - \bar{f}^{*s})$ are at most $sL$ and so $|\lambda_n \rho_n(\hat{f}) - \lambda_n \rho_n(f^*_s)| \leq 2 sL \lambda_n$. 
-
-
-By Theorem~\ref{thm:uniform_risk_deviation}, we know that under the condition of the theorem, $\tau_n \leq  Lb (sB+\sigma) sB \sqrt{ \frac{s}{cn^{4/5}} \log n}$.
-
-
-$\tau'_n$, as shown above, is at most $2 (sB+\sigma) sB \sqrt{\frac{1}{cn} \log sn}$ with probability at least $1-\frac{C}{n}$ for $n > n_0$.
-
-
-For $n$ large enough such that
-\[
-c s L \lambda_n < \frac{\alpha}{2} \trm{ and } Lb sB (sB+\sigma) \sqrt{ \frac{s}{n^{4/5}} \log sn}) < \frac{\alpha}{4}
-\]
-we get that $\hat{R}_s(\hat{f}) + \lambda_n \rho_n(\hat{r}) > \hat{R}_s(f^*_s) + \lambda_n \rho_n(f^*_s)$, which is a contradiction since we assumed that $\hat{f}$ minimizes the regularized empirical risk.
-
-\end{proof}
-
-%
-
-\begin{theorem} (Uniform Risk Deviation)
-\label{thm:uniform_risk_deviation}
-For all $n > n_0$, we have that, with probability at least $1 - \frac{C}{n}$, 
-\[
-\sup_{f \in \mathcal{C}^s[b,B,L]} |\hat{R}_s(f) - R_s(f)| \leq Lb(sB+\sigma)sB\sqrt{ \frac{s}{cn^{4/5}} \log sn}
-\]
-\end{theorem}
-
-
-\begin{proof}
-This proof uses a standard covering number argument.
-
-Let $\mathcal{C}_\epsilon[s,b,B,L]$ be an $\epsilon$-cover of $\mathcal{C}[s,b,B,L]$ such that for all $f \in \mathcal{C}[s,b,B,L]$, there exists $f' \in \mathcal{C}_\epsilon[s,b,B,L]$ such that $\| f - f'\|_\infty \leq \epsilon$.
-
-For all $f \in \mathcal{C}[s,b,B,L]$,
-\[
-\hat{R}_s(f) - R_s(f) = \hat{R}_s(f) - \hat{R}_s(f') + \hat{R}_s(f') - R_s(f') + R_s(f') - R_s(f)
-\]
-where $f' \in \mathcal{C}_\epsilon[s,b,B,L]$ and $\| f - f' \|_\infty \leq \epsilon$.\\
-
-\textbf{Step 1.} We first bound $\hat{R}_s(f) - \hat{R}_s(f')$.
-
-\begin{align*}
-|\hat{R}_s(f) - \hat{R}_s(f')| &= |\| f_0 - \bar{f}_0 + w - \bar{w} - f \|_n^2 
-                                - \| f_0 - \bar{f}_0 + w -\bar{w} - f' \|_n^2| \\
-	&\leq 2 \langle f_0 - \bar{f}_0 + w -\bar{w}, f' - f \rangle_n 
-                            + \| f \|_n^2 - \| f' \|_n^2\\
-	&\leq 2 \| f_0 - \bar{f}_0 + w -\bar{w} \|_n \| f' 
-                   - f \|_n + ( \| f \|_n - \|f'\|_n)( \| f \|_n + \|f'\|_n)\\
-\end{align*}
-
-We now want to bound $\| f_0 - \bar{f}_0 + w -\bar{w} \|_n \leq \| f_0 \|_n  + \|w \|_n + |\bar{f}| + |\bar{w}|$.
-
-$\| w \|^2_n = \frac{1}{n}\sum_{i=1}^n w_i^2$ is the average of subexponential random variables. Therefore, for all $n$ larger than some absolute constant $n_0$, with probability at least $1-\frac{C}{n}$, $|\|w\|^2_n - \E|w|^2 | < \sigma^2 \sqrt{\frac{1}{cn} \log n}$. The absolute constant $n_0$ is determined so that for all $n > n_0$, $\sqrt{\frac{1}{cn} \log n} < 1$. Since $\E w^2 \leq \sigma^2$, for all $n > n_0$, with probability at least $1 - \frac{C}{n}$, for some constant $c$, $\| w \|^2_n \leq c \sigma^2$.
-
-By Chernoff bound and the fact that $\E w = 0$, we know that $|\bar{w}| \leq c \sigma \sqrt{\frac{1}{n}}$ with high probability.
-
-%$\|f_0\|^2_n$ is the average of random variables bounded by $s^2 B^2$ and therefore, with probability at least $1-\frac{C}{n}$, $|\| f_0 \|^2_n - \E f_0(X)^2 | \leq s^2B^2\sqrt{ \frac{1}{cn} \log n}$. Since $\E f_0(X)^2 \leq s^2B^2$, we have that, for all $n > n_0$, with probability at least $1-\frac{C}{n}$, for some constant $c$, $\| f_0 \|_n^2 \leq c s^2 B^2$.
-
-$\|f_0\|^2_n = \frac{1}{n} \sum_{i=1}^n f_0(X^{(i)})^2$. Since $f_0(X^{(i)})^2 \leq s^2 B^2$, $\|f_0\|^2_n \leq s^2 B^2$.
-
-$|\bar{f}_0| = | \frac{1}{n} \sum_{i=1}^n f_0(X^{(i)})| \leq s B$.
-
-Combining these together, We have that for all $n \geq n_0$, with probability at least $1-\frac{C}{n}$, $\| f_0 - \bar{f}_0 + w -\bar{w} \|^2_n \leq c ( s^2 B^2 +\sigma^2 )$, and so 
-
-\[
-\|f_0 - \bar{f}_0 + w -\bar{w} \|^2_n \leq c (sB + \sigma)
-\]
-
-$\| f' - f \|_\infty \leq \epsilon$ implies that $\| f' - f\|_n \leq \epsilon$. And therefore, $\| f \|_n - \|f'\|_n \leq \| f - f' \|_n \leq \epsilon$. 
-
-$f,f'$ are all bounded by $sB$, and so $\|f \|_n, \| f' \|_n \leq sB$.
-
-Thus, we have that, for all $n > n_0$,
-\begin{align}
-|\hat{R}_s(f) - \hat{R}_s(f')| \leq \epsilon c( sB + \sigma ) \label{eqn:approx_deviation1}
-\end{align}
-with probability at least $1-\frac{C}{n}$.
-
-\textbf{Step 2:} Now we bound $R_s(f') - R_s(f)$. The steps follow the bounds before, and we have that 
-\begin{align}
-|R_s(f') - R_s(f)| \leq \epsilon c(sB + \sigma) \label{eqn:approx_deviation2}
-\end{align}
-
-\textbf{Step 3:} Lastly, we bound $\sup_{f' \in \mathcal{C}_\epsilon[s,b,B,L]} \hat{R}_s(f') - R_s(f')$. 
-
-For a fixed $f'$, we have that, by definition
-\begin{align*}
-\hat{R}_s (f') &= \| f_0 + w - \bar{f}_0 - \bar{w} - f' \|_n^2\\
-      &= \|f_0 - \bar{f}_0 - f'\|_n^2 + 2 \langle w - \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n
-             + \| w - \bar{w}\|_n^2\\
-R_s(f') &= \E\big(f_0(X) + w - \mu - f'(X)\big)^2 \\
-     &= \E\big(f_0(X) - \mu - f'(X)\big)^2 + \E w^2 
-\end{align*}
-
+We will set $\epsilon = \frac{1}{n^{2/5}} (C s^{0.5} L b)^2$. 
 Therefore:
 \begin{align*}
-\hat{R}_s(f') - R_s(f') = & \|f_0 -\bar{f}_0 - f'\|_n^2 - \E(f_0(X) - \mu - f'(X))^2 \\
-            &+ \|w - \bar{w}\|_n^2 - \E w^2 \\
-            &+ 2\langle w-\bar{w}, f_0 - \bar{f}_0 - f'\rangle_n
+\sup_{h_\epsilon} \Big|  \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| &\leq
+   (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+        + s n^{1/5}  \big) } \\
+  &\leq (8Lb)^2 \sqrt{ \frac{s^5}{cn^{4/5}} \log \frac{2}{\delta} }
 \end{align*}
-
-\textbf{Step 3.1:} We first bound $2 \langle w - \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n$.
+And
 \begin{align*}
-\langle w - \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n &=
-      \langle w, f_0 - \bar{f}_0 - f'\rangle_n 
-      - \langle \bar{w}, f_0 - \bar{f}_0 - f'\rangle_n \\
+\sup_{h \in \mathcal{G}}  \Big| \|h\|^2_n - \|h\|^2_P \Big| &\leq 
+\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| 
+        + \frac{1}{n^{2/5}} C^2 s^2 (Lb)^3 \\
+  &\leq (8Lb)^2 \sqrt{ \frac{s^5}{c n^{4/5}} \log \frac{2}{\delta}}
+     + (CLb)^2 \sqrt{ \frac{s^4}{n^{4/5}} } \\
+  &\leq \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
 \end{align*}
-
-The first term, fully expanded, is $\frac{1}{n} \sum_{i=1}^n w_i (f_0(X^{(i)}) - \bar{f}_0 - f'(X^{(i)}))$. Since $w_i$ and $X^{(i)}$ are independent, we use the sub-Gaussian concentration inequality. Note that $|f_0(X^{(i)}) - \bar{f}_0 - f'(X^{(i)})| \leq 3sB$, and so $|\langle w, f_0 - \bar{f}_0 - f' \rangle_n | > t$ with probability at most $C \exp\big( - c n t^2 \frac{1}{\sigma^2 (sB)^2} \big)$.
-
-The second term, fully expanded, is $\bar{w} \bar{f'}$. $\bar{f'} \leq sB$ and so $|\bar{w}\bar{f'}| > t$ with probability at most $C \exp\big( - c n t^2 \frac{1}{\sigma^2(sB)^2} \big)$ as well.
-
-\textbf{Step 3.2} We now bound $\| w - \bar{w} \|_n^2 - \E w^2$. 
-\begin{align*}
-\|w - \bar{w} \|_n^2 &= \|w\|_n^2 - 2 \langle w, \bar{w} \rangle_n + \|\bar{w}\|_n \\
-               &= \|w\|_n^2 - \bar{w}^2
-\end{align*}
-
-Using sub-Exponential concentration, we know that $| \|w\|_n^2 - \E w^2 | \geq t$ with probability at most $C \exp( - c n \frac{1}{\sigma^2})$. 
-
-$\bar{w} \leq \sigma\sqrt{\frac{1}{cn}}$ with probability at least $1-\frac{C}{n}$. Thus, $| \bar{w}|^2 \leq \sigma^2 \frac{1}{cn}$ with high probability, has a second order effect, and can be safely ignored in the bound.
-
-\textbf{Step 3.3:} We now bound $\| f_0 - \bar{f}_0 - f'\|_n^2 - \E(f_0(X) - \mu - f'(X))^2$.
-
-\begin{align*}
-\| f_0 - \bar{f}_0 - f'\|_n^2 &= \|f_0 -\mu+\mu - \bar{f}_0 - f'\|_n^2 \\
-      &= \| f_0 - \mu - f'\|_n^2 + 2 \langle \mu-\bar{f}_0, f_0 - \mu - f'\rangle_n 
-          + \|\mu - \bar{f}_0 \|_n^2 
-\end{align*}
-
-Using similar reasoning as before, we know that $| \langle \mu-\bar{f}_0, f_0 - \mu - f'\rangle_n | \geq t $ with probability at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
-
-Likewise, $| \mu - \bar{f}_0 | \leq sB \sqrt{\frac{1}{cn}}$ with probability at least $1-\frac{C}{n}$. Thus, $| \mu - \bar{f}_0 |^2 \leq (sB)^2 \frac{1}{cn}$, has a second order effect, and can be safely ignored in the bound.
-
-Because $f_0(X^{(i)}) -\mu - f'^(X^{(i)})$ is bounded by $3sB$, $\| f_0 -\mu- f'\|_n^2$ is the empirical average of $n$ random variables bounded by $9(sB)^2$. 
-
-Using Hoeffding Inequality then, we know that the probability $\Big| \| f_0 -\mu - f' \|_n^2 - \E(f_0(X) -\mu - f '(X))^2 \Big| \geq t $ is at most $C \exp( - c n t^2 \frac{1}{(sB)^4})$. 
-
-Applying union bound, we have that $\sup_{f' \in \mathcal{C}_\epsilon[s,b,B,L]} | \hat{R}_s(f') - R_s(f') | \geq t$ occurs with probability at most
-\[
-C \exp\big( s\left( \frac{bBLs}{\epsilon} \right)^{1/2} - c n t^2 \frac{1}{\sigma^2(sB)^2 + (sB)^4} \big)
-\]
-for all $n > n_0$.
-
-Restating, we have that with probability at most $1- \frac{1}{n}$, the deviation is at most 
-\begin{align}
-(sB+\sigma)sB\sqrt{ \frac{1}{cn} \left( \log Cn + s( \frac{bBLs}{\epsilon})^{1/2} \right)} \label{eqn:finite_cover_deviation}
-\end{align}
-Substituting in $\epsilon = \frac{bBLs}{n^{2/5}}$, expression~\ref{eqn:finite_cover_deviation} can be upper bounded by $sB(\sigma+sB)\sqrt{ \frac{s}{cn^{4/5}} \log Cn}$.
-
-Expressions~\ref{eqn:approx_deviation1} and \ref{eqn:approx_deviation2} from \textbf{Step 1} and \textbf{Step 2} become $\sqrt{ \frac{(bBLs)^2}{cn^{4/5}}} (sB+\sigma)$.
-
-We can arrive at the statement of the theorem by summing these up and absorbing any constants into the symbols $c$ and $C$.
 
 \end{proof}
- 
- 
- 
- 
- 
- 
- 
+
+
+
+\begin{lemma}
+\label{lem:remove_centering}
+
+Let $f_0, f^*$ be defined as in section~\ref{sec:false_negative_proof_notations}. Define $\bar{f}^* = \frac{1}{n} \sum_{i=1}^n f^*(X_i)$.
+
+Then, with probability at least $1 - 2\delta$,
+\[
+\Big | \| f_0 - f^* \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 \Big| \leq
+    \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{4}{\delta}
+\]
+\end{lemma}
+
+\begin{proof} (of lemma~\ref{lem:remove_centering})
+\begin{align*}
+\| f_0 - f^* + \bar{f}^* \|_n^2 &= \| f_0 - f^* \|_n^2 
+    + 2 \langle f_0 - f^*, \bar{f}^* \rangle + \bar{f}^{*2} \\
+  &= \| f_0 - f^* \|_n^2 + 2 \bar{f}^* \langle f_0 - f^*, \mathbf{1} \rangle_n + 
+    \bar{f}^{*2} \\
+  &= \| f_0 - f^* \|_n^2 + 2 \bar{f}^* \bar{f}_0 - \bar{f}^{*2}
+\end{align*}
+
+
+$\bar{f}^* = \frac{1}{n} \sum_{i=1}^n f^*(X_i)$ is the average of $n$ bounded mean-zero random variables and therefore, with probability at least $1-\delta$, $| \bar{f}^* | \leq 4 s L b \sqrt{ \frac{1}{n} \log \frac{2}{\delta} }$.
+
+The same reasoning likewise applies to $\bar{f}_0 = \frac{1}{n} \sum_{i=1}^n f_0(X_i)$.
+
+Taking a union bound and we have that, with probability at least $1- 2\delta$, 
+
+\begin{align*}
+| \bar{f}^* | | \bar{f}_0 | &\leq \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \\
+\bar{f}^{*2} &\leq \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
+\end{align*}
+
+Therefore, with probability at least $1 - 2\delta$,
+\[
+\|f_0 - f^*\|_n^2 - \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \leq
+    \| f_0 - f^* + \bar{f}^* \|_n^2 \leq 
+\|f_0 - f^*\|_n^2 + \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
+\]
+
+\end{proof}
+
+
+
+
+%%%%%%%%%%%%%
+%% Technical Material
+%%
+%%
+%%
+%%
+%%%%%%%%%%%%%%%%%%%% 
+
  \subsection{Supporting Technical Material}
  
  \subsubsection{Concentration of Measure}
@@ -701,6 +667,8 @@ First, let $\delta = \frac{1}{n}$. Suppose $n$ is large enough such that $ \frac
  \end{align*}
  
 \end{proof}
+
+
 
 \subsubsection{Sampling Without Replacement}
 
@@ -775,6 +743,30 @@ Let $f' \coloneqq \sum_{k=1}^s f'_k$, then
 
 Therefore, a product of $s$ $\frac{\epsilon}{s}$-coverings of univariate functions induces an $\epsilon$-covering of the additive functions.
 \end{proof}
+
+In our proofs, we will use the Dudley's chaining: [TODO:cite van de geer]
+
+\begin{theorem} (Dudley's Chaining) \\
+\label{thm:chaining}
+Let $\mathcal{G} = \{ g : \| g \|_n \leq R \}$. Let $M( \epsilon, R)$ be the size of the minimal $\epsilon$-covering of $\mathcal{G}$ with respect to the $\| \cdot \|_n$ norm. Suppose $w = (w_1, ..., w_n)$ is a vector of i.i.d. subgaussian random variables with scale $\sigma$.\\
+
+Suppose $\delta > 0$ is such that
+\[
+\sqrt{n} \delta \geq \sigma \Big( 
+   14 \sum_{s=0}^\infty 2^{-s} \sqrt{ \log M( 2^{-s} R, \mathcal{G})} 
+      \Big)\vee 70 \log 2 R
+\]
+Then we have that 
+\[
+P\Big( \sup_{g \in \mathcal{G}} \langle w, g \rangle_n \geq \delta \Big) \leq
+  4 \exp \Big( - \frac{n \delta^2}{(70R)^2\sigma^2} \Big)
+\]
+\end{theorem}
+
+For convenience, we can upper bound the metric-entropy sum with an integral: \\
+$\ds \sum_{s=0}^\infty 2^{-s} \sqrt{ \log M( 2^{-s} R, \mathcal{G})} 
+  \leq \int_0^R \sqrt{\log M(t, \mathcal{G}) } dt
+$
 
 
 
