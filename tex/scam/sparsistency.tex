@@ -1,15 +1,16 @@
 \section{Analysis of Variable Selection Consistency}
 
-We divide our analysis into two parts. We first establish a sufficient
-\emph{deterministic} condition for sparsistency.  We then consider the
+We divide our analysis into two parts. We first establish a sufficient deterministic condition for sparsistency.  We then consider the
 stochastic setting and argue that the deterministic conditions hold with high probability. 
 
 \subsection{Deterministic Setting}
 
-We follow \cite{Wain:09a} and define the \emph{restricted regression} purely for theoretical purposes.
+We construct an additive convex solution $\{\hat{d}_k\}_{k=1,...,p}$ that is zero for $k \in S^c$ and show that it satisfies the KKT conditions for optimality of optimization~\ref{opt:alternate_opt}. We define $\hat{d}_k$ for $k \in S$ to be a solution to the restricted regression (defined below). We will then also show that $\hat{c}_k = 0$ satisfies the optimality condition of optimization~\ref{opt:alternate_opt_concave} for all $k \in S^c$.
+
 \begin{definition}
+\label{def:restricted_regression}
 In \emph{restricted regression}, we restrict the indices $k$ in
-optimization (\ref{opt:alternate_opt}) to lie in the support $S$ instead of ranging from $1,...,p$. 
+optimization (\ref{opt:alternate_opt}) to lie in the set $S$ instead of ranging from $1,...,p$. 
 \end{definition}
 
 Our analysis then differs from the now-standard ``primal-dual witness
@@ -26,7 +27,7 @@ Suppose for all $k\in S^c$, for all $i=1,...,n$, $\lambda_n > | \frac{1}{2n}
 Then the following are true:
 \begin{enumerate}
 \item Let $\hat{d}_k = 0$ for $k \in S^c$, then \{$\hat{d}_k\}_{k=1,...,p}$ is an optimal solution to optimization~\ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
-\item For all $k \in S^c$, the solution to optimization~\ref{opt:alternate_opt_concave} must be 0 and must be unique.
+\item For all $k \in S^c$, the solution $\hat{c}_k$ to optimization~\ref{opt:alternate_opt_concave} must be 0 and must be unique.
 \end{enumerate}
 
 \end{theorem}

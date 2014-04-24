@@ -1,0 +1,227 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2012 The MathWorks, Inc.
+                    R2012a (7.14.0.739) 64-bit (glnxa64)
+                              February 9, 2012
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+version=0 run=1
+version=0 run=2
+version=0 run=3
+version=0 run=4
+version=0 run=5
+version=0 run=6
+version=0 run=7
+version=0 run=8
+version=0 run=9
+version=0 run=10
+version=0 run=11
+version=0 run=12
+version=0 run=13
+version=0 run=14
+version=0 run=15
+version=0 run=16
+version=0 run=17
+version=0 run=18
+version=0 run=19
+version=0 run=20
+   SCAM_QP:    Iteration 10 Objective 10.7619
+version=0 run=21
+version=0 run=22
+version=0 run=23
+version=0 run=24
+   SCAM_QP:    Iteration 10 Objective 11.1024
+version=0 run=25
+version=0 run=26
+version=0 run=27
+version=0 run=28
+version=0 run=29
+version=0 run=30
+version=0 run=31
+version=0 run=32
+version=0 run=33
+version=0 run=34
+version=0 run=35
+version=0 run=36
+version=0 run=37
+version=0 run=38
+version=0 run=39
+version=0 run=40
+version=0 run=41
+   SCAM_QP:    Iteration 10 Objective 10.4322
+version=0 run=42
+version=0 run=43
+version=0 run=44
+version=0 run=45
+version=0 run=46
+version=0 run=47
+version=0 run=48
+version=0 run=49
+version=0 run=50
+version=0 run=51
+version=0 run=52
+version=0 run=53
+version=0 run=54
+version=0 run=55
+version=0 run=56
+version=0 run=57
+version=0 run=58
+version=0 run=59
+version=0 run=60
+version=0 run=61
+version=0 run=62
+   SCAM_QP:    Iteration 10 Objective 13.1414
+version=0 run=63
+   SCAM_QP:    Iteration 10 Objective 9.4859
+version=0 run=64
+version=0 run=65
+version=0 run=66
+version=0 run=67
+   SCAM_QP:    Iteration 10 Objective 8.5729
+version=0 run=68
+version=0 run=69
+version=0 run=70
+version=0 run=71
+version=0 run=72
+version=0 run=73
+version=0 run=74
+version=0 run=75
+version=0 run=76
+   SCAM_QP:    Iteration 10 Objective 8.5225
+version=0 run=77
+version=0 run=78
+version=0 run=79
+version=0 run=80
+version=0 run=81
+version=0 run=82
+version=0 run=83
+version=0 run=84
+version=0 run=85
+version=0 run=86
+version=0 run=87
+version=0 run=88
+version=0 run=89
+version=0 run=90
+version=0 run=91
+version=0 run=92
+version=0 run=93
+version=0 run=94
+version=0 run=95
+version=0 run=96
+version=0 run=97
+version=0 run=98
+version=0 run=99
+version=0 run=100
+version=0 run=101
+version=0 run=102
+version=0 run=103
+version=0 run=104
+version=0 run=105
+version=0 run=106
+version=0 run=107
+version=0 run=108
+   SCAM_QP:    Iteration 10 Objective 10.3066
+version=0 run=109
+version=0 run=110
+version=0 run=111
+version=0 run=112
+version=0 run=113
+version=0 run=114
+version=0 run=115
+version=0 run=116
+   SCAM_QP:    Iteration 10 Objective 9.957
+version=0 run=117
+version=0 run=118
+version=0 run=119
+version=0 run=120
+version=0 run=121
+version=0 run=122
+version=0 run=123
+version=0 run=124
+version=0 run=125
+version=0 run=126
+version=0 run=127
+version=0 run=128
+version=0 run=129
+version=0 run=130
+version=0 run=131
+version=0 run=132
+version=0 run=133
+version=0 run=134
+version=0 run=135
+version=0 run=136
+version=0 run=137
+version=0 run=138
+version=0 run=139
+version=0 run=140
+version=0 run=141
+   SCAM_QP:    Iteration 10 Objective 8.3968
+version=0 run=142
+version=0 run=143
+version=0 run=144
+version=0 run=145
+version=0 run=146
+version=0 run=147
+version=0 run=148
+version=0 run=149
+version=0 run=150
+version=0 run=151
+version=0 run=152
+version=0 run=153
+version=0 run=154
+version=0 run=155
+version=0 run=156
+version=0 run=157
+version=0 run=158
+version=0 run=159
+version=0 run=160
+version=0 run=161
+version=0 run=162
+version=0 run=163
+version=0 run=164
+version=0 run=165
+version=0 run=166
+   SCAM_QP:    Iteration 10 Objective 11.7472
+version=0 run=167
+version=0 run=168
+   SCAM_QP:    Iteration 10 Objective 11.6397
+version=0 run=169
+version=0 run=170
+version=0 run=171
+version=0 run=172
+version=0 run=173
+version=0 run=174
+version=0 run=175
+version=0 run=176
+version=0 run=177
+version=0 run=178
+version=0 run=179
+version=0 run=180
+version=0 run=181
+version=0 run=182
+version=0 run=183
+version=0 run=184
+version=0 run=185
+version=0 run=186
+version=0 run=187
+   SCAM_QP:    Iteration 10 Objective 9.5567
+version=0 run=188
+version=0 run=189
+version=0 run=190
+version=0 run=191
+   SCAM_QP:    Iteration 10 Objective 10.9743
+version=0 run=192
+version=0 run=193
+version=0 run=194
+version=0 run=195
+version=0 run=196
+version=0 run=197
+version=0 run=198
+   SCAM_QP:    Iteration 10 Objective 10.1975
+version=0 run=199
+version=0 run=200
+>> {Warning: Objects of graph2d.lineseries class exist - not clearing this class
+or any of its super-classes} 

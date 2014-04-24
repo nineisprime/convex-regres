@@ -66,31 +66,31 @@ $(Y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block
 coordinate descent method, where in each step we solve the following
 QP subproblem for $\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the
 other variables fixed. We present the one-block optimization in matrix notation:
-\begin{align*}
+\begin{align}
 \min_{ \bds{f}_k, \bds{\beta}_k, \gamma_k}& \frac{1}{2n} \| \bds{r}_{\mh k} - \bds{f}_k \|_2^2 
-     + \lambda \gamma_k \\
- \textrm{s.t. } & P \bds{f}_k = \diag(P \bds{x}_k)  \bds{\beta}_k \\
+     + \lambda \gamma_k \label{opt:1d_compact} \\
+ \textrm{s.t. } & P \bds{f}_k = \diag(P \bds{x}_k)  \bds{\beta}_k \nonumber \\
    & D \bds{\beta}_k \leq 0 ,
    \quad -\gamma_k \mathbf{1}_n \leq \bds{f}_k \leq \gamma_k \mathbf{1}_n,
-   \quad \mathbf{1}_n^\tran \bds{f}_k = 0
-\end{align*}
+   \quad \mathbf{1}_n^\tran \bds{f}_k = 0 \nonumber
+\end{align}
 
 where $\bds{f}_k \in \R^n$ and equals $(f_{k1}, ..., f_{kn})$, $\bds{\beta}_k \in \R^{n-1}$ and equals $(\beta_{k1}, ..., \beta_{k(n-1)})$. $\bds{r}_{\mh k} \in \R^n$ is the residual vector: $\bds{r}_{\mh k}(i) = Y_i - \bar{Y} - \sum_{k' \neq k} f_{k' i}$. $\bds{x}_k \in \R^n$ and equals $(x_{k1}, ..., x_{kn})$. \\
 
 $P \in \R^{(n-1) \times n}$ is a permutation matrix where the $i'$-th row $P_{i' \cdot}$ is all zero except $-1$ at the $(i')$-th smallest coordinate of $\bds{x}_k$ and $1$ at the $(i'+1)$-th smallest coordinate of $\bds{x}_k$. $D \in \R^{(n-2) \times (n-1)}$ is another permutation matrix where the $i'$-th row is all zero except $1$ at position $i'$ and $-1$ at position $i'+1$. $\diag( v )$ for a vector $v$ is a diagonal matrix whose diagonal entries are $v$.
 
-\begin{equation}
-\label{eqn:opt_1d}
-\begin{split}
-       \min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} &
-             \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((Y_{i}-\bar{Y}
-                -\sum_{r\neq{k}}f_{ri})-f_{ki}\Bigr)^{2} 
-                      + \lambda\gamma_{k} \\
-        \textrm{such that} & \ f_{k(i+1)} = f_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}),\\
-        &\ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq f_{ki}\leq\gamma_{k}\\
-        &\  \sum_{i=1}^{n}f_{ki}=0, \ (\forall i).
-\end{split}
-\end{equation}
+% \begin{equation}
+% \label{eqn:opt_1d}
+% \begin{split}
+%        \min_{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot},\gamma_{k}} &
+%              \ \frac{1}{2n}\sum_{i=1}^{n}\Bigl((Y_{i}-\bar{Y}
+%                 -\sum_{r\neq{k}}f_{ri})-f_{ki}\Bigr)^{2} 
+%                       + \lambda\gamma_{k} \\
+%         \textrm{such that} & \ f_{k(i+1)} = f_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}),\\
+%         &\ \beta_{k(i+1)} \geq \beta_{k(i)}, \ -\gamma_{k}\leq f_{ki}\leq\gamma_{k}\\
+%         &\  \sum_{i=1}^{n}f_{ki}=0, \ (\forall i).
+% \end{split}
+% \end{equation}
 The extra variable $\gamma_{k}$ is introduced to deal with the $\ell_{\infty}$ norm. This QP subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse structure, 
 which can be solved efficiently using optimization packages (e.g., MOSEK: \verb+http://www.mosek.com/+).  We cycle through all feature dimensions ($k$) from $1$ to $p$ multiple times until convergence.
 Empirically, we observe that the algorithm converges in only a few cycles. We also implemented an ADMM solver for (\ref{np}), but found that it is not as efficient as this QP solver.
@@ -99,13 +99,13 @@ After optimization, the function estimator for any input data $\bds{x}_j$ is, ac
 \begin{equation}
 \begin{split}
 \nonumber
-      f(\bds{x}_j) & = \sum_{k=1}^{p}f_k(x_{kj})+\mu \\ 
-    & = \sum_{k=1}^{p}\max_{i} \{f_{ki}+\beta_{ki}(x_{kj}-x_{ki})\} +
+      f(\bds{x}_j) & = \sum_{k=1}^{p}f_k(x_{kj})+\mu 
+= \sum_{k=1}^{p}\max_{i} \{f_{ki}+\beta_{ki}(x_{kj}-x_{ki})\} +
       \mu.
 \end{split}
 \end{equation} 
 
-The univariate concave function estimation is a straightforward modification of optimization~\ref{eqn:opt_1d}. We need only modify one linear inequality constraint to enforce that the subgradients must be non-increasing: $\beta_{k(i+1)} \leq \beta_{k(i)}$.
+The univariate concave function estimation is a straightforward modification of optimization~\ref{opt:1d_compact}. We need only modify one linear inequality constraint to enforce that the subgradients must be non-increasing: $\beta_{k(i+1)} \leq \beta_{k(i)}$.
 
 
 \subsection{Alternative Formulation}
@@ -144,16 +144,16 @@ f_k(x_{kn})
     ... \\
     d_{k(n-1)}
 \end{array} \right] 
-+ c_k \equiv \Delta_k d_k + c_k
++ \mu_k \equiv \Delta_k d_k + \mu_k
 \end{split}
 \end{equation*}
 
 
-Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = |x_{ki} - x_{k(j)}|_+$, $d_k = (d_{k(1)} ,..., d_{k(n-1)})$, and $c_k = f_k(x_{k1})$. 
+Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = |x_{ki} - x_{k(j)}|_+$, $d_k = (d_{k(1)} ,..., d_{k(n-1)})$, and $\mu_k = f_k(x_{k1})$. 
 
-Because $f_k$ has to be centered, $c_k = - \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k$, therefore:
+Because $f_k$ has to be centered, $\mu_k = - \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k$, therefore:
 \[
-\Delta_k d_k + c_k \mathbf{1}_n = 
+\Delta_k d_k + \mu_k \mathbf{1}_n = 
    \Delta_k d_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\tran \Delta_k d_k = 
    \bar{\Delta}_k d_k 
 \]
@@ -173,15 +173,18 @@ We can now reformulate (\ref{np}) as an equivalent optimization program with onl
 The decoupled concave postprocessing stage optimization is again similar. Suppose $\hat{d}_k$'s are the output of optimization~\ref{opt:alternate_opt}, define $\hat{r} = Y - \sum_{k=1}^p \bar{\Delta}_k \hat{d}_k$. 
 \begin{align}
 \textrm{for all}&\textrm{ $k$ such that $\hat{d}_k = 0$: }  \nonumber \\
-  \min_{d_k} & 
-      \frac{1}{2n} \Bigl \| \hat{r} - \bar{\Delta}_k d_k \Bigr \|_2^2
-      + \lambda_n \| \bar{\Delta}_k d_k \|_\infty 
+  \min_{c_k} & 
+      \frac{1}{2n} \Bigl \| \hat{r} - \Delta_k c_k \Bigr \|_2^2
+      + \lambda_n \| \Delta_k c_k \|_\infty 
       \label{opt:alternate_opt_concave}\\
- \trm{s.t.} & d_{k(2)}, \ldots, d_{k(n-1)} \leq 0 \qquad \trm{(concavity)} \nonumber
+ \trm{s.t.} & c_{k(2)}, \ldots, c_{k(n-1)} \leq 0 \qquad \trm{(concavity)} \nonumber
 \end{align}
 
-\textbf{Note:} in sparsistency analysis, we assume that an upper bound $L$ to the Lipschitz smoothness of the true function $f_0$ is known and that we constrain our estimate $\hat{f}$ to obey the same Lipschitz condition, that is, each $\hat{f}_k$ must be $L$-Lipschitz. This Lipschitz constraint can be easily added to our optimization program. In optimization~\ref{opt:alternate_opt}, we can enforce the Lipschitz condition by adding two constraints: $d_{k(1)} \geq - L$ and $\sum_{j=2}^{n-1} d_{k(j)} \leq L$. We emphasize that we use the Lipschitz constraint only in our theoretical analysis; all of our experiments do not impose any Lipschitz condition.
+We can use either the off-centered $\Delta_k$ matrix or the centered $\bar{\Delta}_k$ matrix because the concave estimations are decoupled and hence suffer no identifiability problems.\\
 
+\begin{remark}
+in sparsistency analysis, we assume that $L$, an upper bound to the coordinate-wise Lipschitz smoothness of the true function $f_0$, is known and that we constrain our estimate $\hat{f}$ to obey the same Lipschitz condition, that is, each $\hat{f}_k$ must be $L$-Lipschitz. This Lipschitz constraint can be easily added to our optimization program. In optimization~\ref{opt:alternate_opt}, we can enforce the Lipschitz condition by adding two constraints: $d_{k(1)} \geq - L$ and $\sum_{j=2}^{n-1} d_{k(j)} \leq L$ (similarly for optimization~\ref{opt:alternate_opt_concave}). We emphasize that we use the Lipschitz constraint only in our theoretical analysis; all of our experiments do not impose any Lipschitz condition.
+\end{remark}
 
 
 % DO NOT CHANGE; RefTex variables -minx
