@@ -1,5 +1,7 @@
 function T(version)
+% p changes
 % Diagonal quadratic with noise.
+
 clc; close all; format long; randn('state',0); rand('state',0); 
 switch version
     case 00, n = 100; p = 064;
@@ -49,23 +51,44 @@ switch version
     otherwise, return
 end
 
-k = 5; lambda = 4*sqrt(log(n*p)/n); maxit = 20; tol = 10^-6;
-nrun = 200; J = ones(p,nrun)==0; Ln = zeros(p,nrun); Q = eye(k);
+k = 5; 
+lambda = 0.5*sqrt(1/n)*log(n*p); %MODIFY
+
+alpha = 0.5;
+
+maxit = 20; tol = 10^-6;
+nrun = 100; J = ones(p,nrun)==0; 
+Ln = zeros(p,nrun);
+
+
 
 for run = 1:nrun
+    Q = 0.5*eye(k);
+    B0 = rand(k,k) < alpha;
+    for i=1:k
+        for j=1:i
+            if B0(i,j) && i~=j
+                Q(i,j) = 0.5;
+            end
+        end
+    end
+    Q = Q + Q';
+    
     ord = randperm(p); J(ord(1:k),run) = 1==1; X = randn(p,n); 
+    
     y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)' + randn(n,1);
-    [beta,h,obj,Ln(:,run)] = SCAM_QP(X,y-mean(y),lambda,maxit,tol);
+    
+    [beta,h,obj,Ln(:,run)] = acdc_QP(X,y-mean(y),lambda,maxit,tol);
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
-save(['SCAM/T_' num2str(version) '.mat'],'J','Ln');
+save(['T_' num2str(version) '.mat'],'J','Ln');
 return
 
 %% Reading the result:
 clc; clear all; close all; 
-prob = zeros(1,40); epsil = 10^-8;
+prob = zeros(1,40); epsil = 10^-7;
 for version = 1:40
-    load(['SCAM/T_' num2str(version) '.mat']);
+    load(['T_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
         if max(Ln(~J(:,run),run)) < epsil && min(Ln(J(:,run),run)) > epsil

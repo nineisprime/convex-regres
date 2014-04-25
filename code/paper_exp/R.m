@@ -1,5 +1,9 @@
 function R(version)
+% Hessian changes
 % Non-diagonal quadratic with noise.
+% Independent
+
+
 clc; close all; format long; randn('state',0); rand('state',0); 
 switch version
     case 00, n = 100; alpha = 0.2;
@@ -49,8 +53,11 @@ switch version
     otherwise, return
 end
 
-p = 128; k = 5; lambda = 4*sqrt(log(n*p)/n); maxit = 20; tol = 10^-6;
-nrun = 200; J = ones(p,nrun)==0; Ln = zeros(p,nrun);
+p = 128; k = 5; 
+lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
+maxit = 20; tol = 10^-6;
+nrun = 100; 
+J = ones(p,nrun)==0; Ln = zeros(p,nrun);
 
 if alpha<10^-16
     Q = eye(k); 
@@ -75,8 +82,8 @@ for run = 1:nrun
     %[beta,h,obj,Ln(:,run)] = SCAM_QP(X,y-mean(y),lambda,maxit,tol);
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
-%save(['SCAM/R_' num2str(version) '.mat'],'J','Ln');
-save('tmp.mat', 'J', 'Ln');
+save(['R_' num2str(version) '.mat'],'J','Ln'); %MODIFY
+%save('tmp.mat', 'J', 'Ln');
 return
 
 %% Reading the result:
@@ -105,9 +112,10 @@ for v = 1:length(alpha)
     caxis([0 1.5]);colorbar;
 end
 
-prob = zeros(1,40); epsil = 10^-8;
+
+prob = zeros(1,40); epsil = 10^-7;
 for version = 1:40
-    load(['SCAM/R_' num2str(version) '.mat']);
+    load(['R_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0;
     for run = 1:nrun
         if max(Ln(~J(:,run),run)) < epsil && min(Ln(J(:,run),run)) > epsil
