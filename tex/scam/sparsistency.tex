@@ -1,7 +1,7 @@
 \section{Analysis of Variable Selection Consistency}
 
 We divide our analysis into two parts. We first establish a sufficient deterministic condition for sparsistency.  We then consider the
-stochastic setting and argue that the deterministic conditions hold with high probability. 
+stochastic setting and argue that the deterministic conditions hold with high probability. In all of our results and analysis, we let $c, C$ represent absolute constants; the actual values of $c,C$ could change from line to line.
 
 \subsection{Deterministic Setting}
 
@@ -9,16 +9,17 @@ We construct an additive convex solution $\{\hat{d}_k\}_{k=1,...,p}$ that is zer
 
 \begin{definition}
 \label{def:restricted_regression}
-In \emph{restricted regression}, we restrict the indices $k$ in
-optimization (\ref{opt:alternate_opt}) to lie in the set $S$ instead of ranging from $1,...,p$. 
+We define as \emph{restricted regression} where we restrict the indices $k$ in
+optimization (\ref{opt:alternate_opt}) to lie in the set $S$ instead of ranging from $1,...,p$:
+\[
+\min_{d_k} \frac{1}{n} \Big\| Y - \sum_{k \in S} \bar{\Delta}_k d_k \Big\|_2^2 + 
+   \lambda_n \sum_{k \in S} \| \bar{\Delta}_k d_k \|_\infty \quad \trm{such that} \, d_{k,1}, ..., d_{k,n-1} \geq 0
+\]
 \end{definition}
-
-Our analysis then differs from the now-standard ``primal-dual witness
-technique''~\cite{Wain:09a}. Primal-dual witness explicitly solves all the dual variables, but because our optimization program is more complex, we do not solve the dual variables on $S$; we instead write the dual variables on $S^c$ as a function of the restricted regression \emph{residual}, which is implicitly a function of the dual variables on $S$.
 
 \begin{theorem} (Deterministic setting)
 \label{thm:deterministic}
-Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. 
+Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression as defined above.
 Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. \\
 
 Suppose for all $k\in S^c$, for all $i=1,...,n$, $\lambda_n > | \frac{1}{2n}
@@ -32,15 +33,14 @@ Then the following are true:
 
 \end{theorem}
 
-
-
 This result holds regardless of whether we impose the Lipschitz conditions in optimization~\ref{opt:alternate_opt} and~\ref{opt:alternate_opt_concave} or not.
 The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix.\\
 
-
 Theorem~\ref{thm:deterministic} allows us to analyze false negative
 rates and false positive rates separately. To control false positives,
-we analyze when the condition on $\lambda_n$ is fulfilled for all $j$ and all $k \in S^c$. To control false negatives, we analyze the restricted regression.
+we analyze when the condition on $\lambda_n$ is fulfilled for all $j$ and all $k \in S^c$. To control false negatives, we analyze the restricted regression. \\
+
+The proof of theorem~\ref{thm:deterministic} looks at KKT conditions of optimization~\ref{opt:alternate_opt}, similar to the now standard \emph{primal-dual witness} technique~\cite{wainwright2009sharp}. We cannot derive analogous \emph{mutual incoherence} conditions because the estimation is nonparametric -- even the low dimensional restricted regression has $s(n-1)$ variables. The details of the proof are in section~\ref{sec:deterministic_proof} of the Appendix.
 
 \subsection{Probabilistic Setting}
 
@@ -102,7 +102,7 @@ Intuitively, if $\alpha_f$ is smaller, then it is easier to make a false omissio
 \label{thm:false_positive}
 Suppose assumptions A1-A4 hold. 
 
-Suppose $\lambda_n \geq \mathbf{c} s Lb \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
+Suppose $\lambda_n \geq c s Lb \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
 \[
 \lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)} \Big|
 \]
@@ -119,10 +119,10 @@ Section~\ref{sec:false_positive_proof} of the Appendix.
 \label{thm:false_negative}
 Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $L$-Lipschitz constraint and let $\hat{g}_k$'s be any DC solution to the restricted regression with $L$-Lipschitz constraint.\\
 
-Suppose $\lambda \leq \mathbf{c} sLb  \sqrt{\frac{1}{n} \log^2 np}$ and suppose $n$ is large enough such that $(Lb)^3 \sigma \sqrt{\frac{s^5}{n^{4/5}} \log^2 np} \leq 1$.\\
+Suppose $\lambda \leq c sLb  \sqrt{\frac{1}{n} \log^2 np}$ and suppose $n$ is large enough such that $(Lb)^3 \sigma \sqrt{\frac{s^5}{n^{4/5}} \log^2 np} \leq 1$.\\
 
 Suppose 
-$\frac{\alpha_f}{\sigma} \geq \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
+$\frac{\alpha_f}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
 
 Then, with probability at least $1 - \frac{1}{n}$, we have that for all $k \in S$, $\hat{f}_k \neq 0$ or $\hat{g}_k \neq 0$.
 
@@ -149,7 +149,7 @@ $\lambda = \Theta \Big( sLb \sqrt{\frac{1}{n} \log^2 np} \Big)$. \\
 
 
 Suppose 
-$\frac{\alpha_f}{\sigma} \geq \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
+$\frac{\alpha_f}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
 
 Then, for all large enough $n$, we have that with probability at least $1-\frac{1}{n}$:
 \begin{align*}

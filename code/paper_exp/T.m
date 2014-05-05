@@ -86,7 +86,7 @@ return
 
 %% Reading the result:
 clc; clear all; close all; 
-prob = zeros(1,40); epsil = 10^-7;
+prob = zeros(1,40); epsil = 10^-6;
 for version = 1:40
     load(['T_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 

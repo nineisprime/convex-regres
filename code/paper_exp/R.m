@@ -113,7 +113,7 @@ for v = 1:length(alpha)
 end
 
 
-prob = zeros(1,40); epsil = 10^-7;
+prob = zeros(1,40); epsil = 10^-6;
 for version = 1:40
     load(['R_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0;

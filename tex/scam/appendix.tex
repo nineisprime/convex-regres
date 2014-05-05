@@ -124,7 +124,7 @@ The exact same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT cond
 \begin{theorem} 
 Suppose assumptions A1-A4 hold. 
 
-Suppose $\lambda_n \geq \mathbf{c} s Lb \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
+Suppose $\lambda_n \geq c s Lb \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
 \[
 \lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)} \Big|
 \]
@@ -143,12 +143,12 @@ $\hat{r}_i = f_0(x_i) + w_i - \hat{f}(x_i)$ where $\hat{f}(x_i) = \sum_{k \in S}
 
 Both $f_0(x_i)$ and $\hat{f}(x_i)$ are coordinate-wise $L$-Lipschitz and therefore are bounded by $2 sLb$. 
 
-Because $w_i$ is subgaussian, $|w_i| \leq \mathbf{c} \sigma \sqrt{\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq \mathbf{c} \sigma \sqrt{ \log \frac{2}{\delta}}$ with probability at most $1 - n \delta$.
+Because $w_i$ is subgaussian, $|w_i| \leq c \sigma \sqrt{\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq c \sigma \sqrt{ \log \frac{2}{\delta}}$ with probability at most $1 - n \delta$.
 
 We now put this together and take another union bound across all $j$ and all $i'$:
 \begin{align*}
-\| \hat{r} \|_\infty &\leq \mathbf{c} (sLb + \sigma \sqrt{ \log \frac{2}{\delta}}) \\
-      &\leq \mathbf{c} sLb \sigma \sqrt{\log \frac{2}{\delta}}
+\| \hat{r} \|_\infty &\leq c (sLb + \sigma \sqrt{ \log \frac{2}{\delta}}) \\
+      &\leq c sLb \sigma \sqrt{\log \frac{2}{\delta}}
 \end{align*}
 with probability at least $1 - n^2 p \delta$. We supposed that both $sLb \geq 2$ and $\sigma\sqrt{\log \frac{2}{\delta}} \geq 2$.
 
@@ -168,7 +168,7 @@ Taking an union bound, we have that
 
 \begin{align*}
 | \frac{1}{n} \hat{r}^\tran \mathbf{1}| &\leq 2 sLb \sqrt{\frac{1}{n} \log \frac{2}{\delta}} + 2 \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} \\
-  &\leq \mathbf{c} sLb \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} 
+  &\leq c sLb \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} 
 \end{align*}
 with probability at least $1-2\delta$.\\
 
@@ -185,7 +185,7 @@ Serfling's theorem states that with probability at least $1 - \delta$:
 Taking an union bound across previous events, we have that with probability at least $1 - 3n^2 p \delta$, for all $j \in S^c$, for all $i'=1,...,n$:
 \begin{align*}
 \Big|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)} \Big| &\leq
-  \mathbf{c} sLb \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} 
+  c sLb \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} 
 \end{align*}
 Setting $\delta = \frac{1}{n^3 p}$ gives the desired result.
 
@@ -266,12 +266,12 @@ Suppose $f^*_k = 0$, then $g^*_k \neq 0$. When $n$ is large enough, $\hat{g}_k$ 
 
 \begin{theorem}
 \label{thm:convex_consistent}
-Let $\hat{f}$ be the minimizer of the restricted regression with $\lambda \leq \mathbf{c} sLb\sqrt{ \frac{1}{n} \log^2 np}$.
+Let $\hat{f}$ be the minimizer of the restricted regression with $\lambda \leq c sLb\sqrt{ \frac{1}{n} \log^2 np}$.
 
 Then, with probability at least $1-\delta$,
 \begin{align}
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
-&\leq \mathbf{c} (Lb)^3\sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{np}{\delta}}
+&\leq c (Lb)^3\sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{np}{\delta}}
 \end{align}
 
 \end{theorem}
@@ -309,7 +309,7 @@ Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from the LHS. 
 \begin{align}
 \label{eqn:first_step_inequality}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
-   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s L b + \mathbf{c}(sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s L b + c(sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
 \end{align}
 
 [TOOD: at this point, we still have to choose a value for $\lambda$]\\
@@ -325,19 +325,19 @@ Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from the LHS. 
 
 Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s_L\}$ as the set of convex additive functions centered around the function $f^* - \bar{f}^*$. Then, $\| h \|_n \leq \| h \|_\infty \leq 4sLb$ for all $h \in \mathcal{G}$.\\
 
-According to theorem~\ref{thm:chaining}, for all $\epsilon > \frac{1}{\sqrt{n}}\sigma \mathbf{c} \int_0^R \sqrt{ \log N_2(t, \mathcal{G}) }dt \vee R$,
+According to theorem~\ref{thm:chaining}, for all $\epsilon > \frac{1}{\sqrt{n}}\sigma c \int_0^R \sqrt{ \log N_2(t, \mathcal{G}) }dt \vee R$,
 \[
 P\Big( \sup_{h \in \mathcal{G}} \langle w, h \rangle_n \geq \epsilon \Big) \leq
-  4 \exp \Big( - \frac{ n \epsilon^2}{ \mathbf{c} R^2 \sigma^2} \Big)
+  4 \exp \Big( - \frac{ n \epsilon^2}{ c R^2 \sigma^2} \Big)
 \]
 where $R = 4sLb$ for our purpose.
 
 Restated, we have that, with probablity at least $1-\delta$,
 \[
 \sup_{h \in \mathcal{G}} | \langle w, h \rangle_n | \leq 
-   \mathbf{c} R \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta}} + 
+   c R \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta}} + 
       \Big( \int_0^R \sqrt{\log N_2(t, \mathcal{G})}dt \vee R \Big)\, 
-       \mathbf{c} \sigma \sqrt{\frac{1}{n}} 
+       c \sigma \sqrt{\frac{1}{n}} 
 \]
 
 Now we evaluate the integral. Since $N_{\|\cdot\|_n}(t, \mathcal{G}) \leq N_\infty(t, \mathcal{G})$, we know that $\sqrt{\log N_{\|\cdot\|_n}(t, \mathcal{G})} \leq \sqrt{C s^{1.5} b L} t^{-1/4}$.
@@ -346,25 +346,25 @@ Now we evaluate the integral. Since $N_{\|\cdot\|_n}(t, \mathcal{G}) \leq N_\inf
 \int_0^R \sqrt{\log N_{\|\cdot\|_n}(t, \mathcal{G})} dt &\leq 
       \sqrt{C s^{1.5} b L} \int_0^R t^{-1/4} dt \\ 
  &= \sqrt{C s^{1.5} b L} \, \frac{4}{3} R^{3/4} \\
- &= \sqrt{C s^{1.5} b L} \, \mathbf{c} (sLb)^{3/4} \\
- &\leq \mathbf{c} (s b L)^2
+ &= \sqrt{C s^{1.5} b L} \, c (sLb)^{3/4} \\
+ &\leq c (s b L)^2
 \end{align*}
 
 Coming back, we have, with probability at least $1-\delta$,
 \begin{align*}
 \sup_{h \in \mathcal{G}} | \langle w, h \rangle | &\leq 
-    \mathbf{c} sLb \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} } + 
-    \mathbf{c} (sLb)^2 \sigma \sqrt{ \frac{1}{n} } \\
- &\leq \mathbf{c} (sLb)^2\sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }
+   c sLb \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} } + 
+    c (sLb)^2 \sigma \sqrt{ \frac{1}{n} } \\
+ &\leq c (sLb)^2\sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }
 \end{align*}
 
 Plugging this result into equation~\ref{eqn:first_step_inequality} and using an union bound, we get, with probability at least $1 - 2\delta$:
 \begin{align}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
-   &\leq \mathbf{c} (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
-   + \lambda 4 s L b + \mathbf{c}(sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
+   &\leq c (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
+   + \lambda 4 s L b + c (sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
-   &\leq \mathbf{c} (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
+   &\leq c (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
    + \lambda 4 s L b    \label{eqn:second_step_inequality}
 \end{align}
 
@@ -379,13 +379,13 @@ Plugging this result into equation~\ref{eqn:first_step_inequality} and using an 
 
 \begin{align}
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
-   &\leq \mathbf{c} (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
- +\lambda 4 s L b + \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+   &\leq c (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
+ +\lambda 4 s L b + c (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
     \nonumber \\
-&\leq \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}} + \lambda 4 sLb
+&\leq c (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}} + \lambda 4 sLb
 \end{align}
 
-Substituting in $\lambda \leq \mathbf{c} sLb \sqrt{\frac{1}{n} \log^2 np}$ and we get the desired result.
+Substituting in $\lambda \leq c sLb \sqrt{\frac{1}{n} \log^2 np}$ and we get the desired result.
 
 \end{proof}
  
@@ -398,13 +398,13 @@ Substituting in $\lambda \leq \mathbf{c} sLb \sqrt{\frac{1}{n} \log^2 np}$ and w
 
 \begin{theorem}
 \label{thm:concave_consistent}
-Let $\hat{g}_k$ denote the minimizer of the concave postprocessing with $\lambda \leq \mathbf{c} sLb \sqrt{\frac{1}{n} \log^2 np}$.\\
+Let $\hat{g}_k$ denote the minimizer of the concave postprocessing with $\lambda \leq c sLb \sqrt{\frac{1}{n} \log^2 np}$.\\
 
 Suppose $n$ is large enough such that $(Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta} } \leq 1$.\\
 
 Then, with probability at least $1- s\delta$, for all $k=1,...,s$:\\
 \[
-\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  \mathbf{c}(Lb)^{2.5} \sigma^{0.5} \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
+\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  c (Lb)^{2.5} \sigma^{0.5} \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
 \]
 \end{theorem}
 
@@ -426,24 +426,24 @@ The proof proceeds almost identically to that of theorem~\ref{thm:convex_consist
 Using the chaining result (theorem~\ref{thm:chaining}), setting $s=1$, we have, with probability at least $1-\delta$,
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 - \hat{f} - g^*_k \|_n^2 &\leq
-  \mathbf{c} (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb
+  c (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb
 \end{align*}
 
 Using the uniform convergence result (lemma~\ref{lem:uniform_convergence}), we have, with probability at least $1-2\delta$:
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &\leq
-  \mathbf{c} (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb +
-  \mathbf{c} (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log \frac{2}{\delta} } \\
- &\leq \mathbf{c}(Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log \frac{4}{\delta}}+ \lambda 2 Lb
+  c (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb +
+  c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log \frac{2}{\delta} } \\
+ &\leq c (Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log \frac{4}{\delta}}+ \lambda 2 Lb
 \end{align*}
 
 Plugging in $\lambda \leq \sqrt{ \frac{1}{n} \log^2 np}$:
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
-\leq \mathbf{c}(Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log \frac{4}{\delta}}+ 
+\leq c (Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log \frac{4}{\delta}}+ 
     2Lb \sqrt{\frac{1}{n} \log^2 np}\\
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
-\leq \mathbf{c}(Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} \\
+\leq c (Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} \\
 \end{align*}
 
 \textbf{Step 2.} The goal is to bound the quality of approximation between $\| f_0 - \hat{f} - g^*_k \|_P^2$ and $\| f_0 - f^* - g^*_k \|_P^2$ and likewise for $\hat{g}_k$.
@@ -452,14 +452,14 @@ Plugging in $\lambda \leq \sqrt{ \frac{1}{n} \log^2 np}$:
 \| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 &\leq 
     \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle
    + 2 \langle f_0 - f^*, g^*_k \rangle \\
- &\leq \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} + 
+ &\leq c (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} + 
     2 | \langle \hat{f} - f^*, g^*_k \rangle |  \\
- &\leq  \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} +
+ &\leq  c (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} +
     2 \| \hat{f} - f^* \|_P \| g^*_k \|_P \\
-&\leq  \mathbf{c} (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} +
-   \mathbf{c}(Lb) \sqrt{(Lb)^3\sigma \sqrt{ 
+&\leq  c (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} +
+   c (Lb) \sqrt{(Lb)^3\sigma \sqrt{ 
                    \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} }\\
-&\leq  \mathbf{c}(Lb) \sqrt{(Lb)^3\sigma \sqrt{ 
+&\leq  c (Lb) \sqrt{(Lb)^3\sigma \sqrt{ 
                    \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} }\\
 \end{align*}
 
@@ -468,7 +468,7 @@ The same bound likewise holds for $\hat{g}_k$.
 \textbf{Step 3.} Collecting the results from Step 1 and Step 2, we have, with probability at least $1-2\delta$:
 \begin{align*}
 \| f_0 - f^* - \hat{g}_k \|_P^2 - \|f_0 - f^* - g^*_k \|_P^2 \leq
-   \mathbf{c}(Lb)^{2.5} \sigma^{0.5} 
+   c (Lb)^{2.5} \sigma^{0.5} 
      \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
 \end{align*}
 
@@ -498,7 +498,7 @@ Taking an union bound across $k=1,...,s$ dimensions completes the result.
 With probability at least $1-\delta$:
 \begin{align*}
 \sup_{f \in \mathcal{C}^s_L} \Big| \| f_0 - f \|^2_n - \|f_0 - f \|^2_P\Big| \leq
-   \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+   c (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
 \end{align*}
 
 \end{lemma}
@@ -557,7 +557,7 @@ And
         + \frac{1}{n^{2/5}} C^2 s^2 (Lb)^3 \\
   &\leq (8Lb)^2 \sqrt{ \frac{s^5}{c n^{4/5}} \log \frac{2}{\delta}}
      + (CLb)^2 \sqrt{ \frac{s^4}{n^{4/5}} } \\
-  &\leq \mathbf{c} (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+  &\leq c (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
 \end{align*}
 
 \end{proof}
@@ -572,7 +572,7 @@ Let $f_0, f^*$ be defined as in section~\ref{sec:false_negative_proof_notations}
 Then, with probability at least $1 - 2\delta$,
 \[
 \Big | \| f_0 - f^* \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 \Big| \leq
-    \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{4}{\delta}
+    c (sLb)^2 \frac{1}{n} \log \frac{4}{\delta}
 \]
 \end{lemma}
 
@@ -593,15 +593,15 @@ The same reasoning likewise applies to $\bar{f}_0 = \frac{1}{n} \sum_{i=1}^n f_0
 Taking a union bound and we have that, with probability at least $1- 2\delta$, 
 
 \begin{align*}
-| \bar{f}^* | | \bar{f}_0 | &\leq \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \\
-\bar{f}^{*2} &\leq \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
+| \bar{f}^* | | \bar{f}_0 | &\leq c (sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \\
+\bar{f}^{*2} &\leq c (sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
 \end{align*}
 
 Therefore, with probability at least $1 - 2\delta$,
 \[
-\|f_0 - f^*\|_n^2 - \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \leq
+\|f_0 - f^*\|_n^2 - c (sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \leq
     \| f_0 - f^* + \bar{f}^* \|_n^2 \leq 
-\|f_0 - f^*\|_n^2 + \mathbf{c} (sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
+\|f_0 - f^*\|_n^2 + c (sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
 \]
 
 \end{proof}
