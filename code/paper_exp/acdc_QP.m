@@ -41,7 +41,7 @@ while iter < maxit && change > tol
    
         
         if (screen_one_flag)
-            disp('good')
+            %disp('good')
             counter(1) = counter(1) +1;
             %[beta(d,:),z(d,:),Ln(d)] = SCAM_MOSEK_f(res,X(d,:),lambda);
             %if (max(abs(z(d,:))) > 1e-6)
@@ -50,7 +50,7 @@ while iter < maxit && change > tol
             
             
         else
-            disp('bad')
+            %disp('bad')
             counter(2) = counter(2) + 1;
             [beta(d,:),z(d,:),Ln(d)] = SCAM_MOSEK_f(res,X(d,:),lambda);
         end
@@ -106,7 +106,7 @@ for d=1:p
         sum(lambda_vec2 >= res_vec) == n-1 ;
     
     if (screen_one_flag)
-        disp('good')
+        %disp('good')
         counter(1) = counter(1) +1;
         %[~,~,Ln2(d)] = SCAM_MOSEK_f(res,X(d,:),lambda);
         %if (max(abs(z(d,:))) > 1e-6)
@@ -115,7 +115,7 @@ for d=1:p
         
         
     else
-        disp('bad')
+        %disp('bad')
         counter(2) = counter(2) + 1;
         [~,~,Ln2(d)] = SCAM_MOSEK_f(-res,X(d,:),lambda);
     end
