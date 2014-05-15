@@ -274,14 +274,34 @@ additive.
 \end{remark}
 
 \begin{remark} 
-It is difficult to prove the opposite direction of additive faithfulness, that is, if $f$ does not depend on coordinate $k$, then $f_k^*$ will be zero in the additive approximation. Consider as a conceptual example a 3D distribution over $(X_1, X_2, X_3)$; suppose $X_1, X_2$ are independent, and $f$ is only a function of $X_1, X_2$. We can then let $X_3 = f(X_1, X_2) - f^*_1(X_1) - f^*_2(X_2)$, that is, we let $X_3$ exactly capture the additive approximation error, then the best additive approximation of $f$ would have a component $f^*_3(X_3) = X_3$ even though $f$ does not depend on $X_3$. 
+It remains difficult to find conditions under which the opposite direction of additive faithfulness holds, that is, if $f$ does not depend on coordinate $k$, then $f_k^*$ will be zero in the additive approximation. As a conceptual example, suppose that $f$ is only a function of $X_1, X_2$, and that $(X_1, X_2, X_3)$ follows a degenerate 3-dimensional distribution where $X_3 = f(X_1, X_2) - f^*(X_1) - f^*_2(X_2)$, that is, we let $X_3$ exactly capture the additive approximation error. In this case, the best additive approximation of $f$ would have a component $f^*_3(X_3) = X_3$ even though $f$ does not depend on $X_3$. 
 \end{remark}
+
+It is possible to get a similar result for distributions with unbounded support, by using a limit condition $\lim_{|x_k| \rightarrow \infty} \frac{\partial p(\mathbf{x}_{-k} \given x_k)}{\partial x_k} = 0$ instead of the boundary condition. Such a limit condition is too strong however, it is not obeyed by the multivariate Gaussian distribution. \\
+
+In fact, not all convex functions are additively faithful under certain multivariate Gaussian distributions. 
+
+\begin{example}
+\label{examp:gaussian_counterexample}
+Consider a quadratic form $f( \mathbf{x}) = \mathbf{x}^\tran H \mathbf{x} + c^\tran \mathbf{x}$ and a Gaussian distribution $X \sim N(0, \Sigma)$ where $\Sigma_{jj} = 1$ for all $j$.
+
+Then we have a closed form for the additive approximation, which we prove in [TODO:appendix reference].
+\begin{itemize}
+\item If $f$ does not depend on $x_j$, then $f^*_j(x_j) = 0$.
+\item If $f$ depends on $x_j$, then
+\[
+f^*_j(x_j) = H_j^\tran \Sigma_j x_j^2 + c_j x_j
+\]
+where $H_j, \Sigma_j$ are the $j$-th row of $H_j, \Sigma_j$ respectively. 
+\end{itemize}
+Let $H = [1, 2; 2,5]$ and let $\Sigma = [1, -\alpha; -\alpha, 1]$. It is easy to check then that if $\alpha=0.5$, then $f^*_1 = 0$ and additive faithfulness is violated, and if $\alpha > 0.5$, then $f^*_1$ is a concave function.
+\end{example}
 
 \subsection{Convex Additive Model}
 
-Although convex functions are additively faithful, it is difficult to estimate the optimal additive functions $f^*_k$'s (as defined in equation~\ref{eqn:unconstrained_additive}) because $f^*_k$ need not be a convex function.
+Although convex functions are additively faithful, it is difficult to estimate the optimal additive functions $f^*_k$'s (as defined in equation~\ref{eqn:unconstrained_additive}) because $f^*_k$ need not be a convex function, as example~\ref{examp:gaussian_counterexample} shows. $f^*_k$ can be shown to be smooth but it is preferable to use shape-constraints whenever possible to avoid the introduction of the additional smoothing bandwidth.
 
-Because the true regression function $f$ is convex, it is natural to consider an convex additive model:
+Since the true regression function $f$ is convex, it is natural to ask when it is sufficient to estimate an convex additive model:
 \begin{equation}
 \label{eqn:convex_additive}
 \{ f^*_k \}_{k=1}^s = \arg\min \Big \{ 
@@ -289,7 +309,7 @@ Because the true regression function $f$ is convex, it is natural to consider an
 \end{equation}
 where $\mathcal{C}^1$ is the set of univariate convex functions.
 
-The convex functions $f^*_k$'s are not additively faithful by themselves but faithfulness can be restored by coupling the $f^*_k$'s with a set of concave functions:
+The convex functions $f^*_k$'s are not additively faithful by themselves unfortunately. But, faithfulness can be restored by coupling the $f^*_k$'s with a set of concave functions:
 \begin{equation}
 \label{eqn:concave_postprocess}
 g^*_k = \arg\min \Big\{

@@ -1,14 +1,15 @@
-n = 500;
-alpha = 0.5;
-v = 0.3;
+n = 1000;
+alpha = 0;
+%v = 0.3;
+v = 0;
 
-p = 64; 
+p = 512; 
 k = 4; 
 
 lambda = 0.5*sqrt(1/n)*log(n*p); 
 maxit = 20; tol = 10^-6;
 
-nrun = 5; 
+nrun = 1; 
 
 J = ones(p,nrun)==0; 
 Ln = zeros(p,nrun);
@@ -40,10 +41,10 @@ for run = 1:nrun
     % main function call
     [beta,h,obj,Ln(:,run)] = acdc_QP(X, y-mean(y), lambda, maxit, tol);
     %[beta,h,obj,Ln(:,run)] = SCAM_QP(X,y-mean(y),lambda,maxit,tol);
-    disp(['version=' num2str(version) ' run=' num2str(run)]);
+    %disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
 
-prob = 0; epsil = 10^-7;
+prob = 0; epsil = 10^-6;
 
 nrun = size(Ln,2); suc = 0;
 for run = 1:nrun

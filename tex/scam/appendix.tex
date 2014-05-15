@@ -37,7 +37,7 @@ The Lagrangian is
   \frac{1}{2n} \Big\| 
     Y - \sum_{k=1}^p  \bar{\Delta}_k d_k  \Big\|_2^2 + 
     \lambda \sum_{k=1}^p \| \bar{\Delta}_k d_k \|_\infty -
-    \sum_{k=1}^p \sum_{i=1}^{n-1} \nu_{ki} d_{ki} 
+    \sum_{k=1}^p \sum_{i=2}^{n-1} \nu_{ki} d_{ki} 
 \end{equation}
 with the constraint that $\nu_{ki} \geq 0$ for all $k,i$.
 
@@ -95,13 +95,54 @@ where $\mathsf{gap}_i = X_{ki} - X_{k,i-1}$. If $\frac{1}{2n} |\mathbf{1}_{(i:n)
 - (X_{kn} - X_{kj}) \lambda a + \lambda (X_{kn} - X_{kj}) a &\geq 0
 \end{align*}
 
+We have thus proven that there exist one solution $\{ \hat{d}_k \}_{k=1,...,p}$ such that $\hat{d}_k = 0$ for all $k \in S^c$. Furthermore, we have shown that the subgradient variables $\mathbf{u}_k$ of the solution $\{ \hat{d}_k \}$ can be chosen such that $\| \mathbf{u}_k \|_1 < 1$ for all $k \in S^c$.  We now prove that if $\{ \hat{d}'_k \}_{k = 1,..., p}$ is another solution, then it must be that $\hat{d}'_k = 0$ for all $k \in S^c$ as well.  \\
+
+%% prove uniqueness of sparsity pattern.
+
+We first claim that $\sum_{k=1}^p \bar{\Delta}_k \hat{d}_k = \sum_{k=1}^p \bar{\Delta}_k \hat{d}'_k$. If this were not true, then a convex combination of $\hat{d}_k, \hat{d}'_k$ would achieve a strictly lower objective on the quadratic term. More precisely, let $\zeta \in [0,1]$. If $\sum_{k=1}^p \bar{\Delta}_k \hat{d}'_k \neq \sum_{k=1}^p \bar{\Delta}_k \hat{d}_k$, then $\| Y - \sum_{k=1}^p \bar{\Delta}_k \big( \hat{d}_k + \zeta ( \hat{d}'_k - \hat{d}_k) \big) \|_2^2$ is strongly convex as a function of $\nu$. Thus, it cannot be that $\hat{d}_k$ and $\hat{d}'_k$ both achieve optimal objective and we have reached a contradiction.\\
+
+Now, we look at the stationarity condition for both $\{ \hat{d}_k \}$ and $\{ \hat{d}'_k \}$. Let $\mathbf{u}_k \in \partial \| \bar{\Delta}_k \hat{d}_k \|_\infty$ and let $\mathbf{u}'_k \in \partial \| \bar{\Delta}_k \hat{d}'_k \|_\infty$ be the two sets of subgradients. Let $\{ \nu_{ki} \}_{k=1,..,p,\, i=1,...n-1}$ and $\{ \nu'_{ki} \}$ be the two sets of positivity dual variables. \footnote{since there is no positivity constraint on $d_{k1}$, we let $\nu_{k1} = 0$ always.}
+
+Let us define $\bar{\Delta}$, a $n \times p(n-1)$ matrix, to denote the column-wise concatenation of $\{ \bar{\Delta}_k \}_k$ and $\hat{d}$, a $p(n-1)$ dimensional vector, to denote the concatenation of $\{ \hat{d}_k \}_k$. With this notation, we can express $\sum_{k=1}^p \bar{\Delta}_k \hat{d}_k = \bar{\Delta} \hat{d}$.
+
+Since both solutions $(\hat{d}, \mathbf{u}, \nu)$ and $(\hat{d}', \mathbf{u}', \nu')$ must satisfy the stationarity condition, we have that:
+\[
+\bar{\Delta}^\tran ( Y - \bar{\Delta} \hat{d} ) 
+   + \lambda \sum_{k=1}^p \bar{\Delta}_k^\tran \mathbf{u}_k - \nu = 
+\bar{\Delta}^\tran ( Y - \bar{\Delta} \hat{d}' ) 
+   + \lambda \sum_{k=1}^p \bar{\Delta}_k^\tran \mathbf{u}'_k - \nu' = 0
+\] 
+We multiply both sides of the above equation by $\hat{d}'$:
+\[
+\hat{d}'^{\tran}  \bar{\Delta}^\tran ( Y - \bar{\Delta} \hat{d} ) 
+    + \lambda \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k - \hat{d}'^\tran \nu = \hat{d}'^{\tran}  \bar{\Delta}^\tran ( Y - \bar{\Delta} \hat{d}' ) 
+    + \lambda \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}'_k - \hat{d}'^\tran \nu'
+\]
+Since $\bar{\Delta} \hat{d}_k = \bar{\Delta} \hat{d}$, $\hat{d}'^\tran \nu' = 0$ (complementary slackness), and $\hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}'_k  = \| \hat{f}'_k \|_\infty$ (where $\hat{f}'_k = \bar{\Delta}_k \hat{d}'_k$), we have that:
+\[
+\lambda \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k - \hat{d}'^\tran \nu = \lambda \sum_{k=1}^p \| \hat{f}'_k \|_\infty
+\]
+On one hand, $\hat{d}'$ is a feasible solution so $\hat{d}'^\tran \nu \geq 0$ and so 
+\[
+\sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k \geq \sum_{k=1}^p \| \hat{f}'_k \|_\infty .
+\]
+
+On the other hand, by Holder's inequality:
+\begin{align*}
+\sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k &\leq 
+   \sum_{k=1}^p \| \hat{f}'_k \|_\infty \|\mathbf{u}_k \|_1 
+\end{align*}
+
+Since $\mathbf{u}_k$ can be chosen so that $\| \mathbf{u}_k \|_1 < 1$ for all $k \in S^c$, we would get a contradiction if $\| \hat{f}'_k \|_\infty > 0$ for some $k \in S^c$. We thus conclude that $\hat{d}'$ must follow the same sparsity pattern.\\
+
+
 The second item in the theorem concerning optimization~\ref{opt:alternate_opt_concave} is proven in exactly the same way. 
 
 The Lagrangian of optimization~\ref{opt:alternate_opt_concave} is:
 \[
 \mathcal{L}_{\trm{cave}}(d_k, \nu_k) = 
   \frac{1}{2n} \big\| \hat{r} - \bar{\Delta}_k d_k \big \|_2^2 + 
-  \lambda \| \bar{\Delta}_k d_k \|_\infty + \sum_{k=1}^p \sum_{i=1}^{n-1} \nu_{ki} d_{ki}
+  \lambda \| \bar{\Delta}_k d_k \|_\infty + \sum_{k=1}^p \sum_{i=2}^{n-1} \nu_{ki} d_{ki}
 \]
 
 The exact same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT conditions sufficient for optimality.
