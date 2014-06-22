@@ -11,7 +11,7 @@
 
 \bibliographystyle{plainnat}
 
-\title{Variable Selection in Convex Function Estimation}
+\title{Faithful Variable Screening for High-Dimensional Convex Regression}
 
 %\author{
 %Min Xu, Minhua Chen, John Lafferty
@@ -127,7 +127,8 @@
 \maketitle
 
 \begin{abstract}
-We consider the problem of estimating a convex function of several variables from noisy values of the function at a finite sample of input points. 
+We consider the problem of estimating a convex function of several variables from noisy values of the function at a finite sample of input points. Convex function estimation is subject to the curse of dimensionality where the sample size necessary for consistent estimation increases exponentially with the dimensionality of the observed variables $p$. However, if the function is sparse, with $s << p$ relevant variables, then one could achieve consistency in the high-dimensional setting by first identifying the $s$ variables. We develop a faithful screening procedure to compute a set $S$ that contains the $s$ relevant variables. Our approach is a two-stage method that estimates a sum of $p$ one-dimensional convex functions, followed by one-dimensional concave regression fits on the residuals. The method is based on quadratic programming, and in contrast to standard sparse additive models, requires no tuning parameters for smoothness. Under appropriate assumptions, we prove that the procedure is faithful in the population setting, yielding no false negatives, and we give a finite sample statistical analysis. In addition, we introduce algorithms for efficiently carrying out the required quadratic programs. The approach leads to significant computational and statistical advantages over fitting a full model, and provides an effective, practical approach to variable screening in convex regression.
+
 \end{abstract}
 \vskip10pt
 
