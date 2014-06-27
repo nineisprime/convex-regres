@@ -1,0 +1,245 @@
+\documentclass[12pt,pdftex,aos]{imsart}
+
+\RequirePackage[OT1]{fontenc}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math}
+\RequirePackage{hypernat}
+\usepackage[ruled,section]{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{graphicx}
+\usepackage[hscale=0.7,vscale=0.8]{geometry}
+
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{yhmath}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\pr}{Prob}
+\DeclareMathOperator{\cov}{Cov}
+\newcommand{\EE}[1]{\mathbb{E}({#1})}
+\def\interleave{|\kern-.25ex|\kern-.25ex|}
+\def\interleavesub{|\kern-.15ex|\kern-.15ex|}
+\newcommand{\nnorm}[1]{\interleave {#1} \interleave}
+\newcommand{\nnormsub}[1]{\interleavesub {#1} \interleavesub}
+\newcommand{\nNorm}[1]{\left|\kern-.25ex\left|\kern-.25ex\left| {#1}\right|\kern-.25ex\right|\kern-.25ex\right|}
+\newcommand{\norm}[1]{\left\|{#1}\right\|}
+%\newcommand{\trnorm}[1]{\norm{{#1}}_{\mathrm{tr}}}
+\newcommand{\trnorm}[1]{\norm{{#1}}_{*}}
+\newcommand{\spnorm}[1]{\norm{{#1}}_{\mathrm{sp}}}
+\newcommand{\frnorm}[1]{\norm{{#1}}_{\mathrm{F}}}
+%\newcommand{\trnnorm}[1]{\nnorm{{#1}}_{\mathrm{tr}}}
+\newcommand{\trnnorm}[1]{\nnorm{{#1}}_{*}}
+\newcommand{\spnnorm}[1]{\nnorm{{#1}}_{\mathrm{sp}}}
+\newcommand{\spnnormsub}[1]{\nnormsub{{#1}}_{\mathrm{sp}}}
+\newcommand{\frnnorm}[1]{\nnorm{{#1}}_{\mathrm{F}}}
+\newcommand{\Norm}[1]{\left\|{#1}\right\|}
+%\newcommand{\Trnorm}[1]{\Norm{{#1}}_{\mathrm{tr}}}
+\newcommand{\Trnorm}[1]{\Norm{{#1}}_{*}}
+\newcommand{\Spnorm}[1]{\Norm{{#1}}_{\mathrm{sp}}}
+\newcommand{\Frnorm}[1]{\Norm{{#1}}_{\mathrm{F}}}
+%\newcommand{\Trnnorm}[1]{\nNorm{{#1}}_{\mathrm{tr}}}
+\newcommand{\Trnnorm}[1]{\nNorm{{#1}}_{*}}
+\newcommand{\Spnnorm}[1]{\nNorm{{#1}}_{\mathrm{sp}}}
+\newcommand{\Frnnorm}[1]{\nNorm{{#1}}_{\mathrm{F}}}
+\newcommand{\colspan}[1]{\mathrm{colspan}\left({#1}\right)}
+\def\myllangle{\langle\mspace{-4mu}\langle\mspace{1mu}}
+\def\myrrangle{\mspace{1mu}\rangle\mspace{-4mu}\rangle}
+
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheoremstyle{remark}{\topsep}{\topsep}%
+     {\normalfont}% Body font
+     {}           % Indent amount (empty = no indent, \parindent = para indent)
+     {\bfseries}  % Thm head font
+     {.}          % Punctuation after thm head
+     {.5em}       % Space after thm head (\newline = linebreak)
+     {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}}% Thm head spec
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{definition}{Definition}[section]
+
+
+\renewcommand{\baselinestretch}{1.1}
+%\parskip12pt
+%\parindent0pt
+\setcounter{tocdepth}{2}
+
+% min's macros
+\mathchardef\mh="2D
+
+% John's macros
+\def\X{\mathcal{X}}
+\def\comma{\unskip,~}
+\def\truep{p^*}
+\def\div{\|\,}
+\long\def\comment#1{}
+\def\reals{{\mathbb R}}
+\def\R{\reals}
+\def\P{{\mathbb P}}
+\def\E{{\mathbb E}}
+\def\Cov{\mathop{\text{Cov}}}
+\def\supp{\mathop{\text{supp}\kern.2ex}}
+\def\argmin{\mathop{\text{\rm arg\,min}}}
+\def\arginf{\mathop{\text{\rm arg\,inf}}}
+\def\argmax{\mathop{\text{\rm arg\,max}}}
+\let\tilde\widetilde
+\def\csd{${}^*$}
+\def\mld{${}^\dag$}
+\def\dos{${}^\ddag$}
+\def\W{\widetilde Y}
+\def\Z{\widetilde X}
+\let\hat\widehat
+\let\tilde\widetilde
+\def\given{{\,|\,}}
+\def\ds{\displaystyle}
+\def\bs{\backslash}
+\def\1{{(1)}}
+\def\2{{(2)}}
+\def\pn{{(n)}}
+\def\ip{{(i)}}
+\def\Xbar{\overline{X}}
+\def\except{\backslash}
+\def\npn{\mathop{\textit{NPN\,}}}
+\def\i{{(i)}}
+\def\cE{{\mathcal{C}}}
+\def\cM{{\mathcal{M}}}
+\def\cF{{\mathcal{F}}}
+\def\cP{{\mathcal{P}}}
+\def\cG{{\mathcal{G}}}
+\def\tr{\mathop{\text{tr}}}
+\long\def\comment#1{}
+\def\ti#1{#1}
+\def\titi#1{\textit{#1}}
+\def\cram{{\sc cram}}
+\def\spam{{\small\sc SpAM}}
+\def\diag{\mathop{\rm diag}}
+\def\ones{\mathbf{1}}
+\def\threebars{\mbox{$|\kern-.25ex|\kern-.25ex|$}}
+\def\fatnorm#1{\threebars #1 \threebars}
+\def\rank{\mathop{\rm rank}}
+\def\S{\mathcal{S}}
+\def\H{\mathcal{H}}
+\def\K{{K}}
+\def\rank{\mathop{\rm rank}}
+\def\half{{1/2}}
+\def\Y{\mathbb{Y}}
+\def\M{\mathbb{M}}
+\def\F{\mathbb{F}}
+\def\pinv{{-1}}
+%\def\ones{\mathds{1}}
+%\def\ones{1}
+\def\Res{Z}
+\def\Proj{P}
+\def\cN{{\mathcal N}}
+\def\cT{{\mathcal H}}
+\def\coloneqq{:=}
+\def\mathbf#1{\mbox{\boldmath $#1$}} 
+\def\bar#1{\overline{#1}}
+
+
+
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Faithful Variable Screening for High-Dimensional Convex Regression}
+\runtitle{Faithful Variable Screening for Convex Regression}
+
+\begin{aug}
+\vskip10pt
+\author{\fnms{Min} \snm{Xu}\ead[label=e1]{minx@cs.cmu.edu}}
+\comma 
+\author{\fnms{Minhua} \snm{Chen}\ead[label=e2]{minhua@galton.uchicago.edu}}
+\and
+\author{\fnms{John} \snm{Lafferty}\ead[label=e3]{lafferty@galton.uchicago.edu}}
+\address{
+\begin{tabular}{ccc}
+\\[10pt]
+Machine Learning Department & Department of Statistics & Department of Statistics\\
+Carnegie Mellon University  & University of Chicago & Department of Computer Science\\
+& & University of Chicago
+\end{tabular}
+\\[20pt]
+\printead{e1,e2,e3}}
+\end{aug}
+
+
+\begin{abstract}
+  We consider the problem of variable selection in convex nonparametric
+  regression.  Under the assumption that the true regression
+  function is sparse and convex, we
+  develop a faithful screening procedure to compute a set $S$ that
+  contains the $s$ relevant variables. Our approach is a two-stage
+  method that estimates a sum of $p$ one-dimensional convex functions,
+  followed by one-dimensional concave regression fits on the
+  residuals. The method is based on quadratic programming, and in
+  contrast to standard sparse additive models, requires no tuning
+  parameters for smoothness. Under appropriate assumptions, we prove
+  that the procedure is faithful in the population setting, yielding
+  no false negatives, and we give a finite sample statistical
+  analysis. In addition, we introduce algorithms for efficiently
+  carrying out the required quadratic programs. The approach leads to
+  significant computational and statistical advantages over fitting a
+  full model, and provides an effective, practical approach to
+  variable screening in convex regression.
+\end{abstract}
+
+\begin{keyword}
+\kwd{nonparametric regression}
+\kwd{convex regression}
+\kwd{variable selection}
+\kwd{quadratic programming}
+\kwd{additive model}
+\end{keyword}
+
+%\tableofcontents
+\vskip20pt
+\end{frontmatter}
+
+\maketitle
+\vskip10pt
+
+% \tableofcontents
+
+\input{introduction}
+\input{related_work}
+\input{summary}
+\input{additive_faithful}
+\input{estimation}
+\input{optimization}
+\input{sparsistency}
+\input{experiments}
+\input{discussion}
+
+
+\clearpage
+
+
+\newpage
+\input{appendix}
+%\newpage
+%\input{notes}
+
+
+\section*{Acknowledgements}
+Research supported in part by NSF grants IIS-1116730, 
+AFOSR grant FA9550-09-1-0373, ONR grant
+N000141210762, and an Amazon AWS in Education Machine Learning
+Research grant.
+
+
+\bibliographystyle{imsart-nameyear}
+\bibliography{local}
+
+
+\end{document}
