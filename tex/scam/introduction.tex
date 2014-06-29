@@ -1,25 +1,23 @@
 \section{Introduction}
 
 
-We consider the problem of estimating a convex function of several
-variables from noisy values of the function at a finite sample of
-input points.  
+Shape restrictions such as monotonicity, convexity, and concavity
+provide a natural way of limiting the complexity of many statistical
+estimation problem.  Shape-constrained estimation is not as well
+understood as more traditional nonparametric estimation involving
+smoothness constraints.  For instance, as of this writing the minimax
+rate of convergence for multivariate convex regression has yet to be
+rigorously established in full generality.  Even the one-dimensional
+case is challenging, and has been of recent interest
+\citep{guntusen:13}.
 
-Recent works \cite{Guntu:12,
-
-Recent work \cite{Guntu:12,Guntu:13} shows that the
-minimax rate for convex function estimation in $p$ dimensions is
-$n^{-4/(4+p)}$.  Loosely speaking, this shows that the
-geometric convexity constraint is statistically equivalent to
-requiring two derivatives of the function, and thus is
-subject to the same curse of dimensionality.
-
-However, if the function is sparse, with $s\ll p$ relevant variables,
-then the faster rate $n^{-4/(4+s)}$ may be achievable if the $s$
-variables can be identified.  To determine the relevant variables, we
+In this paper we study the problem of variable selection
+in convex regression.   Assuming that the regression
+function is convex and sparse, in order to select the
+relevant variables we 
 show that it suffices to estimate a sum of $p$ one-dimensional convex
 functions, leading to significant computational and statistical
-advantages.  In addition, we introduce algorithms and supporting
+advantages .  In addition, we introduce algorithms and supporting
 statistical theory for a practical, effective approach to this
 variable selection problem.
 
