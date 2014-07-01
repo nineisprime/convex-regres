@@ -1,1 +1,42 @@
-%\section{Summary of Results}
+\section{Overview of Results}
+
+The starting point for our approach is the observation that least squares
+nonparametric estimation under convexity constraints is equivalent to
+a finite dimensional quadratic program.  Specifically, the infinite
+dimensional optimization 
+\begin{align}
+\begin{split}
+\text{minimize} & \quad \sum_{i=1}^n (Y_i - m(x_i))^2 \\
+\text{subject to} &  \quad m:\reals^p\rightarrow\reals\ \text{is
+  convex}
+\end{split}
+\end{align}
+is precisely equivalent to the finite dimensional quadratic
+program 
+\begin{align}
+\begin{split}
+\label{eq:outer}
+\text{minimize}_{h, \beta} & \;\; \sum_{i=1}^n (Y_i - h_i)^2 \\
+\text{subject to} & \;\; h_j \geq h_i + \beta_i^T (x_j-x_i),\; \text{for
+    all $i,j$}.
+\end{split}
+\end{align}
+%\end{equation}
+%See \cite{Boyd04}, Section 6.5.5.
+Here $h_i$ is the estimated function value $m(x_i)$, and the vectors
+$\beta_i \in \reals^d$ represent supporting hyperplanes to the
+epigraph of $m$.  Importantly, this finite dimensional quadratic program does
+not have tuning parameters for smoothing the function. Such parameters are the bane
+of nonparametric estimation.
+
+
+\textbf{Notation.} If
+$\mathbf{x}$ is a vector, we use $\mathbf{x}_{-k}$ to denote the
+vector with the $k$-th coordinate removed. If $\mathbf{v} \in \R^n$, then
+$v_{(1)}$ denotes the smallest coordinate of $\mathbf{v}$ in
+magnitude, and $v_{(j)}$ denotes the $j$-th smallest; $\mathbf{1}_n \in \R^n$
+is the all ones vector. If $X \in \R^p$ and $S \subset
+\{1,...,p\}$, then $X_S$ is the subvector of $X$ restricted to
+the coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use
+$\bar{X}$ to denote the empirical average. Given a random variable $X_k$ and a scalar $x_k$, we use $\E[\cdot \given x_k]$ as a shorthand for $\E[ \cdot \given X_k = x_k]$.
+
