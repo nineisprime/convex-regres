@@ -32,7 +32,7 @@ $X_k$ and a scalar $x_k$, we use $\E[\cdot \given x_k]$ as a shorthand
 for $\E[ \cdot \given X_k = x_k]$.
 
 
-\subsection{Additive faithfulness}
+\subsection{Faithful screening}
 
 The starting point for our approach is the observation that least squares
 nonparametric estimation under convexity constraints is equivalent to
@@ -48,6 +48,7 @@ dimensional optimization
 is equivalent to the finite dimensional quadratic
 program 
 \begin{align}
+\label{eq:convreg}
 \begin{split}
 \text{minimize}_{f, \beta} & \;\; \sum_{i=1}^n (Y_i - f_i)^2 \\
 \text{subject to} & \;\; f_j \geq f_i + \beta_i^T (\x_j-\x_i),\; \text{for
@@ -150,22 +151,49 @@ g^*_k = \arg\min \Big\{ \E\big( f(X) -
 \mathcal{C}^1, \E g_k(X_k) = 0 \Big\},
 \end{equation}
 with $\mh{}\mathcal{C}^1$ denoting the set of univariate concave
-function.  Then, $f^*_k = 0$ and $g^*_k = 0$ implies that $f$ does not
+functions.  Then $f^*_k = 0$ and $g^*_k = 0$ implies that $f$ does not
 depend on $x_k$, i.e., $\partial_{x_k} f(\mathbf{x}) = 0$ with
 probability one.
 \end{theorem}
 
-This result suggests a two-stage screening
-procedure for variable selection. In the first stage we fit a sparse \emph{convex}
+This result naturally suggests a two-stage screening
+procedure for variable selection. In the first stage we fit a sparse convex
 additive model.  In the second stage we
 fit a concave function $\hat g_k$ to the residual for each variable
 having a zero convex component $\hat f_k$.  If both $\hat f_k = 0$ and
-$\hat g_k = 0$, we remove variable $x_k$.  
-Our next results concern the optimizations involved, and their finite
+$\hat g_k = 0$, we can safely discard variable $x_k$.  
+Our next results concern the required optimizations, and their finite
 sample statistical performance.
 
 
 \subsection{Optimization}
+
+In Section~\ref{sec:optimization} we present optimization algorithms for the additive convex regression stage.
+The convex constraints for the additive functions, analogous to 
+the multivariate constraints \eqref{eq:convreg},
+are  that each component $f_{k}(\cdot)$ 
+can be represented by its supporting hyperplanes, i.e.,
+\begin{equation}
+      f_{ki'} \geq f_{ki} + \beta_{ki}(x_{ki'}-x_{ki}) \quad \text{for
+        all $i,i'$}
+\end{equation}
+where $f_{ki}\coloneqq f_{k}(x_{ki})$ and $\beta_{ki}$ is the
+subgradient at point $x_{ki}$. While this apparently requires $O(n^2
+p)$ equations to impose the supporting hyperplane constraints, 
+in fact, only $O(np)$ constraints suffice.  This is because univariate convex functions are
+characterized by the condition that the subgradient, which is a scalar, must
+increase monotonically. This observation leads to a reduced quadratic
+program with $O(np)$ variables and $O(np)$ constraints. 
+
+Directly applying a QP solver to this optimization is still computationally
+expensive for relatively large
+$n$ and $p$.  We thus develop a block
+coordinate descent method, where in each step we solve a sparse
+QP involving $O(n)$ variables and $O(n)$ constraints.  This 
+is efficiently solved using optimization packages 
+such as {\sc mosek}.  The details of these optimizations
+are given in Section~\ref{sec:optimization}.
+
 
 \subsection{Finite-sample analysis}
 
