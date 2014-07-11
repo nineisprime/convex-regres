@@ -1,1 +1,286 @@
-%\section{Summary of Results}
+\def\x{\mathbf{x}}
+
+\section{Overview of Results}
+
+In this section we provide a high-level description of our technical
+results.  Our presentation is intended to give the reader
+an overview of our results and their significance.  The 
+full technical details, the precise statement of the results,
+and their detailed proofs are provided in following sections.
+
+Our results address three problems.  The first is to develop
+a procedure based on an additive approximation for identifying
+relevant variables in convex regression.  To this end,
+we prove a result that shows when and how the additive approximation
+be used without introducing false negatives in the population setting.  The
+second result concerns the efficient implementation of
+the quadratic programs required by the procedure.  
+Finally, the third problem we consider is the finite sample
+behavior of our proposed method.  
+
+We first establish some notation, to be used throughout the remainder 
+of the paper.
+If $\mathbf{x}$ is a vector, we use $\mathbf{x}_{-k}$ to denote the
+vector with the $k$-th coordinate removed. If $\mathbf{v} \in \R^n$, then
+$v_{(1)}$ denotes the smallest coordinate of $\mathbf{v}$ in
+magnitude, and $v_{(j)}$ denotes the $j$-th smallest; $\mathbf{1}_n \in \R^n$
+is the all ones vector. If $X \in \R^p$ and $S \subset
+\{1,...,p\}$, then $X_S$ is the subvector of $X$ restricted to
+the coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use
+$\bar{X}$ to denote the empirical average. Given a random variable
+$X_k$ and a scalar $x_k$, we use $\E[\cdot \given x_k]$ as a shorthand
+for $\E[ \cdot \given X_k = x_k]$.
+
+
+\subsection{Faithful screening}
+
+The starting point for our approach is the observation that least squares
+nonparametric estimation under convexity constraints is equivalent to
+a finite dimensional quadratic program.  Specifically, the infinite
+dimensional optimization 
+\begin{align}
+\begin{split}
+\text{minimize} & \quad \sum_{i=1}^n (Y_i - f(\x_i))^2 \\
+\text{subject to} &  \quad f:\reals^p\rightarrow\reals\ \text{is
+  convex}
+\end{split}
+\end{align}
+is equivalent to the finite dimensional quadratic
+program 
+\begin{align}
+\label{eq:convreg}
+\begin{split}
+\text{minimize}_{f, \beta} & \;\; \sum_{i=1}^n (Y_i - f_i)^2 \\
+\text{subject to} & \;\; f_j \geq f_i + \beta_i^T (\x_j-\x_i),\; \text{for
+    all $i,j$}.
+\end{split}
+\end{align}
+See \cite{Boyd04}, Section 6.5.5.
+Here $f_i$ is the estimated function value $f(\x_i)$, and the vectors
+$\beta_i \in \reals^d$ represent supporting hyperplanes to the
+epigraph of $f$.  Importantly, this finite dimensional quadratic program does
+not have tuning parameters for smoothing the function. 
+
+For general regression, using an additive approximation for variable
+selection may make errors.  In particular, the nonlinearities in the
+regression function may result in an additive component being wrongly
+zeroed out.  Surprisingly, this will not happen for convex regression
+under appropriate conditions.
+
+A differential function $f$ depends on variable $x_k$ if
+$\partial_{x_k} f \neq 0$ with probability greater than zero.  An additive approximation is given by
+\begin{equation}
+\{f_k^*\}, \mu^* \coloneqq \argmin_{f_1,\ldots, f_p, \mu} \Bigl\{ 
+             \E ( f(X) - \mu - \sum_{k=1}^p f_k(X_k))^2 
+         \,:\, \E f_k(X_k) = 0 \Bigr\}.
+\end{equation}
+We say that $f$ is \textit{additively faithful} in case $f^*_k = 0$
+implies that $f$ does not depend on coordinate $k$.
+% We can define the support $\trm{supp}(f) \coloneqq \{ k \,:\,
+% \trm{$k$ is relevant to $f$}\}$. Let $f^* = \sum_{k=1}^s$, then $f$
+% is additively faith if $\trm{supp}(f) = \trm{supp}(f^*)$.
+Additive faithfulness is a desireable property,
+since it implies that an additive approximation may allow us to 
+screen out irrelevant variables.
+
+Our first result shows that convex multivariate functions are
+additively faithful
+under the following assumption on the distribution of the data.
+\begin{definition}
+  Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$.  Then $p$
+  satisfies the \emph{boundary-points condition} if, for all $j$, and
+  for all $\mathbf{x}_{-j}$:
+\[
+\frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
+\frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0
+\quad \trm{at $x_j = 0$ and $x_j = 1$}.
+\]
+\end{definition}
+
+As discussed in Section~\ref{sec:additivefaithful}, this is a relatively weak condition. 
+Our first result is that this condition suffices in the population
+setting of convex regression.
+
+\begin{theorem}
+  Let $p$ be a positive density supported on $C=[0,1]^s$ that
+  satisfies the boundary-points property. If $f$ is convex and twice
+  differentiable, then $f$ is additively faithful under $p$.
+\end{theorem}
+
+% We give the full proof in Section~\ref{sec:faithful_proof} of the
+% Appendix, but pause here to provide some intuition. 
+
+Intuitively, an additive approximation zeroes out variable $k$ when, fixing $x_k$, every
+``slice'' of $f$ integrates to zero. We prove this result
+by showing that ``slices'' of convex
+functions that integrate to zero cannot be ``glued together'' while
+still maintaining convexity.
+
+While this shows that convex functions are additively faithful, it is difficult to
+estimate the optimal additive functions $f^*_k$'s.  The difficulty
+is that $f^*_k$ need not be
+a convex function, as we show through a counterexample
+in Section~\ref{sec:additivefaithful}.   
+Since the true regression function $f$ is convex, it is natural to ask
+when it is sufficient to estimate an convex additive model.  
+Unfortunately, a convex additive approximation is not generally
+faithful.  In other words, it could be that $f^*_k\equiv 0$
+even for a relevant variable $x_k$.  But our next result
+shows that this type of error can be detected by fitting 
+a \textit{concave} function to the residual.  If the
+concave fit to the residual is zero, we can then safely
+mark $x_k$ as an irrelevant variable.
+
+\begin{theorem}
+Suppose $p(\mathbf{x})$ is a positive
+density on $C=[0,1]^p$ and satisfies the boundary-points
+condition. Suppose that $f$ is convex and twice-differentiable.
+and that $\partial_{x_k} f$, $\partial_{x_k} p( \mathbf{x}_{-k}
+\given x_k )$, and $\partial_{x_k}^2 p( \mathbf{x}_{-k} \given x_k)$
+are all continuous as functions on $C$.
+Define
+\begin{equation}
+\{ f^*_k \}_{k=1}^p,\mu^* = \arg\min \Big \{
+\E\big( f(X) - \mu - \sum_{k=1}^s f_k(X_k) \big)^2 \,:\, f_k \in
+\mathcal{C}^1, \, \E f_k(X_k) = 0 \Big \}
+\end{equation} where $\mathcal{C}^1$ is the set of univariate convex
+functions, and
+\begin{equation}
+g^*_k = \arg\min \Big\{ \E\big( f(X) -
+\sum_{k' \neq k} f^*_{k'}(X_{k'}) - g_k \big)^2 \,:\, g_k \in \mh
+\mathcal{C}^1, \E g_k(X_k) = 0 \Big\},
+\end{equation}
+with $\mh{}\mathcal{C}^1$ denoting the set of univariate concave
+functions.  Then $f^*_k = 0$ and $g^*_k = 0$ implies that $f$ does not
+depend on $x_k$, i.e., $\partial_{x_k} f(\mathbf{x}) = 0$ with
+probability one.
+\end{theorem}
+
+This result naturally suggests a two-stage screening
+procedure for variable selection. In the first stage we fit a sparse convex
+additive model.  In the second stage we
+fit a concave function $\hat g_k$ to the residual for each variable
+having a zero convex component $\hat f_k$.  If both $\hat f_k = 0$ and
+$\hat g_k = 0$, we can safely discard variable $x_k$.  
+Our next results concern the required optimizations, and their finite
+sample statistical performance.
+
+
+\subsection{Optimization}
+
+In Section~\ref{sec:optimization} we present optimization algorithms for the additive convex regression stage.
+The convex constraints for the additive functions, analogous to 
+the multivariate constraints \eqref{eq:convreg},
+are  that each component $f_{k}(\cdot)$ 
+can be represented by its supporting hyperplanes, i.e.,
+\begin{equation}
+      f_{ki'} \geq f_{ki} + \beta_{ki}(x_{ki'}-x_{ki}) \quad \text{for
+        all $i,i'$}
+\end{equation}
+where $f_{ki}\coloneqq f_{k}(x_{ki})$ and $\beta_{ki}$ is the
+subgradient at point $x_{ki}$. While this apparently requires $O(n^2
+p)$ equations to impose the supporting hyperplane constraints, 
+in fact, only $O(np)$ constraints suffice.  This is because univariate convex functions are
+characterized by the condition that the subgradient, which is a scalar, must
+increase monotonically. This observation leads to a reduced quadratic
+program with $O(np)$ variables and $O(np)$ constraints. 
+
+Directly applying a QP solver to this optimization is still computationally
+expensive for relatively large
+$n$ and $p$.  We thus develop a block
+coordinate descent method, where in each step we solve a sparse
+QP involving $O(n)$ variables and $O(n)$ constraints.  This 
+is efficiently solved using optimization packages 
+such as {\sc mosek}.  The details of these optimizations
+are given in Section~\ref{sec:optimization}.
+
+
+\subsection{Finite sample analysis}
+
+
+In Section~\ref{sec:finitesample} 
+we analyze the finite sample variable selection consistency of convex
+additive modeling, without making the assumption that the true
+regression function is additive.  Our analysis first establishes
+a sufficient deterministic condition for variable selection 
+consistency, and then considers a stochastic setting.
+Our proof technique decomposes the KKT conditions for the optimization
+in a manner that is similar to the now standard \emph{primal-dual
+  witness} method~\cite{wainwright2009sharp}. 
+
+We prove separate results that allow us to analyze false negative
+rates and false positive rates.  To control false positives,
+we analyze when the condition on $\lambda_n$ is fulfilled for all $j$
+and all $k \in S^c$, where $S\subset \{1,\ldots, p\}$ is the set of
+relevant variables. 
+To control false negatives, we analyze the restricted regression
+where the variables in $S^c$ are zeroed out, following the primal-dual
+strategy.
+
+Each of our theorems uses a subset of the following assumptions:
+\begin{packed_enum}
+\item[A1:] $X_S, X_{S^c}$ are independent. 
+\item[A2:] $f_0$ is convex and twice-differentiable. 
+\item[A3:] $|\partial_{x_k} f_0 | \leq L$ for all $k$
+\item[A4:] The noise $w$ is mean-zero sub-Gaussian, independent of $X$
+\end{packed_enum}
+
+We define $\alpha_f, \alpha_g$ as a measure of the signal strength of the weakest variable:
+\begin{align*}
+\alpha_f &= \inf_{f \in \mathcal{C}^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
+       \Big\{ \mathbb{E} \big( f_0(X) - f(X) \big)^2 - 
+        \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\}\\
+\alpha_g &=   \min_{k \in S \,:\, g^*_k \neq 0}
+      \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
+    \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\}
+\end{align*}
+
+Intuitively, if $\alpha_f$ is smaller, then it is easier to make a
+false omission in the additive convex stage of the procedure. If
+$\alpha_g$ is smaller, then it is easier to make a false omission in
+the decoupled concave stage of the procedure.
+
+We make strong assumptions on the covariates in A1 in order to make
+very weak assumptions on the true regression function $f_0$ in
+A2; in particular, we do not assume that $f_0$ is additive. 
+
+We also include an extra
+Lipschitz constraint so that we can use existing covering number
+results \cite{Bronshtein:76}. Recent work
+\cite{Guntu:13} shows that the Lipschitz constraint
+is not required with more advanced empirical process theory
+techniques; we leave the incorporation of this development as future work. 
+
+Our main result is the following.
+\begin{theorem}
+Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution and
+$\hat{g}_k$'s be any DC solution, both with $L$-Lipschitz constraints,
+both with  regularization parameter $\lambda$ scaling as
+$\lambda = \Theta \Big( sLb \sqrt{\frac{1}{n} \log^2 np} \Big)$. 
+Suppose in addition that
+\begin{gather}
+\frac{\alpha_f}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2
+  np}\\
+\frac{\alpha_g^2}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}}
+  \log^2 2np}.
+\end{gather}
+Then, for sufficiently large $n$, with probability at least $1-\frac{1}{n}$:
+\begin{align*}
+\hat{f}_k \neq 0 \trm{ or } \hat{g}_k \neq 0 &\trm{ for all } k \in S\\
+\hat{f}_k = 0 \trm{ and } \hat{g}_k = 0 & \trm{ for all } k \notin S.
+\end{align*}
+
+\end{theorem}
+
+This shows that variable selection consistency is achievable at the
+same exponential scaling of the ambient dimension $p = O(\exp(n^c)),
+c<1$ rate,  as for linear models. The cost of nonparametric modeling is
+reflected in the scaling with respect to $s$, which can only scale at
+$o(n^{4/25})$.
+
+We remark that \citet{dalalyan:12} show that under tradtional smoothness
+constraints, variable selection is achievable only if $n > O(e^s)$. 
+Here we demonstrate that convexity yields the scaling $n =
+O(\textrm{poly}(s))$.
+
+

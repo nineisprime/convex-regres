@@ -1,102 +1,160 @@
 \section{Introduction}
 
 
-We consider the problem of estimating a convex function of several
-variables from noisy values of the function at a finite sample of
-input points.  
+Shape restrictions such as monotonicity, convexity, and concavity
+provide a natural way of limiting the complexity of many statistical
+estimation problem.  Shape-constrained estimation is not as well
+understood as more traditional nonparametric estimation involving
+smoothness constraints.  For instance, as of this writing, the minimax
+rate of convergence for multivariate convex regression has yet to be
+rigorously established in full generality.  Even the one-dimensional
+case is challenging, and has been of recent interest
+\citep{guntusen:13}.
 
-
-Recent work \cite{Guntu:12,Guntu:13} shows that the
-minimax rate for convex function estimation in $p$ dimensions is
-$n^{-4/(4+p)}$.  Loosely speaking, this shows that the
-geometric convexity constraint is statistically equivalent to
-requiring two derivatives of the function, and thus is
-subject to the same curse of dimensionality.
-
-However, if the function is sparse, with $s\ll p$ relevant variables,
-then the faster rate $n^{-4/(4+s)}$ may be achievable if the $s$
-variables can be identified.  To determine the relevant variables, we
-show that it suffices to estimate a sum of $p$ one-dimensional convex
-functions, leading to significant computational and statistical
-advantages.  In addition, we introduce algorithms and supporting
-statistical theory for a practical, effective approach to this
-variable selection problem.
-
-The general sparse nonparametric regression problem is considered in \cite{lafferty2008rodeo}, where it is shown that computationally efficient, near minimax-optimal estimation is possible, but in ambient
-dimensions that scale only as $p = O(\log n)$ instead of $p=O\bigl(e^{n^c}\bigr)$ as enjoyed by sparse linear models. \citet{dalalyan:12} do achieve exponential scaling $p=O(e^n)$ under certain Fourier smoothness conditions but they show that variable selection is still hard in that the number of relevant variables $s$ must be less than $\log n$.
-
-% The general sparse nonparametric regression problem is considered in
-% \cite{lafferty2008rodeo}, where it is shown that computationally
-% efficient, near minimax-optimal estimation is possible, but in ambient
-% dimensions that scale only as $p = O(\log n)$.  This is in stark
-% contrast to the exponential scaling $p = O\bigl(e^{n^c}\bigr)$ enjoyed
-% by sparse linear models \cite{Wain:09a}.  
-
-Approximating the regression function by a sum of one-dimensional functions, known as sparse additive models, \cite{Ravikumar:09} is a practical alternative to fully
-nonparametric function estimation.  But the additive assumption is
-limited.  In particular, the natural idea of first selecting the
-single variable effects, then the pairwise effects, and so on, does
-not in general lead to consistent variable selection.  In other words,
-the general nonparametric model is not additively faithful.
-Remarkably, the additional assumption of convexity does lead to
-consistent variable selection, as we show here. In addition, we show that
-the scaling $p = O(\log n)$ and $n = O\big(\textrm{poly}(s)\big)$ is achievable for sparse convex additive models. Thus, the geometric convexity constraint is quite different from the
-smoothness constraints imposed in traditional nonparametric
-regression.
-
-A key to our approach is the observation that least squares
-nonparametric estimation under convexity constraints is equivalent to
-a finite dimensional quadratic program.  Specifically, the infinite
-dimensional optimization 
-\begin{align}
-\begin{split}
-\text{minimize} & \quad \sum_{i=1}^n (Y_i - m(x_i))^2 \\
-\text{subject to} &  \quad m:\reals^p\rightarrow\reals\ \text{is
-  convex}
-\end{split}
-\end{align}
-is precisely equivalent to the finite dimensional quadratic
-program 
-\begin{align}
-\begin{split}
-\label{eq:outer}
-\text{minimize}_{h, \beta} & \;\; \sum_{i=1}^n (Y_i - h_i)^2 \\
-\text{subject to} & \;\; h_j \geq h_i + \beta_i^T (x_j-x_i),\; \text{for
-    all $i,j$}.
-\end{split}
-\end{align}
-%\end{equation}
-%See \cite{Boyd04}, Section 6.5.5.
-Here $h_i$ is the estimated function value $m(x_i)$, and the vectors
-$\beta_i \in \reals^d$ represent supporting hyperplanes to the
-epigraph of $m$.  Importantly, this finite dimensional quadratic program does
-not have tuning parameters for smoothing the function. Such parameters are the bane
-of nonparametric estimation.
+In this paper we study the problem of variable selection in convex
+regression.  Assuming that the regression function is convex and
+sparse, our goal is to identify the relevant variables.  We show that
+it suffices to estimate a sum of $p$ one-dimensional convex functions,
+leading to significant computational and statistical advantages.  This
+is in contrast to general nonparametric regression, where fitting an
+additive model can result in false negatives.  Our approach is based
+on a two-stage quadratic programming procedure.  In the first stage,
+we fit an convex additive model, imposing a sparsity penalty.  In the
+second stage, we fit a concave function on the residual for each
+variable.  As we demonstrate, this perhaps non-intuity second stage is
+in general necessary.  Our first result is that this procedure is
+faithful in the population setting, meaning that it results in no
+false negatives, under mild assumptions on the density of the
+covariates.  Our second result is a finite-sample statistical analysis
+of the procedure, where we upper bound the statistical rate of
+convergence.  Each stage of the method requires quadratic programming.
+An additional contribution is to show how these quadratic programs can
+be forumlated to be more scalable.  Simulations demonstrate the method
+performs in a manner that is consistent with our analysis.
 
 Estimation of convex functions arises naturally in several
-applications.  Examples include geometric programming \cite{Boyd04},
-computed tomography \cite{Prince:90}, target reconstruction
-\cite{Lele:92}, image analysis \cite{Golden:06} and circuit design
-\cite{Hannah:12}.  Other applications include queuing theory
-\cite{Chen:01} and economics, where it is of interest to estimate
-concave utility functions \cite{Pratt:68}.  See \cite{Lim:12} for
+applications.  Examples include geometric programming \citep{Boyd04},
+computed tomography \citep{Prince:90}, target reconstruction
+\citep{Lele:92}, image analysis \citep{Golden:06} and circuit design
+\citep{Hannah:12}.  Other applications include queuing theory
+\citep{Chen:01} and economics, where it is of interest to estimate
+concave utility functions \citep{Pratt:68}.  See \cite{Lim:12} for
 other applications.  
-
 Beyond cases where the assumption of convexity is
-natural, we offer that the convexity assumption is attractive as a
-tractable, nonparamametric relaxation of the linear model.  In
-addition to the lack of tuning parameters, other than the
-regularization parameter $\lambda$ to control the level of sparsity,
-the global convexity assumption leads to effective, scalable algorithms.  We
-demonstrate use of our approach on experiments with standard
-regression data sets, in a comparison with sparse linear models
-(lasso).
+natural, the convexity assumption can be attractive as a
+tractable, nonparamametric relaxation of the linear model.  
 
-%In the following section we give a high-level summary of our technical
-%results, including additive faithfulness, variable selection 
-%consistency, and high dimensional scaling.  In Section~X...
+Variable selection in general nonparametric regression or function
+estimation is a notoriously difficult problem. \citet{lafferty2008rodeo} develop a greedy procedure for
+adjusting bandwidths in a local linear regression estimator,
+and show that the procedure achieves the minimax rate
+as if the relevant variables were isolated in advance.
+But the method only provably scales to dimensions $p$ that 
+grow logarithmically in the sample size $n$, so that $p = O(\log n)$.  Note that this
+is the opposite of the high dimensional scaling behavior
+known to hold for sparsity selection in linear models
+using $\ell_1$ penalization, where the sample size $n$
+is logarithmic in the dimension $p$. \citet{bertin:08}
+develop an optimization-based approach in
+the nonparametric setting, applying the lasso
+in a local linear model at each test point.  Here again,
+however, the method only scales as $p = O(\log n)$,
+the low-dimensional regime.
+An approximation theory approach to the same
+problem is presented in \cite{devore:11}, 
+using techniques based on hierarchical hashing schemes,
+similar to those used for ``junta'' problems \cite{mossel:04}.
+Here it is shown that the sample complexity scales as $n > \log p$ 
+if one adaptively selects the points on
+which the high-dimensional function is evaluated.
 
-\def\mathbf#1{\mbox{\boldmath $#1$}} 
+\citet{dalalyan:12} show that the exponential scaling $p=O(\log n)$ is achievable if the underlying function is assumed to be smooth with respect to a Fourier basis. They also give
+support for the intrinsic difficulty of variable
+selection in nonparametric regression, giving lower bounds 
+showing that sparsistency is not possible if $n < \log p$ or if $n <
+\exp s$, where $s$ is the number of relevant variables.
+Variable selection over kernel classes is studied
+by \citet{Kolch:10}.  
+
+Perhaps most closely related to the present work, is the framework
+studied by \cite{Raskutti:12} for sparse additive models, where sparse
+regression is considered under an additive assumption, with each
+component function belonging to an RKHS.  An advantage of working over
+an RKHS, in contrast to the other papers mentioned above, is that
+nonparametric regression with a sparsity-inducing regularization penalty can be
+formulated as a finite dimensional convex cone optimization.
+On the other hand, 
+smoothing parameters for the component Hilbert spaces
+must be chosen, leading to extra tuning parameters
+that are difficult to select in practice.  In addition, 
+the additive model must be assumed to
+be correct for sparsistent variable selection.
+
+An attraction of the convex function estimation framework we consider
+in this paper is that the additive model can be used for convenience,
+without assuming it to actually hold.  While nonparametric, the
+problem is naturally formulated using finite dimensional convex
+optimization, but with no additional tuning parameters.  As we show
+below, our method scales to high dimensions, with a dependence on the
+intrinsic dimension $s$ that scales polynomially, rather than
+exponentially as in the general case analyzed in \cite{dalalyan:12}.
+
+
+
+%* Laetitia Comminges, Arnak S. Dalalyan 
+%Tight conditions for consistency of variable selection 
+%In the context of high dimensionality. 
+%Ann. Statist, 40(5), 2667-2696, 2012 
+%
+%Comment: They estimate the coefficient of the regression function with respect to a Fourier basis and then threshold the estimated coefficients. They prove that sparsistency is achievable so long as $n > log p$ and $n > exp(s)$. They assume that the functions are smooth with respect to the Fourier basis. The fourier coefficients however seem difficult to estimate; it appears that the knowledge of the true density is required. They also provide 
+%
+%
+%* Bertin, K. and Lecu´e, G. (2008). Selection of variables 
+%and dimension reduction in high-dimensional non-parametric 
+%regression. Electron. J. Stat. 2 1224–1241 
+%
+%Comment: They assume Holder smoothness and use multiple L1 regularized local polynomial smoothing to detect the sparsity pattern. They require that $p < log n$.
+%
+%
+%* "Approximation of Functions of Few Variables in High Dimensions" 
+%by DeVore, Petrova and Wojtaszczyk. 
+%
+%Comment: They show that variable selection under a scaling of
+%
+
+
+%Variable selection for nonparametric
+%regression under smoothness constraints is difficult without
+%making additional strong assumptions. 
+%\cite{lafferty2008rodeo} show that computationally
+%efficient, near minimax-optimal estimation is possible, but in ambient
+%dimensions that scale only as $p = O(\log n)$; see also \cite{BertinLecue}.  This is in contrast
+%to the $p=O\bigl(e^{n^c}\bigr)$ scaling enjoyed by sparse linear
+%models \cite{Wain:09a}. \citet{dalalyan:12} achieve exponential scaling $p=O(e^n)$
+%under certain Fourier smoothness conditions, but require
+%that the number of relevant variables $s$ must be less than $\log n$.
+%
+%Approximating the regression function by a sum of one-dimensional
+%functions, known as sparse additive models \citep{Ravikumar:09}, is a
+%practical alternative to fully nonparametric function estimation.  
+%Sparse additive models have been further studied in by \cite{Meier09},
+%and by \cite{Raskutti:12}.  But 
+%the additive assumption is limited.  In particular, the natural idea
+%of first selecting the single variable effects, then the pairwise
+%effects, and so on, does not in general lead to consistent variable
+%selection.  In other words, the general nonparametric model is not
+%additively faithful.  Remarkably, the additional assumption of
+%convexity does lead to consistent variable selection, as we show
+%here. In addition, we show that the high dimensional scaling $n =
+%O\big(\textrm{poly}(s) \log p\big)$ is achievable for sparse convex
+%additive models. Thus, with respect to variable selection, the
+%geometric convexity constraint is quite different from the smoothness
+%constraints imposed in traditional nonparametric regression.
+%
+
+In the following section we give a high-level summary of our technical
+results, including additive faithfulness, variable selection 
+consistency, and high dimensional scaling.  In Section~X...
 
 
 
