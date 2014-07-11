@@ -364,40 +364,45 @@ Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from the LHS. 
 
 \textbf{Step 2.} We upper bound $2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle$ with theorem~\ref{thm:chaining}.\\ 
 
-Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s_L\}$ as the set of convex additive functions centered around the function $f^* - \bar{f}^*$. Then, $\| h \|_n \leq \| h \|_\infty \leq 4sLb$ for all $h \in \mathcal{G}$.\\
+Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s_L\}$ as the set of convex additive functions centered around the function $f^* - \bar{f}^*$. 
 
-According to theorem~\ref{thm:chaining}, for all $\epsilon > \frac{1}{\sqrt{n}}\sigma c \int_0^R \sqrt{ \log N_2(t, \mathcal{G}) }dt \vee R$,
-\[
-P\Big( \sup_{h \in \mathcal{G}} \langle w, h \rangle_n \geq \epsilon \Big) \leq
-  4 \exp \Big( - \frac{ n \epsilon^2}{ c R^2 \sigma^2} \Big)
-\]
-where $R = 4sLb$ for our purpose.
 
-Restated, we have that, with probablity at least $1-\delta$,
-\[
-\sup_{h \in \mathcal{G}} | \langle w, h \rangle_n | \leq 
-   c R \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta}} + 
-      \Big( \int_0^R \sqrt{\log N_2(t, \mathcal{G})}dt \vee R \Big)\, 
-       c \sigma \sqrt{\frac{1}{n}} 
-\]
 
-Now we evaluate the integral. Since $N_{\|\cdot\|_n}(t, \mathcal{G}) \leq N_\infty(t, \mathcal{G})$, we know that $\sqrt{\log N_{\|\cdot\|_n}(t, \mathcal{G})} \leq \sqrt{C s^{1.5} b L} t^{-1/4}$.
+% Then, $\| h \|_n \leq \| h \|_\infty \leq 4sLb$ for all $h \in \mathcal{G}$.\\
 
-\begin{align*}
-\int_0^R \sqrt{\log N_{\|\cdot\|_n}(t, \mathcal{G})} dt &\leq 
-      \sqrt{C s^{1.5} b L} \int_0^R t^{-1/4} dt \\ 
- &= \sqrt{C s^{1.5} b L} \, \frac{4}{3} R^{3/4} \\
- &= \sqrt{C s^{1.5} b L} \, c (sLb)^{3/4} \\
- &\leq c (s b L)^2
-\end{align*}
+% According to theorem~\ref{thm:chaining}, for all $\epsilon > \frac{1}{\sqrt{n}}\sigma c \int_0^R \sqrt{ \log N_2(t, \mathcal{G}) }dt \vee R$,
+% \[
+% P\Big( \sup_{h \in \mathcal{G}} \langle w, h \rangle_n \geq \epsilon \Big) \leq
+%   4 \exp \Big( - \frac{ n \epsilon^2}{ c R^2 \sigma^2} \Big)
+% \]
+% where $R = 4sLb$ for our purpose.
 
-Coming back, we have, with probability at least $1-\delta$,
-\begin{align*}
-\sup_{h \in \mathcal{G}} | \langle w, h \rangle | &\leq 
-   c sLb \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} } + 
-    c (sLb)^2 \sigma \sqrt{ \frac{1}{n} } \\
- &\leq c (sLb)^2\sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }
-\end{align*}
+% Restated, we have that, with probablity at least $1-\delta$,
+% \[
+% \sup_{h \in \mathcal{G}} | \langle w, h \rangle_n | \leq 
+%    c R \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta}} + 
+%       \Big( \int_0^R \sqrt{\log N_2(t, \mathcal{G})}dt \vee R \Big)\, 
+%        c \sigma \sqrt{\frac{1}{n}} 
+% \]
+
+% Now we evaluate the integral. Since $N_{\|\cdot\|_n}(t, \mathcal{G}) \leq N_\infty(t, \mathcal{G})$, we know that $\sqrt{\log N_{\|\cdot\|_n}(t, \mathcal{G})} \leq \sqrt{C s^{1.5} b L} t^{-1/4}$.
+
+% \begin{align*}
+% \int_0^R \sqrt{\log N_{\|\cdot\|_n}(t, \mathcal{G})} dt &\leq 
+%       \sqrt{C s^{1.5} b L} \int_0^R t^{-1/4} dt \\ 
+%  &= \sqrt{C s^{1.5} b L} \, \frac{4}{3} R^{3/4} \\
+%  &= \sqrt{C s^{1.5} b L} \, c (sLb)^{3/4} \\
+%  &\leq c (s b L)^2
+% \end{align*}
+
+% Coming back, we have, with probability at least $1-\delta$,
+% \begin{align*}
+% \sup_{h \in \mathcal{G}} | \langle w, h \rangle | &\leq 
+%    c sLb \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} } + 
+%     c (sLb)^2 \sigma \sqrt{ \frac{1}{n} } \\
+%  &\leq c (sLb)^2\sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }
+% \end{align*}
+
 
 Plugging this result into equation~\ref{eqn:first_step_inequality} and using an union bound, we get, with probability at least $1 - 2\delta$:
 \begin{align}
@@ -547,7 +552,9 @@ With probability at least $1-\delta$:
 \begin{proof}
 Let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s_L - f_0$. Note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s b L$.\\
 
-For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-cover of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.\\
+By Corollary~\ref{cor:convexbracket_ln}, there exists a bracketing $\mathcal{G}_\epsilon$ of $\mathcal{G}$ which has sized bounded by [TODO:...], which is an $\epsilon$-bracketing with respect to the $L_2(P)$ norm, and which is also an $(\epsilon + \epsilon_{n,\delta})$-bracketing with respect to the $L_n$ norm with probability at least $1-\delta$.
+
+For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-bracketing of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.\\
 
 Because $\| h \|_n = \| h - h_\epsilon + h_\epsilon \|_n$, we have that
 \begin{align*}
@@ -752,62 +759,108 @@ This completes the proof.
 
 \end{proof}
 
-\subsubsection{Covering Number for Lipschitz Convex Functions}
+\subsubsection{Bracketing Number for Convex Functions}
 
 \begin{definition}
-$\{ f_1,..., f_N\} \subset \mathcal{C}[b,B,L]$ is an $\epsilon$-covering of $\mathcal{C}[b,B,L]$ if for all $f \in \mathcal{C}[b,B,L]$, there exist $f_i$ such that $\| f - f_i \|_\infty \leq \epsilon$.
+% upper, lower, epsilon room
+% metric
+% function space
+Let $\mathcal{C}$ be a set of functions. For a given $\epsilon$ and metric $\rho$ (which we take to be $L_2$ or $L_2(P)$), we define a \textbf{bracketing} of $\mathcal{C}$ to be a set of pairs of functions $\{ (f^L, f^U) \}$ satisfying (1) $\rho( f^L, f^U) \leq \epsilon$ and (2) for any $f \in \mathcal{C}$, there exist a pair $(f^L, f^U)$ where $f^U \geq f \geq f^L$. 
 
-We define $N_\infty( \epsilon, \mathcal{C}[b,B,L])$ as the size of the minimum covering.
+We let $N_{[]}(\epsilon, \mathbf{C}, \rho)$ denote the size of the smallest bracketing of $\mathcal{C}$
 \end{definition}
 
-\begin{lemma} (Bronshtein 1974)
+\begin{proposition} (Proposition 16 in \cite{kim2014global})\\
+\label{prop:convexbracket}
+Let $\mathcal{C}$ be the set of convex functions supported on $[-b, b]^d$ and uniformly bounded by $B$. Then there exist constants $\epsilon_3$ and $K^{**}$, dependent on $d$, such that
 \[
-\log N_\infty (\epsilon, \mathcal{C}[b,B,L]) \leq C\left( \frac{bBL}{\epsilon} \right)^{1/2}
+\log N_{[]} (2\epsilon, \mathcal{C}, L_2) \leq K^{**} \left( \frac{2bB}{\epsilon} \right)^{d/2}
 \]
-For some absolute constant $C$.
-\end{lemma}
+for all $\epsilon \in (0, B \epsilon_3]$.
+\end{proposition}
 
-\begin{lemma}
+It is trivial to extend Kim and Samworth's result to $L_2(P)$ norm for a distribution $P$ with an uniformly upper bounded density.
+
+\begin{corollary}
+\label{cor:convexbracket_lp}
+Let $P$ be a distribution with a density $p$ upper bounded by $c_u$. Let $\mathcal{C}, b, B, \epsilon_3, K^{**}$ be defined as in Proposition~\ref{prop:convexbracket}. Then,
 \[
-\log N_\infty( \epsilon, \mathcal{C}^s[b,B,L])  \leq C s \left(\frac{bBLs}{\epsilon}\right)^{1/2}
+\log N_{[]} (2\epsilon, \mathcal{C}, L_2(P)) \leq K^{**} \left( \frac{2bB c_u}{\epsilon} \right)^{d/2}
 \]
-For some absolute constant $C$.
-\end{lemma}
+\end{corollary}
+
+Given samples $X_1,..., X_n \in \R^p$, we define $L_n$-norm as $\| f \|^2_n \equiv \frac{1}{n}\sum_{i=1}^n f(X_i)^2$. The following result follows from Corollary~\ref{cor:convexbracket_lp} directly by an union bound. 
+
+\begin{corollary}
+\label{cor:convexbracket_ln}
+Let $X_1,...,X_n$ be random samples from a distribution $P$. Let $1 > \delta > 0$. Let $\mathcal{C}_\epsilon$ be an $\epsilon$-bracketing of $\mathcal{C}$ with respect to the $L_2(P)$-norm whose size is at most $N_{[]}( 2\epsilon, \mathcal{C}, L_2(P))$. \\
+
+Then, with probability at least $1-\delta$, for all pairs $(f^L, f^U) \in \mathcal{C}_\epsilon$, $\frac{1}{n} \sum_{i=1}^n ( f^L(X_i) - f^U(X_i)^2 \leq \epsilon + \epsilon_{n, \delta}$, where 
+$\epsilon_{n,\delta} \equiv 
+B^2 \sqrt{ \frac{ \log N_{[]}(2\epsilon, \mathcal{C}, L_2(P)) + \log \frac{1}{\delta}}{2n}} = 
+B^2 \sqrt{ \frac{K^{**} (2bBc_u)^{d/2} + \log \frac{1}{\delta}}{2\epsilon^{d/2} n} }$
+\end{corollary}
 
 \begin{proof}
-Let $f = \sum_{k=1}^s f_k$ be a convex additive function. Let $\{ f'_k \}_{k=1,..,s}$ be $k$ functions from a $\frac{\epsilon}{s}$ $L_\infty$ covering of $\mathcal{C}[b,B,L]$. 
-
-Let $f' \coloneqq \sum_{k=1}^s f'_k$, then 
-\[
-\| f' - f \|_{\infty} \leq \sum_{k=1}^s \| f_k - f'_k \|_\infty \leq s \frac{\epsilon}{s} \leq \epsilon
-\]
-
-Therefore, a product of $s$ $\frac{\epsilon}{s}$-coverings of univariate functions induces an $\epsilon$-covering of the additive functions.
+$(f^L(X_i) - f^U(X_i))^2$ is at most $B^2$. There are $N_{[]}(2\epsilon, \mathcal{C}, L_2(P))$ pairs $(f^L, f^U)$. The corollary follows from a direct application of union bound and Hoeffding Inequality.
 \end{proof}
 
-In our proofs, we will use the Dudley's chaining: [TODO:cite van de geer]
+% \subsubsection{Covering Number for Lipschitz Convex Functions}
 
-\begin{theorem} (Dudley's Chaining) \\
-\label{thm:chaining}
-Let $\mathcal{G} = \{ g : \| g \|_n \leq R \}$. Let $M( \epsilon, R)$ be the size of the minimal $\epsilon$-covering of $\mathcal{G}$ with respect to the $\| \cdot \|_n$ norm. Suppose $w = (w_1, ..., w_n)$ is a vector of i.i.d. subgaussian random variables with scale $\sigma$.\\
+% \begin{definition}
+% $\{ f_1,..., f_N\} \subset \mathcal{C}[b,B,L]$ is an $\epsilon$-covering of $\mathcal{C}[b,B,L]$ if for all $f \in \mathcal{C}[b,B,L]$, there exist $f_i$ such that $\| f - f_i \|_\infty \leq \epsilon$.
 
-Suppose $\delta > 0$ is such that
-\[
-\sqrt{n} \delta \geq \sigma \Big( 
-   14 \sum_{s=0}^\infty 2^{-s} \sqrt{ \log M( 2^{-s} R, \mathcal{G})} 
-      \Big)\vee 70 \log 2 R
-\]
-Then we have that 
-\[
-P\Big( \sup_{g \in \mathcal{G}} \langle w, g \rangle_n \geq \delta \Big) \leq
-  4 \exp \Big( - \frac{n \delta^2}{(70R)^2\sigma^2} \Big)
-\]
-\end{theorem}
+% We define $N_\infty( \epsilon, \mathcal{C}[b,B,L])$ as the size of the minimum covering.
+% \end{definition}
 
-For convenience, we can upper bound the metric-entropy sum with an integral: \\
-$\ds \sum_{s=0}^\infty 2^{-s} \sqrt{ \log M( 2^{-s} R, \mathcal{G})} 
-  \leq \int_0^R \sqrt{\log M(t, \mathcal{G}) } dt
-$
+% \begin{lemma} (Bronshtein 1974)
+% \[
+% \log N_\infty (\epsilon, \mathcal{C}[b,B,L]) \leq C\left( \frac{bBL}{\epsilon} \right)^{1/2}
+% \]
+% For some absolute constant $C$.
+% \end{lemma}
+
+% \begin{lemma}
+% \[
+% \log N_\infty( \epsilon, \mathcal{C}^s[b,B,L])  \leq C s \left(\frac{bBLs}{\epsilon}\right)^{1/2}
+% \]
+% For some absolute constant $C$.
+% \end{lemma}
+
+% \begin{proof}
+% Let $f = \sum_{k=1}^s f_k$ be a convex additive function. Let $\{ f'_k \}_{k=1,..,s}$ be $k$ functions from a $\frac{\epsilon}{s}$ $L_\infty$ covering of $\mathcal{C}[b,B,L]$. 
+
+% Let $f' \coloneqq \sum_{k=1}^s f'_k$, then 
+% \[
+% \| f' - f \|_{\infty} \leq \sum_{k=1}^s \| f_k - f'_k \|_\infty \leq s \frac{\epsilon}{s} \leq \epsilon
+% \]
+
+% Therefore, a product of $s$ $\frac{\epsilon}{s}$-coverings of univariate functions induces an $\epsilon$-covering of the additive functions.
+% \end{proof}
+
+% In our proofs, we will use the Dudley's chaining: [TODO:cite van de geer]
+
+% \begin{theorem} (Dudley's Chaining) \\
+% \label{thm:chaining}
+% Let $\mathcal{G} = \{ g : \| g \|_n \leq R \}$. Let $M( \epsilon, R)$ be the size of the minimal $\epsilon$-covering of $\mathcal{G}$ with respect to the $\| \cdot \|_n$ norm. Suppose $w = (w_1, ..., w_n)$ is a vector of i.i.d. subgaussian random variables with scale $\sigma$.\\
+
+% Suppose $\delta > 0$ is such that
+% \[
+% \sqrt{n} \delta \geq \sigma \Big( 
+%    14 \sum_{s=0}^\infty 2^{-s} \sqrt{ \log M( 2^{-s} R, \mathcal{G})} 
+%       \Big)\vee 70 \log 2 R
+% \]
+% Then we have that 
+% \[
+% P\Big( \sup_{g \in \mathcal{G}} \langle w, g \rangle_n \geq \delta \Big) \leq
+%   4 \exp \Big( - \frac{n \delta^2}{(70R)^2\sigma^2} \Big)
+% \]
+% \end{theorem}
+
+% For convenience, we can upper bound the metric-entropy sum with an integral: \\
+% $\ds \sum_{s=0}^\infty 2^{-s} \sqrt{ \log M( 2^{-s} R, \mathcal{G})} 
+%   \leq \int_0^R \sqrt{\log M(t, \mathcal{G}) } dt
+% $
 
 
 
