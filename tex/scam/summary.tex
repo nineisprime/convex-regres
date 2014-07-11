@@ -15,7 +15,7 @@ we prove a result that shows when and how the additive approximation
 be used without introducing false negatives in the population setting.  The
 second result concerns the efficient implementation of
 the quadratic programs required by the procedure.  
-Finally, the third problem we consider is the finite-sample
+Finally, the third problem we consider is the finite sample
 behavior of our proposed method.  
 
 We first establish some notation, to be used throughout the remainder 
@@ -137,7 +137,7 @@ density on $C=[0,1]^p$ and satisfies the boundary-points
 condition. Suppose that $f$ is convex and twice-differentiable.
 and that $\partial_{x_k} f$, $\partial_{x_k} p( \mathbf{x}_{-k}
 \given x_k )$, and $\partial_{x_k}^2 p( \mathbf{x}_{-k} \given x_k)$
-are all continuous as functions on $C$.\\
+are all continuous as functions on $C$.
 Define
 \begin{equation}
 \{ f^*_k \}_{k=1}^p,\mu^* = \arg\min \Big \{
@@ -195,9 +195,92 @@ such as {\sc mosek}.  The details of these optimizations
 are given in Section~\ref{sec:optimization}.
 
 
-\subsection{Finite-sample analysis}
+\subsection{Finite sample analysis}
 
 
+In Section~\ref{sec:finitesample} 
+we analyze the finite sample variable selection consistency of convex
+additive modeling, without making the assumption that the true
+regression function is additive.  Our analysis first establishes
+a sufficient deterministic condition for variable selection 
+consistency, and then considers a stochastic setting.
+Our proof technique decomposes the KKT conditions for the optimization
+in a manner that is similar to the now standard \emph{primal-dual
+  witness} method~\cite{wainwright2009sharp}. 
 
+We prove separate results that allow us to analyze false negative
+rates and false positive rates.  To control false positives,
+we analyze when the condition on $\lambda_n$ is fulfilled for all $j$
+and all $k \in S^c$, where $S\subset \{1,\ldots, p\}$ is the set of
+relevant variables. 
+To control false negatives, we analyze the restricted regression
+where the variables in $S^c$ are zeroed out, following the primal-dual
+strategy.
+
+Each of our theorems uses a subset of the following assumptions:
+\begin{packed_enum}
+\item[A1:] $X_S, X_{S^c}$ are independent. 
+\item[A2:] $f_0$ is convex and twice-differentiable. 
+\item[A3:] $|\partial_{x_k} f_0 | \leq L$ for all $k$
+\item[A4:] The noise $w$ is mean-zero sub-Gaussian, independent of $X$
+\end{packed_enum}
+
+We define $\alpha_f, \alpha_g$ as a measure of the signal strength of the weakest variable:
+\begin{align*}
+\alpha_f &= \inf_{f \in \mathcal{C}^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
+       \Big\{ \mathbb{E} \big( f_0(X) - f(X) \big)^2 - 
+        \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\}\\
+\alpha_g &=   \min_{k \in S \,:\, g^*_k \neq 0}
+      \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
+    \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\}
+\end{align*}
+
+Intuitively, if $\alpha_f$ is smaller, then it is easier to make a
+false omission in the additive convex stage of the procedure. If
+$\alpha_g$ is smaller, then it is easier to make a false omission in
+the decoupled concave stage of the procedure.
+
+We make strong assumptions on the covariates in A1 in order to make
+very weak assumptions on the true regression function $f_0$ in
+A2; in particular, we do not assume that $f_0$ is additive. 
+
+We also include an extra
+Lipschitz constraint so that we can use existing covering number
+results \cite{Bronshtein:76}. Recent work
+\cite{Guntu:13} shows that the Lipschitz constraint
+is not required with more advanced empirical process theory
+techniques; we leave the incorporation of this development as future work. 
+
+Our main result is the following.
+\begin{theorem}
+Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution and
+$\hat{g}_k$'s be any DC solution, both with $L$-Lipschitz constraints,
+both with  regularization parameter $\lambda$ scaling as
+$\lambda = \Theta \Big( sLb \sqrt{\frac{1}{n} \log^2 np} \Big)$. 
+Suppose in addition that
+\begin{gather}
+\frac{\alpha_f}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2
+  np}\\
+\frac{\alpha_g^2}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}}
+  \log^2 2np}.
+\end{gather}
+Then, for sufficiently large $n$, with probability at least $1-\frac{1}{n}$:
+\begin{align*}
+\hat{f}_k \neq 0 \trm{ or } \hat{g}_k \neq 0 &\trm{ for all } k \in S\\
+\hat{f}_k = 0 \trm{ and } \hat{g}_k = 0 & \trm{ for all } k \notin S.
+\end{align*}
+
+\end{theorem}
+
+This shows that variable selection consistency is achievable at the
+same exponential scaling of the ambient dimension $p = O(\exp(n^c)),
+c<1$ rate,  as for linear models. The cost of nonparametric modeling is
+reflected in the scaling with respect to $s$, which can only scale at
+$o(n^{4/25})$.
+
+We remark that \citet{dalalyan:12} show that under tradtional smoothness
+constraints, variable selection is achievable only if $n > O(e^s)$. 
+Here we demonstrate that convexity yields the scaling $n =
+O(\textrm{poly}(s))$.
 
 
