@@ -5,32 +5,31 @@ Shape restrictions such as monotonicity, convexity, and concavity
 provide a natural way of limiting the complexity of many statistical
 estimation problems.  Shape-constrained estimation is not as well
 understood as more traditional nonparametric estimation involving
-smoothness constraints.  For instance, as of this writing, the minimax
-rate of convergence for multivariate convex regression has yet to be
-rigorously established in full generality.  Even the one-dimensional
-case is challenging, and has been of recent interest
-\citep{guntusen:13}.
+smoothness constraints.  For instance, the minimax rate of convergence
+for multivariate convex regression has yet to be rigorously
+established in full generality.  Even the one-dimensional case is
+challenging, and has been of recent interest \citep{guntusen:13}.
 
 In this paper we study the problem of variable selection in
-multivariate convex regression.  Assuming that the regression function is convex and
-sparse, our goal is to identify the relevant variables.  We show that
-it suffices to estimate a sum of $p$ one-dimensional convex functions,
-leading to significant computational and statistical advantages.  This
-is in contrast to general nonparametric regression, where fitting an
-additive model can result in false negatives.  Our approach is based
-on a two-stage quadratic programming procedure.  In the first stage,
-we fit an convex additive model, imposing a sparsity penalty.  In the
-second stage, we fit a concave function on the residual for each
-variable.  As we demonstrate, this non-intuitive second stage is
-in general necessary.  Our first result is that this procedure is
-faithful in the population setting, meaning that it results in no
-false negatives, under mild assumptions on the density of the
-covariates.  Our second result is a finite sample statistical analysis
-of the procedure, where we upper bound the statistical rate of
-convergence.  Each stage of the method requires quadratic programming.
-An additional contribution is to show how these quadratic programs can
-be formulated to be more scalable.  We give simulations that
-demonstrate our method, showing that it performs in a manner that is consistent with our analysis.
+multivariate convex regression.  Assuming that the regression function
+is convex and sparse, our goal is to identify the relevant variables.
+We show that it suffices to estimate a sum of one-dimensional convex
+functions, leading to significant computational and statistical
+advantages.  This is in contrast to general nonparametric regression,
+where fitting an additive model can result in false negatives.  Our
+approach is based on a two-stage quadratic programming procedure.  In
+the first stage, we fit an convex additive model, imposing a sparsity
+penalty.  In the second stage, we fit a concave function on the
+residual for each variable.  As we show, this non-intuitive second
+stage is in general necessary.  Our first result is that this
+procedure is faithful in the population setting, meaning that it
+results in no false negatives, under mild assumptions on the density
+of the covariates.  Our second result is a finite sample statistical
+analysis of the procedure, where we upper bound the statistical rate
+of convergence.  An additional contribution is to show how the
+required quadratic programs can be formulated to be more scalable.  We
+give simulations to illustrate our method, showing that it performs in
+a manner that is consistent with our analysis.
 
 Estimation of convex functions arises naturally in several
 applications.  Examples include geometric programming \citep{Boyd04},
@@ -77,7 +76,7 @@ possible if $n < \log p$ or if $n < \exp s$, where $s$ is the number
 of relevant variables.  Variable selection over kernel classes is
 studied by \citet{Kolch:10}.
 
-Perhaps most closely related to the present work, is the framework
+Perhaps most closely related to the present work is the framework
 studied by \cite{Raskutti:12} for sparse additive models, where sparse
 regression is considered under an additive assumption, with each
 component function belonging to an RKHS.  An advantage of working over
@@ -89,14 +88,14 @@ parameters that are difficult to select in practice.  In addition, the
 additive model must be assumed to be correct for consistent variable
 selection.
 
-An attraction of the convex function estimation framework we consider
-in this paper is that the additive model can be used for convenience,
-without assuming it to actually hold.  While nonparametric, the
-problem is naturally formulated using finite dimensional convex
-optimization, with no additional tuning parameters.  As we demonstrate,
-our method scales to high dimensions, with a dependence on the
-intrinsic dimension $s$ that scales polynomially, rather than
-exponentially as in the general case analyzed in \cite{dalalyan:12}.
+While nonparametric, the convex regression problem is naturally
+formulated using finite dimensional convex optimization, with no
+additional tuning parameters.  The convex additive model can be used
+for convenience, without assuming it to actually hold, for the purpose
+of variable selection.  As we show, our method scales to high
+dimensions, with a dependence on the intrinsic dimension $s$ that
+scales polynomially, rather than exponentially as in the general case
+analyzed in \cite{dalalyan:12}.
 
 
 
@@ -160,10 +159,10 @@ consistent variable selection.  In Section~\ref{sec:optimization}
 we show how the required quadratic programs can be reformulated
 to be more efficient and scalable.  In Section~\ref{sec:finitesample}
 we give the details of our finite sample analysis, showing
-the scaling $n = O\big(\textrm{poly}(s) \log p\big)$
+that a sample size growing as $n = O\big(\textrm{poly}(s) \log p\big)$
 is sufficient for variable selection.  In Section~\ref{sec:thesims}
 we report the results of simulations that illustrate our methods
-and theory.  The full proofs of are
+and theory.  The full proofs are
 given in a technical appendix.
 
 
