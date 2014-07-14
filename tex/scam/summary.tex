@@ -188,7 +188,7 @@ Directly applying a QP solver to this optimization is still computationally
 expensive for relatively large
 $n$ and $p$.  We thus develop a block
 coordinate descent method, where in each step we solve a sparse
-QP involving $O(n)$ variables and $O(n)$ constraints.  This 
+quadratic program involving $O(n)$ variables and $O(n)$ constraints.  This 
 is efficiently solved using optimization packages 
 such as {\sc mosek}.  The details of these optimizations
 are given in Section~\ref{sec:optimization}.
@@ -200,61 +200,64 @@ are given in Section~\ref{sec:optimization}.
 In Section~\ref{sec:finitesample} 
 we analyze the finite sample variable selection consistency of convex
 additive modeling, without making the assumption that the true
-regression function is additive.  Our analysis first establishes
+regression function $f_0$ is additive.  Our analysis first establishes
 a sufficient deterministic condition for variable selection 
 consistency, and then considers a stochastic setting.
 Our proof technique decomposes the KKT conditions for the optimization
 in a manner that is similar to the now standard \emph{primal-dual
-  witness} method~\cite{wainwright2009sharp}. 
+  witness} method~\citep{wainwright2009sharp}. 
 
 We prove separate results that allow us to analyze false negative
 rates and false positive rates.  To control false positives,
-we analyze when the condition on $\lambda_n$ is fulfilled for all $j$
-and all $k \in S^c$, where $S\subset \{1,\ldots, p\}$ is the set of
+we analyze scaling conditions on the regularization parameter
+$\lambda_n$ for 
+group sparsity needed to zero out irrelevant variables
+$k \in S^c$, where $S\subset \{1,\ldots, p\}$ is the set of
 relevant variables. 
 To control false negatives, we analyze the restricted regression
 where the variables in $S^c$ are zeroed out, following the primal-dual
-strategy.
+strategy.  
 
 Each of our theorems uses a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
 \item[A2:] $f_0$ is convex and twice-differentiable. 
 \item[A3:] $|\partial_{x_k} f_0 | \leq L$ for all $k$
-\item[A4:] The noise $w$ is mean-zero sub-Gaussian, independent of $X$
+\item[A4:] The noise is mean-zero sub-Gaussian, independent of $X$.
 \end{packed_enum}
 
-We define $\alpha_f, \alpha_g$ as a measure of the signal strength of the weakest variable:
+Our analysis involves parameters $\alpha_f$ and $\alpha_g$,
+which are measures of the signal strength of the weakest variable:
 \begin{align*}
 \alpha_f &= \inf_{f \in \mathcal{C}^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
        \Big\{ \mathbb{E} \big( f_0(X) - f(X) \big)^2 - 
         \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\}\\
 \alpha_g &=   \min_{k \in S \,:\, g^*_k \neq 0}
       \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
-    \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\}
+    \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\}.
 \end{align*}
 
-Intuitively, if $\alpha_f$ is smaller, then it is easier to make a
+Intuitively, if $\alpha_f$ is small, then it is easier to make a
 false omission in the additive convex stage of the procedure. If
-$\alpha_g$ is smaller, then it is easier to make a false omission in
+$\alpha_g$ is small, then it is easier to make a false omission in
 the decoupled concave stage of the procedure.
 
 We make strong assumptions on the covariates in A1 in order to make
 very weak assumptions on the true regression function $f_0$ in
 A2; in particular, we do not assume that $f_0$ is additive. 
-
+Relaxing this condition is an important direction for future work.
 We also include an extra
 Lipschitz constraint so that we can use existing covering number
-results \cite{Bronshtein:76}. Recent work
+results \citep{Bronshtein:76}. Recent work
 \cite{Guntu:13} shows that the Lipschitz constraint
 is not required with more advanced empirical process theory
 techniques; we leave the incorporation of this development as future work. 
 
 Our main result is the following.
 \begin{stheorem}
-Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution and
-$\hat{g}_k$'s be any DC solution, both with $L$-Lipschitz constraints
-and with regularization parameter $\lambda$ scaling as
+Suppose assumptions A1-A4 hold. Let $\{\hat{f}_i\}$ be any AC solution and
+let $\{\hat{g}_k\}$ be any DC solution, both estimated with 
+regularization parameter $\lambda$ scaling as
 $\lambda = \Theta \Big( sLb \sqrt{\frac{1}{n} \log^2 np} \Big)$. 
 Suppose in addition that
 \begin{gather}
@@ -271,13 +274,13 @@ Then, for sufficiently large $n$, with probability at least $1-\frac{1}{n}$:
 
 \end{stheorem}
 
-This shows that variable selection consistency is achievable at the
-same exponential scaling of the ambient dimension $p = O(\exp(n^c)),
-c<1$ rate,  as for linear models. The cost of nonparametric modeling is
-reflected in the scaling with respect to $s$, which can only scale at
-$o(n^{4/25})$.
+This shows that variable selection consistency is achievable under
+exponential scaling of the ambient dimension, $p = O(\exp(n^c))
+for c<1$, as for linear models. The cost of nonparametric estimation is
+reflected in the scaling with respect to $s=|S|$, which can grow only
+as $o(n^{4/25})$.
 
-We remark that \citet{dalalyan:12} show that under tradtional smoothness
+We remark that \citet{dalalyan:12} show that under traditional smoothness
 constraints, variable selection is achievable only if $n > O(e^s)$. 
 Here we demonstrate that convexity yields the scaling $n =
 O(\textrm{poly}(s))$.
