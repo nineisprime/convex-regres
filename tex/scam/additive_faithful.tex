@@ -2,15 +2,14 @@
 \section{Additive Faithfulness}
 \label{sec:additivefaithful}
 
-For general regression, additive approximation may result in a
+For general regression, an additive approximation may result in a
 relevant variable being incorrectly marked as irrelevant. Such
-mistakes are inherent to the approximation and may persist even with
-infinite samples.  In this section we give
+mistakes are inherent to the approximation and may persist even in
+the population setting.  In this section we give
 examples of this phenomenon, and then show how the convexity
 assumption
 changes the behavior of the additive approximation. We begin
 with a lemma that characterizes the components of the additive approximation under mild conditions.
-
 
 % OLD lemma, requires product distribution
 % \begin{lemma}
@@ -30,42 +29,59 @@ with a lemma that characterizes the components of the additive approximation und
 
 \begin{lemma}
 \label{lem:general_int_reduction}
-Let $F$ be a distribution on $C=[0,1]^s$ with a positive density function $p$. Let $f: C \rightarrow \R$ be an integrable function。
-
-Let $\ds f^*_1,...,f^*_s, \mu^* \coloneqq 
-\arg\min \{ \E \big( f(X) - \sum_{k=1}^s f_k(X_k) - mu \big)^2 \,:\, \forall k, \E f_k(X_k) = 0\}$ 
-
-Then 
-$$ f^*_k(x_k) = \E[ f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) \given x_k] - \E f(X) $$
- and $\mu^* = \E f(X)$ and this solution is unique.
+Let $F$ be a distribution on $C=[0,1]^p$ with a positive density
+function $p$. Let $f: C \rightarrow \R$ be an integrable function,
+and define 
+\begin{equation}
+f^*_1,...,f^*_s, \mu^* \coloneqq 
+\arg\min \left\{ \E \Bigl( f(X) - \mu - \sum_{k=1}^p f_k(X_k)\Bigr)^2 \,:\,
+\E f_k(X_k) = 0,\; \forall k=1,\ldots, p \right\}.
+\end{equation}
+Then $\mu^* = \E f(X)$,
+\begin{equation}
+\label{eq:backfit}
+f^*_k(x_k) = \E\Bigl[ f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) \given
+x_k\Bigr] - \E f(X) 
+\end{equation}
+and this solution is unique.
 \end{lemma}
 
 
 Lemma~\ref{lem:general_int_reduction} follows from the stationarity
-conditions of the optimal solution. 
+conditions of the optimal solution.   This result is known, and
+criterion \eqref{eq:backfit} is used in the backfitting
+algorithm for fitting additive models.   We include 
+a proof of the result as our results build on it.
+% perhaps include this in an appendix??
 
 \begin{proof}
-Let $f^*_1,...,f^*_s, \mu^*$ be the minimizers as defined. 
+  Let $f^*_1,...,f^*_s, \mu^*$ be the minimizers as defined.  We first
+  show that the optimal $\mu$ is $\mu^* = \E f(X)$ for any $f_1, ...,
+  f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity
+  condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] =
+  \E[ f(X) ]$. Uniqueness is apparent because the second derivative is
+  strictly larger than zero and strong convexity is guaranteed.
 
-We first show that the optimal $\mu^* = \E f(X)$ for any $f_1, ..., f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] = \E[ f(X) ]$. Uniqueness is apparent because the second derivative is strictly larger than 0 and strong convexity is guaranteed.
-
-We now turn our attention toward the $f^*_k$'s. 
-
-It must be that $f^*_k$ minimizes $\Big\{ \E \big( f(X) - \mu^* - \sum_{k' \neq k} f^*_{k'} (X_{k'}) - f_k (X_k) \big)^2 \,:\, \E f_k(X_k) = 0 \Big\}$.
-
-Fix $x_k$, we will show that the value 
-$\E[ f(X) - \sum_{k' \neq k} f_{k'}(X_{k'}) \given x_k] - \mu^*$, for all $x_k$,  
-uniquely minimizes 
-\[
+  We now turn our attention toward the $f^*_k$s.  It must be that
+  $f^*_k$ minimizes 
+\begin{equation}
+\E\Bigl[ \big( f(X) - \mu^* - \sum_{k' \neq k}
+  f^*_{k'} (X_{k'}) - f_k (X_k) \big)^2\Bigr]
+\end{equation}
+subject to $\E f_k(X_k) = 0$.
+Fixing $x_k$, we will show that the value 
+\begin{equation}
+\E[ f(X) - \sum_{k' \neq k}
+f_{k'}(X_{k'}) \given x_k] - \mu^*
+\end{equation} 
+uniquely minimizes
+\begin{equation}
 \min_{ f_k(x_k) } \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
          \Big( f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'}) - f_k (x_k) -\mu^*\Big)^2 
                  d \mathbf{x}_{-k}.
-\]
-It easily follows then that the function $x_k \mapsto \E[ f(X) - \sum_{k'} f_{k'} (X_{k'}) \given x_k] - \mu^*$ is the unique $f^*_k$ that minimizes the expected square error.We focus our attention on $f^*_K$, and fix $x_k$. 
-
-The first-order optimality condition gives us:
-
-\begin{align*}
+\end{equation}
+The first-order optimality condition gives us
+\begin{align}
 \int_{\mathbf{x}_{-k}} p(\mathbf{x}) f_k(x_k) d \mathbf{x}_{-k} &= 
   \int_{\mathbf{x}_{-k}} p(\mathbf{x}) 
       ( f(\mathbf{x})-\sum_{k' \neq k} f^*_{k'}(x_{k'})-\mu^*) d \mathbf{x}_{-k} \\  
@@ -76,40 +92,47 @@ p(x_k) f_k(x_k) &= \int_{\mathbf{x}_{-k}} p(x_k)
 f_k(x_k) &= \int_{\mathbf{x}_{-k}} 
        p(\mathbf{x}_{-k} \given x_k ) 
      (f(\mathbf{x}) - \sum_{k'\neq k} f_{k'} (x_{k'})  -\mu^*) d \mathbf{x}_{-k} 
- \end{align*}
-
-The square error objective is strongly convex. The second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
-
-Now, we note that as a function of $x_k$, $\E[ f(X) -\sum_{k'\neq k} f_{k'}(X_{k'}) | x_k] - \E f(X)$ has mean zero and we thus finish the proof.
+ \end{align}
+The square error objective is strongly convex,
+and the second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
+Noting that $\E[ f(X) -\sum_{k'\neq k} f_{k'}(X_{k'}) | x_k] - \E f(X)$ has mean zero as a function of $x_k$
+completes the proof.
 \end{proof}
 
-In the case that the distribution in Lemma~\ref{lem:general_int_reduction} is a product distribution, we get particularly clean expressions for the additive components.
+In the case that the distribution in
+Lemma~\ref{lem:general_int_reduction} is a product distribution, 
+the additive components take on a simple form.
 
 \begin{corollary}
 \label{cor:product_int_reduction}
-Let $F$ be a product distribution on $\mathbf{C}=[0,1]^s$ with density function $p$ which is positive on $\mathbf{C}$. Let $\mu^*, f^*_k(x_k)$ be defined as in Lemma~\ref{lem:general_int_reduction}.
+Let $F$ be a product distribution on $C=[0,1]^p$ with density function
+$p$ which is positive on $C$. 
+Let $\mu^*, f^*_k(x_k)$ be defined as in Lemma~\ref{lem:general_int_reduction}.
 Then $\mu^* = \E f(X)$ and $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and this solution is unique.
 \end{corollary}
 
-
 If $F$ is the uniform distribution,
-then $f^*_k(x_k) = \int f(x_k, \mathbf{x}_{-k})
+then $f^*_k(x_k) = \displaystyle\int f(x_k, \mathbf{x}_{-k})
 d\mathbf{x}_{-k}$.
 
-\begin{example} Using Corollary~\ref{cor:product_int_reduction}, we give two examples of \emph{additive unfaithfulness} under
-  the uniform distribution, that is, examples where relevant variables are erroneously marked as irrelevant under an additive approximation. First, consider the following function:
+\begin{example} Using Corollary~\ref{cor:product_int_reduction}, we
+  give two examples of \emph{additively unfaithfulness} under the
+  uniform distribution---where relevant variables are
+  erroneously marked as irrelevant under an additive
+  approximation. First, consider the following function:
 \[
-\trm{(egg carton)} \quad f(x_1, x_2) = \sin( 2\pi x_1) \sin( 2 \pi x_2)
+f(x_1, x_2) = \sin( 2\pi x_1) \sin( 2 \pi x_2)\quad
+\trm{(egg carton)} 
 \]
 defined for $(x_1, x_2) \in [0,1]^2$.  Then
-$\int_{x_2} f(x_1, x_2) d x_2 = 0$ and
-$\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_1$ and $x_2$. An additive approximation
+$\displaystyle\int_{x_2} f(x_1, x_2) d x_2 = 0$ and
+$\displaystyle\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_1$ and $x_2$. An additive approximation
 would set $f_1 = 0$ and $f_2 = 0$.  Next, consider the function
 \[
-\trm{(tilting slope)} \quad f(x_1, x_2) = x_1 x_2
+f(x_1, x_2) = x_1 x_2 \quad \trm{(tilting slope)} 
 \]
 defined for $x_1 \in [-1,1],\; x_2 \in [0,1]$.  In this case
-$\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_2$; therefore, we expect $f_2 = 0$ under the additive approximation. This function, for every fixed $x_2$, is a zero-intercept linear function of $x_1$ with slope $x_2$.
+$\displaystyle\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_2$; therefore, we expect $f_2 = 0$ under the additive approximation. This function, for every fixed $x_2$, is a zero-intercept linear function of $x_1$ with slope $x_2$.
 \end{example}
 
 \begin{figure*}[htp]
@@ -129,36 +152,36 @@ $\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_2$; therefore, we expect $f_2 = 0
 \vskip-10pt
 \end{figure*}
 
-In order to exploit additive models, it is important to understand when the
+In order to exploit additive models in variable selection, it is important to understand when the
 additive approximation accurately captures all of the relevant variables.
-We call this property \textbf{additive faithfulness}. We first formalize the intuitive notion that a multivariate function $f$ \emph{depends on} a coordinate $x_k$.
+We call this property \textit{additive faithfulness}. We first formalize the intuitive notion that a multivariate function $f$ \emph{depends on} a coordinate $x_k$.
 
 \begin{definition}
-  Let $F$ be a distribution on $\mathbf{C}=[0,1]^s$, and $f:\mathbf{C}\rightarrow \R$. 
-  
-We say that $f$ \textbf{depends on} coordinate $k$ if, for all $x_k \in [0,1]$, the set 
+  Let $F$ be a distribution on $C=[0,1]^p$, and $f:C \rightarrow \R$. 
+We say that $f$ \textit{depends on coordinate $k$} if, for all $x_k \in [0,1]$, the set 
 $\big\{ x'_k \in [0, 1] \,:\, f(x_k, \mathbf{x}_{-k}) = f(x'_k, \mathbf{x}_{-k}) 
 \trm{ for almost all  $\mathbf{x}_{-k}$} \big\}$ 
-has probability strictly less than 1.\\
+has probability strictly less than one.
+If $f$ is differentiable, then $f$ depends on $k$ if $\partial_{x_k} f \neq 0$ with probability greater than zero.
 
-If $f$ is differentiable, then $f$ depends on $k$ if $\partial_{x_k} f \neq 0$ with probability greater than 0.\\
-
-Suppose we have the additive approximation:
+Suppose we have the additive approximation
 \begin{equation}
 \label{eqn:unconstrained_additive}
 f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_s, \mu} \Bigl\{ 
-             \E ( f(X) - \sum_{k=1}^s f_k(X_k) -\mu )^2 
+             \E \Bigl[\bigl( f(X) - \sum_{k=1}^s f_k(X_k) -\mu \bigr)^2 \Bigr]
          \,:\, \E f_k(X_k) = 0 \Bigr\}.
 \end{equation}
-
-We say that $f$ is \textbf{additively faithful} under $F$ in case $f^*_k = 0 \Rightarrow \trm{$f$ does not depend on coordinate $k$}$. 
-
+We say that $f$ is \textit{additively faithful} under $F$ in case
+$f^*_k = 0$ implies that $f$ does not depend on coordinate $k$.
 \end{definition}
+
 % We can define the support $\trm{supp}(f) \coloneqq \{ k \,:\,
 % \trm{$k$ is relevant to $f$}\}$. Let $f^* = \sum_{k=1}^s$, then $f$
 % is additively faith if $\trm{supp}(f) = \trm{supp}(f^*)$.
 
-Additive faithfulness is an attractive property because it implies that, in the population setting, the additive approximation yields consistent variable selection. 
+Additive faithfulness is an attractive property because it implies
+that, in the population setting, the additive approximation yields
+consistent variable selection.
 
 \subsection{Additive Faithfulness of Convex Functions}
 
@@ -298,7 +321,7 @@ where $H_j, \Sigma_j$ are the $j$-th row of $H_j, \Sigma_j$ respectively.
 Let $H = [1, 2; 2,5]$ and let $\Sigma = [1, -\alpha; -\alpha, 1]$. It is easy to check then that if $\alpha=0.5$, then $f^*_1 = 0$ and additive faithfulness is violated, and if $\alpha > 0.5$, then $f^*_1$ is a concave function.
 \end{example}
 
-\subsection{Convex Additive Model}
+\subsection{Convex Additive Models}
 
 Although convex functions are additively faithful, it is difficult to estimate the optimal additive functions $f^*_k$'s (as defined in equation~\ref{eqn:unconstrained_additive}) because $f^*_k$ need not be a convex function, as example~\ref{examp:gaussian_counterexample} shows. $f^*_k$ can be shown to be smooth but it is preferable to use shape-constraints whenever possible to avoid the introduction of the additional smoothing bandwidth.
 
