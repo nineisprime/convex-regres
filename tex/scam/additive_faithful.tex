@@ -51,7 +51,7 @@ Lemma~\ref{lem:general_int_reduction} follows from the stationarity
 conditions of the optimal solution.   This result is known, and
 criterion \eqref{eq:backfit} is used in the backfitting
 algorithm for fitting additive models.   We include 
-a proof of the result as our results build on it.
+a proof as our results build on it.
 % perhaps include this in an appendix??
 
 \begin{proof}
@@ -111,7 +111,7 @@ Let $\mu^*, f^*_k(x_k)$ be defined as in Lemma~\ref{lem:general_int_reduction}.
 Then $\mu^* = \E f(X)$ and $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and this solution is unique.
 \end{corollary}
 
-If $F$ is the uniform distribution,
+In particular, if $F$ is the uniform distribution,
 then $f^*_k(x_k) = \displaystyle\int f(x_k, \mathbf{x}_{-k})
 d\mathbf{x}_{-k}$.
 
@@ -120,17 +120,17 @@ d\mathbf{x}_{-k}$.
   uniform distribution---where relevant variables are
   erroneously marked as irrelevant under an additive
   approximation. First, consider the following function:
-\[
+\begin{equation}
 f(x_1, x_2) = \sin( 2\pi x_1) \sin( 2 \pi x_2)\quad
 \trm{(egg carton)} 
-\]
+\end{equation}
 defined for $(x_1, x_2) \in [0,1]^2$.  Then
 $\displaystyle\int_{x_2} f(x_1, x_2) d x_2 = 0$ and
 $\displaystyle\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_1$ and $x_2$. An additive approximation
 would set $f_1 = 0$ and $f_2 = 0$.  Next, consider the function
-\[
+\begin{equation}
 f(x_1, x_2) = x_1 x_2 \quad \trm{(tilting slope)} 
-\]
+\end{equation}
 defined for $x_1 \in [-1,1],\; x_2 \in [0,1]$.  In this case
 $\displaystyle\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_2$; therefore, we expect $f_2 = 0$ under the additive approximation. This function, for every fixed $x_2$, is a zero-intercept linear function of $x_1$ with slope $x_2$.
 \end{example}
@@ -168,7 +168,7 @@ Suppose we have the additive approximation
 \begin{equation}
 \label{eqn:unconstrained_additive}
 f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_s, \mu} \Bigl\{ 
-             \E \Bigl[\bigl( f(X) - \sum_{k=1}^s f_k(X_k) -\mu \bigr)^2 \Bigr]
+             \E \Bigl[\Bigl( f(X) - \sum_{k=1}^p f_k(X_k) -\mu \Bigr)^2 \Bigr]
          \,:\, \E f_k(X_k) = 0 \Bigr\}.
 \end{equation}
 We say that $f$ is \textit{additively faithful} under $F$ in case
@@ -176,7 +176,7 @@ $f^*_k = 0$ implies that $f$ does not depend on coordinate $k$.
 \end{definition}
 
 % We can define the support $\trm{supp}(f) \coloneqq \{ k \,:\,
-% \trm{$k$ is relevant to $f$}\}$. Let $f^* = \sum_{k=1}^s$, then $f$
+% \trm{$k$ is relevant to $f$}\}$. Let $f^* = \sum_{k=1}^p$, then $f$
 % is additively faith if $\trm{supp}(f) = \trm{supp}(f^*)$.
 
 Additive faithfulness is an attractive property because it implies
@@ -185,37 +185,48 @@ consistent variable selection.
 
 \subsection{Additive Faithfulness of Convex Functions}
 
-Remarkably, under a general class of distributions which we characterize below, convex multivariate functions are additively faithful.
+We now show that under a general class of distributions which we
+characterize below, convex multivariate functions are additively
+faithful.
 
 \begin{definition}
 \label{defn:boundary-point}
-Let $p(\mathbf{x})$ be a density supported on $[0,1]^s$, $p$ satisfies the \emph{boundary-points condition} if, for all $j$, and for all $\mathbf{x}_{-j}$:
+A density $p(\mathbf{x})$ be a density supported on $[0,1]^p$ satisfies
+the \emph{boundary points condition} if, for all $j$, and for all $\mathbf{x}_{-j}$:
 
-\[
+\begin{equation}
 \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
 \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0
 \quad \trm{at } x_k = 0, x_k = 1
-\]
+\end{equation}
 
 \end{definition}
 
 
 
-The boundary-points condition is a weak condition. For instance, it is satisfied when the density is flat at the boundary of support, more precisely, when the \emph{joint density} satisfies the properties that $\frac{\partial p(x_j,\mathbf{x}_{-j})}{\partial x_j} =  \frac{\partial^2 p(x_j, \mathbf{x}_{-j})}{\partial x_j^2} = 0$ at points $x_j = 0, x_j=1$. The boundary-points property is also trivially satisfied when $p$ is the density of any product distributions.
+The boundary points condition is a weak condition. For instance, it is
+satisfied when the density is flat at the boundary of support---more
+precisely, when the joint density satisfies the property that
+$\frac{\partial p(x_j,\mathbf{x}_{-j})}{\partial x_j} =
+\frac{\partial^2 p(x_j, \mathbf{x}_{-j})}{\partial x_j^2} = 0$ at
+points $x_j = 0, x_j=1$. The boundary points property is also
+trivially satisfied when $p$ is a product density.
 
 The following theorem is the main result of this section.
 
 \begin{theorem}
 \label{thm:convex_faithful}
-Let $p$ be a positive density supported on $C=[0,1]^s$ that satisfies the boundary-points property (definition~\ref{defn:boundary-point}). If $f$ is convex and twice differentiable, then $f$ is \emph{additively faithful} under $p$.
+Let $p$ be a positive density supported on $C=[0,1]^p$ that satisfies
+the boundary points property. 
+If $f$ is convex and twice differentiable, then $f$ is additively faithful under $p$.
 \end{theorem}
 
 % We give the full proof in Section~\ref{sec:faithful_proof} of the
 % Appendix, but pause here to provide some intuition. 
 
-We pause to give some intuition before we present the full proof: 
-suppose the underlying distribution is a product distribution for a second, 
-then we know from lemma~\ref{lem:general_int_reduction} that the
+We pause to give some intuition before we presenting the full proof.
+Suppose that the the underlying distribution has a product density.
+Then we know from Lemma~\ref{lem:general_int_reduction} that the
 additive approximation zeroes out $k$ when, fixing $x_k$, every
 ``slice'' of $f$ integrates to zero. We prove
 Theorem~\ref{thm:convex_faithful} by showing that ``slices'' of convex
@@ -223,52 +234,73 @@ functions that integrate to zero cannot be ``glued'' together while
 still maintaining convexity.
 
 
-\begin{proof} (of Theorem~\ref{thm:convex_faithful})\\
-Fix $k$. Using the result of Lemma~\ref{lem:general_int_reduction}, we need only show that for all $x_k$, $ \E[ f(X) - \sum_{k'} f_{k'}(X_{k'}) \given x_k] - \E f(X) = 0 $ implies that $f$ does not depend on coordinate $k$, i.e., $\partial_{x_k} f(\mathbf{x}) = 0$ for all $\mathbf{x}$.\\
+\begin{proof}
 
-Let us then use the shorthand notation that $r(\mathbf{x}_{-k}) = \sum_{k' \neq k} f_{k'}(x_{k'})$ and assume without loss of generality that $\mu = 0$. We then assume that for all $x_k$, 
+Fixing $k$ and using the result of
+Lemma~\ref{lem:general_int_reduction}, 
+we need only show that for all $x_k$, $ \E[ f(X) - \sum_{k'}
+f_{k'}(X_{k'}) \given x_k] - \E f(X) = 0 $ 
+implies that $f$ does not depend on coordinate $k$, i.e., 
+$\partial_{x_k} f(\mathbf{x}) = 0$ for all $\mathbf{x}$.
 
-\[
+Let us use the shorthand notation that $r(\mathbf{x}_{-k}) = \sum_{k'
+  \neq k} f_{k'}(x_{k'})$ and assume without loss of generality that
+$\mu = 0$. We then assume that for all $x_k$,
+\begin{equation}
  \E[ f(X) - r(X_{-k})  \given x_k] \equiv 
  \int_{\mathbf{x}_{-k}}  p(\mathbf{x}_{-k} \given x_k ) 
- \big(f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big) = 0
-\]
-
+ \big(f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big) = 0.
+\end{equation}
 We let $p'(\mathbf{x}_{-k} \given x_k)$ denote 
 $\frac{\partial p(\mathbf{x}_{-k} \given x_k)}{\partial x_k}$ and 
 $p''(\mathbf{x}_{-k} \given x_k)$ denote 
-$\frac{\partial^2 p(\mathbf{x}_{-k} \given x_k)}{\partial x_k^2}$ and likewise for $f'(x_k, \mathbf{x}_{-k})$ and $f''(x_k, \mathbf{x}_{-k})$. We then differentiate under the integral, which is valid because all functions are bounded.
-
-\begin{align}
-& \int_{\mathbf{x}_{-k}} p'(\mathbf{x}_{-k} \given x_k) 
+$\frac{\partial^2 p(\mathbf{x}_{-k} \given x_k)}{\partial x_k^2}$ and
+likewise for $f'(x_k, \mathbf{x}_{-k})$ and $f''(x_k,
+\mathbf{x}_{-k})$. We then differentiate under the integral, valid
+because all functions are bounded, and obtain
+\begin{gather}
+\int_{\mathbf{x}_{-k}} p'(\mathbf{x}_{-k} \given x_k) 
 \big( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big) + 
 p(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}  = 0 
 \label{eqn:integral1a} \\
-& \int_{\mathbf{x}_{-k}} p''(\mathbf{x}_{-k} \given x_k) 
-\big( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big)  + 
-2 p'(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) +
-p(\mathbf{x}_{-k} \given x_k) f''(x_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k}  = 0 
-\end{align}
+\int_{\mathbf{x}_{-k}} p''(\mathbf{x}_{-k} \given x_k) 
+\big( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big)  + 2 p'(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) +
+p(\mathbf{x}_{-k} \given x_k) f''(x_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k}  = 0 .
+\end{gather}
 
-By the boundary-points condition, we have that $p''(\mathbf{x}_{-k} \given x_k)$ and $p'(\mathbf{x}_{-k} \given x_k)$ are zero at $x_k = x_k^0 \equiv 0$. The integral equations reduce to the following then:
+By the boundary points condition, we have that $p''(\mathbf{x}_{-k}
+\given x_k)$ and $p'(\mathbf{x}_{-k} \given x_k)$ are zero at $x_k =
+x_k^0 \equiv 0$. The integral equations then reduce to the following:
 \begin{align}
 & \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k} \given x^0_k) f'(x^0_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}= 0 \label{eqn:integral1b} \\
-& \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k} \given x^0_k) f''(x^0_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k} = 0
+& \int_{\mathbf{x}_{-k}} p(\mathbf{x}_{-k} \given x^0_k) f''(x^0_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k} = 0.
 \end{align}
+Because $f$ is convex, $f(x_k, \mathbf{x}_{-k})$ must be a convex
+function of 
+$x_k$ for all $\mathbf{x}_{-k}$. Therefore, for all $\mathbf{x}_{-k}$,
+$f''(x^0_k, \mathbf{x}_{-k}) \geq 0$. Since $p(\mathbf{x}_{-k} \given
+x^0_k) > 0$ by the assumption that $p$ is a positive density, 
+we have that $\forall \mathbf{x}_{-k}, f''(x^0_k, \mathbf{x}_{-k}) = 0$ necessarily.
 
-Because $f$ is convex, $f(x_k, \mathbf{x}_{-k})$ must be a convex function of $x_k$ for all $\mathbf{x}_{-k}$. Therefore, for all $\mathbf{x}_{-k}$, $f''(x^0_k, \mathbf{x}_{-k}) \geq 0$. Since $p(\mathbf{x}_{-k} \given x^0_k) > 0$ by assumption that $p$ is a positive density, we have that $\forall \mathbf{x}_{-k}, f''(x^0_k, \mathbf{x}_{-k}) = 0$ necessarily.\\
+The Hessian of $f$ at $(x^0_k, \mathbf{x}_{-k})$ then has a zero at
+the $k$-th main diagonal entry. A positive semidefinite matrix with a
+zero on the $k$-th main diagonal entry must have only zeros on the
+$k$-th row and column; see proposition 7.1.10 of
+\citet{HJ90}.  Thus, at all $\mathbf{x}_{-k}$, the
+gradient of $f'(x^0_k, \mathbf{x}_{-k})$ with respect to
+$\mathbf{x}_{-k}$ must be zero.
+Therefore, $f'(x_k^0, \mathbf{x}_{-k})$ must be constant for all
+$\mathbf{x}_{-k}$. By equation~\ref{eqn:integral1b}, we conclude 
+that $f'(x_k^0, \mathbf{x}_{-k}) = 0$ for all $\mathbf{x}_{-k}$. We
+can use the same reasoning for the case where $x_k = x_k^1$ and deduce
+that $f'(x^1_k, \mathbf{x}_{-k}) = 0$ for all $\mathbf{x}_{-k}$. 
 
-The Hessian of $f$ at $(x^0_k, \mathbf{x}_{-k})$ then has a zero at the $k$-th main diagonal entry. A positive semidefinite matrix with a zero on the $k$-th main diagonal entry must have only zeros on the $k$-th row and column \footnote{ See proposition 7.1.10 of \citet{HJ90}}, which means that \emph{at all $\mathbf{x}_{-k}$, the gradient of $f'(x^0_k, \mathbf{x}_{-k})$ with respect to $\mathbf{x}_{-k}$ must be zero}.
-
-Therefore, $f'(x_k^0, \mathbf{x}_{-k})$ must be constant for all $\mathbf{x}_{-k}$. By equation~\ref{eqn:integral1b}, we conclude then that $f'(x_k^0, \mathbf{x}_{-k}) = 0$ for all $\mathbf{x}_{-k}$. We can use the same reasoning for the case where $x_k = x_k^1$ and deduce that $f'(x^1_k, \mathbf{x}_{-k}) = 0$ for all $\mathbf{x}_{-k}$. \\
-
-Because $f(x_k, \mathbf{x}_{-k})$ as a function of $x_k$ is convex, it must be that, for all $x_k \in (0,1)$ and for all $\mathbf{x}_{-k}$:
-\[
+Because $f(x_k, \mathbf{x}_{-k})$ as a function of $x_k$ is convex, it must be that, for all $x_k \in (0,1)$ and for all $\mathbf{x}_{-k}$,
+\begin{equation}
 0 = f'(x_k^0, \mathbf{x}_{-k}) \leq f'(x_k, \mathbf{x}_{-k}) \leq 
     f'(x_k^1, \mathbf{x}_{-k}) = 0
-\]
-
-$f$ thus does not depend on $x_k$.
+\end{equation}
+Therefore $f$ does not depend on $x_k$.
 % Now we apply the first-order condition of convex functions to any two points $(x_k, \mathbf{x}_{-k})$ and $(x'_k, \mathbf{x}_{-k})$ where $x_k, x'_k \in [0,1]$:
 
 % \begin{align*}
@@ -284,7 +316,7 @@ $f$ thus does not depend on $x_k$.
 \end{proof}
 
 Theorem~\ref{thm:convex_faithful} plays an important role in our
-sparsistency analysis, where we show that the additive
+finite sample analysis, where we show that the additive
 approximation is variable selection consistent (or ``sparsistent''), even when the true function is not
 additive.
 
@@ -313,9 +345,9 @@ Then we have a closed form for the additive approximation, which we prove in [TO
 \begin{itemize}
 \item If $f$ does not depend on $x_j$, then $f^*_j(x_j) = 0$.
 \item If $f$ depends on $x_j$, then
-\[
+\begin{equation}
 f^*_j(x_j) = H_j^\tran \Sigma_j x_j^2 + c_j x_j
-\]
+\end{equation}
 where $H_j, \Sigma_j$ are the $j$-th row of $H_j, \Sigma_j$ respectively. 
 \end{itemize}
 Let $H = [1, 2; 2,5]$ and let $\Sigma = [1, -\alpha; -\alpha, 1]$. It is easy to check then that if $\alpha=0.5$, then $f^*_1 = 0$ and additive faithfulness is violated, and if $\alpha > 0.5$, then $f^*_1$ is a concave function.
@@ -328,8 +360,8 @@ Although convex functions are additively faithful, it is difficult to estimate t
 Since the true regression function $f$ is convex, it is natural to ask when it is sufficient to estimate an convex additive model:
 \begin{equation}
 \label{eqn:convex_additive}
-\{ f^*_k \}_{k=1}^s = \arg\min \Big \{ 
-    \E\big( f(X) - \sum_{k=1}^s f_k(X_k) \big)^2 \,:\, f_k \in \mathcal{C}^1, \, \E f_k(X_k) = 0 \Big \}
+\{ f^*_k \}_{k=1}^p = \arg\min \Big \{ 
+    \E\big( f(X) - \sum_{k=1}^p f_k(X_k) \big)^2 \,:\, f_k \in \mathcal{C}^1, \, \E f_k(X_k) = 0 \Big \}
 \end{equation}
 where $\mathcal{C}^1$ is the set of univariate convex functions.
 
@@ -344,7 +376,7 @@ g^*_k = \arg\min \Big\{
 
 \begin{theorem}
 \label{thm:acdc_faithful}
-Suppose $p(\mathbf{x})$ is a positive density on $C=[0,1]^p$ and satisfies the boundary-points condition. Suppose that $f$ is convex and twice-differentiable.
+Suppose $p(\mathbf{x})$ is a positive density on $C=[0,1]^p$ and satisfies the boundary points condition. Suppose that $f$ is convex and twice-differentiable.
 
 Suppose that $\partial_{x_k} f$, $\partial_{x_k} p( \mathbf{x}_{-k} \given x_k )$, and $\partial_{x_k}^2 p( \mathbf{x}_{-k} \given x_k)$ are all continuous as functions on $C$.\\
 
@@ -376,7 +408,7 @@ Now we use corollary~\ref{cor:faithfulness_extension}. We let $\phi(\mathbf{x}_{
 
 \begin{corollary} 
 \label{cor:faithfulness_extension}
-Suppose $p(x)$ is a positive density on $[0,1]^p$ and it satisfies the boundary-points condition.
+Suppose $p(x)$ is a positive density on $[0,1]^p$ and it satisfies the boundary points condition.
 
 For any function $\phi(X_{-k})$ that does not depend on $X_k$:
  \begin{align*}
@@ -426,18 +458,18 @@ h^*_k(x_k) &= \E[ h(X) \given x_k] \\
 The first term $h''(x) p(\mathbf{x}_{-k} \given x_k)$ is strictly positive. By assumption, the remaining terms are continuous and hence bounded on a compact set. $\partial^2_{x_k} h^*_k(x_k)$ is therefore lower bounded. Before proceeding, we also note that because $\E h(X) = 0$, it must be that $\E h^*_k(X_k) = 0$.
 
 Now suppose $f^*_k = 0$ and $g^*_k = 0$. Let $\sigma_k^2$ denote $\E X_k^2$. Then 
-\[
+\begin{equation}
 \arg\min_{c \in \mathbb{R}} \mathbb{E}\Big( h(X) - c (X_k^2-\sigma_k^2) \Big)^2 = 0
-\]
+\end{equation}
 Since optimal $c^* = \frac{\mathbb{E} [ h(X) (X_k^2-\sigma_k^2) ]}{\mathbb{E}[ X_k^2 ]}$, 
 we know $\mathbb{E} [ h(X) X_k^2 ] = 
 \mathbb{E} \Big[ \mathbb{E}[ h(X) \,|\, X_k] X_k^2 \Big] = 0$.\\
 
 Because $\partial^2_{x_k} h^*_k(x_k)$ is lower bounded, for large enough $\alpha$, $h^*_k(x_k) + \alpha (x_k^2 - \sigma_k^2)$ has a non-negative second derivative and thus is convex. Then
-\[
+\begin{equation}
 \arg\min_{c \in \mathbb{R}} \mathbb{E}\Big( h(X) 
        - c (h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2)) \Big)^2 = 0
-\]
+\end{equation}
 Again, $c^* = \frac{\mathbb{E}[g(X)\big( 
             h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2) \big)]}{\mathbb{E}
         \big( h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2) \big)^2} = 0$, so
