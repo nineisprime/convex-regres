@@ -322,35 +322,54 @@ additive.
 
 \begin{remark}
   We assume twice differentiability in
-  Theorems~\ref{thm:convex_faithful} to simplify the proof. 
-  We believe
-  this smoothness condition is not necessary because every non-smooth
-  convex function can be approximated arbitrarily well by a smooth
-  one.  
+  Theorems~\ref{thm:convex_faithful} to simplify the proof.  We
+  expect, however, that this this smoothness condition is not
+  necessary---every convex function can be approximated arbitrarily
+  well by a smooth convex function.
 \end{remark}
 
 \begin{remark} 
-It remains difficult to find conditions under which the opposite direction of additive faithfulness holds, that is, if $f$ does not depend on coordinate $k$, then $f_k^*$ will be zero in the additive approximation. As a conceptual example, suppose that $f$ is only a function of $X_1, X_2$, and that $(X_1, X_2, X_3)$ follows a degenerate 3-dimensional distribution where $X_3 = f(X_1, X_2) - f^*(X_1) - f^*_2(X_2)$, that is, we let $X_3$ exactly capture the additive approximation error. In this case, the best additive approximation of $f$ would have a component $f^*_3(X_3) = X_3$ even though $f$ does not depend on $X_3$. 
+  We have not found natural conditions under which the opposite
+  direction of additive faithfulness holds---conditions implying that if $f$ does not
+  depend on coordinate $k$, then $f_k^*$ will be zero in the additive
+  approximation.  Suppose, for example, that $f$ is only a
+  function of $X_1, X_2$, and that $(X_1, X_2, X_3)$ follows a
+  degenerate 3-dimensional distribution where $X_3 = f(X_1, X_2) -
+  f^*(X_1) - f^*_2(X_2)$.  In this case $X_3$ exactly captures the
+  additive approximation error.  The best additive
+  approximation of $f$ would have a component $f^*_3(x_3) = x_3$ even
+  though $f$ does not depend on $x_3$.
 \end{remark}
 
-It is possible to get a similar result for distributions with unbounded support, by using a limit condition $\lim_{|x_k| \rightarrow \infty} \frac{\partial p(\mathbf{x}_{-k} \given x_k)}{\partial x_k} = 0$ instead of the boundary condition. Such a limit condition is too strong however, it is not obeyed by the multivariate Gaussian distribution. \\
+\begin{remark}
+It is possible to get a similar result for distributions with
+unbounded support, by using a limit condition $\lim_{|x_k| \rightarrow
+  \infty} \frac{\partial p(\mathbf{\scriptstyle x}_{-k} \given x_k)}{\partial x_k}
+= 0$.  Such a limit condition is too
+strong however, as it is not obeyed by the multivariate Gaussian
+distribution. 
+\end{remark}
 
-In fact, not all convex functions are additively faithful under certain multivariate Gaussian distributions. 
+The following example shows that not all convex functions are
+additively faithful under multivariate Gaussian distributions.
 
 \begin{example}
 \label{examp:gaussian_counterexample}
 Consider a quadratic form $f( \mathbf{x}) = \mathbf{x}^\tran H \mathbf{x} + c^\tran \mathbf{x}$ and a Gaussian distribution $X \sim N(0, \Sigma)$ where $\Sigma_{jj} = 1$ for all $j$.
-
-Then we have a closed form for the additive approximation, which we prove in [TODO:appendix reference].
-\begin{itemize}
+As we show in the appendix, the additive approximation has the
+following closed form.
+\begin{enumerate}
 \item If $f$ does not depend on $x_j$, then $f^*_j(x_j) = 0$.
 \item If $f$ depends on $x_j$, then
 \begin{equation}
 f^*_j(x_j) = H_j^\tran \Sigma_j x_j^2 + c_j x_j
 \end{equation}
-where $H_j, \Sigma_j$ are the $j$-th row of $H_j, \Sigma_j$ respectively. 
-\end{itemize}
-Let $H = [1, 2; 2,5]$ and let $\Sigma = [1, -\alpha; -\alpha, 1]$. It is easy to check then that if $\alpha=0.5$, then $f^*_1 = 0$ and additive faithfulness is violated, and if $\alpha > 0.5$, then $f^*_1$ is a concave function.
+where $H_j, \Sigma_j$ are the $j$-th rows of $H_j, \Sigma_j$, respectively. 
+\end{enumerate}
+Let $H = \begin{pmatrix}1 & 2 \\ 2 & 5\end{pmatrix}$ and let $\Sigma
+= \begin{pmatrix}1 & -\alpha \\ -\alpha & 1\end{pmatrix}$. 
+It can be checked that if if $\alpha=\frac{1}{2}$, then $f^*_1 = 0$
+and additive faithfulness is violated.  Moreover, if $\alpha > \frac{1}{2}$, then $f^*_1$ is a concave function.
 \end{example}
 
 \subsection{Convex Additive Models}
