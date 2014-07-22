@@ -1,31 +1,110 @@
-\section{Estimation Procedure}
+\subsection{Estimation Procedure}
 \label{sec:acdc}
 
-Theorem~\ref{thm:acdc_faithful} suggest a two stage procedure for variable selection in convex regression--first learning a sparse convex additive model and then, on the residual, separately learning an univariate concave function for each of the dimensions. 
+Theorem~\ref{thm:acdc_faithful} naturally suggests a two-stage screening procedure for
+variable selection.  In the first stage we fit a sparse convex additive model.
+In the second stage, for every variable marked as irrelevant in the first stage,
+we fit a univariate \emph{concave} function separately on the residual for
+that variable. We refer to this procedure as AC/DC (additive
+convex/decoupled concave).
 
-More precisely, given samples $(\mathbf{x}_1, y_1), ..., (\mathbf{x}_n, y_n)$, we perform the following procedure, which we refer to as AC/DC (additively convex / decoupled concave):
+More precisely, given samples  
+$(\mathbf{x}_1, y_1), ..., (\mathbf{x}_n, y_n)$, 
+we perform the following procedure, which we refer to as AC/DC (additively convex / decoupled concave):
 \begin{enumerate}
-\item Compute: 
+\item {\it AC Stage}: Estimate an additive convex model
 \begin{equation}
 \label{eqn:scam}
-\hat{f}_1, ..., \hat{f}_p = \argmin_{f_1,...,f_p \in \mathcal{C}^1} 
-   \frac{1}{n} \sum_{i=1}^n \Big(y_i - \sum_{k=1}^p f_k(x_{ki}) \Big)^2 
-       + \lambda \sum_{k=1}^p \| f_k \|_\infty
+\hat{f}_1, ..., \hat{f}_p, \hat \mu  = \argmin_{f_1,...,f_p \in
+  \mathcal{C}^1, \mu\in\reals} 
+   \frac{1}{n} \sum_{i=1}^n \Big(y_i - \mu - \sum_{k=1}^p f_k(x_{ik}) \Big)^2 
+       + \lambda \sum_{k=1}^p \| f_k \|_\infty.
 \end{equation}
-\item Compute, for each $k$ such that $\| \hat{f}_k \| = 0$:
+\item {\it DC Stage}: For each $k$ such that $\| \hat{f}_k \| = 0$, estimate
+  a concave function on the residual:
 \begin{equation}
 \label{eqn:dc}
 \hat{g}_k = \argmin_{g_k \in \mathcal{C}^1} 
-   \frac{1}{n} \sum_{i=1}^n \Big( y_i - \sum_{k'} \hat{f}_{k'}(x_{k'i}) 
-    - g_k(x_{ki})\Big)^2 
-      + \lambda \| g_k \|_\infty
+   \frac{1}{n} \sum_{i=1}^n \Big( y_i - \hat \mu - \sum_{k'} \hat{f}_{k'}(x_{ik'}) 
+    - g_k(x_{ik})\Big)^2 
+      + \lambda \| g_k \|_\infty.
 \end{equation}
-\item Output as the set of relevant variables: 
-$\{ k \,:\, \| \hat{f}_k \|_\infty > 0 
-  \textrm{ or } \| \hat{g}_k \|_\infty > 0 \}$ 
+\item Output as the set of relevant variables
+$\hat S = \{ k \,:\, \| \hat{f}_k \|_\infty > 0 
+  \textrm{ or } \| \hat{g}_k \|_\infty > 0 \}$. 
 \end{enumerate}
 
-We added an $\ell_\infty/\ell_1$ penalty in equation~\ref{eqn:scam} and the $\ell_\infty$ penalty in equation~\ref{eqn:dc} to encourage sparsisty. There are other forms of penalty that can also produce sparse estimates such as a penalty on the derivative of each of the component functions; we find the form we use to be convenient both for theoretical analysis and implementation.
+We use an $\ell_\infty/\ell_1$ penalty in equation~\eqref{eqn:scam}
+and an $\ell_\infty$ penalty in equation~\eqref{eqn:dc} to encourage
+sparsity.  Other penalties can also produce
+sparse estimates, such as a penalty on the derivative of each of the
+component functions.  The $\|\cdot\|_\infty$ norm convenient for both
+theoretical analysis and implementation.
+
+The optimization in 
+\begin{align}
+\label{eq:convreg}
+\begin{split}
+\text{minimize}_{f, \beta} & \;\; \sum_{i=1}^n (Y_i - f_i)^2 \\
+\text{subject to} & \;\; f_j \geq f_i + \beta_i^T (\x_j-\x_i),\; \text{for
+    all $i,j$}.
+\end{split}
+\end{align}
+See \cite{Boyd04}, Section 6.5.5.
+Here $f_i$ is the estimated function value $f(\x_i)$, and the vectors
+$\beta_i \in \reals^d$ represent supporting hyperplanes to the
+epigraph of $f$.  Importantly, this finite dimensional quadratic program does
+not have tuning parameters for smoothing the function. 
+
+
+
+\begin{figure}[t]
+{\sc AC/DC Algorithm for Variable Selection in Convex Regression\hfill}
+\vskip5pt
+\begin{center}
+\hrule
+\vskip7pt
+\normalsize
+\begin{enumerate}
+\item[] \textit{Input}:  $(\mathbf{x}_1, y_1), ..., (\mathbf{x}_n, y_n)$, regularization parameter $\lambda$.
+\vskip5pt
+\item[] \textit{AC Stage}:  Estimate a sparse additive convex model:
+\begin{equation}
+\label{eqn:scam2}
+\hat{f}_1, ..., \hat{f}_p = \argmin_{f_1,...,f_p \in \mathcal{C}^1} 
+   \frac{1}{n} \sum_{i=1}^n \Big(y_i - \sum_{k=1}^p f_k(x_{ik}) \Big)^2 
+       + \lambda \sum_{k=1}^p \| f_k \|_\infty
+\end{equation}
+\vskip5pt
+\item[] \textit{DC Stage}:  Estimate decoupled concave functions
+ for each $k$ such that $\| \hat{f}_k \| = 0$:
+\begin{equation}
+\label{eqn:dc2}
+\hat{g}_k = \argmin_{g_k \in \mathcal{C}^1} 
+   \frac{1}{n} \sum_{i=1}^n \Big( y_i - \sum_{k'} \hat{f}_{k'}(x_{ik'}) 
+    - g_k(x_{ik})\Big)^2 
+      + \lambda \| g_k \|_\infty
+\end{equation}
+\item[] \textit{Output}: Component functions $\{\hat f_k\}$ and 
+relevant variables $\hat S$ where
+\begin{equation}
+\hat S^c = \bigl\{k : \| \hat{f}_k \| =
+0 \; \mathrm{and}\; \|\hat{g}_k \|=0\bigr\}.
+\end{equation}
+\end{enumerate}
+\vskip3pt
+\hrule
+\end{center}
+\vskip0pt
+\caption{The AC/DC algorithm for variable selection in convex
+  regression.  The AC stage fits a sparse additive convex regression
+  model, using a quadratic program that imposes an group sparsity
+  penalty for each component function.  The DC stage fits
+  decoupled concave functions on the residuals, for each 
+  component that is zeroed out in the AC stage.}
+\label{fig:backfitting:algo}
+\end{figure}
+
 
 % DO NOT CHANGE; RefTex variables -minx
  
