@@ -15,11 +15,11 @@ with a lemma that characterizes the components of the additive approximation und
 % \begin{lemma}
 % \label{lem:general_int_reduction}
 % Let $F$ be a product distribution on $\mathbf{C}=[0,1]^s$ with density function $p$ which is positive on $\mathbf{C}$. Let
-% $X=(X_1,...,X_s) \sim F$. Let $f: \mathbf{C} \rightarrow \R$ be an
+% $X=(X_1,...,X_p) \sim F$. Let $f: \mathbf{C} \rightarrow \R$ be an
 % integrable function.
 % Let 
 % \begin{equation}
-% f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_s, \mu} \Bigl\{ \E \bigl( f(X)  -
+% f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_p, \mu} \Bigl\{ \E \bigl( f(X)  -
 %  \sum_{k=1}^s f_k(X_k) -\mu \bigr)^2 
 %         \,:\, \E f_k(X_k) = 0\Bigr\}.
 % \end{equation}
@@ -33,7 +33,7 @@ Let $F$ be a distribution on $C=[0,1]^p$ with a positive density
 function $p$. Let $f: C \rightarrow \R$ be an integrable function,
 and define 
 \begin{equation}
-f^*_1,...,f^*_s, \mu^* \coloneqq 
+f^*_1,...,f^*_p, \mu^* \coloneqq 
 \arg\min \left\{ \E \Bigl( f(X) - \mu - \sum_{k=1}^p f_k(X_k)\Bigr)^2 \,:\,
 \E f_k(X_k) = 0,\; \forall k=1,\ldots, p \right\}.
 \end{equation}
@@ -55,7 +55,7 @@ a proof as our results build on it.
 % perhaps include this in an appendix??
 
 \begin{proof}
-  Let $f^*_1,...,f^*_s, \mu^*$ be the minimizers as defined.  We first
+  Let $f^*_1,...,f^*_p, \mu^*$ be the minimizers as defined.  We first
   show that the optimal $\mu$ is $\mu^* = \E f(X)$ for any $f_1, ...,
   f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity
   condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] =
@@ -167,7 +167,7 @@ If $f$ is differentiable, then $f$ depends on $k$ if $\partial_{x_k} f \neq 0$ w
 Suppose we have the additive approximation
 \begin{equation}
 \label{eqn:unconstrained_additive}
-f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_s, \mu} \Bigl\{ 
+f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_p, \mu} \Bigl\{ 
              \E \Bigl[\Bigl( f(X) - \sum_{k=1}^p f_k(X_k) -\mu \Bigr)^2 \Bigr]
          \,:\, \E f_k(X_k) = 0 \Bigr\}.
 \end{equation}
@@ -245,7 +245,7 @@ $\partial_{x_k} f(\mathbf{x}) = 0$ for all $\mathbf{x}$.
 
 Let us use the shorthand notation that $r(\mathbf{x}_{-k}) = \sum_{k'
   \neq k} f_{k'}(x_{k'})$ and assume without loss of generality that
-$\mu = 0$. We then assume that for all $x_k$,
+$\mu^* = E[f(X)] = 0$. We then assume that for all $x_k$,
 \begin{equation}
  \E[ f(X) - r(X_{-k})  \given x_k] \equiv 
  \int_{\mathbf{x}_{-k}}  p(\mathbf{x}_{-k} \given x_k ) 
@@ -413,14 +413,6 @@ $f^*_k = 0$ and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x})
 so that $f$ does not depend on~$x_k$.
 \end{theorem}
 
-This theorem naturally suggests a two-stage screening procedure for
-variable selection.  In the first stage we fit a sparse convex additive model.
-In the second stage, for every variable marked as irrelevant in the first stage,
-we fit a univariate \emph{concave} function on the residual for
-that variable. We refer to this procedure as AC/DC (additive
-convex / decoupled concave) and describe it in more detail in
-Section~\ref{sec:acdc}.
-
 \begin{lemma}
 \label{cor:faithfulness_extension}
 Suppose $p(x)$ is a positive density on $[0,1]^p$ satisfying the boundary points condition.
@@ -443,7 +435,7 @@ and $ f^*_k = 0$ implies that $\partial_{x_k} f(x) = 0$.
 
 
 \begin{proof}[Proof of theorem~\ref{thm:acdc_faithful}]
-Fix $k$. Let $f^*_k$ and $g^*_k$'s be defined as in
+Fix $k$. Let $f^*_k$ and $g^*_k$ be defined as in
 equation~\ref{eqn:convex_additive} and
 equation~\ref{eqn:concave_postprocess}.  Then
 we have that
