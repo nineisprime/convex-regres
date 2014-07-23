@@ -1,3 +1,5 @@
+\def\C{\mathcal{C}}
+
 \subsection{Estimation Procedure}
 \label{sec:acdc}
 
@@ -10,21 +12,21 @@ convex/decoupled concave).
 
 More precisely, given samples  
 $(\mathbf{x}_1, y_1), ..., (\mathbf{x}_n, y_n)$, 
-we perform the following procedure, which we refer to as AC/DC (additively convex / decoupled concave):
+we perform the following steps.
 \begin{enumerate}
 \item {\it AC Stage}: Estimate an additive convex model
 \begin{equation}
 \label{eqn:scam}
 \hat{f}_1, ..., \hat{f}_p, \hat \mu  = \argmin_{f_1,...,f_p \in
-  \mathcal{C}^1, \mu\in\reals} 
+  \C^1_0, \,\mu\in\reals} 
    \frac{1}{n} \sum_{i=1}^n \Big(y_i - \mu - \sum_{k=1}^p f_k(x_{ik}) \Big)^2 
        + \lambda \sum_{k=1}^p \| f_k \|_\infty.
 \end{equation}
-\item {\it DC Stage}: For each $k$ such that $\| \hat{f}_k \| = 0$, estimate
+\item {\it DC Stage}: For each $k$ such that $\| \hat{f}_k \|_\infty = 0$, estimate
   a concave function on the residual:
 \begin{equation}
 \label{eqn:dc}
-\hat{g}_k = \argmin_{g_k \in \mathcal{C}^1} 
+\hat{g}_k = \argmin_{g_k \in \mh{}\C^1_0} 
    \frac{1}{n} \sum_{i=1}^n \Big( y_i - \hat \mu - \sum_{k'} \hat{f}_{k'}(x_{ik'}) 
     - g_k(x_{ik})\Big)^2 
       + \lambda \| g_k \|_\infty.
@@ -38,24 +40,46 @@ We use an $\ell_\infty/\ell_1$ penalty in equation~\eqref{eqn:scam}
 and an $\ell_\infty$ penalty in equation~\eqref{eqn:dc} to encourage
 sparsity.  Other penalties can also produce
 sparse estimates, such as a penalty on the derivative of each of the
-component functions.  The $\|\cdot\|_\infty$ norm convenient for both
+component functions.  The $\|\cdot\|_\infty$ norm is convenient for both
 theoretical analysis and implementation.
+For identifiability, we impose the constraint $\sum_{i=1}^n f_k(x_{ik}) =
+0$ for each $k$.  The set of 1-dimensional convex (concave) functions
+satisfying this mean zero constraint is denoted $\C^1_0$ ($\mh{}\C^1_0$).
 
-The optimization in 
-\begin{align}
-\label{eq:convreg}
-\begin{split}
-\text{minimize}_{f, \beta} & \;\; \sum_{i=1}^n (Y_i - f_i)^2 \\
-\text{subject to} & \;\; f_j \geq f_i + \beta_i^T (\x_j-\x_i),\; \text{for
-    all $i,j$}.
-\end{split}
-\end{align}
-See \cite{Boyd04}, Section 6.5.5.
-Here $f_i$ is the estimated function value $f(\x_i)$, and the vectors
-$\beta_i \in \reals^d$ represent supporting hyperplanes to the
-epigraph of $f$.  Importantly, this finite dimensional quadratic program does
-not have tuning parameters for smoothing the function. 
+The optimization in \eqref{eqn:scam} appears to be infinite
+dimensional, but it is equivalent to a finite dimensional quadratic
+program.  In the following section, we give the details
+of this optimization, and show how it can be reformulated
+to be more computationally efficient.
 
+%%For a simple proof of this fact, see \cite{Boyd04}, Section 6.5.5.
+%%In more detail, we first set $\hat\mu = \frac{1}{n}\sum_{i=1}^n y_i$.  
+%%For identifiability, we impose the constraint $\sum_{i=1}^n f_{ik} =
+%%0$ for each $k$, where $f_{ik} = f_k(x_{ik})$ are the function values,
+%%which are the program variables.  Then, we write the optimization as
+%%\begin{align}
+%%\label{eqn:scamqp}
+%%\min_{f, \beta} \quad
+%% &  \frac{1}{n} \sum_{i=1}^n \Big(y_i - \hat\mu - \sum_{k=1}^p f_{ik} \Big)^2 
+%%       + \lambda \sum_{k=1}^p \| f_k \|_\infty \\
+%%\nonumber
+%%\text{such that} \quad & \textrm{for all $k=1,\ldots, p$:} \\
+%% & \mathbf{1}^T f_k = 0, \; k=1,\ldots, p \\
+%% & f_{i'k} \geq f_{ik} + \beta_{ik}(x_{i'k} - x_{ik}), \; \textrm{for
+%%   all $i', i = 1,\ldots, n$}.
+%%\end{align}
+%%Likewise, the optimization in \eqref{eqn:dc} is implemented as
+%%\begin{align}
+%%\label{eqn:dcqp}
+%%\min_{g_k, \gamma_k} \quad
+%% &  \frac{1}{n} \sum_{i=1}^n \Big(y_i - \hat\mu - \sum_{k'=1}^p
+%% f_{ik'} - g_{ik}\Big)^2 
+%%       + \lambda \sum_{k=1}^p \| g_k \|_\infty \\
+%%\nonumber
+%%\text{such that} \quad &  \mathbf{1}^T g_k = 0, \\
+%% & g_{i'k} \leq g_{ik} + \gamma_{ik}(x_{i'k} - x_{ik}), \; \textrm{for
+%%   all $i', i = 1,\ldots, n$}.
+%%\end{align}
 
 
 \begin{figure}[t]
@@ -71,17 +95,17 @@ not have tuning parameters for smoothing the function.
 \item[] \textit{AC Stage}:  Estimate a sparse additive convex model:
 \begin{equation}
 \label{eqn:scam2}
-\hat{f}_1, ..., \hat{f}_p = \argmin_{f_1,...,f_p \in \mathcal{C}^1} 
-   \frac{1}{n} \sum_{i=1}^n \Big(y_i - \sum_{k=1}^p f_k(x_{ik}) \Big)^2 
+\hat{f}_1, ..., \hat{f}_p, \hat\mu = \argmin_{f_1,...,f_p \in \C^1_0} 
+   \frac{1}{n} \sum_{i=1}^n \Big(y_i - \mu-\sum_{k=1}^p f_k(x_{ik}) \Big)^2 
        + \lambda \sum_{k=1}^p \| f_k \|_\infty
 \end{equation}
 \vskip5pt
-\item[] \textit{DC Stage}:  Estimate decoupled concave functions
- for each $k$ such that $\| \hat{f}_k \| = 0$:
+\item[] \textit{DC Stage}:  Estimate concave functions
+ for each $k$ such that $\| \hat{f}_k \|_\infty = 0$:
 \begin{equation}
 \label{eqn:dc2}
-\hat{g}_k = \argmin_{g_k \in \mathcal{C}^1} 
-   \frac{1}{n} \sum_{i=1}^n \Big( y_i - \sum_{k'} \hat{f}_{k'}(x_{ik'}) 
+\hat{g}_k = \argmin_{g_k \in \mh{}\C^1_0} 
+   \frac{1}{n} \sum_{i=1}^n \Big( y_i - \hat \mu - \sum_{k'} \hat{f}_{k'}(x_{ik'}) 
     - g_k(x_{ik})\Big)^2 
       + \lambda \| g_k \|_\infty
 \end{equation}
