@@ -298,7 +298,7 @@ Intuitively, we would like to show the following:
 \| f_0 - f^* - \hat{g}_k \|_P & \approx \| f_0 - f^* - g^*_k \|_P 
        \quad \trm{for all $k \in S$ where $f^*_k = 0$}
 \end{align*}
-where the difference is a term that decreases with $n$.
+where the estimation error is a term that decreases with $n$.
 
 Suppose $\hat{f}_k = 0$ and $f^*_k \neq 0$, then, when $n$ is large enough, there must exist a contradiction because the population risk of $f^*$, $\| f_0 - f^* \|_P$, is strictly larger than the population risk of the best approximation whose $k$-th component is constrained to be zero. 
 
@@ -307,12 +307,12 @@ Suppose $f^*_k = 0$, then $g^*_k \neq 0$. When $n$ is large enough, $\hat{g}_k$ 
 
 \begin{theorem}
 \label{thm:convex_consistent}
-Let $\hat{f}$ be the minimizer of the restricted regression with $\lambda \leq c sLb\sqrt{ \frac{1}{n} \log^2 np}$.
+Let $\hat{f}$ be the minimizer of the restricted regression with $\lambda \leq c sB \sqrt{ \frac{1}{n} \log^2 np}$.
 
 Then, with probability at least $1-\delta$,
 \begin{align}
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
-&\leq c (Lb)^3\sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{np}{\delta}}
+&\leq c B^3\sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{np}{\delta}}
 \end{align}
 
 \end{theorem}
@@ -339,21 +339,21 @@ We plug in $y = f_0 + w$:
  \| f^*_k - \bar{f}^*_k \|_\infty \Big) &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle
 \end{align*}
 
-The middle term can be bounded with the fact that $\|f^*_k - \bar{f}^*_k \|_\infty \leq 4Lb$ because $f^*_k$ as is $L$-Lipschitz and supported on $[-b, b]$. 
+The middle term can be bounded with the fact that $\|f^*_k - \bar{f}^*_k \|_\infty \leq 4B$ because $f^*_k$ as is $L$-Lipschitz and supported on $[-b, b]$. 
 
 \begin{align*}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 
-   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s L b 
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s B 
 \end{align*}
 
 Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from the LHS. With probability at least $1 - \delta$:
 \begin{align}
 \label{eqn:first_step_inequality}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
-   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s L b + c(sLb)^2 \frac{1}{n} \log \frac{2}{\delta}
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s B + c(sB)^2 \frac{1}{n} \log \frac{2}{\delta}
 \end{align}
 
-[TOOD: at this point, we still have to choose a value for $\lambda$]\\
+%[TOOD: at this point, we still have to choose a value for $\lambda$]\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 
@@ -362,11 +362,56 @@ Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from the LHS. 
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\textbf{Step 2.} We upper bound $2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle$ with theorem~\ref{thm:chaining}.\\ 
+\textbf{Step 2.} We upper bound $2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle$ with bracketing entropy.
 
-Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s_L\}$ as the set of convex additive functions centered around the function $f^* - \bar{f}^*$. 
+Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s\}$ as the set of convex additive functions centered around the function $f^* - \bar{f}^*$. 
 
+By Corollary~\ref{prop:convexbracket_lp}, there is an $\epsilon$-bracketing of $\mathcal{G}$ whose size is bounded by $\log N_{[]}( 2\epsilon, \mathcal{G}, L_2(P)) \leq sK^{**} \left( \frac{2sbB}{\epsilon} \right)^{1/2}$, for all $\epsilon \in (0, sB \epsilon_3]$.
 
+By Corollary~\ref{cor:convexbracket_ln}, with probability at least $1-\delta$, each bracketing pair $(h^U, h^L)$ is close in $L_1(P_n)$ norm, i.e., for all $(h_U, h_L)$, 
+$\frac{1}{n} \sum_{i=1}^n | h_U(X_i) - h_L(X_i) | \leq 2 \epsilon + sB \sqrt{ \frac{sK^{**}(2sbB
+)^{1/2} + \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}$.
+
+For each $h \in \mathcal{G}$, there exists a pair $(h_U, h_L)$ such that $h_U(X_i) - h_L(X_i) \geq h(X_i) - h_L(X_i) \geq 0$. Therefore, with probability at least $1-\delta$, uniformly for all $h \in \mathcal{G}$:
+
+$$
+\frac{1}{n} \sum_{i=1}^n |h(X_i) - h_L(X_i)| \leq \frac{1}{n} \sum_{i=1}^n | h_U(X_i) - h_L(X_i)| \leq 2\epsilon +  (sB) \sqrt{ \frac{sK^{**}(2sbBc_u)^{1/2} + \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}
+$$.
+
+We denote $\epsilon_{n,\delta} \equiv (sB) \sqrt{ \frac{sK^{**}(2sbBc_u)^{1/2} + \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}$. 
+Therefore,  
+\[
+|\langle w, h - h_L\rangle_n| \leq \| w \|_\infty \frac{1}{n} \sum_{i=1}^n |h(X_i) - h_L(X_i)| \leq
+  \sigma \sqrt{\log \frac{n}{\delta}} \left( \epsilon + \epsilon_{n,\delta} \right)
+\]
+For the last inequality, we used the fact that $w$ is a vector of independent subgaussian($\sigma$) random variables and hence, by union bound, with probability at least $1-\delta$, $\| w \|_\infty \leq \sigma \sqrt{\log \frac{n}{\delta}}$. 
+
+By another property of subgaussian random variables, with probability at least $1-\delta$, $|\langle w, h_L \rangle_n | \leq \| h_L \|_n \sigma \sqrt{ \frac{1}{cn} \log \frac{1}{\delta} }$. Applying an union bound, we have that 
+$\sup_{h_L} |\langle w, h_L \rangle| \leq sB \sigma \sqrt{ \frac{\log N_{[]}}{n} \log \frac{1}{\delta}}$.
+
+Putting this together, we have that
+\begin{align*}
+|\langle w, h \rangle_n | &\leq | \langle w, h_L\rangle_n| + |\langle w, h - h_L\rangle_n|\\
+|\sup_{h \in \mathcal{G}} \langle w, h \rangle_n| &\leq 
+     | \sup_{h^L} \langle w, h^L \rangle_n | + \sigma \sqrt{\log \frac{n}{\delta}} (\epsilon + \epsilon_{n, \delta}) \\
+   &\leq   sB \sigma \sqrt{ \frac{ \log N_{[]} + \log 1/\delta}{cn}} + \sigma \sqrt{\log \frac{n}{\delta}} (\epsilon + \epsilon_{n, \delta}) \\
+   &\leq  sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} + \log 1/\delta}{cn \epsilon^{1/2}}} +
+   \sigma \sqrt{ \log \frac{n}{\delta}} (\epsilon + \epsilon_{n, \delta}) \\
+   &\leq sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} + \log 1/\delta}{cn \epsilon^{1/2}}} +
+   \sigma\sqrt{\log \frac{n}{\delta}} \epsilon + sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} + \log 1/\delta}{cn \epsilon^{1/2}} \log \frac{n}{\delta}} \\
+   &\leq \sigma\sqrt{\log \frac{n}{\delta}} \epsilon + sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} + \log 1/\delta}{cn \epsilon^{1/2}} \log \frac{n}{\delta}} \\
+\end{align*}
+
+The two terms are balanced when one sets $\epsilon = \sqrt{ \frac{((sB)^2 s K^{**} (sBb)^{1/2})^{4/5}}{n^{4/5}} }$.  
+
+This is only valid if $n$ is large enough so that $\epsilon \in (0, sB \epsilon_3]$.
+
+We upper bound some terms to simplify the presentations again and end up with the following result:
+
+\[
+|\sup_{h \in \mathcal{G}} \langle w, h \rangle | \leq sB \sigma \sqrt{ 
+   \frac{s b^{1/2} \log \frac{1}{\delta}}{c n^{4/5}}}
+\]
 
 % Then, $\| h \|_n \leq \| h \|_\infty \leq 4sLb$ for all $h \in \mathcal{G}$.\\
 
@@ -407,11 +452,16 @@ Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s_L\}$ a
 Plugging this result into equation~\ref{eqn:first_step_inequality} and using an union bound, we get, with probability at least $1 - 2\delta$:
 \begin{align}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
-   &\leq c (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
-   + \lambda 4 s L b + c (sLb)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
+   &\leq c sB \sigma \sqrt{ 
+   \frac{s b^{1/2} \log \frac{1}{\delta}}{c n^{4/5}}}
+   + \lambda 4 s B + c (sB)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
-   &\leq c (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
-   + \lambda 4 s L b    \label{eqn:second_step_inequality}
+   &\leq sB \sigma \sqrt{ 
+   \frac{s b^{1/2} \log \frac{1}{\delta}}{c n^{4/5}}}
+   + \lambda 4 s B \nonumber\\   
+   &\leq cB \sigma 
+    \sqrt{ \frac{s^3 b^{1/2}}{n^{4/5}} \log \frac{C}{\delta}} + \lambda 4 sB
+\label{eqn:second_step_inequality}
 \end{align}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -425,13 +475,14 @@ Plugging this result into equation~\ref{eqn:first_step_inequality} and using an 
 
 \begin{align}
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
-   &\leq c (sLb)^2 \sigma \sqrt{\frac{1}{n} \log \frac{4}{\delta}} 
- +\lambda 4 s L b + c (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+   &\leq cB^2 \sigma 
+    \sqrt{ \frac{s^5 (b c_u)^{2/5}}{n^{4/5}} \log \frac{C}{\delta}}
+ +\lambda 4 s B + c B^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
     \nonumber \\
-&\leq c (Lb)^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}} + \lambda 4 sLb
+&\leq c B^3 \sigma \sqrt{ \frac{s^5(bc_u)^{2/5}}{n^{4/5}} \log \frac{2}{\delta}} + \lambda 4 sB
 \end{align}
 
-Substituting in $\lambda \leq c sLb \sqrt{\frac{1}{n} \log^2 np}$ and we get the desired result.
+Substituting in $\lambda \leq c sB \sqrt{\frac{1}{n} \log^2 np}$ and we get the desired result.
 
 \end{proof}
  
@@ -455,7 +506,7 @@ Then, with probability at least $1- s\delta$, for all $k=1,...,s$:\\
 \end{theorem}
 
 \begin{proof}
-The proof proceeds almost identically to that of theorem~\ref{thm:convex_consistent} because convex and concave functions have the same covering number.
+The proof proceeds almost identically to that of theorem~\ref{thm:convex_consistent} because convex and concave functions have the same bracketing number.
 
 \textbf{Step 1.} We start from the definition of $\hat{g}_k$:
 \begin{align*}
@@ -469,10 +520,10 @@ The proof proceeds almost identically to that of theorem~\ref{thm:convex_consist
    2 \langle w, \hat{g}_k - g^*_k \rangle_n + \lambda 2Lb
 \end{align*}
 
-Using the chaining result (theorem~\ref{thm:chaining}), setting $s=1$, we have, with probability at least $1-\delta$,
+Using identical analysis as Step 2 of the proof of Theorem~\ref{thm:convex_consistent} but setting $s=1$, we have, with probability at least $1-\delta$,
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 - \hat{f} - g^*_k \|_n^2 &\leq
-  c (Lb)^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb
+  c B^2 \sigma \sqrt{ \frac{b^{1/2}}{n^{4/5}} \log \frac{C}{\delta} }+ \lambda 2 Lb
 \end{align*}
 
 Using the uniform convergence result (lemma~\ref{lem:uniform_convergence}), we have, with probability at least $1-2\delta$:
@@ -544,69 +595,134 @@ Taking an union bound across $k=1,...,s$ dimensions completes the result.
 With probability at least $1-\delta$:
 \begin{align*}
 \sup_{f \in \mathcal{C}^s_L} \Big| \| f_0 - f \|^2_n - \|f_0 - f \|^2_P\Big| \leq
-   c (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+   c B^2 \sqrt{ \frac{s^5b^{1/2}}{n^{4/5}} \log \frac{2}{\delta}}
 \end{align*}
 
 \end{lemma}
 
 \begin{proof}
-Let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s_L - f_0$. Note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s b L$.\\
+Let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s - f_0$. Note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s B$.\\
 
-By Corollary~\ref{cor:convexbracket_ln}, there exists a bracketing $\mathcal{G}_\epsilon$ of $\mathcal{G}$ which has sized bounded by [TODO:...], which is an $\epsilon$-bracketing with respect to the $L_2(P)$ norm, and which is also an $(\epsilon + \epsilon_{n,\delta})$-bracketing with respect to the $L_n$ norm with probability at least $1-\delta$.
+There exists an $\epsilon$-bracketing of $\mathcal{G}$. 
 
-For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-bracketing of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.\\
+%For every $h \in \mathcal{G}$, there exists $h^L$ in the bracketing such that $\| h^U - h^L \|_{L_1(P)} \leq \epsilon$. 
 
-Because $\| h \|_n = \| h - h_\epsilon + h_\epsilon \|_n$, we have that
+By Corollary~\ref{cor:convexadditive_lp}, the bracketing has size at most $\log N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P)) \leq s K^{**}\left( \frac{2sbB}{\epsilon} \right)^{1/2}$. By Corollary~\ref{cor:convexbracket_ln}, we know that with probability at least $1-\delta$, we have that $\| h_U - h_L \|_{L_1(P_n)} \leq \epsilon + \epsilon_{n,\delta}$ for all pairs $(h_U, h_L)$ in the bracketing, where $\epsilon_{n,\delta} = sB \sqrt{ \frac{K^{**} (2sbB)^{1/2} + \log \frac{1}{\delta}}{2 \epsilon^{1/2} n}}$.
+
+For a particular function $h \in \mathcal{G}$, we can construct $\psi_L \equiv \min( |h_U|, |h_L|)$ and $\psi_U \equiv \max( |h_U|, |h_L| )$ so that
+\[
+\psi_L^2 \leq h^2 \leq \psi_U^2
+\]
+
+We can then bound the $L_1(P)$ norm of $\psi_U^2 - \psi_L^2$.
 \begin{align*}
-\|h_\epsilon \|_n - \| h - h_\epsilon \|_n &\leq 
-    \| h \|_n \leq \|h_\epsilon \|_n + \| h - h_\epsilon \|_n \\
-\|h_\epsilon \|_n - \epsilon &\leq 
-    \| h \|_n \leq \|h_\epsilon \|_n + \epsilon  \\
-\| h_\epsilon \|^2_n - 8 \epsilon (s L b)  &\leq \| h  \|^2_n  \leq
-   \| h_\epsilon \|_n^2 + 8 \epsilon (s L b) 
-\end{align*}
-where we used the fact that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$ and $ \| h_\epsilon \|_n \leq \| h_\epsilon \|_\infty \leq 4 s L b$.
-
-
-And likewise:
-\begin{align*}
-\| h_\epsilon \|^2_P - 8 \epsilon (s L b)  &\leq \| h  \|^2_P \leq
-   \| h_\epsilon \|_P^2 + 8 \epsilon (s L b)
-\end{align*} 
-
-Therefore, 
-\begin{align*}
-\sup_{h \in \mathcal{G}}  \Big| \|h\|^2_n - \|h\|^2_P \Big| \leq 
-\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| 
-        + \epsilon (16 sLb)
+\int (\psi_U^2(x) - \psi_L^2(x)) p(x)dx  &\leq  \int | h_U^2(x) - h_L^2(x)| p(x) dx \\
+   &\leq \int | h_U(x) - h_L(x) | \, |h_U(x) + h_L(x)| p(x) dx \\
+   &\leq 2sB \epsilon
 \end{align*}
 
-Since $\| h_\epsilon \|_n^2 = \frac{1}{n} \sum_{i=1}^n h_\epsilon(X_i)^2$ is an average of bounded random variables, we have by Union Bound and Hoeffding Inequality that, with probability at most $1 - \delta$,
+% And, with probability at least $1-\delta$, for all $\psi_U, \psi_L$:
+% \begin{align*}
+% \frac{1}{n} \sum_{i=1}^n ( \psi_U^2(X_i) - \psi_L^2(X_i)) &\leq 
+%          \frac{1}{n} \sum_{i=1}^n | h_U^2(X_i) - h_L^2(X_i)| \\
+%   &\leq \frac{1}{n}\sum_{i=1}^n | h_U(X_i) - h_L(X_i)| \, |h_U(X_i) + h_L(X_i)| \\
+%   &\leq 2sB(\epsilon + \epsilon_{n,\delta})
+% \end{align*}
+
+Now we can bound $\| h \|_n^2 - \| h \|_P^2$.
+
+\begin{align}
+\frac{1}{n} \sum_{i=1}^n \psi_L(X_i)^2 - \E \psi_U(X)^2  \leq
+    \| h \|_n^2 - \| h \|_P^2 \leq
+  \frac{1}{n} \sum_{i=1}^n \psi_U(X_i)^2 - \E \psi_L(X)^2  \label{eqn:hpsi_bound}
+\end{align}
+
+$\psi_L(X_i)^2$ and $\psi_U(X_i)^2$ are bounded random variables with upper bound $sB$. By uniform convergence, we have that, with probability at least $1-\delta$,, for all $\psi_L$ (and likewise $\psi_U$):
+\[
+\left| \frac{1}{n} \sum_{i=1}^n \psi_L(X_i)^2 - 
+   \E \psi_L(X)^2 \right| \leq (sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} + \log \frac{1}{\delta}}{ \epsilon^{1/2} n} }
+\]
+
+Plugging this into equation~\ref{eqn:hpsi_bound} above, we have that:
 \begin{align*}
-\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| &\leq
-  (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
-        + \log N_\infty(\epsilon, \mathcal{C}_L^s) \big) } \\
-&\leq (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
-        + C s^{1.5} Lb \epsilon^{-1/2}   \big) }
+& \E \psi_L(X)^2 - \E \psi_U(X)^2 - 
+(sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} + \log \frac{1}{\delta}}{ \epsilon^{1/2} n} } \\
+ & \leq 
+ \| h \|_n^2 - \| h \|_P^2 \leq
+\E \psi_U(X)^2 - \E \psi_L(X)^2 + 
+(sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} + \log \frac{1}{\delta}}{ \epsilon^{1/2} n} }
 \end{align*}
 
-We will set $\epsilon = \frac{1}{n^{2/5}} (C s^{0.5} L b)^2$. 
-Therefore:
+Using the $L_1(P)$ norm of $\psi_U^2 - \psi_L^2$ result, we have:
 \begin{align*}
-\sup_{h_\epsilon} \Big|  \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| &\leq
-   (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
-        + s n^{1/5}  \big) } \\
-  &\leq (8Lb)^2 \sqrt{ \frac{s^5}{cn^{4/5}} \log \frac{2}{\delta} }
+-sB\epsilon - 
+(sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} + \log \frac{1}{\delta}}{ \epsilon^{1/2} n} } \leq 
+ \| h \|_n^2 - \| h \|_P^2 \leq
+sB\epsilon + 
+(sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} + \log \frac{1}{\delta}}{ \epsilon^{1/2} n} }
 \end{align*}
-And
+
+We balance the terms by choosing $\epsilon = \left( \frac{ (sB)^2 sK^{**} (sBb)^{1/2}}{n} \right)^{2/5}$.
+
+We have then that, with probability at least $1-\delta$,
 \begin{align*}
-\sup_{h \in \mathcal{G}}  \Big| \|h\|^2_n - \|h\|^2_P \Big| &\leq 
-\sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| 
-        + \frac{1}{n^{2/5}} C^2 s^2 (Lb)^3 \\
-  &\leq (8Lb)^2 \sqrt{ \frac{s^5}{c n^{4/5}} \log \frac{2}{\delta}}
-     + (CLb)^2 \sqrt{ \frac{s^4}{n^{4/5}} } \\
-  &\leq c (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+\big| \| h \|_n^2 - \| h \|_P^2  \big| \leq
+  B^2 \sqrt{ \frac{s^5 b^{1/2} \log \frac{1}{\delta}}{n^{4/5}}}
 \end{align*}
+
+%For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-bracketing of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.\\
+
+% Because $\| h \|_n = \| h - h^L + h^L \|_n$, we have that
+% \begin{align*}
+% \|h^L \|_n - \| h - h^L \|_n &\leq 
+%     \| h \|_n \leq \|h^L \|_n + \| h - h^L \|_n \\
+% \|h^L \|_n - \epsilon - \epsilon_{n,\delta} &\leq 
+%     \| h \|_n \leq \|h^L \|_n + \epsilon + \epsilon_{n,\delta}  \\
+% \| h^L \|^2_n - 8 \epsilon (sB)  &\leq \| h  \|^2_n  \leq
+%    \| h^L \|_n^2 + 8 \epsilon (sB) 
+% \end{align*}
+% where we used the fact that $\| h - h^L \|_n \leq \| h - h^L \|_\infty \leq \epsilon$ and $ \| h^L \|_n \leq \| h^L \|_\infty \leq 4 s L b$.
+
+
+% And likewise:
+% \begin{align*}
+% \| h_\epsilon \|^2_P - 8 \epsilon (s L b)  &\leq \| h  \|^2_P \leq
+%    \| h_\epsilon \|_P^2 + 8 \epsilon (s L b)
+% \end{align*} 
+
+% Therefore, 
+% \begin{align*}
+% \sup_{h \in \mathcal{G}}  \Big| \|h\|^2_n - \|h\|^2_P \Big| \leq 
+% \sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| 
+%         + \epsilon (16 sLb)
+% \end{align*}
+
+% Since $\| h_\epsilon \|_n^2 = \frac{1}{n} \sum_{i=1}^n h_\epsilon(X_i)^2$ is an average of bounded random variables, we have by Union Bound and Hoeffding Inequality that, with probability at most $1 - \delta$,
+% \begin{align*}
+% \sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| &\leq
+%   (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+%         + \log N_\infty(\epsilon, \mathcal{C}_L^s) \big) } \\
+% &\leq (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+%         + C s^{1.5} Lb \epsilon^{-1/2}   \big) }
+% \end{align*}
+
+% We will set $\epsilon = \frac{1}{n^{2/5}} (C s^{0.5} L b)^2$. 
+% Therefore:
+% \begin{align*}
+% \sup_{h_\epsilon} \Big|  \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| &\leq
+%    (8sLb)^2 \sqrt{ \frac{1}{cn} \big(\log \frac{2}{\delta} 
+%         + s n^{1/5}  \big) } \\
+%   &\leq (8Lb)^2 \sqrt{ \frac{s^5}{cn^{4/5}} \log \frac{2}{\delta} }
+% \end{align*}
+% And
+% \begin{align*}
+% \sup_{h \in \mathcal{G}}  \Big| \|h\|^2_n - \|h\|^2_P \Big| &\leq 
+% \sup_{h_\epsilon} \Big| \|h_\epsilon\|^2_n - \|h_\epsilon\|^2_P \Big| 
+%         + \frac{1}{n^{2/5}} C^2 s^2 (Lb)^3 \\
+%   &\leq (8Lb)^2 \sqrt{ \frac{s^5}{c n^{4/5}} \log \frac{2}{\delta}}
+%      + (CLb)^2 \sqrt{ \frac{s^4}{n^{4/5}} } \\
+%   &\leq c (Lb)^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+% \end{align*}
 
 \end{proof}
 
@@ -765,7 +881,7 @@ This completes the proof.
 % upper, lower, epsilon room
 % metric
 % function space
-Let $\mathcal{C}$ be a set of functions. For a given $\epsilon$ and metric $\rho$ (which we take to be $L_2$ or $L_2(P)$), we define a \textbf{bracketing} of $\mathcal{C}$ to be a set of pairs of functions $\{ (f^L, f^U) \}$ satisfying (1) $\rho( f^L, f^U) \leq \epsilon$ and (2) for any $f \in \mathcal{C}$, there exist a pair $(f^L, f^U)$ where $f^U \geq f \geq f^L$. 
+Let $\mathcal{C}$ be a set of functions. For a given $\epsilon$ and metric $\rho$ (which we take to be $L_2$ or $L_2(P)$), we define a \textbf{bracketing} of $\mathcal{C}$ to be a set of pairs of functions $\{ (f_L, f_U) \}$ satisfying (1) $\rho( f_L, f_U) \leq \epsilon$ and (2) for any $f \in \mathcal{C}$, there exist a pair $(f_L, f_U)$ where $f^U \geq f \geq f^L$. 
 
 We let $N_{[]}(\epsilon, \mathbf{C}, \rho)$ denote the size of the smallest bracketing of $\mathcal{C}$
 \end{definition}
@@ -779,32 +895,71 @@ Let $\mathcal{C}$ be the set of convex functions supported on $[-b, b]^d$ and un
 for all $\epsilon \in (0, B \epsilon_3]$.
 \end{proposition}
 
-It is trivial to extend Kim and Samworth's result to $L_2(P)$ norm for a distribution $P$ with an uniformly upper bounded density.
+It is trivial to extend Kim and Samworth's result to $L_2(P)$ norm for an absolutely continuous distribution $P$.
 
-\begin{corollary}
-\label{cor:convexbracket_lp}
-Let $P$ be a distribution with a density $p$ upper bounded by $c_u$. Let $\mathcal{C}, b, B, \epsilon_3, K^{**}$ be defined as in Proposition~\ref{prop:convexbracket}. Then,
+\begin{proposition}
+\label{prop:convexbracket_lp}
+Let $P$ be a distribution with a density $p$. Let $\mathcal{C}, b, B, \epsilon_3, K^{**}$ be defined as in Proposition~\ref{prop:convexbracket}. Then,
 \[
-\log N_{[]} (2\epsilon, \mathcal{C}, L_2(P)) \leq K^{**} \left( \frac{2bB c_u}{\epsilon} \right)^{d/2}
+\log N_{[]} (2\epsilon, \mathcal{C}, L_1(P)) \leq K^{**} \left( \frac{2bB}{\epsilon} \right)^{d/2}
 \]
-\end{corollary}
+For all $\epsilon \in (0, B\epsilon_3]$.
+\end{proposition}
 
-Given samples $X_1,..., X_n \in \R^p$, we define $L_n$-norm as $\| f \|^2_n \equiv \frac{1}{n}\sum_{i=1}^n f(X_i)^2$. The following result follows from Corollary~\ref{cor:convexbracket_lp} directly by an union bound. 
+\begin{proof}
+Let $\mathcal{C}_\epsilon$ be the bracketing the satisfies the size bound in Proposition~\ref{prop:convexbracket_lp}. 
+
+Let $(f_L, f_U) \in \mathcal{C}_\epsilon$. Then we have that:
+\begin{align*}
+\| f_L - f_U \|_{L_1(P)} &= \int | f_L(x) - f_U(x)| p(x) dx \\
+   &\leq \left( \int | f_L(x) - f_U(x) |^2 dx \right)^{1/2}
+      \left( \int p(x)^2 dx \right)^{1/2} \\
+  &\leq \left( \int | f_L(x) - f_U(x)|^2 dx \right)^{1/2}\\
+ &\leq \| f_L - f_U \|_{L_2} \leq \epsilon
+\end{align*}
+On the third line, we used the fact that $\int p(x)^2 dx \leq \left( \int p(x) dx \right)^2 \leq 1$.
+\end{proof}
+
+It is also simple to extend the bracketing number result to additive convex functions. As before, let $\mathcal{C}^s$ be the set of additive convex functions with $s$ components.
 
 \begin{corollary}
-\label{cor:convexbracket_ln}
-Let $X_1,...,X_n$ be random samples from a distribution $P$. Let $1 > \delta > 0$. Let $\mathcal{C}_\epsilon$ be an $\epsilon$-bracketing of $\mathcal{C}$ with respect to the $L_2(P)$-norm whose size is at most $N_{[]}( 2\epsilon, \mathcal{C}, L_2(P))$. \\
-
-Then, with probability at least $1-\delta$, for all pairs $(f^L, f^U) \in \mathcal{C}_\epsilon$, $\frac{1}{n} \sum_{i=1}^n ( f^L(X_i) - f^U(X_i)^2 \leq \epsilon + \epsilon_{n, \delta}$, where 
-$\epsilon_{n,\delta} \equiv 
-B^2 \sqrt{ \frac{ \log N_{[]}(2\epsilon, \mathcal{C}, L_2(P)) + \log \frac{1}{\delta}}{2n}} = 
-B^2 \sqrt{ \frac{K^{**} (2bBc_u)^{d/2} + \log \frac{1}{\delta}}{2\epsilon^{d/2} n} }$
+\label{cor:convexadditive_lp}
+Let $P$ be a distribution with a density $p$ upper bounded by $c_u$. Let $b, B, \epsilon_3, K^{**}$ be defined as in Proposition~\ref{prop:convexbracket}. Then,
+\[
+\log N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P)) \leq s K^{**} 
+    \left( \frac{2sbB}{\epsilon} \right)^{1/2}
+\]
+For all $\epsilon \in (0, s B \epsilon_3]$.
 \end{corollary}
 
 \begin{proof}
-$(f^L(X_i) - f^U(X_i))^2$ is at most $B^2$. There are $N_{[]}(2\epsilon, \mathcal{C}, L_2(P))$ pairs $(f^L, f^U)$. The corollary follows from a direct application of union bound and Hoeffding Inequality.
+Let $f \in \mathcal{C}^s$. We can construct an $\epsilon$-bracketing for $f$ through $\epsilon/s$-bracketings for each of the components $\{ f_k \}_{k=1,...,s}$:
+\[f_U = \sum_{k=1}^s f_{Uk}  \qquad f_L = \sum_{k=1}^s f_{Lk} \]
+It is clear that $f_U \geq f \geq f_L$. It is also clear that $\| f_U - f_L \|_{L_1(P)} \leq \sum_{k=1}^s \| f_{Uk} - f_{Lk} \|_{L_1(P)} \leq \epsilon$.
 \end{proof}
 
+
+The following result follows from Corollary~\ref{prop:convexbracket_lp} directly by an union bound. 
+
+\begin{corollary}
+\label{cor:convexbracket_ln}
+Let $X_1,...,X_n$ be random samples from a distribution $P$. Let $1 > \delta > 0$. Let $\mathcal{C}^s_\epsilon$ be an $\epsilon$-bracketing of $\mathcal{C}^s$ with respect to the $L_1(P)$-norm whose size is at most $N_{[]}( 2\epsilon, \mathcal{C}^s, L_1(P))$. Let $\epsilon \in (0, s B \epsilon_3]$.
+
+Then, with probability at least $1-\delta$, for all pairs $(f_L, f_U) \in \mathcal{C}^s_\epsilon$, we have that
+
+\begin{align*}
+\frac{1}{n} \sum_{i=1}^n |f_L(X_i) - f_U(X_i)| &\leq \epsilon + \epsilon_{n, \delta}
+\end{align*}
+
+where 
+$\epsilon_{n,\delta} \equiv 
+sB \sqrt{ \frac{ \log N_{[]}(2\epsilon, \mathcal{C}^s, L_2(P)) + \log \frac{1}{\delta}}{2n}} = 
+sB \sqrt{ \frac{sK^{**} (2sbB)^{d/2} + \log \frac{1}{\delta}}{2\epsilon^{d/2} n} }$
+\end{corollary}
+
+\begin{proof}
+$|f_L(X_i) - f_U(X_i)|$ is at most $sB$. There are $N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P))$ pairs $(f_L, f_U)$. The inequality follows from a direct application of union bound and Hoeffding Inequality.\\
+\end{proof}
 % \subsubsection{Covering Number for Lipschitz Convex Functions}
 
 % \begin{definition}
