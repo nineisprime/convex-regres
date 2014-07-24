@@ -1,52 +1,69 @@
+\def\uds#1{#1}
+
 \section{Optimization}
 \label{sec:optimization}
 
-We describe in detail the optimization algorithm for the additive convex regression stage, the second decoupled concave regression stage follows almost identical procedure. 
+We now describe in detail the optimization algorithm for the additive
+convex regression stage.  The second decoupled concave regression stage
+follows a very similar procedure.
 
-We let $\bds{x}_{i}\in\mathbb{R}^{p}$ be the covariate, $Y_{i}$ be the
-response and $\epsilon_{i}$ be the mean zero noise. The regression function $f(\cdot)$ we estimate is the summation of 
+Let $\bds{x}_{i}\in\mathbb{R}^{p}$ be the covariate, let $y_{i}$ be the
+response and let $\epsilon_{i}$ be the mean zero noise. The regression function $f(\cdot)$ we estimate is the summation of 
 functions $f_{k}(\cdot)$ in each variable dimension and a scalar offset $\mu$.  
 We impose an additional constraint that each $f_{k}(\cdot)$ is 
 an univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
 \begin{equation}\label{hyper}
-      f_{kj} \geq f_{ki} + \beta_{ki}(x_{kj}-x_{ki}) \quad (\forall i,j)
+      f_{i'k} \geq f_{ik} + \beta_{ik}(x_{i'k}-x_{ik}) \quad
+      \textrm{for all $i,i' = 1,\ldots, n$,}
 \end{equation}
-where $f_{ki}\coloneqq f_{k}(x_{ki})$ and $\beta_{ki}$ is the
-subgradient at point $x_{ki}$. We apparently need $O(n^2 p)$ constraints to
-impose the supporting hyperplane constraints, which is computationally
-expensive for large scale problems.  In fact, only $O(np)$
+where $f_{ik}\coloneqq f_{k}(x_{ik})$ and $\beta_{ik}$ is the
+subgradient at point $x_{ik}$. We apparently need $O(n^2 p)$ constraints to
+impose the supporting hyperplane constraints.
+In fact, only $O(np)$
 constraints suffice, since univariate convex functions are
 characterized by the condition that the subgradient, which is a scalar, must
-increase monotonically. This observation leads to our optimization
-program:
+increase monotonically. This observation leads to the  optimization
 \begin{equation}
 \begin{split}
-       \min_{\bds{h},\bds{\beta},\mu} & \;\; \frac{1}{2n}\sum_{i=1}^{n}
-                     \Bigl( Y_{i}-\sum_{k=1}^{p}f_{ki} - \mu \Bigr)^{2} 
-                         + \lambda\sum_{k=1}^{p}\|\bds{f}_{k\cdot}\|_{\infty} \\
-       \textrm{subject to} &\;\; f_{k(i+1)} = f_{k(i)} + \beta_{k(i)}(x_{k(i+1)}-x_{k(i)}), \\
-                     & \;\; \sum_{i=1}^{n}f_{ki}=0,\\
-                     & \;\; \beta_{k(i+1)} \geq \beta_{k(i)} \ (\forall k, i)
+       \min_{f,\beta,\mu} & \;\; \frac{1}{2n}\sum_{i=1}^{n}
+                     \Bigl( y_{i}-\mu - \sum_{k=1}^{p}f_{ik}\Bigr)^{2} 
+                         + \lambda\sum_{k=1}^{p}\|f_k\|_{\infty} \\
+       \textrm{subject to} &\;\; \textrm{for all $k=1,\ldots, p$:}\\
+       & \;\; f_{(i+1)_k k} = f_{(i)_k k} +
+       \beta_{(i)_k k}(x_{(i+1)_k k}-x_{(i)_k k}),\;\textrm{for $i=1,\ldots, n-1$}\\
+       & \;\; \sum_{i=1}^{n}f_{ik}=0,\\
+       & \;\; \beta_{(i+1)_k k} \geq \beta_{(i)_k k}\;\textrm{for $i=1,\ldots, n-1$}.
 \end{split}
 \label{np}
 \end{equation}
-Here $\{(1),(2),\ldots,(n)\}$ is a reordering of $\{1,2,\ldots,n\}$ such that $x_{k(1)}\leq{}x_{k(2)}\leq\cdots\leq{}x_{k(n)}$. 
+Here $f_k$ denotes the vector $f_k = (f_{1k}, f_{2_k}\ldots, f_{nk})^T\in\reals^n$
+and $\{(1)_k,(2)_k,\ldots,(n)_k\}$ is a reordering of $\{1,2,\ldots,n\}$
+such that 
+\begin{equation}
+x_{(1)_k k} \leq{} x_{(2)_k k} \leq \cdots \leq{} x_{(n)_k k}.
+\end{equation}
 
-We can solve for $\mu$ explicitly, as  
-$\mu = \frac{1}{n} \sum_{i=1}^n Y_i = \bar{Y}$ which follows from the
+We can solve for $\mu$ explicitly as  
+$\mu = \frac{1}{n} \sum_{i=1}^n y_i = \bar{y}$.  This follows from the
 KKT conditions
 and the constraints $\sum_i f_{ki} = 0$.
-It is easy to verify that the constraints in (\ref{np}) satisfy the supporting hyperplane constraints, as
-\begin{align*}
-  \forall & j\geq i, \; f_{k(j)}-f_{k(i)}  = \sum\limits_{t=i}^{j-1}(f_{k(t+1)}-f_{k(t)}) \\
-   &= \sum\limits_{t=i}^{j-1}\beta_{k(t)}(x_{k(t+1)}-x_{k(t)})
-   \geq \beta_{k(i)}\sum\limits_{t=i}^{j-1}(x_{k(t+1)}-x_{k(t)}) 
-  = \beta_{k(i)}(x_{k(j)}-x_{k(i)}) \\
-  \forall & j<i,\;  f_{k(j)}-f_{k(i)} =
-                \sum\limits_{t=j}^{i-1}(f_{k(t)}-f_{k(t+1)}) \\
-     & = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) 
-     \geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)}) = \beta_{k(i)}(x_{k(j)}-x_{k(i)}).
-\end{align*}
+It is easy to verify that the constraints in (\ref{np}) satisfy the
+supporting hyperplane constraints, since
+for all $j > i$
+\begin{align}
+  f_{(j)_kk}-f_{(i)_kk}  & = \sum\limits_{t=i}^{j-1}(f_{(t+1)_kk}-f_{(t)_kk}) \\
+   &= \sum\limits_{t=i}^{j-1}\beta_{(t)_kk}(x_{(t+1)_kk}-x_{(t)_kk}) \\
+   &\geq \beta_{(i)_kk}\sum\limits_{t=i}^{j-1}(x_{(t+1)_kk}-x_{(t)_kk}) \\
+  & = \beta_{(i)_kk}(x_{(j)_kk}-x_{(i)_kk}) 
+\end{align}
+and for all $j < i$
+\begin{align}
+f_{k(j)}-f_{k(i)} & =
+    \sum\limits_{t=j}^{i-1}(f_{k(t)}-f_{k(t+1)}) \\
+     & = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) \\
+     &\geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)}) \\
+     & = \beta_{k(i)}(x_{k(j)}-x_{k(i)}).
+\end{align}
 
 
 %\begin{SCfigure}
@@ -57,28 +74,37 @@ It is easy to verify that the constraints in (\ref{np}) satisfy the supporting h
 %  chooses the inner piece-wise linear convex functions.}
 %\end{SCfigure}
 
-The sparse convex additive model optimization in (\ref{np}) is a quadratic program (QP) with
+The sparse convex additive model optimization in (\ref{np}) is a quadratic program with
 $O(np)$ variables and $O(np)$ constraints. 
-Directly applying a QP solver for $\bds{h},
-\bds{\beta}$ would be computationally expensive for relatively large
+Directly applying a QP solver for $f$ and $\beta$
+would be computationally expensive for relatively large
 $n$ and $p$. However, notice that variables in different feature
 dimensions are only coupled in the term
-$(Y_{i}-\sum_{k=1}^{p}h_{ki})^{2}$. Hence, we can apply the block
+$(Y_{i}-\mu - \sum_{k=1}^{p}f_{ik})^{2}$. Hence, we can apply the block
 coordinate descent method, where in each step we solve the following
-QP subproblem for $\{\bds{h}_{k\cdot},\bds{\beta}_{k\cdot}\}$ with the
-other variables fixed. We present the one-block optimization in matrix notation:
+QP subproblem for $\{f_k, \beta_k\}$ with the
+other variables fixed. In matrix notation, the optimization is
 \begin{align}
-\min_{ \bds{f}_k, \bds{\beta}_k, \gamma_k}& \frac{1}{2n} \| \bds{r}_{\mh k} - \bds{f}_k \|_2^2 
+\begin{split}
+\min_{ f_k, \beta_k, \gamma_k} \;\;& \frac{1}{2n} \| \uds{r}_k - \uds{f}_k \|_2^2 
      + \lambda \gamma_k \label{opt:1d_compact} \\
- \textrm{s.t. } & P \bds{f}_k = \diag(P \bds{x}_k)  \bds{\beta}_k \nonumber \\
-   & D \bds{\beta}_k \leq 0 ,
-   \quad -\gamma_k \mathbf{1}_n \leq \bds{f}_k \leq \gamma_k \mathbf{1}_n,
-   \quad \mathbf{1}_n^\tran \bds{f}_k = 0 \nonumber
+ \textrm{such that } & P \uds{f}_k = \diag(P \bds{x}_k)  \uds{\beta}_k \\
+   & D \uds{\beta}_k \leq 0 \\
+   & -\gamma_k \mathbf{1}_n \leq \uds{f}_k \leq \gamma_k \mathbf{1}_n   \\
+   & \mathbf{1}_n^\tran \uds{f}_k = 0 
+\end{split}
 \end{align}
-
-where $\bds{f}_k \in \R^n$ and equals $(f_{k1}, ..., f_{kn})$, $\bds{\beta}_k \in \R^{n-1}$ and equals $(\beta_{k1}, ..., \beta_{k(n-1)})$. $\bds{r}_{\mh k} \in \R^n$ is the residual vector: $\bds{r}_{\mh k}(i) = Y_i - \bar{Y} - \sum_{k' \neq k} f_{k' i}$. $\bds{x}_k \in \R^n$ and equals $(x_{k1}, ..., x_{kn})$. \\
-
-$P \in \R^{(n-1) \times n}$ is a permutation matrix where the $i'$-th row $P_{i' \cdot}$ is all zero except $-1$ at the $(i')$-th smallest coordinate of $\bds{x}_k$ and $1$ at the $(i'+1)$-th smallest coordinate of $\bds{x}_k$. $D \in \R^{(n-2) \times (n-1)}$ is another permutation matrix where the $i'$-th row is all zero except $1$ at position $i'$ and $-1$ at position $i'+1$. $\diag( v )$ for a vector $v$ is a diagonal matrix whose diagonal entries are $v$.
+where $\uds{\beta}_k \in \R^{n-1}$ is the vector $\uds{\beta}_k =
+(\beta_{1k}, \ldots, \beta_{(n-1)k})^T$, and
+$\uds{r}_{k} \in \R^n$ is the residual vector $\uds{r}_{k} = (y_i -
+\hat\mu - \sum_{k' \neq k} f_{ik'})^T$.
+In addition, 
+$P \in \R^{(n-1) \times n}$ is a permutation matrix where the $i$-th
+row  is all zero except $-1$ at in position $(i)_k$ and $1$ in
+position $(i+1)_k$, and $D \in \R^{(n-2) \times (n-1)}$ is another
+permutation matrix  where the $i$-th row is all zero except for a $1$ 
+at position $i$ and $-1$ at position $i+1$.  We denote by
+$\diag( v )$ the diagonal matrix whose diagonal entries are $v$.
 
 % \begin{equation}
 % \label{eqn:opt_1d}
