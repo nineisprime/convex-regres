@@ -439,7 +439,7 @@ Fix $k$. Let $f^*_k$ and $g^*_k$ be defined as in
 equation~\ref{eqn:convex_additive} and
 equation~\ref{eqn:concave_postprocess}.  Then
 we have that
-\begin{align*}
+\begin{align}
 f^*_k &= \arg\min_{f_k} \Big\{
    \E\big( f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) - f_k \big)^2 
     \,:\, f_k \in  \mathcal{C}^1,\, \E f_k(X_k) = 0 
@@ -448,7 +448,7 @@ g^*_k &= \arg\min_{g_k} \Big\{
    \E\big( f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) - g_k \big)^2 
     \,:\, g_k \in \mh \mathcal{C}^1,\, \E g_k(X_k) = 0 
   \Big\}
-\end{align*}
+\end{align}
 Therefore, $f^*_k = 0$ and $g^*_k = 0$ implies that $\E[ f(X) -
 \sum_{k'\neq k} f^*_{k'}(X_{k'}) \given x_k] = 0$.  Now we use
 Lemma~\ref{cor:faithfulness_extension} with $\phi(\mathbf{x}_{-k}) =
