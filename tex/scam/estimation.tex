@@ -36,15 +36,15 @@ $\hat S = \{ k \,:\, \| \hat{f}_k \|_\infty > 0
   \textrm{ or } \| \hat{g}_k \|_\infty > 0 \}$. 
 \end{enumerate}
 
+For identifiability, we impose the constraint $\sum_{i=1}^n f_k(x_{ik}) =
+0$ for each $k$.  The set of one-dimensional convex (concave) functions
+satisfying this mean zero constraint is denoted $\C^1_0$ ($\mh{}\C^1_0$).
 We use an $\ell_\infty/\ell_1$ penalty in equation~\eqref{eqn:scam}
 and an $\ell_\infty$ penalty in equation~\eqref{eqn:dc} to encourage
 sparsity.  Other penalties can also produce
 sparse estimates, such as a penalty on the derivative of each of the
 component functions.  The $\|\cdot\|_\infty$ norm is convenient for both
 theoretical analysis and implementation.
-For identifiability, we impose the constraint $\sum_{i=1}^n f_k(x_{ik}) =
-0$ for each $k$.  The set of 1-dimensional convex (concave) functions
-satisfying this mean zero constraint is denoted $\C^1_0$ ($\mh{}\C^1_0$).
 
 The optimization in \eqref{eqn:scam} appears to be infinite
 dimensional, but it is equivalent to a finite dimensional quadratic
