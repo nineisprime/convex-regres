@@ -17,7 +17,7 @@ an univariate convex function, which can be represented by its supporting hyperp
       \textrm{for all $i,i' = 1,\ldots, n$,}
 \end{equation}
 where $f_{ik}\coloneqq f_{k}(x_{ik})$ and $\beta_{ik}$ is the
-subgradient at point $x_{ik}$. We apparently need $O(n^2 p)$ constraints to
+subgradient at point $x_{ik}$. This apparently requires $O(n^2 p)$ constraints to
 impose the supporting hyperplane constraints.
 In fact, only $O(np)$
 constraints suffice, since univariate convex functions are
@@ -37,11 +37,12 @@ increase monotonically. This observation leads to the  optimization
 \label{np}
 \end{equation}
 Here $f_k$ denotes the vector $f_k = (f_{1k}, f_{2_k}\ldots, f_{nk})^T\in\reals^n$
-and $\{(1)_k,(2)_k,\ldots,(n)_k\}$ is a reordering of $\{1,2,\ldots,n\}$
-such that 
+and $\{(1)_k,(2)_k,\ldots,(n)_k\}$ are the indices in the sorted ordering
+of the values of coordinate $k$:
 \begin{equation}
 x_{(1)_k k} \leq{} x_{(2)_k k} \leq \cdots \leq{} x_{(n)_k k}.
 \end{equation}
+
 
 We can solve for $\mu$ explicitly as  
 $\mu = \frac{1}{n} \sum_{i=1}^n y_i = \bar{y}$.  This follows from the
@@ -77,10 +78,10 @@ f_{k(j)}-f_{k(i)} & =
 The sparse convex additive model optimization in (\ref{np}) is a quadratic program with
 $O(np)$ variables and $O(np)$ constraints. 
 Directly applying a QP solver for $f$ and $\beta$
-would be computationally expensive for relatively large
+is computationally expensive for relatively large
 $n$ and $p$. However, notice that variables in different feature
-dimensions are only coupled in the term
-$(Y_{i}-\mu - \sum_{k=1}^{p}f_{ik})^{2}$. Hence, we can apply the block
+dimensions are only coupled in the squared error term
+$(y_{i}-\mu - \sum_{k=1}^{p}f_{ik})^{2}$. Hence, we can apply the block
 coordinate descent method, where in each step we solve the following
 QP subproblem for $\{f_k, \beta_k\}$ with the
 other variables fixed. In matrix notation, the optimization is
@@ -100,11 +101,13 @@ $\uds{r}_{k} \in \R^n$ is the residual vector $\uds{r}_{k} = (y_i -
 \hat\mu - \sum_{k' \neq k} f_{ik'})^T$.
 In addition, 
 $P \in \R^{(n-1) \times n}$ is a permutation matrix where the $i$-th
-row  is all zero except $-1$ at in position $(i)_k$ and $1$ in
+row  is all zeros except for a $-1$ in position $(i)_k$ and a $1$ in
 position $(i+1)_k$, and $D \in \R^{(n-2) \times (n-1)}$ is another
-permutation matrix  where the $i$-th row is all zero except for a $1$ 
-at position $i$ and $-1$ at position $i+1$.  We denote by
-$\diag( v )$ the diagonal matrix whose diagonal entries are $v$.
+permutation matrix  where the $i$-th row is all zeros except for a $1$ 
+in position $i$ and a $-1$ in position $i+1$.  We denote by
+$\diag( v )$ the diagonal matrix with diagonal entries $v$.
+The extra variable $\gamma_{k}$ is introduced to impose the
+regularization penalty involving the $\ell_{\infty}$ norm.  
 
 % \begin{equation}
 % \label{eqn:opt_1d}
@@ -118,21 +121,30 @@ $\diag( v )$ the diagonal matrix whose diagonal entries are $v$.
 %         &\  \sum_{i=1}^{n}f_{ki}=0, \ (\forall i).
 % \end{split}
 % \end{equation}
-The extra variable $\gamma_{k}$ is introduced to deal with the $\ell_{\infty}$ norm. This QP subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse structure, 
-which can be solved efficiently using optimization packages (e.g., MOSEK: \verb+http://www.mosek.com/+).  We cycle through all feature dimensions ($k$) from $1$ to $p$ multiple times until convergence.
-Empirically, we observe that the algorithm converges in only a few cycles. We also implemented an ADMM solver for (\ref{np}), but found that it is not as efficient as this QP solver.
 
-After optimization, the function estimator for any input data $\bds{x}_j$ is, according to (\ref{hyper}),
+This QP
+subproblem involves $O(n)$ variables, $O(n)$ constraints and a sparse
+structure, which can be solved efficiently using optimization
+packages. In our experiments we use {\sc mosek} (\href{http://www.mosek.com/}{www.mosek.com}).  We cycle through
+all covariates $k$ from $1$ to $p$ multiple times until convergence.
+Empirically, we observe that the algorithm converges in only a few
+cycles. We also implemented an ADMM solver for (\ref{np})
+\citep{Boyd:admm}, but found
+that it is not as efficient as this QP solver.
+
+After optimization, the function estimates for an input vector $\bds{x}$ is, according to (\ref{hyper}),
 \begin{equation}
 \begin{split}
-\nonumber
-      f(\bds{x}_j) & = \sum_{k=1}^{p}f_k(x_{kj})+\mu 
-= \sum_{k=1}^{p}\max_{i} \{f_{ki}+\beta_{ki}(x_{kj}-x_{ki})\} +
-      \mu.
+      \hat f(\bds{x}) & = \sum_{k=1}^{p} \hat f_k(x_{j})+ \hat \mu 
+= \sum_{k=1}^{p}\max_{i} \bigl\{\hat f_{ik}+ \hat \beta_{ik}(x_{k}-x_{ik})\bigr\} +
+      \hat \mu.
 \end{split}
 \end{equation} 
 
-The univariate concave function estimation is a straightforward modification of optimization~\ref{opt:1d_compact}. We need only modify one linear inequality constraint to enforce that the subgradients must be non-increasing: $\beta_{k(i+1)} \leq \beta_{k(i)}$.
+The univariate concave function estimation is a straightforward
+modification of optimization~\ref{opt:1d_compact}. It is only
+necessary to modify the linear inequality constraints so that the subgradients are
+non-increasing: $\beta_{(i+1)_kk} \leq \beta_{(i)_kk}$.
 
 
 \subsection{Alternative Formulation}
