@@ -34,7 +34,7 @@ Then the following are true:
 
 \end{theorem}
 
-This result holds regardless of whether we impose the Lipschitz conditions in optimization~\ref{opt:alternate_opt} and~\ref{opt:alternate_opt_concave} or not.
+This result holds regardless of whether we impose the boundedness conditions in optimization~\ref{opt:alternate_opt} and~\ref{opt:alternate_opt_concave} or not.
 The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix.\\
 
 Theorem~\ref{thm:deterministic} allows us to analyze false negative
@@ -71,7 +71,7 @@ Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
 \item[A2:] $f_0$ is convex and twice-differentiable. 
-\item[A3:] $|\partial_{x_k} f_0 | \leq L$ for all $k$
+\item[A3:] $\|f_0\|_\infty \leq sB$ and $\| f^*_k \|_\infty \leq B$ for all $k$.
 \item[A4:] $w$ is mean-zero subgaussian, independent of $X$, with subgaussian scale $\sigma$, i.e. for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
 \end{packed_enum}
 By assumption A1, $f^*_k$ is must be zero for $k\notin \{1,...,s\}$. 
@@ -103,7 +103,7 @@ Intuitively, if $\alpha_f$ is smaller, then it is easier to make a false omissio
 \label{thm:false_positive}
 Suppose assumptions A1-A4 hold. 
 
-Suppose $\lambda_n \geq c s Lb \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
+Suppose $\lambda_n \geq c s B \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
 \[
 \lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)} \Big|
 \]
@@ -118,12 +118,12 @@ Section~\ref{sec:false_positive_proof} of the Appendix.
 
 \begin{theorem} (Controlling false negatives) \\
 \label{thm:false_negative}
-Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $L$-Lipschitz constraint and let $\hat{g}_k$'s be any DC solution to the restricted regression with $L$-Lipschitz constraint.\\
+Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $B$-boundedness and let $\hat{g}_k$'s be any DC solution to the restricted regression with $B$-boundedness constraint.\\
 
-Suppose $\lambda \leq c sLb  \sqrt{\frac{1}{n} \log^2 np}$ and suppose $n$ is large enough such that $(Lb)^3 \sigma \sqrt{\frac{s^5}{n^{4/5}} \log^2 np} \leq 1$.\\
+Suppose $\lambda \leq c sB  \sqrt{\frac{1}{n} \log^2 np}$ and $n$ is large enough such that$\frac{n^{4/5}}{\log^2 np} \geq B^3 \sigma s^{2.5}$.
 
 Suppose 
-$\frac{\alpha_f}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
+$\frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
 
 Then, with probability at least $1 - \frac{1}{n}$, we have that for all $k \in S$, $\hat{f}_k \neq 0$ or $\hat{g}_k \neq 0$.
 
@@ -133,24 +133,19 @@ This is a finite sample version of
 Theorem~\ref{thm:convex_faithful}. We need stronger assumptions in
 Theorem~\ref{thm:false_negative} to use our additive faithfulness
 result, Theorem~\ref{thm:convex_faithful}. We also include an extra
-Lipschitz constraint so that we can use existing covering number
-results \cite{Bronshtein:76}. Recent work
-\cite{Guntu:13} shows that the Lipschitz constraint
-is not required with more advanced empirical process theory
-techniques; we leave the incorporation of this development as future work. 
-We give the full proof of Theorem~\ref{thm:false_negative}
-in Section~\ref{sec:false_negative_proof} of the Appendix.
+boundedness constraint so that we can use recent bracketing number
+results \cite{kim2014global}.
 
 Combining Theorem~\ref{thm:false_positive} and
 ~\ref{thm:false_negative} 
 we have the following result.
 \begin{corollary}
-Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution and $\hat{g}_k$'s be any DC solution, both with $L$-Lipschitz constraints, both with 
-$\lambda = \Theta \Big( sLb \sqrt{\frac{1}{n} \log^2 np} \Big)$. \\
+Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution and $\hat{g}_k$'s be any DC solution, both with $B$-boundedness constraints, both with 
+$\lambda = \Theta \Big( sB \sqrt{\frac{1}{n} \log^2 np} \Big)$. \\
 
 
 Suppose 
-$\frac{\alpha_f}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c (Lb)^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
+$\frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
 
 Then, for all large enough $n$, we have that with probability at least $1-\frac{1}{n}$:
 \begin{align*}
@@ -164,7 +159,7 @@ Then, for all large enough $n$, we have that with probability at least $1-\frac{
 The above corollary implies that sparsistency is achievable at the same exponential scaling of the ambient dimension $p = O(\exp(n^c)), c<1$ rate as parametric models. The cost of nonparametric modeling is reflected in the scaling with respect to $s$, which can only scale at $o(n^{4/25})$.
 
 \begin{remark}
-\citet{dalalyan:12} have shown that under tradtional smoothness constraints, variable selection is achievable only if $n > O(e^s)$. It is interesting to observe that because of additive faithfulness, the convexity assumption enables a much better scaling of $n = O(\textrm{poly}(s))$, demonstrating that geometric constraints can be quite different from the previously studied smoothness conditions.
+\citet{dalalyan:12} have shown that under tradtional smoothness constraints, even with a product distribution, variable selection is achievable only if $n > O(e^s)$. It is interesting to observe that because of additive faithfulness, the convexity assumption enables a much better scaling of $n = O(\textrm{poly}(s))$, demonstrating that geometric constraints can be quite different from the previously studied smoothness conditions.
 \end{remark}
 
 %\textbf{Comparison with Related Work.} 
