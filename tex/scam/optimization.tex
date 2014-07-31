@@ -222,7 +222,7 @@ The decoupled concave postprocessing stage optimization is again similar. Suppos
 We can use either the off-centered $\Delta_k$ matrix or the centered $\bar{\Delta}_k$ matrix because the concave estimations are decoupled and hence suffer no identifiability problems.\\
 
 \begin{remark}
-in sparsistency analysis, we assume that $L$, an upper bound to the coordinate-wise Lipschitz smoothness of the true function $f_0$, is known and that we constrain our estimate $\hat{f}$ to obey the same Lipschitz condition, that is, each $\hat{f}_k$ must be $L$-Lipschitz. This Lipschitz constraint can be easily added to our optimization program. In optimization~\ref{opt:alternate_opt}, we can enforce the Lipschitz condition by adding two constraints: $d_{k(1)} \geq - L$ and $\sum_{j=2}^{n-1} d_{k(j)} \leq L$ (similarly for optimization~\ref{opt:alternate_opt_concave}). We emphasize that we use the Lipschitz constraint only in our theoretical analysis; all of our experiments do not impose any Lipschitz condition.
+in sparsistency analysis, we assume that $B$, an upper bound to $\| f^*_k \|_\infty$, is known and that we constrain our estimate $\hat{f}$ to obey the same boundedness condition, that is, for each $k$, we require that $\|\hat{f}_k\|_\infty \leq B$. This boundedness constraint can be easily added to our optimization program. In optimization~\ref{opt:alternate_opt}, we can enforce the boundedness condition by adding $p$ constraints: $\| \bar{\Delta}_k d_k \|_\infty \leq B$ for $k=1,...,p$. (similarly for optimization~\ref{opt:alternate_opt_concave}). We emphasize that we use the boundedness constraint only in our theoretical analysis; all of our experiments do not impose any boundedness condition.
 \end{remark}
 
 

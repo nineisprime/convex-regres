@@ -120,10 +120,10 @@ Section~\ref{sec:false_positive_proof} of the Appendix.
 \label{thm:false_negative}
 Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $B$-boundedness and let $\hat{g}_k$'s be any DC solution to the restricted regression with $B$-boundedness constraint.\\
 
-Suppose $\lambda \leq c sB  \sqrt{\frac{1}{n} \log^2 np}$ and $n$ is large enough such that$\frac{n^{4/5}}{\log^2 np} \geq B^3 \sigma s^{2.5}$.
+Suppose $\lambda \leq c_1 sB  \sqrt{\frac{1}{n} \log^2 np}$ and $n$ is large enough such that$\frac{n^{4/5}}{\log^2 np} \geq B^3 \sigma s^{2.5}$.  Suppose also that $\sigma \geq c_2$ for an arbitrarily small constant $c_2 > 0$. 
 
 Suppose 
-$\frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
+$\frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$, where $c$ is a constant dependent only on $b, c_1, c_2$.\\
 
 Then, with probability at least $1 - \frac{1}{n}$, we have that for all $k \in S$, $\hat{f}_k \neq 0$ or $\hat{g}_k \neq 0$.
 
@@ -141,11 +141,11 @@ Combining Theorem~\ref{thm:false_positive} and
 we have the following result.
 \begin{corollary}
 Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution and $\hat{g}_k$'s be any DC solution, both with $B$-boundedness constraints, both with 
-$\lambda = \Theta \Big( sB \sqrt{\frac{1}{n} \log^2 np} \Big)$. \\
+$\lambda = \Theta \Big( sB \sqrt{\frac{1}{n} \log^2 np} \Big)$. Suppose $\sigma \geq c_2$ for an arbitrarily small constant $c_2 > 0$.\\
 
 
 Suppose 
-$\frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$.\\
+$\frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$ where $c$ is some constant dependent only on $b, c_2$.\\
 
 Then, for all large enough $n$, we have that with probability at least $1-\frac{1}{n}$:
 \begin{align*}

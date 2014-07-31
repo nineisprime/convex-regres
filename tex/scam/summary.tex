@@ -256,14 +256,16 @@ Our main result is the following.
 Suppose assumptions A1-A4 hold. Let $\{\hat{f}_i\}$ be any AC solution and
 let $\{\hat{g}_k\}$ be any DC solution, both estimated with 
 regularization parameter $\lambda$ scaling as
-$\lambda = \Theta \Big( sB \sqrt{\frac{1}{n} \log^2 np} \Big)$. 
+$\lambda = \Theta \Big( sB \sqrt{\frac{1}{n} \log^2 np} \Big)$. Suppose $\sigma \geq c_1$ for an arbitrarily small constant $c_1 > 0$.
 Suppose in addition that
 \begin{gather}
 \frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2
   np}\\
 \frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}}
   \log^2 2np}.
-\end{gather}
+\end{gather} 
+where $c$ is a constant dependent only on $b, c_1$.
+
 Then, for sufficiently large $n$, with probability at least $1-\frac{1}{n}$:
 \begin{align*}
 \hat{f}_k \neq 0 \trm{ or } \hat{g}_k \neq 0 &\trm{ for all } k \in S\\
