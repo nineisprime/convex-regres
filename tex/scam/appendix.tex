@@ -163,11 +163,11 @@ The exact same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT cond
  
 
 \begin{theorem} 
-Suppose assumptions A1-A4 hold. 
+Suppose assumptions A1-A4 hold. Suppose $\sqrt{\log 2np} \geq 1$. Define $\tilde{\sigma} \equiv \max(\sigma, B)$.
 
-Suppose $\lambda_n \geq c s Lb \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
+Suppose $\lambda_n \geq 8 s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$, then, with probability at least $ 1 - \frac{12}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
 \[
-\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)} \Big|
+\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big|
 \]
 
 And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from optimization~\ref{opt:alternate_opt}, and the DC solution $\hat{g}_k$, from optimization~\ref{opt:alternate_opt_concave} are zero. 
@@ -176,22 +176,23 @@ And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from opti
 \begin{proof}
 The key is to note that $\hat{r}$ and $\Delta_{k,j}$ are independent for all $k \in S^c,j=1,...,n$ because $\hat{r}$ is only dependent on $X_{S}$.
 
-Fix $j$ and $i$. $\hat{r}^\tran \mathbf{1}_{(i':n)}$ is then the sum of $n-i'+1$ random coordinates of $\hat{r}$. We will then use Serfling's theorem on the concentration of measure of sampling without replacement. (corollary~\ref{cor:serfling}) We must first bound $\| \hat{r} \|_\infty$ and $\frac{1}{n} \sum_{i=1}^n \hat{r}_i$ before we can use Serfling's results however.\\
+Fix $j$ and $i$. $\hat{r}^\tran \mathbf{1}_{(i':n)_k}$ is then the sum of $n-i'+1$ random coordinates of $\hat{r}$. We will then use Serfling's theorem on the concentration of measure of sampling without replacement. (corollary~\ref{cor:serfling}) We must first bound $\| \hat{r} \|_\infty$ and $\frac{1}{n} \sum_{i=1}^n \hat{r}_i$ before we can use Serfling's results however.\\
 
 \textbf{Step 1}: Bounding $\| \hat{r} \|_\infty$. 
 
 $\hat{r}_i = f_0(x_i) + w_i - \hat{f}(x_i)$ where $\hat{f}(x_i) = \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ is the convex additive function outputted by the restricted regression.
 
-Both $f_0(x_i)$ and $\hat{f}(x_i)$ are coordinate-wise $L$-Lipschitz and therefore are bounded by $2 sLb$. 
+Both $f_0(x_i)$ and $\hat{f}(x_i)$ are bounded by $sB$.
 
-Because $w_i$ is subgaussian, $|w_i| \leq c \sigma \sqrt{\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq c \sigma \sqrt{ \log \frac{2}{\delta}}$ with probability at most $1 - n \delta$.
+Because $w_i$ is subgaussian, $|w_i| \leq  \sigma \sqrt{2\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq \sigma \sqrt{ 2 \log \frac{2n}{\delta}}$ with probability at most $1 - \delta$.
 
-We now put this together and take another union bound across all $j$ and all $i'$:
-\begin{align*}
-\| \hat{r} \|_\infty &\leq c (sLb + \sigma \sqrt{ \log \frac{2}{\delta}}) \\
-      &\leq c sLb \sigma \sqrt{\log \frac{2}{\delta}}
-\end{align*}
-with probability at least $1 - n^2 p \delta$. We supposed that both $sLb \geq 2$ and $\sigma\sqrt{\log \frac{2}{\delta}} \geq 2$.
+We now put this together: 
+%and take another union bound across all $j$ and all $i'$:
+\begin{align}
+\| \hat{r} \|_\infty &\leq 2sB + \sigma \sqrt{ 2\log \frac{2n}{\delta}}) \nonumber \\
+      &\leq 4 s \tilde{\sigma} \sqrt{\log \frac{2n}{\delta}} \label{eqn:stepone_rhat}
+\end{align}
+with probability at least $1 - \delta$. We define $\tilde{\sigma} = \max(\sigma, B)$. We also supposed that $\sqrt{\log \frac{2np}{\delta}} \geq 1$, which is acceptable since $\delta \leq 1$ and the theorem presupposes that $\sqrt{ \log 2np } \geq 1$.
 
 \textbf{Step 2}: Bounding $| \frac{1}{n} \hat{r}^\tran \mathbf{1} |$. 
 
@@ -201,34 +202,40 @@ with probability at least $1 - n^2 p \delta$. We supposed that both $sLb \geq 2$
   &= \frac{1}{n} \sum_{i=1}^n f_0(x_i) + w_i \quad \trm{ ($\hat{f}$ is centered)}
 \end{align*}
 
-Because $|f_0(x_i)| \leq sLb$, the first term $| \frac{1}{n} \sum_{i=1}^n f_0(x_i)|$ is at most $2 sLb \sqrt{\frac{1}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$ by Hoeffding Inequality.
+Because $|f_0(x_i)| \leq sB$, the first term $| \frac{1}{n} \sum_{i=1}^n f_0(x_i)|$ is at most $sB \sqrt{\frac{2}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$ by Hoeffding Inequality.
 
-Because $w_i$ is subgaussian, the second term $|\frac{1}{n} \sum_{i=1}^n w_i|$ is at most $2 \sigma \sqrt{ \frac{1}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$.
+Because $w_i$ is subgaussian, the second term $|\frac{1}{n} \sum_{i=1}^n w_i|$ is at most $\sigma \sqrt{ \frac{2}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$.
 
 Taking an union bound, we have that 
 
-\begin{align*}
-| \frac{1}{n} \hat{r}^\tran \mathbf{1}| &\leq 2 sLb \sqrt{\frac{1}{n} \log \frac{2}{\delta}} + 2 \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} \\
-  &\leq c sLb \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} 
-\end{align*}
-with probability at least $1-2\delta$.\\
+\begin{align}
+| \frac{1}{n} \hat{r}^\tran \mathbf{1}| &\leq sB \sqrt{\frac{2}{n} \log \frac{4}{\delta}} +  \sigma \sqrt{\frac{2}{n} \log \frac{4}{\delta}} \nonumber \\
+  &\leq 4 s \tilde{\sigma} \sqrt{\frac{1}{n} \log \frac{4}{\delta}} \label{eqn:steptwo_rhat}
+\end{align}
+with probability at least $1-\delta$.\\
 
 \textbf{Step 3}: We now apply Serfling's theorem.
 
-Serfling's theorem states that with probability at least $1 - \delta$:
-\[
+For any $k \in S^c$, Serfling's theorem states that with probability at least $1 - \delta$:
+\begin{align*}
 \Big
-|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)}\Big| \leq
+|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)_k}\Big| \leq
    2\| \hat{r} \|_\infty \sqrt{ \frac{1}{n} \log \frac{2}{\delta}} + 
    \Big|\frac{1}{n} \hat{r}^\tran \mathbf{1} \Big|
-\]
-
-Taking an union bound across previous events, we have that with probability at least $1 - 3n^2 p \delta$, for all $j \in S^c$, for all $i'=1,...,n$:
-\begin{align*}
-\Big|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)} \Big| &\leq
-  c sLb \sigma \sqrt{\frac{1}{n} \log \frac{2}{\delta}} 
 \end{align*}
-Setting $\delta = \frac{1}{n^3 p}$ gives the desired result.
+
+We need Serfling's theorem to hold for all $k = 1,...,p$ and $i' = 1,...,n$. We also need the events that $\|\hat{r}\|_\infty$ and $| \frac{1}{n} \hat{r}^\tran \mathbf{1}|$ are small to hold. The following follows from a union bound. With probability at least $1-\delta$, for all $k,i'$,
+\begin{align*}
+\Big
+|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)_k}\Big| &\leq
+   2\| \hat{r} \|_\infty \sqrt{ \frac{1}{n} \log \frac{6np}{\delta}} + 
+   \Big|\frac{1}{n} \hat{r}^\tran \mathbf{1} \Big|\\
+  &\leq 4s\tilde{\sigma}\sqrt{\log \frac{6n}{\delta}} \sqrt{\frac{1}{n}\log \frac{6np}{\delta}} + 4 s \tilde{\sigma} \sqrt{\frac{1}{n}\log \frac{12}{\delta}} \\
+  &\leq 8 s\tilde{\sigma} \sqrt{ \frac{1}{n} \log^2 \frac{12np}{\delta}}
+\end{align*}
+
+In the second inequality, we used equation~\ref{eqn:stepone_rhat} and equation~\ref{eqn:steptwo_rhat} from step 1 and 2 respectively. Setting $\delta = \frac{12}{n}$ gives the desired result.
+
 
 \end{proof}
 
@@ -253,14 +260,14 @@ Setting $\delta = \frac{1}{n^3 p}$ gives the desired result.
 Let $f : \mathbb{R}^s \rightarrow \R$, we denote $\| f \|_P \equiv \E f(X)^2$. \\
 Given samples $X_1,...,X_n$, we denote $\| f \|_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i)^2$ and $\langle f, g \rangle_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i) g(X_i)$. \\
 
-Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_L \equiv \{ f \in \mathcal{C}^1 \,:\, \| \partial f \|_\infty \leq L \}$ denote the set of $L$-Lipschitz univariate convex functions. \\
+Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_B \equiv \{ f \in \mathcal{C}^1 \,:\, \| f \|_\infty \leq B \}$ denote the set of $B$-bounded univariate convex functions. \\
 
-Define $\mathcal{C}^s$ as the set of convex additive functions and $\mathcal{C}^s_L$ likewise as the set of $L$-Lipschitz convex additive functions.
+Define $\mathcal{C}^s$ as the set of convex additive functions and $\mathcal{C}^s_B$ likewise as the set of convex additive functions whose components are $B$-bounded.
 \begin{align*}
 \mathcal{C}^s &\equiv \{ f \,:\, f = \sum_{k=1}^s f_k, \,
    f_k \in \mathcal{C}^1 \} \\
-\mathcal{C}^s_L &\equiv \{ f \in \mathcal{C}^s \,:\, 
-f = \sum_{k=1}^s f_k, \, \| \partial f_k \|_\infty \leq L \}
+\mathcal{C}^s_B &\equiv \{ f \in \mathcal{C}^s \,:\, 
+f = \sum_{k=1}^s f_k, \, \| f_k \|_\infty \leq B \}
 \end{align*}
 
 Let $f^*(x) = \sum_{k=1}^s f^*_k(x_k)$ be the population risk minimizer:
@@ -268,12 +275,12 @@ Let $f^*(x) = \sum_{k=1}^s f^*_k(x_k)$ be the population risk minimizer:
 f^* = \arg\min_{f \in \mathcal{C}^s} \| f_0 - f^* \|_P^2
 \]
 
-We let $L$ be an upper bound on $\| \partial_{x_k} f_0 \|_\infty$ and $\| \partial f^*_k \|_\infty$. Since $f_0, f^*$ are supported on $[-b, b]^s$, it follows that $\| f_0 \|_\infty, \|f^* \|_\infty \leq s L b$.
+We let $sB$ be an upper bound on $\| f_0 \|_\infty$ and $B$ be an upper bound on $\| f^*_k \|_\infty$. It follows that $\|f^* \|_\infty \leq s B$.
 
 We define $\hat{f}$ as the empirical risk minimizer:
 \[
 \hat{f} = \arg\min \Big \{ \| y - f \|_n^2 + \lambda \sum_{k=1}^s \| f_k \|_\infty 
-    \,:\, f \in \mathcal{C}^s_L, \mathbf{1}_n^\tran f_k = 0 \Big \}
+    \,:\, f \in \mathcal{C}^s_B,\, \mathbf{1}_n^\tran f_k = 0 \Big \}
 \]
 
 For $k \in \{1,...,s\}$, define $g^*_k$ to be decoupled concave population risk minimizer
@@ -282,7 +289,7 @@ g^*_k \equiv \argmin_{g_k \in \mh \mathcal{C}^1} \| f_0 - f^* - g_k \|_P^2
 \]
 In our proof, we will analyze $g^*_k$ for $k$'s such that $f^*_k = 0$. Likewise, we define the empirical version:
 \[
-\hat{g}_k \equiv \argmin \Big\{ \| f_0 - \hat{f} - g_k \|_n^2 \,:\, g_k \in \mh \mathcal{C}^1_L \,, \mathbf{1}_n^\tran g_k = 0 \Big\}
+\hat{g}_k \equiv \argmin \Big\{ \| f_0 - \hat{f} - g_k \|_n^2 \,:\, g_k \in \mh \mathcal{C}^1_B \,, \mathbf{1}_n^\tran g_k = 0 \Big\}
 \]
 By the definition of the ACDC procedure, $\hat{g}_k$ exist only for $k$ that have zero in their convex additive approximation.
 
@@ -307,16 +314,16 @@ Suppose $f^*_k = 0$, then $g^*_k \neq 0$. When $n$ is large enough, $\hat{g}_k$ 
 
 \begin{theorem}
 \label{thm:convex_consistent}
-Let $\hat{f}$ be the minimizer of the restricted regression with $\lambda \leq sB \sqrt{ \frac{1}{n} \log^2 np}$.
+Let $\tilde{\sigma} \equiv \max(\sigma, B)$. Let $\hat{f}$ be the minimizer of the restricted regression with $\lambda \leq 9 s \tilde{\sigma} \sqrt{ \frac{1}{n} \log^2 np}$.
 
-Suppose $n \geq c_1 \max(\sqrt{sB}, B)$ and $\sigma \geq c_2$ for some constant $c_1, c_2 > 0$.
+Suppose $n \geq c_1 \max(\sqrt{sB}, B)$.
 
-Then, with probability at least $1-\delta$,
+Then, with probability at least $1-\frac{C}{n}$,
 \begin{align}
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
-&\leq c B^3\sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{Cnp}{\delta}}
+&\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np}
 \end{align}
-Where $c, C$ are constants, dependent on $c_1, c_2$.
+Where $c, C$ are constants, possibly dependent on $c_1, b$.
 
 \end{theorem}
 
@@ -342,18 +349,18 @@ We plug in $y = f_0 + w$:
  \| f^*_k - \bar{f}^*_k \|_\infty \Big) &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle
 \end{align*}
 
-The middle term can be bounded with the fact that $\|f^*_k - \bar{f}^*_k \|_\infty \leq 4B$.
+The middle term can be bounded with the fact that $\|f^*_k - \bar{f}^*_k \|_\infty \leq 2B$.
 
 \begin{align*}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 
-   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s B 
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 2 s B 
 \end{align*}
 
 Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from the LHS. With probability at least $1 - \delta$:
 \begin{align}
 \label{eqn:first_step_inequality}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
-   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 4 s B + c(sB)^2 \frac{1}{n} \log \frac{2}{\delta}
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 2 s B + c(sB)^2 \frac{1}{n} \log \frac{2}{\delta}
 \end{align}
 
 %[TOOD: at this point, we still have to choose a value for $\lambda$]\\
@@ -367,57 +374,58 @@ Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from the LHS. 
 
 \textbf{Step 2.} We upper bound $2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle$ with bracketing entropy.
 
-Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s\}$ as the set of convex additive functions centered around the function $f^* - \bar{f}^*$. 
+Define $\mathcal{G}$ as $\{ f - f^* + \bar{f}^* \,:\, f \in \mathcal{C}^s_B \}$ as the set of convex additive functions centered around the function $f^* - \bar{f}^*$. 
 
 By Corollary~\ref{prop:convexbracket_lp}, there is an $\epsilon$-bracketing of $\mathcal{G}$ whose size is bounded by $\log N_{[]}( 2\epsilon, \mathcal{G}, L_1(P)) \leq sK^{**} \left( \frac{2sbB}{\epsilon} \right)^{1/2}$, for all $\epsilon \in (0, sB \epsilon_3]$.
 
 By Corollary~\ref{cor:convexbracket_ln}, with probability at least $1-\delta$, each bracketing pair $(h_U, h_L)$ is close in $L_1(P_n)$ norm, i.e., for all $(h_U, h_L)$, 
 $\frac{1}{n} \sum_{i=1}^n | h_U(X_i) - h_L(X_i) | \leq 2 \epsilon + sB \sqrt{ \frac{sK^{**}(2sbB
-)^{1/2} + \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}$.
+)^{1/2} \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}$, where we assumed that condition~\ref{cond:simplify_covering_number} holds. 
+
 
 For each $h \in \mathcal{G}$, there exists a pair $(h_U, h_L)$ such that $h_U(X_i) - h_L(X_i) \geq h(X_i) - h_L(X_i) \geq 0$. Therefore, with probability at least $1-\delta$, uniformly for all $h \in \mathcal{G}$:
 
 $$
 \frac{1}{n} \sum_{i=1}^n |h(X_i) - h_L(X_i)| \leq \frac{1}{n} \sum_{i=1}^n | h_U(X_i) - h_L(X_i)| \leq 2\epsilon +  (sB) \sqrt{ \frac{sK^{**}(2sbB)^{1/2} \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}
 $$.
-Where we assumed that condition~\ref{cond:simplify_covering_number} holds. 
 
-We denote $\epsilon_{n,\delta} \equiv (sB) \sqrt{ \frac{sK^{**}(2sbBc_u)^{1/2} \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}$. 
-Therefore,  
+We denote $\epsilon_{n,\delta} \equiv (sB) \sqrt{ \frac{sK^{**}(2sbBc_u)^{1/2} \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}$. \\
+
+As proved before, the event $\| w \|_\infty \leq \sigma \sqrt{ 2\log \frac{2n}{\delta}}$ has probability at most $1-\delta$. We take an union bound between this event and the event that for all $h$, $\frac{1}{n}\sum_{i=1}^n | h(X_i) - h_L(X_i)|$ is small:
 \[
 |\langle w, h - h_L\rangle_n| \leq \| w \|_\infty \frac{1}{n} \sum_{i=1}^n |h(X_i) - h_L(X_i)| \leq
-  \sigma \sqrt{\log \frac{n}{\delta}} \left( \epsilon + \epsilon_{n,\delta} \right)
+  \sigma \sqrt{2 \log \frac{4n}{\delta}} \left( \epsilon + \epsilon_{n,2\delta} \right)
 \]
-For the last inequality, we used the fact that $w$ is a vector of independent subgaussian($\sigma$) random variables and hence, by union bound, with probability at least $1-\delta$, $\| w \|_\infty \leq \sigma \sqrt{\log \frac{n}{\delta}}$. 
 
-By another property of subgaussian random variables, with probability at least $1-\delta$, $|\langle w, h_L \rangle_n | \leq \| h_L \|_n \sigma \sqrt{ \frac{1}{cn} \log \frac{1}{\delta} }$. Applying an union bound, we have that 
-$\sup_{h_L} |\langle w, h_L \rangle| \leq sB \sigma \sqrt{ \frac{\log N_{[]}}{n} \log \frac{1}{\delta}}$.
+
+By another property of subgaussian random variables, for any fixed vector $h_L = (h_L(X_1),...,h_L(X_n))$, with probability at least $1-\delta$, $|\langle w, h_L \rangle_n | \leq \| h_L \|_n \sigma \sqrt{ \frac{2}{n} \log \frac{2}{\delta} }$. Union bound again, we have that 
+$\sup_{h_L} |\langle w, h_L \rangle| \leq sB \sigma \sqrt{ \frac{2}{n}\log \frac{2 N_{[]}}{\delta}}$.
 
 Putting this together, we have that
 \begin{align*}
 |\langle w, h \rangle_n | &\leq | \langle w, h_L\rangle_n| + |\langle w, h - h_L\rangle_n|\\
 |\sup_{h \in \mathcal{G}} \langle w, h \rangle_n| &\leq 
-     | \sup_{h^L} \langle w, h^L \rangle_n | + \sigma \sqrt{\log \frac{n}{\delta}} (\epsilon + \epsilon_{n, \delta}) \\
-   &\leq   sB \sigma \sqrt{ \frac{ \log N_{[]} + \log \frac{1}{\delta}}{cn}} + \sigma \sqrt{\log \frac{n}{\delta}} (\epsilon + \epsilon_{n, \delta}) \\
-   &\leq  sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} \log \frac{1}{\delta}}{cn \epsilon^{1/2}}} +
-   \sigma \sqrt{ \log \frac{n}{\delta}} (\epsilon + \epsilon_{n, \delta}) \\
-   &\leq sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} \log \frac{1}{\delta}}{cn \epsilon^{1/2}}} +
-   \sigma\sqrt{\log \frac{n}{\delta}} \epsilon + sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} + \log \frac{1}{\delta}}{cn \epsilon^{1/2}} \log \frac{n}{\delta}} \\
-   &\leq \sigma\sqrt{\log \frac{n}{\delta}} \epsilon + sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} \log^2 \frac{n}{\delta}}{cn \epsilon^{1/2}}} \\
+     | \sup_{h^L} \langle w, h_L \rangle_n | + \sigma \sqrt{2 \log \frac{2n}{\delta}} (\epsilon + \epsilon_{n, 2\delta}) \\
+   &\leq   sB \sigma \sqrt{ 2 \frac{ \log N_{[]} + \log \frac{1}{\delta}}{n}} + \sigma \sqrt{2 \log \frac{2n}{\delta}} (\epsilon + \epsilon_{n, \delta}) \\
+   &\leq  sB \sigma \sqrt{ 2 \frac{sK^{**} (2sbB)^{1/2} \log \frac{1}{\delta}}{n \epsilon^{1/2}}} +
+   \sigma \sqrt{ 2\log \frac{2n}{\delta}} (\epsilon + \epsilon_{n, \delta}) \\
+   &\leq sB \sigma \sqrt{ 2\frac{sK^{**} (2sbB)^{1/2} \log \frac{1}{\delta}}{n \epsilon^{1/2}}} +
+   \sigma\sqrt{2 \log \frac{2n}{\delta}} \epsilon + sB \sigma \sqrt{2 \frac{sK^{**} (2sbB)^{1/2} + \log \frac{1}{\delta}}{n \epsilon^{1/2}} \log \frac{2n}{\delta}} \\
+   &\leq \sigma\sqrt{2\log \frac{2n}{\delta}} \epsilon + 2 sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} \log^2 \frac{2n}{\delta}}{n \epsilon^{1/2}}} \\
 \end{align*}
 
-The two terms are balanced when one sets $\epsilon = sB \sqrt{ \frac{(s K^{**} (sBb)^{1/2})^{4/5}}{n^{4/5}} }$.  
+We need that $n$ is large enough so that $\epsilon \in (0, sB \epsilon_3]$ and to ensure that conditions~\ref{cond:simplify_covering_number} hold, we need that $\log n \geq 2$ and $n \geq c B$ where $c$ is some constant dependent only on $K^{**}$ and $b$.
 
-This is only valid if $n$ is large enough so that $\epsilon \in (0, sB \epsilon_3]$.
+The conditions needed are satisfied if we set $\epsilon = sB \sqrt{ \frac{(s K^{**} (sBb)^{1/2})^{4/5}}{n^{4/5}} }$ and use the $n \geq c_1 \max( \sqrt{sB}, B)$ assumption in the statement of the theorem. Setting $\epsilon$ thus also balances the two terms.
 
-Also, to ensure that conditions~\ref{cond:simplify_covering_number} hold, we need that $\log n \geq 2$ and $n \geq c B$ where $c$ is some constant dependent only on $K^{**}$ and $b$.
 
-We upper bound some terms to simplify the presentations again and end up with the following result:
+We upper bound some terms to simplify the presentations again and end up with the following result, with probability at least $1-\delta$:
 
 \[
-|\sup_{h \in \mathcal{G}} \langle w, h \rangle | \leq sB \sigma \sqrt{ 
-   \frac{s b^{1/2} \log^2 \frac{n}{\delta}}{c n^{4/5}}}
+|\sup_{h \in \mathcal{G}} \langle w, h \rangle | \leq c sB \sigma \sqrt{ 
+   \frac{s b^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
 \]
+where we absorbed $K^{**}$ into the constants $c$ and the union bound multipliers into the constant $C$.
 
 % Then, $\| h \|_n \leq \| h \|_\infty \leq 4sLb$ for all $h \in \mathcal{G}$.\\
 
@@ -459,14 +467,14 @@ Plugging this result into equation~\ref{eqn:first_step_inequality} and using an 
 \begin{align}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
    &\leq c sB \sigma \sqrt{ 
-   \frac{s b^{1/2} \log^2 \frac{n}{\delta}}{n^{4/5}}}
-   + \lambda 4 s B + c (sB)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
+   \frac{s b^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
+   + \lambda 2 s B + c (sB)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
    &\leq c sB \sigma \sqrt{ 
-   \frac{s b^{1/2} \log^2 \frac{nC}{\delta}}{n^{4/5}}}
-   + \lambda 4 s B \nonumber\\   
+   \frac{s b^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
+   + \lambda 2 s B \nonumber\\   
    &\leq c B \sigma 
-    \sqrt{ \frac{s^3 b^{1/2}}{n^{4/5}} \log^2 \frac{n}{\delta}} + \lambda 4 sB
+    \sqrt{ \frac{s^3 b^{1/2}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 2 sB
 \label{eqn:second_step_inequality}
 \end{align}
 
@@ -483,13 +491,13 @@ Plugging this result into equation~\ref{eqn:first_step_inequality} and using an 
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
    &\leq cB^2 \sigma 
     \sqrt{ \frac{s^3 b^{2/5}}{n^{4/5}} \log^2 \frac{Cn}{\delta}}
- +\lambda 4 s B + c B^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
+ +\lambda 2 s B + c B^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
     \nonumber \\
-&\leq c B^3 \sigma \sqrt{ \frac{s^5 b^{2/5}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 4 sB \nonumber
+&\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5 b^{2/5}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 2 sB \nonumber
 \end{align}
-Where for the second inequality, we used the assumption that there is some large constant $c$ such that $B \geq \frac{\sigma}{c\sigma + 1}$.
+Where for the second inequality, we define $\tilde{\sigma} \equiv \max(\sigma, B)$.
 
-Substituting in $\lambda \leq c sB \sqrt{\frac{1}{n} \log^2 np}$ and we get the desired result.
+Substituting in $\lambda \leq 9 s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}$ and $\delta = \frac{C}{n}$ we get the desired result.
 
 \end{proof}
  
@@ -502,13 +510,13 @@ Substituting in $\lambda \leq c sB \sqrt{\frac{1}{n} \log^2 np}$ and we get the 
 
 \begin{theorem}
 \label{thm:concave_consistent}
-Let $\hat{g}_k$ denote the minimizer of the concave postprocessing with $\lambda \leq c sB \sqrt{\frac{1}{n} \log^2 np}$.\\
+Let $\hat{g}_k$ denote the minimizer of the concave postprocessing with $\lambda \leq 9 sB \sqrt{\frac{1}{n} \log^2 np}$. Let $\tilde{\sigma} \equiv \max(\sigma, B)$.
 
-Suppose $n$ is large enough such that $B^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta} } \leq 1$.\\
+Suppose $n$ is large enough such that $B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np } \leq 1$.\\
 
-Then, with probability at least $1- s\delta$, for all $k=1,...,s$:\\
+Then, with probability at least $1- \frac{C}{n}$, for all $k=1,...,s$:\\
 \[
-\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  c (Lb)^{2.5} \sigma^{0.5} \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
+\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  c B^2 \sigma^{1/2} \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 np} 
 \]
 \end{theorem}
 
@@ -533,46 +541,48 @@ Using identical analysis as Step 2 of the proof of Theorem~\ref{thm:convex_consi
   c B^2 \sigma \sqrt{ \frac{b^{1/2}}{n^{4/5}} \log \frac{C}{\delta} }+ \lambda 2 B
 \end{align*}
 
-Using the uniform convergence result (lemma~\ref{lem:uniform_convergence}), we have, with probability at least $1-2\delta$:
+Using the uniform convergence result (lemma~\ref{lem:uniform_convergence}), we have, with probability at least $1-\delta$:
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &\leq
-  c B^2 \sigma \sqrt{ \frac{1}{n} \log \frac{4}{\delta} }+ \lambda 2 Lb +
+  c B^2 \sigma \sqrt{ \frac{1}{n} \log \frac{Cn}{\delta} }+ \lambda 2 B +
   c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log \frac{2}{\delta} } \\
- &\leq c (Lb)^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log \frac{4}{\delta}}+ \lambda 2 Lb
+ &\leq c B^2 \tilde{\sigma} \sqrt{\frac{s^5}{n^{4/5}} \log \frac{C}{\delta}}+ \lambda 2B
 \end{align*}
 
-Plugging in $\lambda \leq \sqrt{ \frac{1}{n} \log^2 np}$:
+Plugging in $\lambda \leq 9 s \tilde{\sigma} \sqrt{ \frac{1}{n} \log^2 np}$:
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
-\leq c B^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log \frac{4}{\delta}}+ 
-    2Lb \sqrt{\frac{1}{n} \log^2 np}\\
+\leq c B^2 \tilde{\sigma} \sqrt{\frac{s^5}{n^{4/5}} \log \frac{C}{\delta}}+ 
+    2s B \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}\\
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
-\leq c B^3\sigma \sqrt{\frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} \\
+\leq c B^2 \tilde{\sigma} \sqrt{\frac{s^5}{n^{4/5}} \log^2 \frac{Cnp}{\delta}} \\
 \end{align*}
+with probability at least $1-\delta$.
 
-\textbf{Step 2.} The goal is to bound the quality of approximation between $\| f_0 - \hat{f} - g^*_k \|_P^2$ and $\| f_0 - f^* - g^*_k \|_P^2$ and likewise for $\hat{g}_k$.
+\textbf{Step 2.} The goal is to bound the quality of approximation between $\| f_0 - \hat{f} - g^*_k \|_P^2$ and $\| f_0 - f^* - g^*_k \|_P^2$ and likewise for $\hat{g}_k$. 
 
 \begin{align*}
 \| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 &\leq 
     \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle
    + 2 \langle f_0 - f^*, g^*_k \rangle \\
- &\leq c B^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} + 
+ &\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} + 
     2 | \langle \hat{f} - f^*, g^*_k \rangle |  \\
- &\leq  c B^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} +
+ &\leq  c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} +
     2 \| \hat{f} - f^* \|_P \| g^*_k \|_P \\
-&\leq  c B^3 \sigma \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} +
-   c B \sqrt{B^3\sigma \sqrt{ 
-                   \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} }\\
-&\leq  cB \sqrt{B^3\sigma \sqrt{ 
-                   \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} }\\
+&\leq  c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} +
+   c B \sqrt{B^2 \tilde{\sigma} \sqrt{ 
+                   \frac{s^5}{n^{4/5}} \log^2 np} }\\
+&\leq  cB \sqrt{B^2 \tilde{\sigma} \sqrt{ 
+                   \frac{s^5}{n^{4/5}} \log^2 np} }\\
 \end{align*}
+with probability at least $1-\frac{C}{n}$, by theorem~\ref{thm:convex_consistent}.
 
 The same bound likewise holds for $\hat{g}_k$.
 
 \textbf{Step 3.} Collecting the results from Step 1 and Step 2, we have, with probability at least $1-2\delta$:
 \begin{align*}
 \| f_0 - f^* - \hat{g}_k \|_P^2 - \|f_0 - f^* - g^*_k \|_P^2 \leq
-   c B^{2.5} \sigma^{0.5} 
+   c B^2 \sigma^{1/2} 
      \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
 \end{align*}
 
@@ -602,7 +612,7 @@ Taking an union bound across $k=1,...,s$ dimensions completes the result.
 With probability at least $1-\delta$:
 \begin{align*}
 \sup_{f \in \mathcal{C}^s_L} \Big| \| f_0 - f \|^2_n - \|f_0 - f \|^2_P\Big| \leq
-   c B^2 \sqrt{ \frac{s^5b^{1/2}}{n^{4/5}} \log \frac{2}{\delta}}
+   c B^3 \sqrt{ \frac{s^5b^{1/2}}{n^{4/5}} \log \frac{2}{\delta}}
 \end{align*}
 \end{lemma}
 
@@ -643,7 +653,7 @@ Now we can bound $\| h \|_n^2 - \| h \|_P^2$.
   \frac{1}{n} \sum_{i=1}^n \psi_U(X_i)^2 - \E \psi_L(X)^2  \label{eqn:hpsi_bound}
 \end{align}
 
-$\psi_L(X_i)^2$ and $\psi_U(X_i)^2$ are bounded random variables with upper bound $sB$. By Hoeffding's inequality and union bound, we have that, with probability at least $1-\delta$,, for all $\psi_L$ (and likewise $\psi_U$):
+$\psi_L(X_i)^2$ and $\psi_U(X_i)^2$ are bounded random variables with upper bound $(sB)^2$. By Hoeffding's inequality and union bound, we have that, with probability at least $1-\delta$,, for all $\psi_L$ (and likewise $\psi_U$):
 \[
 \left| \frac{1}{n} \sum_{i=1}^n \psi_L(X_i)^2 - 
    \E \psi_L(X)^2 \right| \leq (sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{2}{\delta}}{ \epsilon^{1/2} n} }
@@ -673,7 +683,7 @@ We balance the terms by choosing $\epsilon = \left( \frac{ (sB)^2 sK^{**} (sBb)^
 We have then that, with probability at least $1-\delta$,
 \begin{align*}
 \big| \| h \|_n^2 - \| h \|_P^2  \big| \leq
-  B^2 \sqrt{ \frac{s^5 b^{1/2} \log \frac{2}{\delta}}{n^{4/5}}}
+  c B^3 \sqrt{ \frac{s^5 b^{1/2} \log \frac{2}{\delta}}{n^{4/5}}}
 \end{align*}
 
 %For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-bracketing of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.\\
@@ -742,7 +752,7 @@ Let $f_0, f^*$ be defined as in section~\ref{sec:false_negative_proof_notations}
 Then, with probability at least $1 - 2\delta$,
 \[
 \Big | \| f_0 - f^* \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 \Big| \leq
-    c (sLb)^2 \frac{1}{n} \log \frac{4}{\delta}
+    c (sB)^2 \frac{1}{n} \log \frac{4}{\delta}
 \]
 \end{lemma}
 
@@ -756,7 +766,7 @@ Then, with probability at least $1 - 2\delta$,
 \end{align*}
 
 
-$\bar{f}^* = \frac{1}{n} \sum_{i=1}^n f^*(X_i)$ is the average of $n$ bounded mean-zero random variables and therefore, with probability at least $1-\delta$, $| \bar{f}^* | \leq 4 s L b \sqrt{ \frac{1}{n} \log \frac{2}{\delta} }$.
+$\bar{f}^* = \frac{1}{n} \sum_{i=1}^n f^*(X_i)$ is the average of $n$ bounded mean-zero random variables and therefore, with probability at least $1-\delta$, $| \bar{f}^* | \leq 4 sB \sqrt{ \frac{1}{n} \log \frac{2}{\delta} }$.
 
 The same reasoning likewise applies to $\bar{f}_0 = \frac{1}{n} \sum_{i=1}^n f_0(X_i)$.
 
@@ -1041,6 +1051,6 @@ Then we have that
  
 %%% Local Variables: ***
 %%% mode:latex ***
-%%% TeX-master: "faithful.tex" ***
+%%% TeX-master: "paper.tex" ***
 %%% End: ***
 

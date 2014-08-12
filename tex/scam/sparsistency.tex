@@ -101,11 +101,11 @@ Intuitively, if $\alpha_f$ is smaller, then it is easier to make a false omissio
 
 \begin{theorem} (Controlling false positives) \\
 \label{thm:false_positive}
-Suppose assumptions A1-A4 hold. 
+Suppose assumptions A1-A4 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$.
 
-Suppose $\lambda_n \geq c s B \sigma  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{C}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
+Suppose $\lambda_n \geq 8 s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{12}{np}$, for all $k \in S^c$, and for all $i'=1,...,n$:
 \[
-\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)} \Big|
+\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big|
 \]
 
 And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from optimization~\ref{opt:alternate_opt}, and the DC solution $\hat{g}_k$, from optimization~\ref{opt:alternate_opt_concave} are zero. \\
@@ -118,14 +118,14 @@ Section~\ref{sec:false_positive_proof} of the Appendix.
 
 \begin{theorem} (Controlling false negatives) \\
 \label{thm:false_negative}
-Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $B$-boundedness and let $\hat{g}_k$'s be any DC solution to the restricted regression with $B$-boundedness constraint.\\
+Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $B$-boundedness constraint and let $\hat{g}_k$'s be any DC solution to the restricted regression with $B$-boundedness constraint. Let $\tilde{\sigma}$ denote $\max(\sigma, B)$.\\
 
-Suppose $\lambda \leq c_1 sB  \sqrt{\frac{1}{n} \log^2 np}$ and $n$ is large enough such that$\frac{n^{4/5}}{\log^2 np} \geq B^3 \sigma s^{2.5}$.  Suppose also that $\sigma \geq c_2$ for an arbitrarily small constant $c_2 > 0$. 
+Suppose $\lambda \leq 9 s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}$ and $n$ is large enough such that $\frac{n^{4/5}}{\log^2 np} \geq c_1 B^2 \tilde{\sigma} s^{5/2}$. 
 
 Suppose 
-$\frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$, where $c$ is a constant dependent only on $b, c_1, c_2$.\\
+$\alpha_f/\tilde{\sigma} \geq c B^2 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\alpha_g^2/\tilde{\sigma} \geq c B^2 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$, where $c$ is a constant dependent only on $b, c_1$.\\
 
-Then, with probability at least $1 - \frac{1}{n}$, we have that for all $k \in S$, $\hat{f}_k \neq 0$ or $\hat{g}_k \neq 0$.
+Then, with probability at least $1 - \frac{C}{n}$ for some constant $C$, we have that for all $k \in S$, $\hat{f}_k \neq 0$ or $\hat{g}_k \neq 0$. 
 
 \end{theorem}
 
@@ -141,19 +141,19 @@ Combining Theorem~\ref{thm:false_positive} and
 we have the following result.
 \begin{corollary}
 Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution and $\hat{g}_k$'s be any DC solution, both with $B$-boundedness constraints, both with 
-$\lambda = \Theta \Big( sB \sqrt{\frac{1}{n} \log^2 np} \Big)$. Suppose $\sigma \geq c_2$ for an arbitrarily small constant $c_2 > 0$.\\
+$\lambda = \Theta\big( s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np} \big) $. Let $\tilde{\sigma} \equiv \max(\sigma, B)$.
 
 
 Suppose 
-$\frac{\alpha_f}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\frac{\alpha_g^2}{\sigma} \geq c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log^2 2np}$ where $c$ is some constant dependent only on $b, c_2$.\\
+$\alpha_f/\tilde{\sigma} \geq c B^2 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\alpha_g^2/\tilde{\sigma} \geq c B^4 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$.
 
-Then, for all large enough $n$, we have that with probability at least $1-\frac{1}{n}$:
+Then, for all large enough $n$, we have that with probability at least $1-\frac{C}{n}$:
 \begin{align*}
 \hat{f}_k \neq 0 \trm{ or } \hat{g}_k \neq 0 &\trm{ for all } k \in S\\
 \hat{f}_k = 0 \trm{ and } \hat{g}_k = 0 & \trm{ for all } k \notin S
 \end{align*}
 
-
+where $c,C$ are constants, possibly dependent on $b, c_1$.
 
 \end{corollary}
 The above corollary implies that sparsistency is achievable at the same exponential scaling of the ambient dimension $p = O(\exp(n^c)), c<1$ rate as parametric models. The cost of nonparametric modeling is reflected in the scaling with respect to $s$, which can only scale at $o(n^{4/25})$.
