@@ -130,3 +130,22 @@ plot(100:100:1000,prob(1:10),'r.-',100:100:1000,prob(11:20),'b.-',...
 legend('\alpha=0.0','\alpha=0.2','\alpha=0.5','\alpha=1.0');
 xlabel('Number of samples'); ylabel('Probability of recovery');
 title('Probability of support recovery');
+
+
+tightInset = get(gca, 'TightInset');
+position(1) = tightInset(1);
+position(2) = tightInset(2);
+position(3) = 1 - tightInset(1) - tightInset(3);
+position(4) = 1 - tightInset(2) - tightInset(4);
+set(gca, 'Position', position);
+set(gca,'units','centimeters')
+pos = get(gca,'Position');
+
+ti = get(gca,'TightInset');
+set(gcf, 'PaperUnits','centimeters');
+set(gcf, 'PaperSize', [pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
+set(gcf, 'PaperPositionMode', 'manual');
+set(gcf, 'PaperPosition',[0 0 pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
+
+h = gcf;
+saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/Curve2.pdf')
