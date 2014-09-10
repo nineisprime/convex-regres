@@ -120,10 +120,10 @@ Section~\ref{sec:false_positive_proof} of the Appendix.
 \label{thm:false_negative}
 Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $B$-boundedness constraint and let $\hat{g}_k$'s be any DC solution to the restricted regression with $B$-boundedness constraint. Let $\tilde{\sigma}$ denote $\max(\sigma, B)$.\\
 
-Suppose $\lambda \leq 9 s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}$ and $n$ is large enough such that $\frac{n^{4/5}}{\log^2 np} \geq c_1 B^2 \tilde{\sigma} s^{5/2}$. 
+Suppose $\lambda \leq 9 s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}$ and $n$ is large enough such that $\frac{n^{4/5}}{\log np} \geq B^4 \tilde{\sigma}^2 s^5$. 
 
 Suppose 
-$\alpha_f/\tilde{\sigma} \geq c B^2 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\alpha_g^2/\tilde{\sigma} \geq c B^2 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$, where $c$ is a constant dependent only on $b, c_1$.\\
+$\alpha_f/\tilde{\sigma} \geq c B^2 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\alpha_g^2/\tilde{\sigma} \geq c B^2 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ where $c$ is a constant.
 
 Then, with probability at least $1 - \frac{C}{n}$ for some constant $C$, we have that for all $k \in S$, $\hat{f}_k \neq 0$ or $\hat{g}_k \neq 0$. 
 
@@ -147,13 +147,13 @@ $\lambda = \Theta\big( s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np} \big) $. Le
 Suppose 
 $\alpha_f/\tilde{\sigma} \geq c B^2 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$ and $\alpha_g^2/\tilde{\sigma} \geq c B^4 \sqrt{\frac{s^5}{n^{4/5}} \log^2 np}$.
 
-Then, for all large enough $n$, we have that with probability at least $1-\frac{C}{n}$:
+Then, for all large enough $n$ such that $\frac{n^{4/5}}{\log^2 np} \geq B^4 \tilde{\sigma}^2 s^5$, we have that with probability at least $1-\frac{C}{n}$:
 \begin{align*}
 \hat{f}_k \neq 0 \trm{ or } \hat{g}_k \neq 0 &\trm{ for all } k \in S\\
 \hat{f}_k = 0 \trm{ and } \hat{g}_k = 0 & \trm{ for all } k \notin S
 \end{align*}
 
-where $c,C$ are constants, possibly dependent on $b, c_1$.
+where $c,C$ are constants.
 
 \end{corollary}
 The above corollary implies that sparsistency is achievable at the same exponential scaling of the ambient dimension $p = O(\exp(n^c)), c<1$ rate as parametric models. The cost of nonparametric modeling is reflected in the scaling with respect to $s$, which can only scale at $o(n^{4/25})$.

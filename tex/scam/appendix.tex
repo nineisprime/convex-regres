@@ -511,7 +511,7 @@ Substituting in $\lambda \leq 9 s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}$ a
 \label{thm:concave_consistent}
 Let $\hat{g}_k$ denote the minimizer of the concave postprocessing with $\lambda \leq 9 sB \sqrt{\frac{1}{n} \log^2 np}$. Let $\tilde{\sigma} \equiv \max(\sigma, B)$.
 
-Suppose $n$ is large enough such that $B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np } \leq 1$.\\
+Suppose $n$ is large enough such that $\frac{n^{4/5}}{\log^2 np} \geq B^4 \tilde{\sigma}^2 s^5$.\\
 
 Then, with probability at least $1- \frac{C}{n}$, for all $k=1,...,s$:\\
 \[
@@ -520,9 +520,17 @@ Then, with probability at least $1- \frac{C}{n}$, for all $k=1,...,s$:\\
 \end{theorem}
 
 \begin{proof}
-The proof proceeds almost identically to that of theorem~\ref{thm:convex_consistent} because convex and concave functions have the same bracketing number.
 
-\textbf{Step 1.} We start from the definition of $\hat{g}_k$:
+Because we fit $\hat{g}_k$ against $f_0 - \hat{f}$ instead of $f_0 - f^*$, we need the following decomposition:
+\begin{align}
+\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 = & \underbrace{\| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \| f_0 - \hat{f} - g^*_k \|_P^2}_{\trm{term 1}} + \nonumber \\
+   & \underbrace{\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - \hat{f} - \hat{g}_k \|_P^2}_{\trm{term 2}} + \nonumber \\
+   & \underbrace{\| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2}_{\trm{term 3}}  \label{eqn:concave_init_decomposition}
+\end{align}
+
+We now bound each of the terms. The proof proceeds almost identically to that of theorem~\ref{thm:convex_consistent} because convex and concave functions have the same bracketing number.
+
+\textbf{Step 1.} We bound term 2. We start from the definition of $\hat{g}_k$:
 \begin{align*}
 \| y - \hat{f} - \hat{g}_k \|_n^2 + \lambda \| \hat{g} \|_\infty &\leq
    \| y - \hat{f} - g^*_k \|_n^2 + \lambda \| g^* \|_\infty \\
@@ -558,30 +566,32 @@ Plugging in $\lambda \leq 9 s \tilde{\sigma} \sqrt{ \frac{1}{n} \log^2 np}$:
 \end{align*}
 with probability at least $1-\delta$.
 
-\textbf{Step 2.} The goal is to bound the quality of approximation between $\| f_0 - \hat{f} - g^*_k \|_P^2$ and $\| f_0 - f^* - g^*_k \|_P^2$ and likewise for $\hat{g}_k$. 
+\textbf{Step 2.} We bound term 2 and 3.
 
 \begin{align*}
 \| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 &\leq 
-    \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle
-   + 2 \langle f_0 - f^*, g^*_k \rangle \\
+    \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle_P
+   + 2 \langle f_0 - f^*, g^*_k \rangle_P \\
  &\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} + 
-    2 | \langle \hat{f} - f^*, g^*_k \rangle |  \\
+    2 | \langle \hat{f} - f^*, g^*_k \rangle_P |  \\
  &\leq  c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} +
     2 \| \hat{f} - f^* \|_P \| g^*_k \|_P \\
 &\leq  c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} +
    c B \sqrt{B^2 \tilde{\sigma} \sqrt{ 
                    \frac{s^5}{n^{4/5}} \log^2 np} }\\
-&\leq  cB \sqrt{B^2 \tilde{\sigma} \sqrt{ 
-                   \frac{s^5}{n^{4/5}} \log^2 np} }\\
+&\leq  cB^2 \tilde{\sigma}^{1/2} \sqrt[4]{ 
+                   \frac{s^5}{n^{4/5}} \log^2 np} 
 \end{align*}
-with probability at least $1-\frac{C}{n}$, by theorem~\ref{thm:convex_consistent}.
+with probability at least $1-\frac{C}{n}$, by theorem~\ref{thm:convex_consistent}. To get the fourth inequality, we used the fact that $\| \hat{f} - f^* \|^2 \leq \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2$, which is true because $f^*$ is the projection of $f_0$ onto the set of additive convex functions and the set of additive convex functions is convex itself. 
 
-The same bound likewise holds for $\hat{g}_k$.
+The last inequality holds because under the condition of the theorem that $n$ is large enough, $B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} \leq 1$.
 
-\textbf{Step 3.} Collecting the results from Step 1 and Step 2, we have, with probability at least $1-2\delta$:
+The same bound likewise holds for term 2.
+
+\textbf{Step 3.} Collecting the results and plugging them into equation~\ref{eqn:concave_init_decomposition}, we have, with probability at least $1-2\delta$:
 \begin{align*}
 \| f_0 - f^* - \hat{g}_k \|_P^2 - \|f_0 - f^* - g^*_k \|_P^2 \leq
-   c B^2 \sigma^{1/2} 
+   c B^2 \tilde{\sigma}^{1/2} 
      \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
 \end{align*}
 

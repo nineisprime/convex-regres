@@ -51,20 +51,20 @@ and the constraints $\sum_i f_{ki} = 0$.
 It is easy to verify that the constraints in (\ref{np}) satisfy the
 supporting hyperplane constraints, since
 for all $j > i$
-\begin{align}
+\begin{align*}
   f_{(j)_kk}-f_{(i)_kk}  & = \sum\limits_{t=i}^{j-1}(f_{(t+1)_kk}-f_{(t)_kk}) \\
    &= \sum\limits_{t=i}^{j-1}\beta_{(t)_kk}(x_{(t+1)_kk}-x_{(t)_kk}) \\
    &\geq \beta_{(i)_kk}\sum\limits_{t=i}^{j-1}(x_{(t+1)_kk}-x_{(t)_kk}) \\
   & = \beta_{(i)_kk}(x_{(j)_kk}-x_{(i)_kk}) 
-\end{align}
+\end{align*}
 and for all $j < i$
-\begin{align}
+\begin{align*}
 f_{k(j)}-f_{k(i)} & =
     \sum\limits_{t=j}^{i-1}(f_{k(t)}-f_{k(t+1)}) \\
      & = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{k(t)}-x_{k(t+1)}) \\
      &\geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{k(t)}-x_{k(t+1)}) \\
      & = \beta_{k(i)}(x_{k(j)}-x_{k(i)}).
-\end{align}
+\end{align*}
 
 
 %\begin{SCfigure}

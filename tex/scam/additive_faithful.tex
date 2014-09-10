@@ -32,16 +32,16 @@ with a lemma that characterizes the components of the additive approximation und
 Let $F$ be a distribution on $C=[0,1]^p$ with a positive density
 function $p$. Let $f: C \rightarrow \R$ be an integrable function,
 and define 
-\begin{equation}
-f^*_1,...,f^*_p, \mu^* \coloneqq 
-\arg\min \left\{ \E \Bigl( f(X) - \mu - \sum_{k=1}^p f_k(X_k)\Bigr)^2 \,:\,
+\begin{align*}
+f^*_1,...,&f^*_p, \mu^* \coloneqq  \\
+&\arg\min \left\{ \E \Bigl( f(X) - \mu - \sum_{k=1}^p f_k(X_k)\Bigr)^2 \,:\,
 \E f_k(X_k) = 0,\; \forall k=1,\ldots, p \right\}.
-\end{equation}
-Then $\mu^* = \E f(X)$,
+\end{align*}
+Then $\mu^* = \E f(X)$, 
 \begin{equation}
 \label{eq:backfit}
 f^*_k(x_k) = \E\Bigl[ f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) \given
-x_k\Bigr] - \E f(X) 
+x_k\Bigr] - \E f(X), 
 \end{equation}
 and this solution is unique.
 \end{lemma}
@@ -264,7 +264,8 @@ because all functions are bounded, and obtain
 p(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}  = 0 
 \label{eqn:integral1a} \\
 \int_{\mathbf{x}_{-k}} p''(\mathbf{x}_{-k} \given x_k) 
-\big( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big)  + 2 p'(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) +
+\big( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big) 
+    + 2 p'(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) +
 p(\mathbf{x}_{-k} \given x_k) f''(x_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k}  = 0 .
 \end{gather}
 
