@@ -51,7 +51,7 @@ We can solve for $\mu$ explicitly as
 $\mu = \frac{1}{n} \sum_{i=1}^n y_i = \bar{y}$.  This follows from the
 KKT conditions
 and the constraints $\sum_i f_{ki} = 0$.
-It is easy to verify that the constraints in (\ref{np}) satisfy the
+It is easy to verify that the constraints in \eqref{np} satisfy the
 supporting hyperplane constraints, since
 for all $j > i$
 \begin{align*}
@@ -78,7 +78,7 @@ f_{k(j)}-f_{k(i)} & =
 %  chooses the inner piece-wise linear convex functions.}
 %\end{SCfigure}
 
-The sparse convex additive model optimization in (\ref{np}) is a quadratic program with
+The sparse convex additive model optimization in \eqref{np} is a quadratic program with
 $O(np)$ variables and $O(np)$ constraints. 
 Directly applying a QP solver for $f$ and $\beta$
 is computationally expensive for relatively large
@@ -132,11 +132,11 @@ structure, which can be solved efficiently using optimization
 packages. In our experiments we use {\sc mosek} (\href{http://www.mosek.com/}{www.mosek.com}).  We cycle through
 all covariates $k$ from $1$ to $p$ multiple times until convergence.
 Empirically, we observe that the algorithm converges in only a few
-cycles. We also implemented an ADMM solver for (\ref{np})
+cycles. We also implemented an ADMM solver for \eqref{np}
 \citep{Boyd:admm}, but found
 that it is not as efficient as this blockwise QP solver.
 
-After optimization, the function estimate for an input vector $\bds{x}$ is, according to (\ref{hyper}),
+After optimization, the function estimate for an input vector $\bds{x}$ is, according to \eqref{hyper},
 \begin{equation}
 \begin{split}
       \hat f(\bds{x}) & = \sum_{k=1}^{p} \hat f_k(x_{j})+ \hat \mu 
@@ -152,7 +152,7 @@ non-increasing: $\beta_{\perm{i+1}k} \leq \beta_{\perm{i}k}$.
 
 
 \subsection{Alternative Formulation}
-Optimization (\ref{np}) can be reformulated in terms of the second
+Optimization \eqref{np} can be reformulated in terms of the second
 derivatives.  We exploit this form in our theoretical analysis. 
 
 The alternative formulation replaces the order constraints
@@ -171,33 +171,31 @@ f_k(x_{\perm{i}k}) = & f_k(x_{\perm{i-1}k}) + \beta_{\perm{i-1}k}(x_{\perm{i}k} 
  =& f_k(x_{\perm{1}k}) + \sum_{j' < i} d_{\perm{j'}k} (x_{\perm{i}k} - x_{\perm{j'}k}).
 \end{align*}
 We can write this more compactly in matrix notation as
-\begin{equation*}
-\begin{split}
+\begin{align}
+\nonumber
 \left[ \begin{array}{c}
 f_k(x_{\perm{1}k}) \\
-\ldots \\
+f_k(x_{\perm{2}k}) \\
+\vdots \\
 f_k(x_{\perm{n}k})
-\end{array} \right] =
+\end{array} \right] &=
 \left[ \begin{array}{ccc}
-    |x_{k1} - x_{\perm{1}k}|_+ & \cdots & |x_{k1} - x_{\perm{n-1}k}|_+ \\
+    (x_{k1} - x_{\perm{1}k})_+ & \cdots & (x_{k1} - x_{\perm{n-1}k})_+ \\
     \cdots & & \\
-    |x_{kn} - x_{\perm{1}k}|_+ & \cdots & |x_{kn} - x_{\perm{n-1}k}|_+ 
+    (x_{kn} - x_{\perm{1}k})_+ & \cdots & (x_{kn} - x_{\perm{n-1}k})_+ 
 \end{array} \right]
 \left[ \begin{array}{c}
     d_{\perm{1}k} \\
     \cdots \\
     d_{\perm{n-1}k}
-\end{array} \right] 
-+ \mu_k \equiv \Delta_k d_k + \mu_k
-\end{split}
-\end{equation*}
-
-
-Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) =
-|x_{\perm{i}k} - x_{\perm{j}k}|_+$, $d_k = (d_{\perm{1}k} ,\ldots,
-d_{\perm{n-1}k})$, and $\mu_k = f_k(x_{\perm{1}k})$.
-
-Because $f_k$ has to be centered, $\mu_k = - \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k$, therefore:
+\end{array} \right] + \mu_k \\[10pt]
+& \equiv \Delta_k d_k + \mu_k
+\end{align}
+where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) =
+(x_{\perm{i}k} - x_{\perm{j}k})_+$, $d_k = (d_{\perm{1}k} ,\ldots,
+d_{\perm{n-1}k})$, and $\mu_k = f_k(x_{\perm{1}k}) \mathbf{1}_n$.
+Because $f_k$ has to be centered, $\mu_k = - \frac{1}{n}
+\mathbf{1}_n^\tran \Delta_k d_k$, and therefore
 \[
 \Delta_k d_k + \mu_k \mathbf{1}_n = 
    \Delta_k d_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\tran \Delta_k d_k = 
@@ -205,31 +203,48 @@ Because $f_k$ has to be centered, $\mu_k = - \frac{1}{n} \mathbf{1}_n^\tran \Del
 \]
 where $\bar{\Delta}_k \equiv \Delta_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\tran \Delta_k$ is $\Delta_k$ with the mean of each column subtracted.
 
-We can now reformulate (\ref{np}) as an equivalent optimization program with only centering and positivity constraints:
+We can now reformulate \eqref{np} as an equivalent optimization program with only centering and positivity constraints:
 \begin{align}
-\min_{d_k}& \frac{1}{2n} 
+\min_{d_k}\;\; & \frac{1}{2n} 
        \Bigl\| Y - \sum_{k=1}^p 
               \bar{\Delta}_k d_k \Bigr\|_2^2 
                + \lambda_n \sum_{k=1}^p \|\bar{\Delta}_k d_k \|_\infty   
      \label{opt:alternate_opt} \\
-\trm{s.t. }  & d_{\perm{2}k}, \ldots , d_{\perm{n-1}k} \geq 0  	
-               \qquad \trm{(convexity)} \nonumber 
+\trm{such that}\;\;  & d_{\perm{2}k}, \ldots , d_{\perm{n-1}k} \geq 0  	
+               \qquad \trm{(convexity).} \nonumber 
 \end{align}
 
-The decoupled concave postprocessing stage optimization is again similar. Suppose $\hat{d}_k$'s are the output of optimization~\ref{opt:alternate_opt}, define $\hat{r} = Y - \sum_{k=1}^p \bar{\Delta}_k \hat{d}_k$. 
+The decoupled concave postprocessing stage optimization is again
+similar. Specifically, suppose $\hat{d}_k$ is the output of
+optimization~\eqref{opt:alternate_opt}, and define the residual vector
+$\hat{r} = Y -
+\sum_{k=1}^p \bar{\Delta}_k \hat{d}_k$.  Then 
+for all $k$ such that $\hat{d}_k = 0$, the DC stage optimization is
+formulated as
 \begin{align}
-\textrm{for all}&\textrm{ $k$ such that $\hat{d}_k = 0$: }  \nonumber \\
-  \min_{c_k} & 
+  \min_{c_k}\;\; & 
       \frac{1}{2n} \Bigl \| \hat{r} - \Delta_k c_k \Bigr \|_2^2
       + \lambda_n \| \Delta_k c_k \|_\infty 
       \label{opt:alternate_opt_concave}\\
- \trm{s.t.} & c_{\perm{2}k}, \ldots, c_{\perm{n-1}k} \leq 0 \qquad \trm{(concavity)} \nonumber
+ \trm{such that }\;\; & c_{\perm{2}k}, \ldots, c_{\perm{n-1}k} \leq 0 \qquad \trm{(concavity).} \nonumber
 \end{align}
 
-We can use either the off-centered $\Delta_k$ matrix or the centered $\bar{\Delta}_k$ matrix because the concave estimations are decoupled and hence suffer no identifiability problems.\\
+We can use either the off-centered $\Delta_k$ matrix or the centered
+$\bar{\Delta}_k$ matrix because the concave estimations are decoupled
+and hence do not suffer identifiability under additive constants.
 
 \begin{remark}
-in sparsistency analysis, we assume that $B$, an upper bound to $\| f^*_k \|_\infty$, is known and that we constrain our estimate $\hat{f}$ to obey the same boundedness condition, that is, for each $k$, we require that $\|\hat{f}_k\|_\infty \leq B$. This boundedness constraint can be easily added to our optimization program. In optimization~\ref{opt:alternate_opt}, we can enforce the boundedness condition by adding $p$ constraints: $\| \bar{\Delta}_k d_k \|_\infty \leq B$ for $k=1,\ldots,p$. (similarly for optimization~\ref{opt:alternate_opt_concave}). We emphasize that we use the boundedness constraint only in our theoretical analysis; all of our experiments do not impose any boundedness condition.
+  In our sparsistency analysis, we assume that an upper bound $B$ to
+  $\| f^*_k \|_\infty$ is known, and that we constrain our estimate
+  $\hat{f}$ to obey the same boundedness condition.  That is, for each
+  $k$, we require that $\|\hat{f}_k\|_\infty \leq B$. This boundedness
+  constraint can be easily added to our optimization program. In
+  optimization~\eqref{opt:alternate_opt}, we can enforce the boundedness
+  condition by adding $p$ constraints $\| \bar{\Delta}_k d_k
+  \|_\infty \leq B$ for $k=1,\ldots,p$ (and similarly for
+  optimization~\eqref{opt:alternate_opt_concave}). We emphasize that we
+  use the boundedness constraint only in our theoretical analysis; 
+  our experiments do not impose any such condition.
 \end{remark}
 
 
