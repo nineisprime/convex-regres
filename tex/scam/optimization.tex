@@ -92,7 +92,7 @@ other variables fixed. In matrix notation, the optimization is
 \begin{split}
 \min_{ f_k, \beta_k, \gamma_k} \;\;& \frac{1}{2n} \| \uds{r}_k - \uds{f}_k \|_2^2 
      + \lambda \gamma_k \label{opt:1d_compact} \\
- \textrm{such that } & P \uds{f}_k = \diag(P \bds{x}_k)  \uds{\beta}_k \\
+ \textrm{such that } & P_k \uds{f}_k = \diag(P_k \bds{x}_k)  \uds{\beta}_k \\
    & D \uds{\beta}_k \leq 0 \\
    & -\gamma_k \mathbf{1}_n \leq \uds{f}_k \leq \gamma_k \mathbf{1}_n   \\
    & \mathbf{1}_n^\tran \uds{f}_k = 0 
@@ -103,8 +103,9 @@ where $\uds{\beta}_k \in \R^{n-1}$ is the vector $\uds{\beta}_k =
 $\uds{r}_{k} \in \R^n$ is the residual vector $\uds{r}_{k} = (y_i -
 \hat\mu - \sum_{k' \neq k} f_{ik'})^T$.
 In addition, 
-$P \in \R^{(n-1) \times n}$ is a permutation matrix where the $i$-th
-row  is all zeros except for a $-1$ in position $\perm{i}$ and a $1$ in
+$P_k \in \R^{(n-1) \times n}$ is a permutation matrix where the $i$-th
+row  is all zeros except for the value $-1$ in position $\perm{i}$ and
+the value $1$ in
 position $\perm{i+1}$, and $D \in \R^{(n-2) \times (n-1)}$ is another
 permutation matrix  where the $i$-th row is all zeros except for a $1$ 
 in position $i$ and a $-1$ in position $i+1$.  We denote by
