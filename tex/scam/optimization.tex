@@ -93,7 +93,7 @@ other variables fixed. In matrix notation, the optimization is
 \min_{ f_k, \beta_k, \gamma_k} \;\;& \frac{1}{2n} \| \uds{r}_k - \uds{f}_k \|_2^2 
      + \lambda \gamma_k \label{opt:1d_compact} \\
  \textrm{such that } & P_k \uds{f}_k = \diag(P_k \bds{x}_k)  \uds{\beta}_k \\
-   & D \uds{\beta}_k \leq 0 \\
+   & D_k \uds{\beta}_k \leq 0 \\
    & -\gamma_k \mathbf{1}_n \leq \uds{f}_k \leq \gamma_k \mathbf{1}_n   \\
    & \mathbf{1}_n^\tran \uds{f}_k = 0 
 \end{split}
@@ -106,7 +106,7 @@ In addition,
 $P_k \in \R^{(n-1) \times n}$ is a permutation matrix where the $i$-th
 row  is all zeros except for the value $-1$ in position $\perm{i}$ and
 the value $1$ in
-position $\perm{i+1}$, and $D \in \R^{(n-2) \times (n-1)}$ is another
+position $\perm{i+1}$, and $D_k \in \R^{(n-2) \times (n-1)}$ is another
 permutation matrix  where the $i$-th row is all zeros except for a
 value $1$  in position $\perm{i}$ and a value $-1$ in position $\perm{i+1}$.  We denote by
 $\diag( v )$ the diagonal matrix with diagonal entries $v$.
@@ -140,7 +140,7 @@ After optimization, the function estimate for an input vector $\bds{x}$ is, acco
 \begin{equation}
 \begin{split}
       \hat f(\bds{x}) & = \sum_{k=1}^{p} \hat f_k(x_{j})+ \hat \mu 
-= \sum_{k=1}^{p}\max_{i} \bigl\{\hat f_{ik}+ \hat \beta_{ik}(x_{k}-x_{ik})\bigr\} +
+= \sum_{k=1}^{p}\max_{i} \Bigl\{\hat f_{ik}+ \hat \beta_{ik}(x_{k}-x_{ik})\Bigr\} +
       \hat \mu.
 \end{split}
 \end{equation} 
@@ -152,47 +152,50 @@ non-increasing: $\beta_{\perm{i+1}k} \leq \beta_{\perm{i}k}$.
 
 
 \subsection{Alternative Formulation}
-Optimization (\ref{np}) can be reformulated in terms of the 2nd derivatives, a form which we analyze in our theoretical analysis. The alternative formulation replaces the ordering
-constraints $\beta_{k(i+1)} \geq \beta_{k(i)}$ with positivity
-constraints, which simplifies theoretical analysis.
-Define $d_{k(i)}$ as the second derivative:
-$d_{k(1)} = \beta_{k(1)}$, and $d_{k(2)} =
-\beta_{k(2)} - \beta_{k(1)}$. The convexity constraint is
-equivalent to the constraint that $d_{k(i)} \geq 0$ for all $i >
-1$.
+Optimization (\ref{np}) can be reformulated in terms of the second
+derivatives.  We exploit this form in our theoretical analysis. 
 
-It is easy to verify that $\beta_{k(i)} = \sum_{j \leq i} d_{k(j)}$ and 
+The alternative formulation replaces the order constraints
+$\beta_{\perm{i+1}k} \geq \beta_{\perm{i}k}$ with positivity constraints, which
+simplifies the analysis.  Define $d_{\perm{i}k}$ as the second
+derivative: $d_{\perm{1}k} = \beta_{\perm{1}k}$, and $d_{\perm{i}k} = \beta_{\perm{i}k} -
+\beta_{\perm{i-1}k}$ for $i > 1$. The convexity constraint is equivalent to the
+constraint that $d_{\perm{i}k} \geq 0$ for all $i > 1$.
+
+It is easy to verify that $\beta_{\perm{i}k} = \sum_{j \leq i} d_{\perm{j}k}$ and 
 \begin{align*}
-f_k(x_{k(i)}) = & f_k(x_{k(i-1)}) + \beta_{k(i-1)}(x_{k(i)} - x_{k(i-1)}) \\
- =& f_k(x_{k1}) + \sum_{j < i} \beta_{k(j)} (x_{k(j)} - x_{k(j-1)}) \\
- =& f_k(x_{k1}) + \sum_{j < i} \sum_{j' \leq j} d_{k(j')} (x_{k(j)} - x_{k(j-1)})\\
- =& f_k(x_{k1}) + \sum_{j' < i} d_{k(j')} \sum_{i > j \geq j'} (x_{k(j)} - x_{k(j-1)}) \\
- =& f_k(x_{k1}) + \sum_{j' < i} d_{k(j')} (x_{k(i)} - x_{k(j')})
+f_k(x_{\perm{i}k}) = & f_k(x_{\perm{i-1}k}) + \beta_{\perm{i-1}k}(x_{\perm{i}k} - x_{\perm{i-1}k}) \\
+ =& f_k(x_{\perm{1}k}) + \sum_{j < i} \beta_{\perm{j}k} (x_{\perm{j}k} - x_{\perm{j-1}k}) \\
+ =& f_k(x_{\perm{1}k}) + \sum_{j < i} \sum_{j' \leq j} d_{\perm{j'}k} (x_{\perm{j}k} - x_{\perm{j-1}k})\\
+ =& f_k(x_{\perm{1}k}) + \sum_{j' < i} d_{\perm{j'}k} \sum_{i > j \geq j'} (x_{\perm{j}k} - x_{\perm{j-1}k}) \\
+ =& f_k(x_{\perm{1}k}) + \sum_{j' < i} d_{\perm{j'}k} (x_{\perm{i}k} - x_{\perm{j'}k}).
 \end{align*}
-We can write this more compactly in matrix notations.
+We can write this more compactly in matrix notation as
 \begin{equation*}
 \begin{split}
 \left[ \begin{array}{c}
-f_k(x_{k1}) \\
-... \\
-f_k(x_{kn}) 
+f_k(x_{\perm{1}k}) \\
+\ldots \\
+f_k(x_{\perm{n}k})
 \end{array} \right] =
 \left[ \begin{array}{ccc}
-    |x_{k1} - x_{k(1)}|_+ & ... & |x_{k1} - x_{k(n-1)}|_+ \\
-    ... & & \\
-    |x_{kn} - x_{k(1)}|_+ & ... & |x_{kn} - x_{k(n-1)}|_+ 
+    |x_{k1} - x_{\perm{1}k}|_+ & \cdots & |x_{k1} - x_{\perm{n-1}k}|_+ \\
+    \cdots & & \\
+    |x_{kn} - x_{\perm{1}k}|_+ & \cdots & |x_{kn} - x_{\perm{n-1}k}|_+ 
 \end{array} \right]
 \left[ \begin{array}{c}
-    d_{k(1)} \\
-    ... \\
-    d_{k(n-1)}
+    d_{\perm{1}k} \\
+    \cdots \\
+    d_{\perm{n-1}k}
 \end{array} \right] 
 + \mu_k \equiv \Delta_k d_k + \mu_k
 \end{split}
 \end{equation*}
 
 
-Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) = |x_{ki} - x_{k(j)}|_+$, $d_k = (d_{k(1)} ,..., d_{k(n-1)})$, and $\mu_k = f_k(x_{k1})$. 
+Where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) =
+|x_{\perm{i}k} - x_{\perm{j}k}|_+$, $d_k = (d_{\perm{1}k} ,\ldots,
+d_{\perm{n-1}k})$, and $\mu_k = f_k(x_{\perm{1}k})$.
 
 Because $f_k$ has to be centered, $\mu_k = - \frac{1}{n} \mathbf{1}_n^\tran \Delta_k d_k$, therefore:
 \[
@@ -209,7 +212,7 @@ We can now reformulate (\ref{np}) as an equivalent optimization program with onl
               \bar{\Delta}_k d_k \Bigr\|_2^2 
                + \lambda_n \sum_{k=1}^p \|\bar{\Delta}_k d_k \|_\infty   
      \label{opt:alternate_opt} \\
-\trm{s.t. }  & d_{k(2)}, \ldots , d_{k(n-1)} \geq 0  	
+\trm{s.t. }  & d_{\perm{2}k}, \ldots , d_{\perm{n-1}k} \geq 0  	
                \qquad \trm{(convexity)} \nonumber 
 \end{align}
 
@@ -220,13 +223,13 @@ The decoupled concave postprocessing stage optimization is again similar. Suppos
       \frac{1}{2n} \Bigl \| \hat{r} - \Delta_k c_k \Bigr \|_2^2
       + \lambda_n \| \Delta_k c_k \|_\infty 
       \label{opt:alternate_opt_concave}\\
- \trm{s.t.} & c_{k(2)}, \ldots, c_{k(n-1)} \leq 0 \qquad \trm{(concavity)} \nonumber
+ \trm{s.t.} & c_{\perm{2}k}, \ldots, c_{\perm{n-1}k} \leq 0 \qquad \trm{(concavity)} \nonumber
 \end{align}
 
 We can use either the off-centered $\Delta_k$ matrix or the centered $\bar{\Delta}_k$ matrix because the concave estimations are decoupled and hence suffer no identifiability problems.\\
 
 \begin{remark}
-in sparsistency analysis, we assume that $B$, an upper bound to $\| f^*_k \|_\infty$, is known and that we constrain our estimate $\hat{f}$ to obey the same boundedness condition, that is, for each $k$, we require that $\|\hat{f}_k\|_\infty \leq B$. This boundedness constraint can be easily added to our optimization program. In optimization~\ref{opt:alternate_opt}, we can enforce the boundedness condition by adding $p$ constraints: $\| \bar{\Delta}_k d_k \|_\infty \leq B$ for $k=1,...,p$. (similarly for optimization~\ref{opt:alternate_opt_concave}). We emphasize that we use the boundedness constraint only in our theoretical analysis; all of our experiments do not impose any boundedness condition.
+in sparsistency analysis, we assume that $B$, an upper bound to $\| f^*_k \|_\infty$, is known and that we constrain our estimate $\hat{f}$ to obey the same boundedness condition, that is, for each $k$, we require that $\|\hat{f}_k\|_\infty \leq B$. This boundedness constraint can be easily added to our optimization program. In optimization~\ref{opt:alternate_opt}, we can enforce the boundedness condition by adding $p$ constraints: $\| \bar{\Delta}_k d_k \|_\infty \leq B$ for $k=1,\ldots,p$. (similarly for optimization~\ref{opt:alternate_opt_concave}). We emphasize that we use the boundedness constraint only in our theoretical analysis; all of our experiments do not impose any boundedness condition.
 \end{remark}
 
 
