@@ -7,11 +7,13 @@ We now describe in detail the optimization algorithm for the additive
 convex regression stage.  The second decoupled concave regression stage
 follows a very similar procedure.
 
-Let $\bds{x}_{i}\in\mathbb{R}^{p}$ be the covariate, let $y_{i}$ be the
-response and let $\epsilon_{i}$ be the mean zero noise. The regression function $f(\cdot)$ we estimate is the summation of 
-functions $f_{k}(\cdot)$ in each variable dimension and a scalar offset $\mu$.  
-We impose an additional constraint that each $f_{k}(\cdot)$ is 
-an univariate convex function, which can be represented by its supporting hyperplanes, i.e.,
+Let $\bds{x}_{i}\in\mathbb{R}^{p}$ be the covariate, let $y_{i}$ be
+the response and let $\epsilon_{i}$ be the mean zero noise. The
+regression function $f(\cdot)$ we estimate is the sum of
+univariate functions $f_{k}(\cdot)$ in each variable dimension and a scalar
+offset $\mu$.  We impose additional constraints that each
+function $f_{k}(\cdot)$ is convex function, which can be
+represented by its supporting hyperplanes, i.e.,
 \begin{equation}\label{hyper}
       f_{i'k} \geq f_{ik} + \beta_{ik}(x_{i'k}-x_{ik}) \quad
       \textrm{for all $i,i' = 1,\ldots, n$,}
