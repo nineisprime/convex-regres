@@ -107,8 +107,8 @@ $P_k \in \R^{(n-1) \times n}$ is a permutation matrix where the $i$-th
 row  is all zeros except for the value $-1$ in position $\perm{i}$ and
 the value $1$ in
 position $\perm{i+1}$, and $D \in \R^{(n-2) \times (n-1)}$ is another
-permutation matrix  where the $i$-th row is all zeros except for a $1$ 
-in position $i$ and a $-1$ in position $i+1$.  We denote by
+permutation matrix  where the $i$-th row is all zeros except for a
+value $1$  in position $\perm{i}$ and a value $-1$ in position $\perm{i+1}$.  We denote by
 $\diag( v )$ the diagonal matrix with diagonal entries $v$.
 The extra variable $\gamma_{k}$ is introduced to impose the
 regularization penalty involving the $\ell_{\infty}$ norm.  
@@ -134,9 +134,9 @@ all covariates $k$ from $1$ to $p$ multiple times until convergence.
 Empirically, we observe that the algorithm converges in only a few
 cycles. We also implemented an ADMM solver for (\ref{np})
 \citep{Boyd:admm}, but found
-that it is not as efficient as this QP solver.
+that it is not as efficient as this blockwise QP solver.
 
-After optimization, the function estimates for an input vector $\bds{x}$ is, according to (\ref{hyper}),
+After optimization, the function estimate for an input vector $\bds{x}$ is, according to (\ref{hyper}),
 \begin{equation}
 \begin{split}
       \hat f(\bds{x}) & = \sum_{k=1}^{p} \hat f_k(x_{j})+ \hat \mu 
@@ -145,8 +145,8 @@ After optimization, the function estimates for an input vector $\bds{x}$ is, acc
 \end{split}
 \end{equation} 
 
-The univariate concave function estimation is a straightforward
-modification of optimization~\ref{opt:1d_compact}. It is only
+The univariate concave function estimation required in the DC stage is a straightforward
+modification of optimization~\eqref{opt:1d_compact}. It is only
 necessary to modify the linear inequality constraints so that the subgradients are
 non-increasing: $\beta_{\perm{i+1}k} \leq \beta_{\perm{i}k}$.
 
