@@ -1,4 +1,5 @@
 \def\uds#1{#1}
+\def\perm#1{\pi_k(#1)}
 
 \section{Optimization}
 \label{sec:optimization}
@@ -12,14 +13,14 @@ the response and let $\epsilon_{i}$ be the mean zero noise. The
 regression function $f(\cdot)$ we estimate is the sum of
 univariate functions $f_{k}(\cdot)$ in each variable dimension and a scalar
 offset $\mu$.  We impose additional constraints that each
-function $f_{k}(\cdot)$ is convex function, which can be
+function $f_{k}(\cdot)$ is convex, which can be
 represented by its supporting hyperplanes, i.e.,
 \begin{equation}\label{hyper}
       f_{i'k} \geq f_{ik} + \beta_{ik}(x_{i'k}-x_{ik}) \quad
       \textrm{for all $i,i' = 1,\ldots, n$,}
 \end{equation}
-where $f_{ik}\coloneqq f_{k}(x_{ik})$ and $\beta_{ik}$ is the
-subgradient at point $x_{ik}$. This apparently requires $O(n^2 p)$ constraints to
+where $f_{ik}\coloneqq f_{k}(x_{ik})$ is the function value and $\beta_{ik}$ is a
+subgradient at point $x_{ik}$. This ostensibly requires $O(n^2 p)$ constraints to
 impose the supporting hyperplane constraints.
 In fact, only $O(np)$
 constraints suffice, since univariate convex functions are
@@ -31,18 +32,18 @@ increase monotonically. This observation leads to the  optimization
                      \Bigl( y_{i}-\mu - \sum_{k=1}^{p}f_{ik}\Bigr)^{2} 
                          + \lambda\sum_{k=1}^{p}\|f_k\|_{\infty} \\
        \textrm{subject to} &\;\; \textrm{for all $k=1,\ldots, p$:}\\
-       & \;\; f_{(i+1)_k k} = f_{(i)_k k} +
-       \beta_{(i)_k k}(x_{(i+1)_k k}-x_{(i)_k k}),\;\textrm{for $i=1,\ldots, n-1$}\\
+       & \;\; f_{\perm{i+1} k} = f_{\perm{i} k} +
+       \beta_{\perm{i} k}(x_{\perm{i+1} k}-x_{\perm{i} k}),\;\textrm{for $i=1,\ldots, n-1$}\\
        & \;\; \sum_{i=1}^{n}f_{ik}=0,\\
-       & \;\; \beta_{(i+1)_k k} \geq \beta_{(i)_k k}\;\textrm{for $i=1,\ldots, n-1$}.
+       & \;\; \beta_{\perm{i+1} k} \geq \beta_{\perm{i} k}\;\textrm{for $i=1,\ldots, n-1$}.
 \end{split}
 \label{np}
 \end{equation}
 Here $f_k$ denotes the vector $f_k = (f_{1k}, f_{2_k}\ldots, f_{nk})^T\in\reals^n$
-and $\{(1)_k,(2)_k,\ldots,(n)_k\}$ are the indices in the sorted ordering
+and $\{\perm{1},\perm{2},\ldots,\perm{n}\}$ are the indices in the sorted ordering
 of the values of coordinate $k$:
 \begin{equation}
-x_{(1)_k k} \leq{} x_{(2)_k k} \leq \cdots \leq{} x_{(n)_k k}.
+x_{\perm{1} k} \leq{} x_{\perm{2} k} \leq \cdots \leq{} x_{\perm{n} k}.
 \end{equation}
 
 
@@ -54,10 +55,10 @@ It is easy to verify that the constraints in (\ref{np}) satisfy the
 supporting hyperplane constraints, since
 for all $j > i$
 \begin{align*}
-  f_{(j)_kk}-f_{(i)_kk}  & = \sum\limits_{t=i}^{j-1}(f_{(t+1)_kk}-f_{(t)_kk}) \\
-   &= \sum\limits_{t=i}^{j-1}\beta_{(t)_kk}(x_{(t+1)_kk}-x_{(t)_kk}) \\
-   &\geq \beta_{(i)_kk}\sum\limits_{t=i}^{j-1}(x_{(t+1)_kk}-x_{(t)_kk}) \\
-  & = \beta_{(i)_kk}(x_{(j)_kk}-x_{(i)_kk}) 
+  f_{\perm{j}k}-f_{\perm{i}k}  & = \sum\limits_{t=i}^{j-1}(f_{\perm{t+1}k}-f_{\perm{t}k}) \\
+   &= \sum\limits_{t=i}^{j-1}\beta_{\perm{t}k}(x_{\perm{t+1}k}-x_{\perm{t}k}) \\
+   &\geq \beta_{\perm{i}k}\sum\limits_{t=i}^{j-1}(x_{\perm{t+1}k}-x_{\perm{t}k}) \\
+  & = \beta_{\perm{i}k}(x_{\perm{j}k}-x_{\perm{i}k}) 
 \end{align*}
 and for all $j < i$
 \begin{align*}
@@ -103,8 +104,8 @@ $\uds{r}_{k} \in \R^n$ is the residual vector $\uds{r}_{k} = (y_i -
 \hat\mu - \sum_{k' \neq k} f_{ik'})^T$.
 In addition, 
 $P \in \R^{(n-1) \times n}$ is a permutation matrix where the $i$-th
-row  is all zeros except for a $-1$ in position $(i)_k$ and a $1$ in
-position $(i+1)_k$, and $D \in \R^{(n-2) \times (n-1)}$ is another
+row  is all zeros except for a $-1$ in position $\perm{i}$ and a $1$ in
+position $\perm{i+1}$, and $D \in \R^{(n-2) \times (n-1)}$ is another
 permutation matrix  where the $i$-th row is all zeros except for a $1$ 
 in position $i$ and a $-1$ in position $i+1$.  We denote by
 $\diag( v )$ the diagonal matrix with diagonal entries $v$.
@@ -146,7 +147,7 @@ After optimization, the function estimates for an input vector $\bds{x}$ is, acc
 The univariate concave function estimation is a straightforward
 modification of optimization~\ref{opt:1d_compact}. It is only
 necessary to modify the linear inequality constraints so that the subgradients are
-non-increasing: $\beta_{(i+1)_kk} \leq \beta_{(i)_kk}$.
+non-increasing: $\beta_{\perm{i+1}k} \leq \beta_{\perm{i}k}$.
 
 
 \subsection{Alternative Formulation}
