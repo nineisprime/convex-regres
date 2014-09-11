@@ -1,47 +1,73 @@
 \section{Analysis of Variable Selection Consistency}
 \label{sec:finitesample}
 
-We divide our analysis into two parts. We first establish a sufficient deterministic condition for sparsistency.  We then consider the
-stochastic setting and argue that the deterministic conditions hold with high probability. In all of our results and analysis, we let $c, C$ represent absolute constants; the actual values of $c,C$ could change from line to line.
+We divide our analysis into two parts. We first establish a sufficient
+deterministic condition for consistency of the sparsity pattern
+selection procedure---a property sometimes called \textit{sparsistency}.
+We then consider the
+stochastic setting and argue that the deterministic conditions hold
+with high probability. Note that in all of our results and analysis, we let $c,
+C$ represent absolute constants; the actual values of $c,C$ may change from line to line.
 
 \subsection{Deterministic Setting}
 
-We construct an additive convex solution $\{\hat{d}_k\}_{k=1,...,p}$ that is zero for $k \in S^c$ and show that it satisfies the KKT conditions for optimality of optimization~\ref{opt:alternate_opt}. We define $\hat{d}_k$ for $k \in S$ to be a solution to the restricted regression (defined below). We will then also show that $\hat{c}_k = 0$ satisfies the optimality condition of optimization~\ref{opt:alternate_opt_concave} for all $k \in S^c$.
+We construct an additive convex solution $\{\hat{d}_k\}_{k=1,...,p}$
+that is zero for $k \in S^c$, where $S$ is the set of relevant
+variables, and show that it satisfies the KKT
+conditions for optimality of optimization~\eqref{opt:alternate_opt}. We
+define $\hat{d}_k$ for $k \in S$ to be a solution to the restricted
+regression (defined below). We also show that $\hat{c}_k =
+0$ satisfies the optimality condition of
+optimization~\eqref{opt:alternate_opt_concave} for all $k \in S^c$.
 
 \begin{definition}
 \label{def:restricted_regression}
-We define as \emph{restricted regression} where we restrict the indices $k$ in
-optimization (\ref{opt:alternate_opt}) to lie in the set $S$ instead of ranging from $1,...,p$:
+We define the \emph{restricted regression} problem 
 \[
 \min_{d_k} \frac{1}{n} \Big\| Y - \sum_{k \in S} \bar{\Delta}_k d_k \Big\|_2^2 + 
    \lambda_n \sum_{k \in S} \| \bar{\Delta}_k d_k \|_\infty \quad \trm{such that} \, d_{k,1}, ..., d_{k,n-1} \geq 0
 \]
+where we restrict the indices $k$ in
+optimization \eqref{opt:alternate_opt} to lie in the set $S$ of true
+relevant variables.
 \end{definition}
 
-\begin{theorem} (Deterministic setting)
+\begin{theorem}[Deterministic setting]
 \label{thm:deterministic}
 Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression as defined above.
-Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. \\
-
+Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. 
 Suppose for all $k\in S^c$, for all $i=1,...,n$, $\lambda_n > | \frac{1}{2n}
-\hat{r}^\tran \mathbf{1}_{(i:n)}|$ where $\mathbf{1}_{(i:n)}$ is 1 on the coordinates of the $i$-th largest to the $n$-th largest entries of $X_k$ and 0 elsewhere.\\
-
-Then the following are true:
+\hat{r}^\tran \mathbf{1}_{(i:n)}|$ where $\mathbf{1}_{(i:n)}$ is 1 on
+the coordinates of the 
+$i$-th largest to the $n$-th largest entries of $X_k$ and 0
+elsewhere.  Then the following two statements hold.
 \begin{enumerate}
-\item Let $\hat{d}_k = 0$ for $k \in S^c$, then \{$\hat{d}_k\}_{k=1,...,p}$ is an optimal solution to optimization~\ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
-\item For all $k \in S^c$, the solution $\hat{c}_k$ to optimization~\ref{opt:alternate_opt_concave} must be 0 and must be unique.
+\item Let $\hat{d}_k = 0$ for $k \in S^c$.  Then
+  \{$\hat{d}_k\}_{k=1,...,p}$ is an optimal solution to
+  optimization~\eqref{opt:alternate_opt}. Furthermore, any solution to
+  the optimization program \eqref{opt:alternate_opt} must be zero on
+  $S^c$.
+\item For all $k \in S^c$, the solution $\hat{c}_k$ to optimization~\eqref{opt:alternate_opt_concave} must be zero.
 \end{enumerate}
 
 \end{theorem}
 
-This result holds regardless of whether we impose the boundedness conditions in optimization~\ref{opt:alternate_opt} and~\ref{opt:alternate_opt_concave} or not.
-The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix.\\
+This result holds regardless of whether or not we impose the boundedness conditions in optimization~\eqref{opt:alternate_opt} and~\eqref{opt:alternate_opt_concave}.
+The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix.
 
-Theorem~\ref{thm:deterministic} allows us to analyze false negative
-rates and false positive rates separately. To control false positives,
-we analyze when the condition on $\lambda_n$ is fulfilled for all $j$ and all $k \in S^c$. To control false negatives, we analyze the restricted regression. \\
+Theorem~\ref{thm:deterministic} allows us to separately analyze the false negative
+rates and false positive rates. To control false positives,
+we analyze the condition on $\lambda_n$ for $k \in S^c$. To control
+false negatives, we analyze the restricted regression. 
 
-The proof of theorem~\ref{thm:deterministic} looks at KKT conditions of optimization~\ref{opt:alternate_opt}, similar to the now standard \emph{primal-dual witness} technique~\cite{wainwright2009sharp}. We cannot derive analogous \emph{mutual incoherence} conditions because the estimation is nonparametric -- even the low dimensional restricted regression has $s(n-1)$ variables. The details of the proof are in section~\ref{sec:deterministic_proof} of the Appendix.
+The proof of Theorem~\ref{thm:deterministic} analyses the KKT
+conditions of optimization~\eqref{opt:alternate_opt}.  This parallels
+the now standard \emph{primal-dual witness}
+technique~\cite{wainwright2009sharp}. However, we cannot derive analogous
+\emph{mutual incoherence} conditions because the estimation is
+nonparametric---even the low dimensional restricted regression has
+$s(n-1)$ variables. The details of the proof are given in
+Section~\ref{sec:deterministic_proof} of the Appendix.
 
 \subsection{Probabilistic Setting}
 
@@ -64,7 +90,7 @@ $f^* \equiv \arg\min_{f \in \mathcal{C}^p} \E\big(f_0(X) - f^*(X) \big)^2$.\\
 Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-b, b]$ and let 
 $g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X) - g_k(X_k) \big)^2$. \\
 
-We let $S = \{ k = 1,...,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$. By additive faithfulness (theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$. 
+We let $S = \{ k = 1,...,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$. 
 
 
 Each of our theorems will use a subset of the following assumptions:
@@ -108,7 +134,7 @@ Suppose $\lambda_n \geq 8 s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$, then
 \lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big|
 \]
 
-And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from optimization~\ref{opt:alternate_opt}, and the DC solution $\hat{g}_k$, from optimization~\ref{opt:alternate_opt_concave} are zero. \\
+And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from optimization~\eqref{opt:alternate_opt}, and the DC solution $\hat{g}_k$, from optimization~\eqref{opt:alternate_opt_concave} are zero. 
 \end{theorem}
 
 The proof of Theorem~\ref{thm:false_positive} exploits independence of
@@ -116,9 +142,9 @@ $\hat{r}$ and $X_k$ from A1; when $\hat{r}$ and $X_k$ are independent, $\hat{r}^
 Theorem~\ref{thm:false_positive} is in
 Section~\ref{sec:false_positive_proof} of the Appendix.
 
-\begin{theorem} (Controlling false negatives) \\
+\begin{theorem} (Controlling false negatives) 
 \label{thm:false_negative}
-Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $B$-boundedness constraint and let $\hat{g}_k$'s be any DC solution to the restricted regression with $B$-boundedness constraint. Let $\tilde{\sigma}$ denote $\max(\sigma, B)$.\\
+Suppose assumptions A1-A4 hold. Let $\hat{f}$ be any AC solution to the restricted regression with $B$-boundedness constraint and let $\hat{g}_k$'s be any DC solution to the restricted regression with $B$-boundedness constraint. Let $\tilde{\sigma}$ denote $\max(\sigma, B)$.
 
 Suppose $\lambda \leq 9 s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}$ and $n$ is large enough such that $\frac{n^{4/5}}{\log np} \geq B^4 \tilde{\sigma}^2 s^5$. 
 
