@@ -217,9 +217,12 @@ We can now reformulate \eqref{np} as an equivalent optimization program with onl
 The decoupled concave postprocessing stage optimization is again
 similar. Specifically, suppose $\hat{d}_k$ is the output of
 optimization~\eqref{opt:alternate_opt}, and define the residual vector
-$\hat{r} = Y -
-\sum_{k=1}^p \bar{\Delta}_k \hat{d}_k$.  Then 
-for all $k$ such that $\hat{d}_k = 0$, the DC stage optimization is
+\begin{equation}
+\hat{r} = Y -
+\sum_{k=1}^p \bar{\Delta}_k \hat{d}_k.
+\label{eq:residual}
+\end{equation}  
+Then  for all $k$ such that $\hat{d}_k = 0$, the DC stage optimization is
 formulated as
 \begin{align}
   \min_{c_k}\;\; & 
