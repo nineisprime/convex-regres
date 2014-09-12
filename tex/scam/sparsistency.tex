@@ -63,7 +63,7 @@ false negatives, we analyze the restricted regression.
 The proof of Theorem~\ref{thm:deterministic} analyses the KKT
 conditions of optimization~\eqref{opt:alternate_opt}.  This parallels
 the now standard \emph{primal-dual witness}
-technique~\cite{wainwright2009sharp}. However, we cannot derive analogous
+technique~\citep{wainwright2009sharp}. However, we cannot derive analogous
 \emph{mutual incoherence} conditions because the estimation is
 nonparametric---even the low dimensional restricted regression has
 $s(n-1)$ variables. The details of the proof are given in
@@ -71,25 +71,36 @@ Section~\ref{sec:deterministic_proof} of the Appendix.
 
 \subsection{Probabilistic Setting}
 
-We use the following statistical setting:
+In the probabilistic setting we treat the covariates as random.  We
+adopt the following standard setup:
 
-\begin{packed_enum}
-\item Let $F$ be a distribution supported and positive on $\mathcal{X}=[-b,b]^p$. Let $X^{(1)},..., X^{(n)} \sim F$ be iid.
-\item Let $Y = f_0(X) + w$ where $w$ is zero-mean noise. Let $Y^{(1)},...,Y^{(n)}$ be iid.
-\item Let $S_0 = \{1,...,s_0\}$ denote the relevant variables where $s_0 \leq p$, i.e.,
-  $f_0(X) = f_0(X_{S_0})$.
-\end{packed_enum}
+\begin{enumerate}
+\item The data $X^{(1)},..., X^{(n)} \sim F$ are iid from
+a distribution $F$ that is supported and strictly positive on $\mathcal{X}=[-b,b]^p$. 
+\item The response is $Y = f_0(X) + W$ where $W$ is
+  independent, zero-mean noise; thus $Y^{(i)} = f_0(X^{(i)}) + W^{(i)}$.
+\item The regression function $f_0$ satisfies
+$f_0(X) = f_0(X_{S_0})$, where $S_0 = \{1,...,s_0\}$ is the set of
+relevant variables.
+\end{enumerate}
 
 
-Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Define $\mathcal{C}^{p}$ as the set of convex additive function
-$\mathcal{C}^p \equiv \{ f \,:\, f = \sum_{k=1}^p f_k, \,
-   f_k \in \mathcal{C}^1 \} $
-Let $f^*(x) = \sum_{k=1}^p f^*_k(x_k)$ be the population risk minimizer:
-$f^* \equiv \arg\min_{f \in \mathcal{C}^p} \E\big(f_0(X) - f^*(X) \big)^2$.\\
-
-Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-b, b]$ and let 
-$g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X) - g_k(X_k) \big)^2$. \\
-
+Let $\mathcal{C}^1$ denote the set of univariate convex functions
+supported on $[-b,b]$, 
+and let  $\mathcal{C}_1^{p}$ denote the set of convex additive functions
+$\mathcal{C}_1^p \equiv \{ f \,:\, f = \sum_{k=1}^p f_k, \,
+   f_k \in \mathcal{C}^1 \} $.  
+Let $f^*(x) = \sum_{k=1}^p f^*_k(x_k)$ be the population risk
+minimizer in $\mathcal{C}_1^p$, 
+\begin{equation}
+f^* \equiv \arg\min_{f \in \mathcal{C}_1^p} \E\big(f_0(X) - f^*(X)
+\big)^2.
+\end{equation}
+Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-b, b]$ and define
+\begin{equation}
+g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X)
+- g_k(X_k) \big)^2.
+\end{equation}
 We let $S = \{ k = 1,...,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$. 
 
 
@@ -98,14 +109,14 @@ Each of our theorems will use a subset of the following assumptions:
 \item[A1:] $X_S, X_{S^c}$ are independent. 
 \item[A2:] $f_0$ is convex and twice-differentiable. 
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\| f^*_k \|_\infty \leq B$ for all $k$.
-\item[A4:] $w$ is mean-zero subgaussian, independent of $X$, with subgaussian scale $\sigma$, i.e. for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
+\item[A4:] $W$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$, i.e. for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
 \end{packed_enum}
 By assumption A1, $f^*_k$ is must be zero for $k\notin \{1,...,s\}$. 
 
 
 We define $\alpha_f, \alpha_g$ as a measure of the signal strength of the weakest variable:
 \begin{align*}
-\alpha_f &= \inf_{f \in \mathcal{C}^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
+\alpha_f &= \inf_{f \in \mathcal{C}_1^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
        \Big\{ \mathbb{E} \big( f_0(X) - f(X) \big)^2 - 
         \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\}\\
 \alpha_g &=   \min_{k \in S \,:\, g^*_k \neq 0}
@@ -125,7 +136,7 @@ Intuitively, if $\alpha_f$ is smaller, then it is easier to make a false omissio
 \end{remark}
 
 
-\begin{theorem} (Controlling false positives) \\
+\begin{theorem}[Controlling false positives]
 \label{thm:false_positive}
 Suppose assumptions A1-A4 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$.
 
