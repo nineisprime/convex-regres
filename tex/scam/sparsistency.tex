@@ -11,7 +11,7 @@ C$ represent absolute constants; the actual values of $c,C$ may change from line
 
 \subsection{Deterministic Setting}
 
-We construct an additive convex solution $\{\hat{d}_k\}_{k=1,...,p}$
+We construct an additive convex solution $\{\hat{d}_k\}_{k=1,\ldots,p}$
 that is zero for $k \in S^c$, where $S$ is the set of relevant
 variables, and show that it satisfies the KKT
 conditions for optimality of optimization~\eqref{opt:alternate_opt}. We
@@ -25,7 +25,7 @@ optimization~\eqref{opt:alternate_opt_concave} for all $k \in S^c$.
 We define the \emph{restricted regression} problem 
 \[
 \min_{d_k} \frac{1}{n} \Big\| Y - \sum_{k \in S} \bar{\Delta}_k d_k \Big\|_2^2 + 
-   \lambda_n \sum_{k \in S} \| \bar{\Delta}_k d_k \|_\infty \quad \trm{such that} \, d_{k,1}, ..., d_{k,n-1} \geq 0
+   \lambda_n \sum_{k \in S} \| \bar{\Delta}_k d_k \|_\infty \quad \trm{such that} \, d_{k,1}, \ldots, d_{k,n-1} \geq 0
 \]
 where we restrict the indices $k$ in
 optimization \eqref{opt:alternate_opt} to lie in the set $S$ of true
@@ -36,14 +36,14 @@ relevant variables.
 \label{thm:deterministic}
 Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression as defined above.
 Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. 
-Suppose for all $k\in S^c$, for all $i=1,...,n$, $\lambda_n > | \frac{1}{2n}
+Suppose for all $k\in S^c$, for all $i=1,\ldots,n$, $\lambda_n > | \frac{1}{2n}
 \hat{r}^\tran \mathbf{1}_{(i:n)}|$ where $\mathbf{1}_{(i:n)}$ is 1 on
 the coordinates of the 
 $i$-th largest to the $n$-th largest entries of $X_k$ and 0
 elsewhere.  Then the following two statements hold.
 \begin{enumerate}
 \item Let $\hat{d}_k = 0$ for $k \in S^c$.  Then
-  \{$\hat{d}_k\}_{k=1,...,p}$ is an optimal solution to
+  \{$\hat{d}_k\}_{k=1,\ldots,p}$ is an optimal solution to
   optimization~\eqref{opt:alternate_opt}. Furthermore, any solution to
   the optimization program \eqref{opt:alternate_opt} must be zero on
   $S^c$.
@@ -75,12 +75,12 @@ In the probabilistic setting we treat the covariates as random.  We
 adopt the following standard setup:
 
 \begin{enumerate}
-\item The data $X^{(1)},..., X^{(n)} \sim F$ are iid from
+\item The data $X^{(1)},\ldots, X^{(n)} \sim F$ are iid from
 a distribution $F$ that is supported and strictly positive on $\mathcal{X}=[-b,b]^p$. 
 \item The response is $Y = f_0(X) + W$ where $W$ is
   independent, zero-mean noise; thus $Y^{(i)} = f_0(X^{(i)}) + W^{(i)}$.
 \item The regression function $f_0$ satisfies
-$f_0(X) = f_0(X_{S_0})$, where $S_0 = \{1,...,s_0\}$ is the set of
+$f_0(X) = f_0(X_{S_0})$, where $S_0 = \{1,\ldots,s_0\}$ is the set of
 relevant variables.
 \end{enumerate}
 
@@ -101,7 +101,7 @@ Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functi
 g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X)
 - g_k(X_k) \big)^2.
 \end{equation}
-We let $S = \{ k = 1,...,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$. 
+We let $S = \{ k = 1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$. 
 
 
 Each of our theorems will use a subset of the following assumptions:
@@ -109,11 +109,9 @@ Each of our theorems will use a subset of the following assumptions:
 \item[A1:] $X_S, X_{S^c}$ are independent. 
 \item[A2:] $f_0$ is convex and twice-differentiable. 
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\| f^*_k \|_\infty \leq B$ for all $k$.
-\item[A4:] $W$ is mean-zero sub-Gaussian, independent of $X$, with sub-Gaussian scale $\sigma$, i.e. for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
+\item[A4:] $W$ is mean-zero sub-Gaussian, independent of $X$, with scale $\sigma$; i.e., for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
 \end{packed_enum}
-By assumption A1, $f^*_k$ is must be zero for $k\notin \{1,...,s\}$. 
-
-
+By assumption A1, $f^*_k$ is must be zero for $k\notin S$.
 We define $\alpha_f, \alpha_g$ as a measure of the signal strength of the weakest variable:
 \begin{align*}
 \alpha_f &= \inf_{f \in \mathcal{C}_1^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
@@ -123,8 +121,12 @@ We define $\alpha_f, \alpha_g$ as a measure of the signal strength of the weakes
       \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
     \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\}
 \end{align*}
-
-Intuitively, if $\alpha_f$ is smaller, then it is easier to make a false omission in the additive convex stage of the procedure. If $\alpha_g$ is smaller, then it is easier to make a false omission in the decoupled concave stage of the procedure.
+These play the role of the absolute value of the smallest nonzero
+coefficient in the true linear model in lasso theory.  Intuitively, if
+$\alpha_f$ is small, then it is easier to make a false omission in the
+additive convex stage of the procedure. If $\alpha_g$ is small, then
+it is easier to make a false omission in the decoupled concave stage
+of the procedure.
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make
@@ -138,19 +140,26 @@ Intuitively, if $\alpha_f$ is smaller, then it is easier to make a false omissio
 
 \begin{theorem}[Controlling false positives]
 \label{thm:false_positive}
-Suppose assumptions A1-A4 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$.
-
-Suppose $\lambda_n \geq 8 s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$, then with probability at least $ 1 - \frac{12}{np}$, for all $k \in S^c$, and for all $i'=1,...,n$:
-\[
-\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big|
-\]
-
-And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from optimization~\eqref{opt:alternate_opt}, and the DC solution $\hat{g}_k$, from optimization~\eqref{opt:alternate_opt_concave} are zero. 
+Suppose assumptions A1-A4 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$,
+and suppose 
+\begin{equation}
+\lambda_n \geq 8 s_0 \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
+\end{equation}  
+Then with probability at least $ 1 - \frac{12}{np}$, for all $k \in
+S^c$, and for all $i'=1,\ldots, n$,
+\begin{equation}
+\Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big| < \lambda_n
+\end{equation}
+and for all $k \in S^c$, both the AC solution $\hat{f}_k$, from optimization~\eqref{opt:alternate_opt}, and the DC solution $\hat{g}_k$, from optimization~\eqref{opt:alternate_opt_concave} are zero. 
 \end{theorem}
 
 The proof of Theorem~\ref{thm:false_positive} exploits independence of
-$\hat{r}$ and $X_k$ from A1; when $\hat{r}$ and $X_k$ are independent, $\hat{r}^\tran \mathbf{1}_{(i':n)}$ is the sum of $n - i' +1$ random coordinates of $\hat{r}$.  We can then uses the concentration of measure result for sampling without replacement to argue that $| \frac{1}{n} \hat{r}^\tran\mathbf{1}_{(i':n)}|$ is small with high probability. The full proof of
-Theorem~\ref{thm:false_positive} is in
+$\hat{r}$ and $X_k$ from A1; when $\hat{r}$ and $X_k$ are independent,
+$\hat{r}^\tran \mathbf{1}_{(i':n)}$ is the sum of $n - i' +1$ random
+coordinates of $\hat{r}$.  We can then use concentration of
+measure results for sampling without replacement to argue that $|
+\frac{1}{n} \hat{r}^\tran\mathbf{1}_{(i':n)}|$ is small with high
+probability. The full proof of Theorem~\ref{thm:false_positive} is in
 Section~\ref{sec:false_positive_proof} of the Appendix.
 
 \begin{theorem} (Controlling false negatives) 
