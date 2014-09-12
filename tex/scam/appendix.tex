@@ -184,7 +184,7 @@ $\hat{r}_i = f_0(x_i) + w_i - \hat{f}(x_i)$ where $\hat{f}(x_i) = \sum_{k \in S}
 
 Both $f_0(x_i)$ and $\hat{f}(x_i)$ are bounded by $sB$.
 
-Because $w_i$ is subgaussian, $|w_i| \leq  \sigma \sqrt{2\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq \sigma \sqrt{ 2 \log \frac{2n}{\delta}}$ with probability at most $1 - \delta$.
+Because $w_i$ is sub-Gaussian, $|w_i| \leq  \sigma \sqrt{2\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq \sigma \sqrt{ 2 \log \frac{2n}{\delta}}$ with probability at most $1 - \delta$.
 
 We now put this together: 
 %and take another union bound across all $j$ and all $i'$:
@@ -204,7 +204,7 @@ with probability at least $1 - \delta$. We define $\tilde{\sigma} = \max(\sigma,
 
 Because $|f_0(x_i)| \leq sB$, the first term $| \frac{1}{n} \sum_{i=1}^n f_0(x_i)|$ is at most $sB \sqrt{\frac{2}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$ by Hoeffding Inequality.
 
-Because $w_i$ is subgaussian, the second term $|\frac{1}{n} \sum_{i=1}^n w_i|$ is at most $\sigma \sqrt{ \frac{2}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$.
+Because $w_i$ is sub-Gaussian, the second term $|\frac{1}{n} \sum_{i=1}^n w_i|$ is at most $\sigma \sqrt{ \frac{2}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$.
 
 Taking an union bound, we have that 
 
@@ -398,7 +398,7 @@ Let $\mathcal{E}_{\|w\|_\infty}$ denote the event that $\| w \|_\infty \leq \sig
 \]
 
 
-Because $w$ is a subgaussian random variables, for any fixed vector $h_L = (h_L(X_1),...,h_L(X_n))$, with probability at least $1-\delta$, $|\langle w, h_L \rangle_n | \leq \| h_L \|_n \sigma \sqrt{ \frac{2}{n} \log \frac{2}{\delta} }$. Using union bound again, we have that the event $\sup_{h_L} |\langle w, h_L \rangle| \leq sB \sigma \sqrt{ \frac{2}{n}\log \frac{2 N_{[]}}{\delta}}$ has probability at most $1-\delta$.
+Because $w$ is a sub-Gaussian random variables, for any fixed vector $h_L = (h_L(X_1),...,h_L(X_n))$, with probability at least $1-\delta$, $|\langle w, h_L \rangle_n | \leq \| h_L \|_n \sigma \sqrt{ \frac{2}{n} \log \frac{2}{\delta} }$. Using union bound again, we have that the event $\sup_{h_L} |\langle w, h_L \rangle| \leq sB \sigma \sqrt{ \frac{2}{n}\log \frac{2 N_{[]}}{\delta}}$ has probability at most $1-\delta$.
 
 Putting this together, we have that
 \begin{align*}
@@ -810,7 +810,7 @@ Therefore, with probability at least $1 - 2\delta$,
  
  \subsubsection{Concentration of Measure}
 
-\textbf{Sub-Exponential} random variable is the square of a subgaussian random variable\cite{vershynin2010introduction}.
+\textbf{Sub-Exponential} random variable is the square of a sub-Gaussian random variable\cite{vershynin2010introduction}.
 
 \begin{proposition} (Subexponential Concentration \cite{vershynin2010introduction})
 Let $X_1,...,X_n$ be zero-mean independent subexponential random variables with subexponential scale $K$. 
@@ -834,7 +834,7 @@ K \max\left( \sqrt{\frac{1}{cn} \log \frac{C}{\delta}},  \frac{1}{cn} \log \frac
 
 
 \begin{corollary}
-Let $w_1,...,w_n$ be $n$ independent subgaussian random variables with subgaussian scale $\sigma$. 
+Let $w_1,...,w_n$ be $n$ independent sub-Gaussian random variables with sub-Gaussian scale $\sigma$. 
 
 Then, for all $n > n_0$, with probability at least $1- \frac{1}{n}$,
 \[
@@ -1033,7 +1033,7 @@ Then we have that
 
 % \begin{theorem} (Dudley's Chaining) \\
 % \label{thm:chaining}
-% Let $\mathcal{G} = \{ g : \| g \|_n \leq R \}$. Let $M( \epsilon, R)$ be the size of the minimal $\epsilon$-covering of $\mathcal{G}$ with respect to the $\| \cdot \|_n$ norm. Suppose $w = (w_1, ..., w_n)$ is a vector of i.i.d. subgaussian random variables with scale $\sigma$.\\
+% Let $\mathcal{G} = \{ g : \| g \|_n \leq R \}$. Let $M( \epsilon, R)$ be the size of the minimal $\epsilon$-covering of $\mathcal{G}$ with respect to the $\| \cdot \|_n$ norm. Suppose $w = (w_1, ..., w_n)$ is a vector of i.i.d. sub-Gaussian random variables with scale $\sigma$.\\
 
 % Suppose $\delta > 0$ is such that
 % \[
