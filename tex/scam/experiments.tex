@@ -1,18 +1,25 @@
+\def\x{x}
+\def\Q{Q}
+\def\bds#1{#1}
+
 \section{Experiments}
 \label{sec:thesims}
 %\subsection{Simulations}
-We first illustrate our methods using a simulation of the following regression problem
+We first illustrate our methods using a simulation of the model
 \begin{equation}\nonumber
-         y_i = \bds{x}_{iS}^{\top}\bds{Q}\bds{x}_{iS} + \epsilon_i \quad (i=1,2,\ldots,n).
+         Y_i = \x_{iS}^{\top}\Q\x_{iS} + \epsilon_i \quad (i=1,2,\ldots,n).
 \end{equation}
-Here $\bds{x}_{i}$ denotes data sample $i$ drawn from $\mathcal{N}(\bds{0},\bds{I}_{p})$, 
-$\bds{x}_{iS}$ is a subset of $\bds{x}_i$ with dimension $|S|=5$, where $S$ represents the active feature set, and 
-$\epsilon_i$ is the additive noise drawn from $\mathcal{N}(0,1)$. 
-$\bds{Q}$ is a symmetric positive definite matrix of dimension $|S|\times{}|S|$. 
-Notice that if $\bds{Q}$ is diagonal, then the true function is convex additive; otherwise the true function is convex but not additive.
-For all the simulations in this section, we set $\lambda=4\sqrt{{\log(np)}/{n}}$.
+Here $\x_{i}$ denotes data sample $i$ drawn from $\mathcal{N}(\bds{0},\bds{I}_{p})$, 
+$\x_{iS}$ is a subset of $\x_i$ with dimension $|S|=5$, where $S$
+represents the relevant variable set, and 
+$\epsilon_i$ is additive noise drawn from $\mathcal{N}(0,1)$. 
+The matrix $\Q$ is a symmetric positive definite matrix of dimension $|S|\times{}|S|$. 
+Note that if $\Q$ is diagonal, then the true function is convex
+additive; 
+otherwise the true function is convex but not additive.
+For all simulations in this section, we set $\lambda=4\sqrt{{\log(np)}/{n}}$.
 
-In the first simulation, we set $\bds{Q}=\bds{I}_{|S|}$ (the additive
+In the first simulation, we set $\Q=\bds{I}_{|S|}$ (the additive
 case), and choose $n=100, 200,\ldots,1000$ and $p=64,128,256,512$.
 For each $(n,p)$ combination, we generate $200$ independent data
 sets. For each data set we use SCAM to infer the model parameterized
@@ -29,7 +36,7 @@ data set with $n=1000$ and $p=512$, on a MacBook with 2.3 GHz Intel
 Core i5 CPU and 4 GB memory.
 
 In the second simulation, we study the case in which the true function
-is convex but not additive. We generate four $\bds{Q}$ matrices
+is convex but not additive. We generate four $\Q$ matrices
 plotted in Figure \ref{Support}(b), where the diagonal elements are all $1$ and
 the off-diagonal elements are $0.5$ with probability $\alpha$
 ($\alpha=0,0.2,0.5,1$ for the four cases). We fix $p=128$ and choose
@@ -40,9 +47,9 @@ consistent variable selection even if the true function is not additive (but
 still convex).
 
 In the third simulation, we study the case of correlated design, where
-$\bds{x}_{i}$ is drawn from $\mathcal{N}(\bds{0},\bds{\Sigma})$
+$\x_{i}$ is drawn from $\mathcal{N}(\bds{0},\bds{\Sigma})$
 instead of $\mathcal{N}(\bds{0},\bds{I}_{p})$, with
-$\Sigma_{ij}=\nu^{|i-j|}$. We use the non-additive $\bds{Q}$ with
+$\Sigma_{ij}=\nu^{|i-j|}$. We use the non-additive $\Q$ with
 $\alpha=0.5$ and fix $p=128$.  The recovery curves for $\nu=02, 0.4,
 0.6, 0.8$ are depicted in Figure \ref{Support}(d). As can be seen, for
 design of moderate correlation, SCAM can still select relevant
@@ -60,7 +67,7 @@ variables well.
 %        \begin{subfigure}[b]{0.45\textwidth}
 %                \centering
 %                \includegraphics[width=\textwidth]{figs/Q}
-%                \caption{Four $\bds{Q}$ matrices.}
+%                \caption{Four $\Q$ matrices.}
 %                \label{Q}
 %        \end{subfigure}\\
 %        \begin{subfigure}[b]{0.45\textwidth}
@@ -89,7 +96,7 @@ variables well.
 %\includegraphics[width=.27\textwidth]{figs/Curve2} &
 %\hskip-17pt
 %\includegraphics[width=.27\textwidth]{figs/Curve3}  \\
-%(a) additive model & (b) four $\bds{Q}$ matrices &
+%(a) additive model & (b) four $\Q$ matrices &
 %(c) non-additive models & (d) correlated design
 %\end{tabular}
 %\end{center}
@@ -176,7 +183,7 @@ besides $\lambda$; 2) SCAM is formulated as a convex program, which guarantees a
 \hskip-10pt
 \includegraphics[width=.26\textwidth]{figs/Curve4}  \\
 \hskip-10pt (a) additive model & 
-\hskip-10pt (b) four $\bds{Q}$ matrices &
+\hskip-10pt (b) four $\Q$ matrices &
 \hskip-10pt (c) non-additive models & 
 \hskip-10pt (d) correlated design
 \end{tabular}
