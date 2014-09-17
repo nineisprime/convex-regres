@@ -1,6 +1,7 @@
 \def\x{x}
 \def\Q{Q}
 \def\bds#1{#1}
+\def\tts#1{\texttt{\small #1}}
 
 \section{Experiments}
 \label{sec:thesims}
@@ -20,39 +21,35 @@ otherwise the true function is convex but not additive.
 For all simulations in this section, we set $\lambda=4\sqrt{{\log(np)}/{n}}$.
 
 In the first simulation, we set $\Q=\bds{I}_{|S|}$ (the additive
-case), and choose $n=100, 200,\ldots,1000$ and $p=64,128,256,512$.
+case), and choose $n=100, 200,\ldots,1000$ and $p=64,128,256$ and $512$.
 For each $(n,p)$ combination, we generate $200$ independent data
-sets. For each data set we use SCAM to infer the model parameterized
-by $\bds{h}$ and $\bds{\beta}$; see equation \eqref{np}. If
-$\|\bds{\beta}_{k\cdot}\|_{\infty}<10^{-8}\ (\forall k\not\in{}S)$ and
-$\|\bds{\beta}_{k\cdot}\|_{\infty}>10^{-8}\ (\forall k\in{}S)$, then
-we declare correct support recovery. We then plot the probability of
+sets. For each data set we use the AC/DC algorithm to estimate the model support.
+We plot the probability of
 support recovery over the $200$ data sets in Figure \ref{Support}(a).  We
-observe that SCAM performs consistent variable selection when the true
-function is convex additive.  
-To give the reader a
-sense of the running speed, the code runs in about $2$ minutes on one
-data set with $n=1000$ and $p=512$, on a MacBook with 2.3 GHz Intel
-Core i5 CPU and 4 GB memory.
+observe that the algorithm performs consistent variable selection when the true
+function is convex additive.    To give the reader a
+sense of the running speed, for a 
+data set with $n=1000$ and $p=512$, the code runs in roughly two 
+minutes on a machine with 2.3 GHz Intel Core i5 CPU and 4 GB memory.
 
 In the second simulation, we study the case in which the true function
 is convex but not additive. We generate four $\Q$ matrices
-plotted in Figure \ref{Support}(b), where the diagonal elements are all $1$ and
-the off-diagonal elements are $0.5$ with probability $\alpha$
+plotted in Figure \ref{Support}(b), where the diagonal elements are all one and
+the off-diagonal elements are $\frac{1}{2}$ with probability $\alpha$
 ($\alpha=0,0.2,0.5,1$ for the four cases). We fix $p=128$ and choose
-$n=100,200,\ldots,1000$. We again run the SCAM optimization on $200$
+$n=100,200,\ldots,1000$. We again run the AC/DC optimization on $200$
 independently generated data sets and plot the probability of recovery
-in Figure \ref{Support}(c). The results demonstrate that SCAM performs
+in Figure \ref{Support}(c). The results demonstrate that AC/DC performs
 consistent variable selection even if the true function is not additive (but
 still convex).
 
-In the third simulation, we study the case of correlated design, where
-$\x_{i}$ is drawn from $\mathcal{N}(\bds{0},\bds{\Sigma})$
+In the third simulation, we study the case of a correlated design, where
+$\x_i$ is drawn from $\mathcal{N}(\bds{0},\bds{\Sigma})$
 instead of $\mathcal{N}(\bds{0},\bds{I}_{p})$, with
 $\Sigma_{ij}=\nu^{|i-j|}$. We use the non-additive $\Q$ with
-$\alpha=0.5$ and fix $p=128$.  The recovery curves for $\nu=02, 0.4,
-0.6, 0.8$ are depicted in Figure \ref{Support}(d). As can be seen, for
-design of moderate correlation, SCAM can still select relevant
+$\alpha=0.5$ and fix $p=128$.  The recovery curves for $\nu=0.2, 0.4,
+0.6, 0.8$ are shown in Figure \ref{Support}(d). As can be seen, for
+design of moderate correlation, AC/DC can still select relevant
 variables well.
 
 
@@ -109,45 +106,57 @@ variables well.
 We next use the Boston housing data rather than simulated data. This data set
 contains 13 covariates, 506 samples and one response variable
 indicating housing values in suburbs of Boston. The data and detailed description
-can be found on the UCI Machine Learning Repository website~\footnote{\texttt{http://archive.ics.uci.edu/ml/datasets/Housing}}. 
+can be found on the UCI Machine Learning Repository website\footnote{\url{http://archive.ics.uci.edu/ml/datasets/Housing}}. 
 
-We first use all $n=506$ samples (with normalization) to train SCAM, using
-a set of candidate $\{\lambda^{(t)}\}$ with $\lambda^{(1)}=0$ (no regularization). For each $\lambda^{(t)}$
-we obtain a subgradient matrix $\bds{\beta}^{(t)}$ with $p=13$ rows. The non-zero
-rows in this matrix indicate the variables selected using $\lambda^{(t)}$. 
-We plot $\|\bds{\beta}^{(t)}\|_{\infty}$ and the row-wise mean of $\bds{\beta}^{(t)}$ versus the normalized
-norm $\frac{\|\bds{\beta}^{(t)}\|_{\infty,1}}{\|\bds{\beta}^{(1)}\|_{\infty,1}}$ in Figures \ref{Boston}(a) and \ref{Boston}(b).
-As a comparison we plot the LASSO/LARS result in a similar way in Figure \ref{Boston}(c).
-From the figures we observe that the first three variables selected by SCAM
-and LASSO are the same: LSTAT, RM and PTRATIO, which is consistent with previous findings~\cite{SpAM:07}.
-The fourth variable selected by SCAM is TAX (with $\lambda^{(t)}=0.09$).
-We then refit SCAM with only these four variables without regularization, and plot the inferred additive
-functions in Figure \ref{Boston}(e). As can be seen, these functions contain clear nonlinear effects which cannot be captured
-by LASSO. The shapes of these functions are in agreement with those obtained by SpAM~\cite{SpAM:07}.
+We first use all $n=506$ samples (with normalization) to fit AC/DC,
+using a set of candidate regularization parameters $\{\lambda^{(t)}\}$
+with $\lambda^{(1)}=0$ (no regularization). For each $\lambda^{(t)}$
+we obtain a subgradient matrix $\bds{\beta}^{(t)}$ with $p=13$
+rows. The non-zero rows in this matrix indicate the variables selected
+using $\lambda^{(t)}$.  We plot $\|\bds{\beta}^{(t)}\|_{\infty}$ and
+the row-wise mean of $\bds{\beta}^{(t)}$ versus the normalized norm
+$\frac{\|\bds{\beta}^{(t)}\|_{\infty,1}}{\|\bds{\beta}^{(1)}\|_{\infty,1}}$
+in Figures \ref{Boston}(a) and \ref{Boston}(b).  For comparison, we
+plot the LASSO/LARS result in a similar way in Figure \ref{Boston}(c).
+From the figures we observe that the first three variables selected by
+AC/DC and LASSO are the same: \tts{LSTAT}, \tts{RM} and \tts{PTRATIO},
+consistent with previous findings~\citep{SpAM:07}.  The fourth
+variable selected by AC/DC is \tts{TAX} (with $\lambda^{(t)}=0.09$).
+We then refit AC/DC with only these four variables without
+regularization, and plot the estimated additive functions in Figure
+\ref{Boston}(e). As can be seen, these functions contain clear
+nonlinear effects which cannot be captured by LASSO. The shapes of
+these functions are in agreement with those obtained by
+SpAM~\citep{SpAM:07}.
 
-Next, in order to quantitatively study the predictive performance, we run 10 times 5-fold cross validation, following
-the same procedure described above (training, variable selection and
-refitting).  A plot of the mean and standard
-deviation of the predictive Mean Squared Error (MSE) in in Figure \ref{Boston}(d). Since for SCAM the same $\lambda^{(t)}$ may lead to
-slightly different number of selected features in different folds and runs, the values on the x-axis (average number of selected features)
-for SCAM are not necessarily integers. Nevertheless, the figure clearly shows that SCAM has a much lower predictive MSE than LASSO. 
-We also compared the performance of SCAM with that of Additive Forward Regression (AFR) presented in~\cite{Xi:09}, and found that they are similar.
-The main advantages of SCAM compared with AFR and SpAM are 1) there are no other tuning parameters (such as bandwidth)
-besides $\lambda$; 2) SCAM is formulated as a convex program, which guarantees a global optimum.
+Next, in order to quantitatively study the predictive performance, we
+run 10 times 5-fold cross validation, following the same procedure
+described above---training, variable selection and refitting.  A plot
+of the mean and standard deviation of the predictive mean squared
+error (MSE) is shown in Figure \ref{Boston}(d). Since for AC/DC the same
+regularization level $\lambda^{(t)}$ may lead to a slightly different number of selected
+variables in different folds and runs, the values on the $x$-axis
+for AC/DC are not necessarily integers. The figure clearly shows that AC/DC has a 
+lower predictive MSE than LASSO.  We also compared the performance of
+AC/DC with that of Additive Forward Regression (AFR) presented
+in~\cite{Xi:09}, and found that they are similar.  The main advantages
+of AC/DC compared with AFR and SpAM are that there are no smoothing
+parameters required, and the optimization is formulated
+as a convex program, guaranteeing a global optimum.
 
 %\begin{figure}[!htpb]
 %        \centering
 %        \begin{subfigure}[b]{0.45\textwidth}
 %                \centering
 %                \includegraphics[width=\textwidth]{figs/Additive}
-%                 \caption{Variable selection result using SCAM.}
-%                \label{SCAM}
+%                 \caption{Variable selection result using AC/DC.}
+%                \label{AC/DC}
 %        \end{subfigure}
 %        \begin{subfigure}[b]{0.45\textwidth}
 %                \centering
 %                \includegraphics[width=\textwidth]{figs/Additive1}
-%                 \caption{Variable selection result using SCAM.}
-%                \label{SCAM1}
+%                 \caption{Variable selection result using AC/DC.}
+%                \label{AC/DC1}
 %        \end{subfigure}\\
 %        \begin{subfigure}[b]{0.45\textwidth}
 %                \centering
@@ -158,13 +167,13 @@ besides $\lambda$; 2) SCAM is formulated as a convex program, which guarantees a
 %        \begin{subfigure}[b]{0.45\textwidth}
 %                \centering
 %                \includegraphics[width=\textwidth]{figs/MSE}
-%                 \caption{Predictive MSE of SCAM and LASSO.}
+%                 \caption{Predictive MSE of AC/DC and LASSO.}
 %                 \label{MSE}
 %        \end{subfigure}\\
 %        \begin{subfigure}[b]{0.45\textwidth}
 %                \centering
 %                \includegraphics[width=\textwidth]{figs/Convex}
-%                \caption{Inferred additive convex functions by SCAM.}
+%                \caption{Inferred additive convex functions by AC/DC.}
 %                \label{Convex}
 %        \end{subfigure}
 %        \caption{Results on Boston housing data.}\label{Boston}
@@ -202,9 +211,9 @@ besides $\lambda$; 2) SCAM is formulated as a convex program, which guarantees a
   \includegraphics[width=.35\textwidth]{figs/LASSO} 
 \\
 \hskip-10pt 
-SCAM $\|\beta_k\|_\infty$ paths & 
+AC/DC $\|\beta_k\|_\infty$ paths & 
 \hskip-25pt 
-SCAM $\text{mean}(\beta_k)$ paths &
+AC/DC $\text{mean}(\beta_k)$ paths &
 \hskip-25pt
 LASSO $\beta_k$ paths
 \end{tabular}
@@ -212,7 +221,7 @@ LASSO $\beta_k$ paths
   \includegraphics[width=.37\textwidth]{figs/MSE} &
   \includegraphics[width=.43\textwidth]{figs/Convex}
 \\
-predictive MSE & inferred functions from SCAM
+predictive MSE & estimated functions from AC/DC
 \end{tabular}
 \end{center}
 \caption{Results on Boston housing data, showing regularization paths,
