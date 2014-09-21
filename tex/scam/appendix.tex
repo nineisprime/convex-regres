@@ -996,6 +996,62 @@ Then we have that
 \epsilon_n \leq sB \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{1}{\delta}}{\epsilon^{1/2}n}}
 \end{align*}
 
+\section{Gaussian Example}
+\label{sec:gaussian_example}
+
+Let $H$ be a positive definite matrix and let $f(x_1, x_2) = H_{11} x_1^2 + 2H_{12} x_1x_2 + H_{22} x_2^2 + c$ be a quadratic form where $c$ is a constant such that $\E[f(X)] = 0$. Let $X \sim N(0, \Sigma)$ be a random bivariate Gaussian vector with covariance $\Sigma = [1, \alpha; \alpha, 1]$ 
+
+\begin{proposition}
+Let $f^*_1(x_1) + f^*_2(x_2)$ be the additive projection of $f$ under the bivariate Gaussian distribution. That is,
+\begin{align*} 
+f^*_1, f^*_2 \equiv \argmin_{f_1, f_2} \Big\{ \E \left(f(X) - f_1(X_1) - f_2(X_2)\right)^2 \,:\, \E[f_1(X_1)] = \E[f_2(X_2)] = 0 \Big\}
+\end{align*}
+
+Then, we have that 
+\begin{align*}
+f^*_1(x_1) &= \left( \frac{T_1 - T_2 \alpha^2}{1 - \alpha^4} \right) x_1^2 + c_1 \\
+f^*_2(x_2) &= \left( \frac{T_2 - T_1\alpha^2}{1 - \alpha^4} \right) x_2^2 + c_2
+\end{align*}
+Where $T_1 = H_{11} + 2H_{12} \alpha + H_{22} \alpha^2$ and $T_2 = H_{22} + 2H_{12} \alpha + H_{11} \alpha^2$ and $c_1,c_2$ are constants such that $\E[f_1^*(X_1)] = \E[f_2^*(X_2)] = 0$.
+
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:general_int_reduction}, we need only verify that $f^*_1, f^*_2$ satisfy
+\begin{align*}
+f^*_1(x_1) &= \E[ f(X) - f_2^*(X_2) \given x_1] \\
+f^*_2(x_2) &= \E[ f(X) - f_1^*(X_1) \given x_2 ] 
+\end{align*}
+
+
+Let us guess that $f^*_1, f^*_2$ are quadratic forms $f^*_1(x_1) = a_1 x_1^2 + c_1$, $f^*_2(x_2) = a_2 x_2^2 + c_2$ and verify that there exist $a_1, a_2$ to satisfy the above equations. Since we are not interested in constants, we define $\simeq$ to be equality up to a constant. 
+
+Then, 
+\begin{align*}
+&\E[ f(X) - f_2^*(X_2) \given x_1]\\
+& \simeq \E[ H_{11} X_1^2 + 2H_{12}X_1 X_2 + H_{22}X_2^2 - a_2 X_2^2 \given x_1 ] \\ 
+    &\simeq H_{11} x_1^2 + 2 H_{12} x_1 \E[X_2 \given x_1] + H_{22} \E[X_2^2 \given x_1] - a_2\E[X_2^2 \given x_1] \\
+   &\simeq H_{11} x_1^2 + 2H_{12} \alpha x_1^2 + H_{22} \alpha^2 x_1^2 - a_2 \alpha^2 x_1^2\\
+   &\simeq (H_{11} + 2 H_{12} \alpha + H_{22} \alpha^2 - a_2 \alpha^2) x_1^2
+\end{align*}
+
+Likewise, we have that
+\[
+\E[ f(X) - f_1^2(X_1) \given x_2] \simeq (H_{22} + 2H_{12}\alpha + H_{22}\alpha^2 - a_1 \alpha^2) x_2^2
+\]
+
+Thus, $a_1, a_2$ need only satisfy the linear system:
+\begin{align*}
+T_1 - a_2 \alpha^2 &= a_1 \\
+T_2 - a_1 \alpha^2 &= a_2 
+\end{align*}
+where $T_1 = H_{11} + 2H_{12} \alpha + H_{22} \alpha^2$ and $T_2 = H_{22} + 2H_{12} \alpha + H_{11} \alpha^2$.
+
+It is then trivial to solve the system and verify that $a_1, a_2$ are as specified.
+
+\end{proof}
+
+
 % \subsubsection{Covering Number for Lipschitz Convex Functions}
 
 % \begin{definition}
