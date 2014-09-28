@@ -808,6 +808,36 @@ Therefore, with probability at least $1 - 2\delta$,
 
  \subsection{Supporting Technical Material}
  
+\subsubsection{Supporting Lemma for Theorem~\ref{thm:acdc_faithful}}
+
+\begin{lemma}
+\label{lem:acdc_derivative_bound}
+Let $f : [0,1]^p \rightarrow \R$ be a twice differentiable function. Suppose $p(\mathbf{x})$ is a density on $[0,1]^p$ such that $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$ and $\partial_{x_k}^2 p(\mathbf{x}_{-k} \given x_k)$ are all continuous as functions of $x_k$. Let $\phi(\mathbf{x}_{-k})$ be a continuous function not dependent on $x_k$.\\
+
+Then, $h^*_k(x_k) \equiv \E[ f(X) - \phi(X_{-k}) \given x_k]$ is twice differentiable and has a second derivative lower bounded, that is, bounded away from $-\infty$.
+\end{lemma}
+
+\begin{proof}
+
+\[
+h^*_k(x_k) = \int_{\mathbf{x}_{-k}} \big(f(\mathbf{x}) - \phi(\mathbf{x}_{-k})\big) p(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}
+\]
+
+The integrand is bounded because it is a sum-product of continuous functions over a compact set. Therefore, we can differentiate under the integral and derive that
+\begin{align*}
+\partial_{x_k} h^*_k(x_k) &= 
+    \int_{\mathbf{x}_{-k}} f'(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) + (f(\mathbf{x}) - \phi(\mathbf{x}_{-k}) p'(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}\\
+\partial_{x_k}^2 h^*_k(x_k) &= 
+    \int_{\mathbf{x}_{-k}} f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) + 2f'(\mathbf{x}) p'(\mathbf{x}_{-k} \given x_k)  + (f(\mathbf{x}) - \phi(\mathbf{x}_{-k}) p''(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}
+\end{align*}
+
+We used the shorthand $f'(\mathbf{x}), p'(\mathbf{x}_{-k} \given x_k), etc$ to denote $\partial_{x_k} f(\mathbf{x})$, $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$, etc. 
+
+This proves that $h^*_k(x_k)$ is twice-differentiable. To see that the second derivative is lower bounded, we note that $f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k)$ is non-negative and the other terms in the second-derivative are all continuous functions on a compact set and thus bounded. 
+
+\end{proof}
+
+
  \subsubsection{Concentration of Measure}
 
 \textbf{Sub-Exponential} random variable is the square of a sub-Gaussian random variable\cite{vershynin2010introduction}.

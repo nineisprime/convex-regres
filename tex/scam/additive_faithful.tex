@@ -424,42 +424,41 @@ g^*_k = \arg\min \Big\{
 \label{thm:acdc_faithful}
 Suppose $p(\mathbf{x})$ is a positive density on $C=[0,1]^p$ that
 satisfies the boundary points condition. Suppose that $f$ is convex
-and twice differentiable, and that $\partial_{x_k} f$,
-$\partial_{x_k} p( \mathbf{x}_{-k} \given x_k )$, and
+and twice differentiable, and that $\partial_{x_k} p( \mathbf{x}_{-k} \given x_k )$, and
 $\partial_{x_k}^2 p( \mathbf{x}_{-k} \given x_k)$ are all continuous
-as functions on $C$.  Let $f^*_k$ and $g^*_k$ be as defined in equations
+as functions of $x_k$.  Let $f^*_k$ and $g^*_k$ be as defined in equations
 \eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}.  Then
 $f^*_k = 0$ and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x})
-= 0$ with probability one,
-so that $f$ does not depend on~$x_k$.
+= 0$, that is, $f$ does not depend on~$x_k$.
 \end{theorem}
 
 \begin{lemma}
 \label{cor:faithfulness_extension}
-Suppose $p(x)$ is a positive density on $[0,1]^p$ satisfying the boundary points condition.
-For any function $\phi(X_{-k})$ that does not depend on $X_k$,
+Suppose $p(x)$ is a positive density on $C=[0,1]^p$ satisfying the boundary points condition.
+Let $f(\mathbf{x})$ be a convex twice differentiable function on $C$. Let $\phi(\mathbf{x}_{-k})$ be any function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
  \begin{align}
-f^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X) 
-           - \phi(X_{-k}) - f_k(X_k) \bigr)^2\Bigr]
+h^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X) 
+           - \phi(X_{-k}) - h_k(X_k) \bigr)^2\Bigr]
 \end{align}
-is given by $f^*_k(x_k) = \mathbb{E}\bigl[ f(X) - \phi(X_{-k}) \,|\, x_k\bigr]$,
-and $ f^*_k = 0$ implies that $\partial_{x_k} f(x) = 0$.
+is given by $h^*_k(x_k) = \mathbb{E}\bigl[ f(X) - \phi(X_{-k}) \,|\, x_k\bigr]$,
+and $ h^*_k = 0$ implies that $\partial_{x_k} f(x) = 0$.
 \end{lemma}
 
 \begin{proof}
   In the proof of Theorem~\ref{thm:convex_faithful}, the only property
   of $r(\mathbf{x}_{-k})$ we used was the fact that $\partial_{x_k}
   r(\mathbf{x}_{-k}) = 0$. Therefore, the proof here is identical to
-  that of Theorem~\ref{thm:convex_faithful} except that we let
-  $\phi(\mathbf{x}_{-k})= r(\mathbf{x}_{-k}).$
+  that of Theorem~\ref{thm:convex_faithful} except that we replace $r(\mathbf{x}_{-k})$ with $\phi(\mathbf{x}_{-k})$.
 \end{proof}
 
 
 \begin{proof}[Proof of theorem~\ref{thm:acdc_faithful}]
+
 Fix $k$. Let $f^*_k$ and $g^*_k$ be defined as in
 equation~\ref{eqn:convex_additive} and
-equation~\ref{eqn:concave_postprocess}.  Then
-we have that
+equation~\ref{eqn:concave_postprocess}. Let $\phi(\mathbf{x}_{-k}) \equiv \sum_{k' \neq k} f^*_{k'}(x_{k'})$.
+
+Then we have that
 \begin{align}
 f^*_k &= \arg\min_{f_k} \Big\{
    \E\big( f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) - f_k \big)^2 
@@ -470,8 +469,39 @@ g^*_k &= \arg\min_{g_k} \Big\{
     \,:\, g_k \in \mh \mathcal{C}^1,\, \E g_k(X_k) = 0 
   \Big\}
 \end{align}
-Therefore, $f^*_k = 0$ and $g^*_k = 0$ implies that $\E[ f(X) -
-\sum_{k'\neq k} f^*_{k'}(X_{k'}) \given x_k] = 0$.  Now we use
+
+Let us suppose that $f^*_k = g^*_k = 0$. It must be then that
+\begin{align*}
+\argmin_{c \in \R} \E \left( f(X) - \phi(X_{-k}) - c (X_k^2 - m_k^2) \right)^2 = 0
+\end{align*}
+where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either convex or concave in $x_k$ and it is centered, i.e. $\E[ X_k^2 - m_k^2] = 0$. Since the optimum has a closed form $c^* = \frac{\E\big[(f(X) -\phi(X_{-k}))(X_k^2 - m^2_k)\big]}{\E X_k^2}$, we deduce that 
+\begin{align*}
+\E \big[ (f(X) - \phi(X_{-k})) &(X_k^2 - m_k^2) \big] \\
+   &= \E[ (f(X) - \phi(X_{-k})) X^2_k] = 
+ \E[ \E[ f(X) - \phi(X_{-k}) \given X_k] X^2_k] = 0
+\end{align*}
+
+We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$.
+
+Under the derivative continuity conditions in the theorem, we apply Lemma~\ref{lem:acdc_derivative_bound} and know that $h^*_k(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$. Therefore, for a large enough positive scalar $\alpha$, $h^*_k(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex.
+
+Because we assumed $f^* = g^* = 0$, it must be that
+\[
+\argmin_{c \in \R} 
+\E\Big( f(X) - \phi(X_{-k}) - c\big( h^*_k(X_k) + \alpha(X_k^2 - m_k^2)\big) \Big)^2 = 0
+\]
+This is because $c\big( h^*_k(x_k) + \alpha(x_k^2 - m_k^2) \big)$ is convex for $c \geq 0$ and concave for $c \leq 0$ and it is a centered function.
+
+Again, $c^* = \frac{\mathbb{E}[(f(X)-\phi(X_{-k}))\big( 
+           h^*_k(X_k) + \alpha (X_k^2 - m_k^2) \big)]}{\mathbb{E}
+       \big( h^*_k(X_k) + \alpha (X_k^2 - m_k^2) \big)^2} = 0$, so
+\begin{align*}
+\mathbb{E}[ (f(X)-\phi(X_{-k})) \big( h^*_k(X_k) + \alpha (X_k^2-m_k^2) \big) ] &= 
+\mathbb{E}[ (f(X) - \phi(X_{-k})) h^*_k(X_k) ] \\
+& = \mathbb{E}\Big[ \mathbb{E}[ f(X) - \phi(X_{-k}) \given X_k]  h^*_k(X_k) \Big] \\
+& = \mathbb{E} h^*_k(X_k)^2 = 0
+\end{align*}
+where the first equality follows because $\E[ (f(X) - \phi(X_{-k})) (X_k^2 - m_k^2)] = 0$. Therefore, we get that $h^*_k = 0$. Now we use
 Lemma~\ref{cor:faithfulness_extension} with $\phi(\mathbf{x}_{-k}) =
 f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})$ and conclude that
 $f^*_k = 0$ and $g^*_k = 0$ together imply that $f$ does not depend on $x_k$.
@@ -482,64 +512,64 @@ $f^*_k = 0$ and $g^*_k = 0$ together imply that $f$ does not depend on $x_k$.
 %% serves any particular role in the rest of the paper.  Am I missing
 %% something??
 %%
-%%\begin{proposition}
-%%\label{prop:shape_approx_univariate}
-%%Let $C \subset \R^p$ be a compact set and let $h : C \rightarrow \R$. Let $p(x)$ be a positive density on $C$ and suppose $\E h(X) = 0$. Suppose that $\partial_{x_k} h(x)$, $\partial_{x_k} p( x \given x_k)$, and $\partial^2_{x_k} p( x \given x_k )$ are all continuous as functions on $C$. Suppose that $\partial^2_{x_k} h(x) \geq 0$.
-%%
-%%
-%%Let 
-%%\begin{align*}
-%%f^*_k(x_k) &= \arg\min_{f_k} \Big\{
-%%   \E \Big( h(X) - f_k(X_k) \Big)^2 \,:\, f_k \in \mathcal{C}^1,\, \E f_k = 0 \Big\} \\
-%%g^*_k(x_k) &= \arg\min_{g_k} \Big \{
-%%   \E \Big( h(X) - g_k(X_k) \Big)^2 \,:\, g_k \in \mh \mathcal{C}^1 ,\, \E g_k = 0 \Big\}
-%%\end{align*}
-%%be the best convex and concave univariate approximation respectively.\\
-%%
-%%Then, $f^*_k = 0$ and $g^*_k = 0$ iff $h^*_k(x_k) \equiv \E[ h(X) \given x_k ] = 0$.
-%%\end{proposition}
-%%
-%%\begin{proof}
-%%
-%%
-%%First, we will establish that $h^*_k(x_k)$ is twice differentiable and that $\partial^2_{x_k} h^*_k(x_k)$ is lower bounded. 
-%%
-%%\begin{align*}
-%%h^*_k(x_k) &= \E[ h(X) \given x_k] \\
-%%  &= \int_{x_{-k}} h(x) p(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}\\
-%%\partial^2_{x_k} h^*_k(x_k) 
-%%  &= \int_{\mathbf{x}_{-k}} h''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) +
-%%  2 h'(x) p'(\mathbf{x}_{-k} \given x_k) + h(x) p''(\mathbf{x}_{-k} \given x_k) 
-%%  d\mathbf{x}_{-k} 
-%%\end{align*}
-%%
-%%The first term $h''(x) p(\mathbf{x}_{-k} \given x_k)$ is strictly positive. By assumption, the remaining terms are continuous and hence bounded on a compact set. $\partial^2_{x_k} h^*_k(x_k)$ is therefore lower bounded. Before proceeding, we also note that because $\E h(X) = 0$, it must be that $\E h^*_k(X_k) = 0$.
-%%
-%%Now suppose $f^*_k = 0$ and $g^*_k = 0$. Let $\sigma_k^2$ denote $\E X_k^2$. Then 
-%%\begin{equation}
-%%\arg\min_{c \in \mathbb{R}} \mathbb{E}\Big( h(X) - c (X_k^2-\sigma_k^2) \Big)^2 = 0
-%%\end{equation}
-%%Since optimal $c^* = \frac{\mathbb{E} [ h(X) (X_k^2-\sigma_k^2) ]}{\mathbb{E}[ X_k^2 ]}$, 
-%%we know $\mathbb{E} [ h(X) X_k^2 ] = 
-%%\mathbb{E} \Big[ \mathbb{E}[ h(X) \,|\, X_k] X_k^2 \Big] = 0$.\\
-%%
-%%Because $\partial^2_{x_k} h^*_k(x_k)$ is lower bounded, for large enough $\alpha$, $h^*_k(x_k) + \alpha (x_k^2 - \sigma_k^2)$ has a non-negative second derivative and thus is convex. Then
-%%\begin{equation}
-%%\arg\min_{c \in \mathbb{R}} \mathbb{E}\Big( h(X) 
-%%       - c (h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2)) \Big)^2 = 0
-%%\end{equation}
-%%Again, $c^* = \frac{\mathbb{E}[g(X)\big( 
-%%            h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2) \big)]}{\mathbb{E}
-%%        \big( h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2) \big)^2} = 0$, so
-%%\begin{align*}
-%%\mathbb{E}[ h(X) \big( h^*_k(X_k) + \alpha X_k^2 \big) ] &= 
-%%\mathbb{E}[ h(X) h^*_k(X_k) ] \\
-%%& = \mathbb{E}\Big[ \mathbb{E}[h(X) | X_k]  h^*_k(X_k) \Big] \\
-%%& = \mathbb{E} h^*_k(X_k)^2 = 0
-%%\end{align*}
-%%Therefore, $h^*_k(x_k) = 0$.
-%%
-%%\end{proof}
+
+% \begin{lemma}
+% \label{lem:shape_approx_univariate}
+% Let $C \subset \R^p$ be a compact set and let $h : C \rightarrow \R$. Let $p(x)$ be a positive density supported on $C$ and suppose $\E h(X) = 0$. Suppose that $\partial_{x_k} h(x)$, $\partial_{x_k} p( x \given x_k)$, and $\partial^2_{x_k} p( x \given x_k )$ are all continuous as functions on $C$. Suppose that $\partial^2_{x_k} h(x) \geq 0$.
+
+
+% Let 
+% \begin{align*}
+% f^*_k(x_k) &= \arg\min_{f_k} \Big\{
+%   \E \Big( h(X) - f_k(X_k) \Big)^2 \,:\, f_k \in \mathcal{C}^1,\, \E f_k = 0 \Big\} \\
+% g^*_k(x_k) &= \arg\min_{g_k} \Big \{
+%   \E \Big( h(X) - g_k(X_k) \Big)^2 \,:\, g_k \in \mh \mathcal{C}^1 ,\, \E g_k = 0 \Big\}
+% \end{align*}
+% be the best convex and concave univariate approximation respectively.\\
+
+% Then, $f^*_k = 0$ and $g^*_k = 0$ iff $h^*_k(x_k) \equiv \E[ h(X) \given x_k ] = 0$.
+% \end{lemma}
+
+% \begin{proof}
+
+% First, we establish that $h^*_k(x_k)$ is twice differentiable and that $\partial^2_{x_k} h^*_k(x_k)$ is lower bounded. 
+
+% \begin{align*}
+% h^*_k(x_k) &= \E[ h(X) \given x_k] \\
+%  &= \int_{x_{-k}} h(x) p(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}\\
+% \partial^2_{x_k} h^*_k(x_k) 
+%  &= \int_{\mathbf{x}_{-k}} h''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) +
+%  2 h'(x) p'(\mathbf{x}_{-k} \given x_k) + h(x) p''(\mathbf{x}_{-k} \given x_k) 
+%  d\mathbf{x}_{-k} 
+% \end{align*}
+
+% The first term $h''(x) p(\mathbf{x}_{-k} \given x_k)$ is strictly positive. By assumption, the remaining terms are continuous and hence bounded on a compact set. $\partial^2_{x_k} h^*_k(x_k)$ is therefore lower bounded. Before proceeding, we also note that because $\E h(X) = 0$, it must be that $\E h^*_k(X_k) = 0$.
+
+% Now suppose $f^*_k = 0$ and $g^*_k = 0$. Let $\sigma_k^2$ denote $\E X_k^2$. Then 
+% \begin{equation}
+% \arg\min_{c \in \mathbb{R}} \mathbb{E}\Big( h(X) - c (X_k^2-\sigma_k^2) \Big)^2 = 0
+% \end{equation}
+% Since optimal $c^* = \frac{\mathbb{E} [ h(X) (X_k^2-\sigma_k^2) ]}{\mathbb{E}[ X_k^2 ]}$, 
+% we know $\mathbb{E} [ h(X) X_k^2 ] = 
+% \mathbb{E} \Big[ \mathbb{E}[ h(X) \,|\, X_k] X_k^2 \Big] = 0$.\\
+
+% Because $\partial^2_{x_k} h^*_k(x_k)$ is lower bounded, for large enough $\alpha$, $h^*_k(x_k) + \alpha (x_k^2 - \sigma_k^2)$ has a non-negative second derivative and thus is convex. Then
+% \begin{equation}
+% \arg\min_{c \in \mathbb{R}} \mathbb{E}\Big( h(X) 
+%       - c (h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2)) \Big)^2 = 0
+% \end{equation}
+% Again, $c^* = \frac{\mathbb{E}[g(X)\big( 
+%            h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2) \big)]}{\mathbb{E}
+%        \big( h^*_k(X_k) + \alpha (X_k^2 - \sigma_k^2) \big)^2} = 0$, so
+% \begin{align*}
+% \mathbb{E}[ h(X) \big( h^*_k(X_k) + \alpha X_k^2 \big) ] &= 
+% \mathbb{E}[ h(X) h^*_k(X_k) ] \\
+% & = \mathbb{E}\Big[ \mathbb{E}[h(X) | X_k]  h^*_k(X_k) \Big] \\
+% & = \mathbb{E} h^*_k(X_k)^2 = 0
+% \end{align*}
+% Therefore, $h^*_k(x_k) = 0$.
+
+% \end{proof}
 %%
 
 % \begin{remark}
