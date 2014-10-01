@@ -321,6 +321,7 @@ finite sample analysis, where we show that the additive
 approximation is variable selection consistent (or ``sparsistent''), even when the true function is not
 additive.
 
+
 \begin{remark}
   We assume twice differentiability in
   Theorems~\ref{thm:convex_faithful} to simplify the proof.  We
@@ -328,6 +329,7 @@ additive.
   necessary---every convex function can be approximated arbitrarily
   well by a smooth convex function.
 \end{remark}
+
 
 \begin{remark} 
   We have not found natural conditions under which the opposite
@@ -341,6 +343,12 @@ additive.
   approximation of $f$ would have a component $f^*_3(x_3) = x_3$ even
   though $f$ does not depend on $x_3$.
 \end{remark}
+
+
+\begin{remark}
+In Theorem~\ref{thm:convex_faithful}, we do not assume a parametric form for the additive components. The additive approximations may not be faithful if we use parametric components. For example, suppose we approximate a convex function $f(X)$ by a linear form $X \beta$. The optimal linear function in the population setting is $\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$. Suppose the $X$'s are independent and follow a symmetric distribution and suppose $f(\mathbf{x}) = x_1^2 - \E[X_1^2]$, then $\beta^*_1 = \E[ X_1 f(X)] = \E[ X_1^3 - X_1 \E[X_1^2]] = 0$.
+\end{remark}
+
 
 \begin{remark}
 It is possible to get a similar result for distributions with
@@ -369,7 +377,7 @@ Interestingly, it is possible to approximate the Gaussian distribution arbitrari
 
 \begin{example} 
 \label{examp:boundaryflat_example}
- Consider a mixture $\lambda U[-(b+\epsilon), b+\epsilon]^2 + (1-\lambda) N_b(0, \Sigma)$ where $N_b(0,\Sigma)$ is the density of a \emph{truncated} bivariate Gaussian bounded in $[-b, b]^2$. The uniform distribution is supported over a slightly larger square to satisfy the boundary flatness conditions.
+ Consider a mixture $\lambda U[-(b+\epsilon), b+\epsilon]^2 + (1-\lambda) N_b(0, \Sigma)$ where $N_b(0,\Sigma)$ is the density of a \emph{truncated} bivariate Gaussian bounded in $[-b, b]^2$ and $U[-(b+\epsilon), b+\epsilon]^2$ is the uniform distribution over a square. The uniform distribution is supported over a slightly larger square to satisfy the boundary flatness conditions.
 
 When $b$ is large, $\epsilon$ is small, and $\lambda$ is small, the mixture closely approximates the Gaussian distribution but is still additively faithful for all convex functions. Figure~\ref{fig:boundaryflat_example} shows the optimal additive function under the mixture distribution, computed by numerical simulation with $b=5, \epsilon=0.3, \lambda=0.0001$. We note that $f^*_1$, which is zero under the Gaussian distribution, is nonzero under the mixture distribution. Although $f^*_1$ is non-zero, $\E f^*_1(X_1)^2$ is small however, around $10^{-8}$ in our example.
 \end{example}
@@ -441,7 +449,7 @@ h^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X)
            - \phi(X_{-k}) - h_k(X_k) \bigr)^2\Bigr]
 \end{align}
 is given by $h^*_k(x_k) = \mathbb{E}\bigl[ f(X) - \phi(X_{-k}) \,|\, x_k\bigr]$,
-and $ h^*_k = 0$ implies that $\partial_{x_k} f(x) = 0$.
+and $ h^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x}) = 0$.
 \end{lemma}
 
 \begin{proof}

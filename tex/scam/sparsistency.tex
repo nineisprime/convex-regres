@@ -28,9 +28,11 @@ We define the \emph{restricted regression} problem
    \lambda_n \sum_{k \in S} \| \bar{\Delta}_k d_k \|_\infty \quad \trm{such that} \, d_{k,1}, \ldots, d_{k,n-1} \geq 0
 \]
 where we restrict the indices $k$ in
-optimization \eqref{opt:alternate_opt} to lie in the set $S$ of true
+optimization \eqref{opt:alternate_opt} to lie in some set $S$ which contains the true
 relevant variables.
 \end{definition}
+
+
 
 \begin{theorem}[Deterministic setting]
 \label{thm:deterministic}
@@ -53,7 +55,7 @@ elsewhere.  Then the following two statements hold.
 \end{theorem}
 
 This result holds regardless of whether or not we impose the boundedness conditions in optimization~\eqref{opt:alternate_opt} and~\eqref{opt:alternate_opt_concave}.
-The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix.
+The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix. We allow $S$ in Theorem~\ref{thm:deterministic} to be any set containing the relevant variables; in Lasso analysis, $S$ is taken to be the set of relevant variables; we will take $S$ to be the set of variables chosen by the additive convex and decoupled concave procedure in the population setting, which is guaranteed to contain the relevant variables because of additive faithfulness.
 
 Theorem~\ref{thm:deterministic} allows us to separately analyze the false negative
 rates and false positive rates. To control false positives,
@@ -90,7 +92,7 @@ supported on $[-b,b]$,
 and let  $\mathcal{C}_1^{p}$ denote the set of convex additive functions
 $\mathcal{C}_1^p \equiv \{ f \,:\, f = \sum_{k=1}^p f_k, \,
    f_k \in \mathcal{C}^1 \} $.  
-Let $f^*(x) = \sum_{k=1}^p f^*_k(x_k)$ be the population risk
+Let $f^*(\mathbf{x}) = \sum_{k=1}^p f^*_k(x_k)$ be the population risk
 minimizer in $\mathcal{C}_1^p$, 
 \begin{equation}
 f^* \equiv \arg\min_{f \in \mathcal{C}_1^p} \E\big(f_0(X) - f^*(X)
@@ -128,9 +130,9 @@ of the procedure.
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make
-  very weak assumptions on the true regression function $f_0$ in
+  weak assumptions on the true regression function $f_0$ in
   A2. In particular, we do not assume that $f_0$ is additive. In
-  important direction for future work is to weaken this assumption.
+  important direction for future work is to weaken assumption A1.
   Our simulation experiments indicate that the procedure can be
   effective even when the relevant and irrelevant variables are correlated.
   %Strong assumptions on the covariates are not uncommon in nonparametric
