@@ -121,10 +121,10 @@ consistent with previous findings~\citep{SpAM:07}.  The fourth
 variable selected by AC/DC is \tts{INDUS} (with $\lambda^{(t)}=0.7$).
 We then refit AC/DC with only these four variables without
 regularization, and plot the estimated additive functions in Figure
-\ref{Boston}(e). As can be seen, these functions contain clear
+\ref{Boston}(e). When refitting, we constrain a component to be convex if it is non-zero in the AC stage and concave only if it is non-zero in the DC stage. As can be seen, these functions contain clear
 nonlinear effects which cannot be captured by LASSO. The shapes of
-these functions are in agreement with those obtained by
-SpAM~\citep{SpAM:07}.
+these functions, including the concave shape of the \tts{PTRATIO} function, are in agreement with those obtained by
+SpAM~\citep{SpAM:07}. 
 
 Next, in order to quantitatively study the predictive performance, we
 run 10 times 5-fold cross validation, following the same procedure
