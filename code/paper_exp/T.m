@@ -1,7 +1,7 @@
 function T(version)
 % p changes
 % function Diagonal quadratic with noise.
-% covariance correlated alpha=0.5
+% independent gaussian
 
 clc; close all; format long; randn('state',0); rand('state',0); 
 switch version
@@ -79,7 +79,8 @@ for run = 1:nrun
     
     y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)' + randn(n,1);
     
-    [beta,h,obj,Ln(:,run)] = acdc_QP(X,y-mean(y),lambda,maxit,tol);
+    [beta,h,obj,Lnvex,Lncave] = acdc_QP(X,y-mean(y),lambda,maxit,tol);
+    Ln(:,run) = max(Lnvex, Lncave);
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
 save(['T_' num2str(version) '.mat'],'J','Ln');

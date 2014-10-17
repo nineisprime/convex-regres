@@ -78,7 +78,9 @@ for run = 1:nrun
     X = randn(p,n); 
     y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)' + randn(n,1);
     % main function call
-    [beta,h,obj,Ln(:,run)] = acdc_QP(X, y-mean(y), lambda, maxit, tol);
+    [beta,h,obj,Lnvex,Lncave] = acdc_QP(X, y-mean(y), lambda, maxit, tol);
+    
+    Ln(:,run) = max(Lnvex,Lncave);
     %[beta,h,obj,Ln(:,run)] = SCAM_QP(X,y-mean(y),lambda,maxit,tol);
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end

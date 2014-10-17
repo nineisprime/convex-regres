@@ -240,7 +240,6 @@ In the second inequality, we used equation~\ref{eqn:stepone_rhat} and equation~\
 \end{proof}
 
  
- 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %%
@@ -296,21 +295,22 @@ By the definition of the ACDC procedure, $\hat{g}_k$ exist only for $k$ that hav
 
 \subsubsection{Proof}
  
-By additive faithfulness of the ACDC procedure, it is necessary that $f^*_k \neq 0$ or $g^*_k \neq 0$ for all $k \in S$. \\
+By additive faithfulness of the AC/DC procedure, it is known that $f^*_k \neq 0$ or $g^*_k \neq 0$ for all $k \in S$. \\
 
 
-Intuitively, we would like to show the following:
+Intuitively, we would like to show that the risks of the AC/DC estimators $\hat{f}, \hat{g}$ tends to the risks of the population optimal functions $f^*, g^*$:
 \begin{align*}
-\| f_0 - \hat{f} \|_P & \approx \| f_0 - f^* \|_P \\
-\| f_0 - f^* - \hat{g}_k \|_P & \approx \| f_0 - f^* - g^*_k \|_P 
+\| f_0 - \hat{f} \|^2_P & = \| f_0 - f^* \|^2_P + \trm{err}_+(n) \\
+\| f_0 - f^* - \hat{g}_k \|^2_P &=  \| f_0 - f^* - g^*_k \|^2_P + \trm{err}_-(n) 
        \quad \trm{for all $k \in S$ where $f^*_k = 0$}
 \end{align*}
-where the estimation error is a term that decreases with $n$.
+where the estimation errors $\trm{err}_+(n), \trm{err}_-(n)$ decrease with $n$ at some rate. 
 
-Suppose $\hat{f}_k = 0$ and $f^*_k \neq 0$, then, when $n$ is large enough, there must exist a contradiction because the population risk of $f^*$, $\| f_0 - f^* \|_P$, is strictly larger than the population risk of the best approximation whose $k$-th component is constrained to be zero. 
+Suppose $\hat{f}_k = 0$ and $f^*_k \neq 0$, then, when $n$ is large enough such that $\trm{err}_+(n)$ and $\trm{err}_-(n)$ are smaller than $\alpha_+, \alpha_-$ (defined in equation~\ref{eqn:signal_level_defn}), there must exist a contradiction because the risk of $f^*$, $\| f_0 - f^* \|_P$, is strictly larger by $\alpha_+$ than the risk of the best approximation whose $k$-th component is constrained to be zero. 
 
 Suppose $f^*_k = 0$, then $g^*_k \neq 0$. When $n$ is large enough, $\hat{g}_k$ must not be zero or we would have another contradiction. \\
 
+Theorem~\ref{thm:convex_consistent} and theorem~\ref{thm:concave_consistent} characterize $\trm{err}_+(n)$ and $\trm{err}_-(n)$ respectively.
 
 \begin{theorem}
 \label{thm:convex_consistent}

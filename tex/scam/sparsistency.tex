@@ -60,7 +60,7 @@ The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:determi
 Theorem~\ref{thm:deterministic} allows us to separately analyze the false negative
 rates and false positive rates. To control false positives,
 we analyze the condition on $\lambda_n$ for $k \in S^c$. To control
-false negatives, we analyze the restricted regression. 
+false negatives, we need only analyze the restricted regression with only $|S|$ variables.
 
 The proof of Theorem~\ref{thm:deterministic} analyses the KKT
 conditions of optimization~\eqref{opt:alternate_opt}.  This parallels
@@ -103,7 +103,7 @@ Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functi
 g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X)
 - g_k(X_k) \big)^2.
 \end{equation}
-We let $S = \{ k = 1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$. 
+We let $S = \{ k = 1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$ and let $s = |S|$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$ and thus $s \geq s_0$. In some cases such as when $X_{S_0}, X_{S^c_0}$ are independent, we have $S = S_0$.
 Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
@@ -113,14 +113,14 @@ Each of our theorems will use a subset of the following assumptions:
 \end{packed_enum}
 By assumption A1, $f^*_k$ is must be zero for $k\notin S$.
 We define $\alpha_{+}, \alpha_{-}$ as a measure of the signal strength of the weakest variable:
-\begin{align*}
+\begin{align}
 \alpha_{+} &= \inf_{f \in \mathcal{C}_1^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
        \Big\{ \mathbb{E} \big( f_0(X) - f(X) \big)^2 - 
-        \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\}\\
+        \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\} \label{eqn:signal_level_defn} \\
 \alpha_{-} &=   \min_{k \in S \,:\, g^*_k \neq 0}
       \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
-    \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\}
-\end{align*}
+    \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\} \nonumber
+\end{align}
 These quantities play the role of the absolute value of the smallest nonzero
 coefficient in the true linear model in lasso theory.  Intuitively, if
 $\alpha_{+}$ is small, then it is easier to make a false omission in the
@@ -146,7 +146,7 @@ of the procedure.
 Suppose assumptions A1-A4 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$,
 and suppose 
 \begin{equation}
-\lambda_n \geq 8 s_0 \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
+\lambda_n \geq 8 s \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
 \end{equation}  
 Then with probability at least $ 1 - \frac{12}{np}$, for all $k \in
 S^c$, and for all $i'=1,\ldots, n$,
@@ -174,18 +174,18 @@ $\hat{g}_k$ be any DC solution to the restricted regression with
 $B$-boundedness constraint. Let $\tilde{\sigma}$ denote $\max(\sigma,
 B)$.  Suppose 
 \begin{equation}
-\lambda_n \leq 9 s_0 \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}
+\lambda_n \leq 9 s \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}
 \end{equation}
 and that $n$ is sufficiently large so that 
 \begin{equation}
-\frac{n^{4/5}}{\log np} \geq B^4 \tilde{\sigma}^2 s_0^5.
+\frac{n^{4/5}}{\log np} \geq B^4 \tilde{\sigma}^2 s^5.
 \end{equation}
 Assume that the signal-to-noise ratio satisfies
 \begin{align}
 \frac{\alpha_{+}}{\tilde{\sigma}} & \geq c B^2
-\sqrt{\frac{s_0^5}{n^{4/5}} \log^2 np}\\
+\sqrt{\frac{s^5}{n^{4/5}} \log^2 np}\\
 \frac{\alpha_{-}^2}{\tilde{\sigma}} &\geq c B^2
-\sqrt{\frac{s_0^5}{n^{4/5}} \log^2 np}
+\sqrt{\frac{s^5}{n^{4/5}} \log^2 np}
 \end{align}
 where $c$ is a constant.  Then with probability at least $1 -
 \frac{C}{n}$ for some constant $C$, 
@@ -198,7 +198,7 @@ Theorem~\ref{thm:convex_faithful}. We need stronger assumptions in
 Theorem~\ref{thm:false_negative} to use our additive faithfulness
 result, Theorem~\ref{thm:convex_faithful}. We also include an extra
 boundedness constraint so that we can use recent bracketing number
-results \cite{kim2014global}.
+results \cite{kim2014global}. The full proof of Theorem~\ref{thm:false_negative} is in Section~\ref{sec:false_negative_proof} of the appendix.
 
 Combining Theorems~\ref{thm:false_positive} and
 ~\ref{thm:false_negative} 
@@ -219,7 +219,7 @@ same exponential scaling of the ambient dimension scaling attained
 with parametric models, $p = O(\exp(n^c))$ for $c<1$.  The cost of
 nonparametric modeling through shape constraints 
 is reflected in the scaling with respect to
-the number of relevant variables, which can scale as $s_0 = o(n^{4/25})$.
+the number of relevant variables, which can scale as $s = o(n^{4/25})$.
 
 \begin{remark}
   \citet{dalalyan:12} have shown that under tradtional smoothness
