@@ -58,7 +58,7 @@ lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
 alpha = 0.5;
 
 maxit = 20; tol = 10^-6;
-nrun = 100; % MODIFY
+nrun = 1; % MODIFY
 J = ones(p,nrun)==0; Ln = zeros(p,nrun); 
 
 
@@ -83,7 +83,7 @@ for run = 1:nrun
     Ln(:,run) = max(Lnvex, Lncave);
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
-save(['C_' num2str(version) '.mat'],'J','Ln');
+%save(['C_' num2str(version) '.mat'],'J','Ln');
 return
 
 

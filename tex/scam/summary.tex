@@ -114,18 +114,21 @@ While this shows that convex functions are additively faithful, it is difficult 
 estimate the optimal additive functions.  The difficulty
 is that $f^*_k$ need not be
 a convex function, as we show through a counterexample
-in Section~\ref{sec:additivefaithful}.   
-Since the true regression function $f$ is convex, it is natural to ask
-when it is sufficient to estimate a convex additive model.  
-Unfortunately, a convex additive approximation is not generally
-faithful.  In other words, it could be that $f^*_k\equiv 0$
-even for a relevant variable $x_k$.  But our next result
-shows that this type of error can be detected by fitting 
-a \textit{concave} function to the residual.  If this
-concave function is zero, we can then safely
-mark $x_k$ as an irrelevant variable.
+in Section~\ref{sec:additivefaithful}. It may be possible to estimate $f^*_k$ with smoothing parameters, but, for the purpose of variable screening, it is sufficient in fact to approximate $f^*_k$ by a \emph{convex} additive model. 
+
+Our next result states that a convex additive fit, combined with a series of univariate concave fits, is faithful. We abuse notation in Theorem~\ref{thm:summary_acdc_population} and let the notation $f^*_k$ represent convex additive components.
+%Since the true regression function $f$ is convex, it is natural to ask
+%when it is sufficient to estimate a convex additive model.  
+%Unfortunately, a convex additive approximation is not generally
+%faithful.  In other words, it could be that $f^*_k\equiv 0$
+%even for a relevant variable $x_k$.  But our next result
+%shows that this type of error can be detected by fitting 
+%a \textit{concave} function to the residual.  If this
+%concave function is zero, we can then safely
+%mark $x_k$ as an irrelevant variable.
 
 \begin{stheorem}
+\label{thm:summary_acdc_population}
 Suppose $p(\mathbf{x})$ is a positive
 density on $C=[0,1]^p$ that satisfies the boundary flatness
 condition. Suppose that $f$ is convex and twice-differentiable.
@@ -138,7 +141,7 @@ Define
 \E\Bigl( f(X) - \mu - \sum_{k=1}^s f_k(X_k) \Bigr)^2 \,:\, f_k \in
 \mathcal{C}^1, \, \E f_k(X_k) = 0 \Big \}
 \end{equation} where $\mathcal{C}^1$ is the set of univariate convex
-functions, and
+functions, and, with respective to $f^*_k$'s from above, define
 \begin{equation}
 g^*_k = \arg\min_{g_k} \Big\{ \E\Bigl( f(X) - \mu^* - 
 \sum_{k' \neq k} f^*_{k'}(X_{k'}) - g_k \Bigr)^2 \,:\, g_k \in \mh
@@ -160,7 +163,7 @@ As a shorthand, we refer to this two-stage procedure as AC/DC.  In
 the AC stage we fit an additive convex model.  In the DC 
 stage we fit decoupled concave functions on the residuals.  The
 decoupled nature of the DC stage allows all of the fits to
-be carried out in parallel.
+be carried out in parallel. The entire process involves no smoothing parameters.
 Our next results concern the required optimizations, and their finite
 sample statistical performance.
 
@@ -227,20 +230,20 @@ Each of our theorems uses a subset of the following assumptions:
 \end{packed_enum}
 In Assumption A3, $f^*=\sum_k f^*_k$ denotes the optimal additive projection of $f_0$ in the population setting.
 
-Our analysis involves parameters $\alpha_f$ and $\alpha_g$,
+Our analysis involves parameters $\alpha_+$ and $\alpha_-$,
 which are measures of the signal strength of the weakest variable:
 \begin{align*}
-\alpha_f &= \inf_{f \in \mathcal{C}^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
+\alpha_+ &= \inf_{f \in \mathcal{C}^p \,:\, \textrm{supp}(f)\subsetneq \textrm{supp}(f^*)} 
        \Big\{ \mathbb{E} \big( f_0(X) - f(X) \big)^2 - 
         \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\}\\
-\alpha_g &=   \min_{k \in S \,:\, g^*_k \neq 0}
+\alpha_- &=   \min_{k \in S \,:\, g^*_k \neq 0}
       \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
     \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\}.
 \end{align*}
 
-Intuitively, if $\alpha_f$ is small, then it is easier to make a
+ Intuitively, if $\alpha_+$ is small, then it is easier to make a
 false omission in the additive convex stage of the procedure. If
-$\alpha_g$ is small, then it is easier to make a false omission in
+$\alpha_-$ is small, then it is easier to make a false omission in
 the decoupled concave stage of the procedure.
 
 We make strong assumptions on the covariates in A1 in order to make

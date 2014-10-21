@@ -354,11 +354,8 @@ In Theorem~\ref{thm:convex_faithful}, we do not assume a parametric form for the
 It is possible to get a similar result for distributions with
 unbounded support, by using a limit condition $\lim_{|x_k| \rightarrow
   \infty} \frac{\partial p(\mathbf{\scriptstyle x}_{-k} \given x_k)}{\partial x_k}
-= 0$.  Such a limit condition however is not obeyed by many common distributions such as the multivariate Gaussian distribution. 
+= 0$.  Such a limit condition however is not obeyed by many common distributions such as the multivariate Gaussian distribution. The next example shows that certain convex functions are not additive faithful under certain multivariate Gaussian distributions.
 \end{remark}
-
-The following example shows that not all convex functions are
-additively faithful under multivariate Gaussian distributions.
 
 \begin{example}
 \label{examp:gaussian_counterexample}
@@ -370,16 +367,16 @@ f^*_1(x_1) &= \left( \frac{T_1 - T_2 \alpha^2}{1 - \alpha^4} \right) x_1^2 + c_1
 f^*_2(x_2) &= \left( \frac{T_2 - T_1 \alpha^2}{1 - \alpha^4} \right) x_2^2 + c_2
 \end{align*}
 Where $T_1 = H_{11} + 2H_{12} \alpha + H_{22} \alpha^2$, $T_2 = H_{22} + 2H_{12} \alpha + H_{11} \alpha^2$, $c_1, c_2$ are constants such that $f^*_1$ and $f^*_2$ both have mean zero. Let $H = \begin{pmatrix} 1.6 & 2 \\ 2 & 5\end{pmatrix}$, then it is easy to check that if $\alpha = - \frac{1}{2}$, then $f^*_1 = 0$
-and additive faithfulness is violated, if $\alpha > \frac{1}{2}$, then $f^*_1$ is a concave function. We take the setting where $\alpha=-1/2$, compute the optimal additive functions via numerical simulation, and show the results in Figure~\ref{fig:gaussian_example}--$f^*_1$ is zero as expected.
+and additive faithfulness is violated, if $\alpha > \frac{1}{2}$, then $f^*_1$ is a concave function. We take the setting where $\alpha=-0.5$, compute the optimal additive functions via numerical simulation, and show the results in Figure~\ref{fig:gaussian_example}--$f^*_1$ is zero as expected.
 \end{example}
 
-Interestingly, it is possible to approximate the Gaussian distribution arbitrarily well with distributions that do satisfy the boundary flatness conditions.
+Although the Gaussian distribution does not satisfy the boundary flatness condition, it is possible to approximate the Gaussian distribution arbitrarily well with distributions that do satisfy the boundary flatness conditions.
 
 \begin{example} 
 \label{examp:boundaryflat_example}
- Consider a mixture $\lambda U[-(b+\epsilon), b+\epsilon]^2 + (1-\lambda) N_b(0, \Sigma)$ where $N_b(0,\Sigma)$ is the density of a \emph{truncated} bivariate Gaussian bounded in $[-b, b]^2$ and $U[-(b+\epsilon), b+\epsilon]^2$ is the uniform distribution over a square. The uniform distribution is supported over a slightly larger square to satisfy the boundary flatness conditions.
+Let $\Sigma$ be as in Example~\ref{examp:gaussian_counterexample} with $\alpha = -0.5$ so that $f^*_1 = 0$. Consider a mixture $\lambda U[-(b+\epsilon), b+\epsilon]^2 + (1-\lambda) N_b(0, \Sigma)$ where $N_b(0,\Sigma)$ is the density of a \emph{truncated} bivariate Gaussian bounded in $[-b, b]^2$ and $U[-(b+\epsilon), b+\epsilon]^2$ is the uniform distribution over a square. The uniform distribution is supported over a slightly larger square to satisfy the boundary flatness conditions.
 
-When $b$ is large, $\epsilon$ is small, and $\lambda$ is small, the mixture closely approximates the Gaussian distribution but is still additively faithful for all convex functions. Figure~\ref{fig:boundaryflat_example} shows the optimal additive function under the mixture distribution, computed by numerical simulation with $b=5, \epsilon=0.3, \lambda=0.0001$. We note that $f^*_1$, which is zero under the Gaussian distribution, is nonzero under the mixture distribution. Although $f^*_1$ is non-zero, $\E f^*_1(X_1)^2$ is small however, around $10^{-8}$ in our example.
+When $b$ is large, $\epsilon$ is small, and $\lambda$ is small, the mixture closely approximates the Gaussian distribution but is still additively faithful for convex functions. Figure~\ref{fig:boundaryflat_example} shows the optimal additive components under the mixture distribution, computed by numerical integration with $b=5, \epsilon=0.3, \lambda=0.0001$. True to our theory, $f^*_1$, which is zero under the Gaussian distribution, is nonzero under the mixture approximation to the Gaussian distribution. We note that the magnitude $\E f^*_1(X_1)^2$, although non-zero, is very small, consistent with the fact that the mixture distribution closely approximates the Gaussian distribution.
 \end{example}
 
 
@@ -407,19 +404,20 @@ Although convex functions are additively faithful---under appropriate conditions
 estimate the optimal additive functions $f^*_k$s as defined in
 equation~\eqref{eqn:unconstrained_additive}.  The reason is that $f^*_k$ need not be
 a convex function, as example~\ref{examp:gaussian_counterexample}
-shows. 
+shows. It may be possible to estimate $f^*_k$ via smoothing, but we prefer an approach that is free of smoothing parameters. 
 %The function $f^*_k$ can be shown to be smooth but it is preferable to use
 %shape-constraints whenever possible to avoid the introduction of the
 %additional smoothing bandwidth.
-Since the true regression function $f$ is convex, it is natural to ask when it is sufficient to estimate an convex additive model
+Since the true regression function $f$ is convex, we approximate the additive model with a \emph{convex} additive model. We abuse notation and, for the rest of the paper, use the notation $f^*_k$ to represent convex additive fits:
+%it is natural to ask when it is sufficient to estimate an convex additive model
 \begin{equation}
 \label{eqn:convex_additive}
 \{ f^*_k \}_{k=1}^p = \arg\min \Big \{ 
     \E\Bigl( f(X) - \sum_{k=1}^p f_k(X_k) \Bigr)^2 \,:\, f_k \in \mathcal{C}^1, \, \E f_k(X_k) = 0 \Big \}
 \end{equation}
-where $\mathcal{C}^1$ is the set of univariate convex functions.
-While the convex functions $\{f^*_k\}$ are not additively faithful by
-themselves, faithfulness can be restored by coupling the $f^*_k$s with a set of concave functions:
+where $\mathcal{C}^1$ is the set of univariate convex functions. 
+The convex functions $\{f^*_k\}$ are not additively faithful by
+themselves, i.e., it could be that $f$ depends on variable $k$ but $f^*_k = 0$. But, faithfulness can be restored by coupling the $f^*_k$'s with a set of concave fits on the \emph{residual} $f - f^*$:
 \begin{equation}
 \label{eqn:concave_postprocess}
 g^*_k = \arg\min \Big\{
@@ -428,6 +426,7 @@ g^*_k = \arg\min \Big\{
   \Big\}.
 \end{equation}
 
+
 \begin{theorem}
 \label{thm:acdc_faithful}
 Suppose $p(\mathbf{x})$ is a positive density on $C=[0,1]^p$ that
@@ -435,10 +434,12 @@ satisfies the boundary flatness condition. Suppose that $f$ is convex
 and twice differentiable, and that $\partial_{x_k} p( \mathbf{x}_{-k} \given x_k )$, and
 $\partial_{x_k}^2 p( \mathbf{x}_{-k} \given x_k)$ are all continuous
 as functions of $x_k$.  Let $f^*_k$ and $g^*_k$ be as defined in equations
-\eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}.  Then
+\eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}, then the $f^*_k$'s and the $g^*_k$'s are unique. Furthermore, 
 $f^*_k = 0$ and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x})
-= 0$, that is, $f$ does not depend on~$x_k$.
+= 0$, that is, $f$ does not depend on~$x_k$. 
 \end{theorem}
+
+Uniqueness of $f^*_k$ and $g^*_k$ follows from the fact that $p(\mathbf{x})$ is a positive density and thus the objective is strongly convex (see proof of Lemma~\ref{lem:general_int_reduction}). Before we can prove the rest of the theorem however, we need a lemma that generalizes Theorem~\ref{thm:convex_faithful}.
 
 \begin{lemma}
 \label{cor:faithfulness_extension}

@@ -78,7 +78,7 @@ adopt the following standard setup:
 
 \begin{enumerate}
 \item The data $X^{(1)},\ldots, X^{(n)} \sim F$ are iid from
-a distribution $F$ that is supported and strictly positive on $\mathcal{X}=[-b,b]^p$. 
+a distribution $F$ with a density $p$ that is supported and strictly positive on $\mathcal{X}=[-b,b]^p$. 
 \item The response is $Y = f_0(X) + W$ where $W$ is
   independent, zero-mean noise; thus $Y^{(i)} = f_0(X^{(i)}) + W^{(i)}$.
 \item The regression function $f_0$ satisfies
@@ -95,15 +95,15 @@ $\mathcal{C}_1^p \equiv \{ f \,:\, f = \sum_{k=1}^p f_k, \,
 Let $f^*(\mathbf{x}) = \sum_{k=1}^p f^*_k(x_k)$ be the population risk
 minimizer in $\mathcal{C}_1^p$, 
 \begin{equation}
-f^* \equiv \arg\min_{f \in \mathcal{C}_1^p} \E\big(f_0(X) - f^*(X)
+f^* = \arg\min_{f \in \mathcal{C}_1^p} \E\big(f_0(X) - f^*(X)
 \big)^2.
 \end{equation}
-Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-b, b]$ and define
+$f^*$ is the unique minimizer since the density is positive and thus the objective is strongly convex on $\mathcal{X}$. Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-b, b]$ and define
 \begin{equation}
 g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X)
 - g_k(X_k) \big)^2.
 \end{equation}
-We let $S = \{ k = 1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$ and let $s = |S|$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$ and thus $s \geq s_0$. In some cases such as when $X_{S_0}, X_{S^c_0}$ are independent, we have $S = S_0$.
+The set $\{\hat{g}_k\}$ is the unique minimizer as well. We let $S = \{ k = 1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$ and let $s = |S|$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$ and thus $s \geq s_0$. In some cases such as when $X_{S_0}, X_{S^c_0}$ are independent, we have $S = S_0$.
 Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
@@ -114,15 +114,14 @@ Each of our theorems will use a subset of the following assumptions:
 By assumption A1, $f^*_k$ is must be zero for $k\notin S$.
 We define $\alpha_{+}, \alpha_{-}$ as a measure of the signal strength of the weakest variable:
 \begin{align}
-\alpha_{+} &= \inf_{f \in \mathcal{C}_1^p \,:\, \exists k ,\, f^*_k \neq 0 \,\wedge\, f_k = 0} 
+\alpha_{+} &= \inf_{f \in \mathcal{C}_1^p \,:\, \textrm{supp}(f) \subsetneq \textrm{supp}(f^*)} 
        \Big\{ \mathbb{E} \big( f_0(X) - f(X) \big)^2 - 
         \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\} \label{eqn:signal_level_defn} \\
 \alpha_{-} &=   \min_{k \in S \,:\, g^*_k \neq 0}
       \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
     \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\} \nonumber
 \end{align}
-These quantities play the role of the absolute value of the smallest nonzero
-coefficient in the true linear model in lasso theory.  Intuitively, if
+$\alpha_+$ is a lower bound on the excess risk incurred by any additive convex function whose support is strictly smaller than $f^*$; $\alpha_+ > 0$ since $f^*$ is the unique risk minimizer. Likewise, $\alpha_-$ lower bounds the excess risk of any decoupled concave fit of the residual $f_0 - f^*$ that is strictly more sparse than the optimal decoupled concave fit $\{\hat{g}_k^*\}$; $\alpha_- > 0$ by the uniqueness of $\{g^*_k\}$ as well. These quantities play the role of the absolute value of the smallest nonzero coefficient in the true linear model in lasso theory.  Intuitively, if
 $\alpha_{+}$ is small, then it is easier to make a false omission in the
 additive convex stage of the procedure. If $\alpha_{-}$ is small, then
 it is easier to make a false omission in the decoupled concave stage

@@ -18,12 +18,12 @@ The matrix $\Q$ is a symmetric positive definite matrix of dimension $|S|\times{
 Note that if $\Q$ is diagonal, then the true function is convex
 additive; 
 otherwise the true function is convex but not additive.
-For all simulations in this section, we set $\lambda=4\sqrt{{\log(np)}/{n}}$.
+For all simulations in this section, we set $\lambda=4\sqrt{{\log(np)}/{n}}$. 
 
-In the first simulation, we vary the ambient dimension $p$. We set $Q$ as one on the diagonal and $1/2$ on the off-diagonal with $0.5$ probability, and choose $n=100, 200,\ldots,1000$ and $p=64,128,256$ and $512$. We use independent design by setting $\Sigma = Id$.
+In the first simulation, we vary the ambient dimension $p$. We set $Q$ as one on the diagonal and $1/2$ on the off-diagonal with $0.5$ probability, and choose $n=100, 200,\ldots,1000$ and $p=64,128,256$ and $512$. We use independent design by setting $\Sigma = \textrm{I}_p$.
 For each $(n,p)$ combination, we generate $100$ independent data
-sets. For each data set we use the AC/DC algorithm to estimate the model support.
-We plot the probability of
+sets. For each data set we use the AC/DC algorithm and mark feature $j$ as irrelevant if both the AC estimate $\| \hat{f}_j \|_\infty$ and the DC estimate $\| \hat{g}_k \|_\infty$ are smaller than $10^{-6}$.
+We plot the probability of exact
 support recovery over the $100$ data sets in Figure \ref{Support}(a).  We
 observe that the algorithm performs consistent variable selection even if the dimensionality is large. To give the reader a
 sense of the running speed, for a 
@@ -34,7 +34,7 @@ In the second simulation, we vary the sparsity of the $Q$ matrix, that is, we va
 plotted in Figure \ref{Support}(b), where the diagonal elements are all one and
 the off-diagonal elements are $\frac{1}{2}$ with probability $\alpha$
 ($\alpha=0,0.2,0.5,1$ for the four cases). We fix $p=128$ and choose
-$n=100,200,\ldots,1000$. We use independent design by seting $\Sigma = Id$. We again run the AC/DC optimization on $100$
+$n=100,200,\ldots,1000$. We use independent design by seting $\Sigma = \textrm{I}_p$. We again run the AC/DC optimization on $100$
 independently generated data sets and plot the probability of recovery
 in Figure \ref{Support}(c). The results demonstrate that AC/DC performs
 consistent variable selection even if the true function is not additive (but
@@ -43,8 +43,7 @@ still convex).
 In the third simulation, we use correlated design and vary the correlation. We let
 $\x_i$ be drawn from $\mathcal{N}(\bds{0},\bds{\Sigma})$
 instead of $\mathcal{N}(\bds{0},\bds{I}_{p})$, with
-$\Sigma_{ij}=\nu^{|i-j|}$. We use the non-additive $\Q$ with
-$\alpha=0.5$ and fix $p=128$.  The recovery curves for $\nu=0.2, 0.4,
+$\Sigma_{ij}=\nu^{|i-j|}$. We use the non-additive $\Q$, same as in the second experiment, with $\alpha=0.5$ and fix $p=128$.  The recovery curves for $\nu=0.2, 0.4,
 0.6, 0.8$ are shown in Figure \ref{Support}(d). As can be seen, for
 design of moderate correlation, AC/DC can still select relevant
 variables well.
@@ -105,13 +104,13 @@ contains 13 covariates, 506 samples and one response variable
 indicating housing values in suburbs of Boston. The data and detailed description
 can be found on the UCI Machine Learning Repository website\footnote{\url{http://archive.ics.uci.edu/ml/datasets/Housing}}. 
 
-We first use all $n=506$ samples (with normalization) to fit AC/DC,
+We first use all $n=506$ samples (with standardization) in the AC/DC algorithm,
 using a set of candidate regularization parameters $\{\lambda^{(t)}\}$
-with $\lambda^{(1)}=0$ (no regularization). For each $\lambda^{(t)}$
+ranging from $\lambda^{(1)} = 0$ (no regularization) to $2$. For each $\lambda^{(t)}$
 we obtain a function value matrix $\bds{h}^{(t)}$ with $p=13$
-rows. The non-zero rows in this matrix indicate the variables selected
+columns. The non-zero columns in this matrix indicate the variables selected
 using $\lambda^{(t)}$.  We plot $\|\bds{h}^{(t)}\|_{\infty}$ and
-the row-wise mean of $\bds{h}^{(t)}$ versus the normalized norm
+the column-wise mean of $\bds{h}^{(t)}$ versus the normalized norm
 $\frac{\|\bds{h}^{(t)}\|_{\infty,1}}{\|\bds{h}^{(1)}\|_{\infty,1}}$
 in Figures \ref{Boston}(a) and \ref{Boston}(b).  For comparison, we
 plot the LASSO/LARS result in a similar way in Figure \ref{Boston}(c).
@@ -121,13 +120,13 @@ consistent with previous findings~\citep{SpAM:07}.  The fourth
 variable selected by AC/DC is \tts{INDUS} (with $\lambda^{(t)}=0.7$).
 We then refit AC/DC with only these four variables without
 regularization, and plot the estimated additive functions in Figure
-\ref{Boston}(e). When refitting, we constrain a component to be convex if it is non-zero in the AC stage and concave only if it is non-zero in the DC stage. As can be seen, these functions contain clear
+\ref{Boston}(e). When refitting, we constrain a component to be convex if it is non-zero in the AC stage and concave if it is non-zero in the DC stage. As can be seen, these functions contain clear
 nonlinear effects which cannot be captured by LASSO. The shapes of
 these functions, including the concave shape of the \tts{PTRATIO} function, are in agreement with those obtained by
 SpAM~\citep{SpAM:07}. 
 
 Next, in order to quantitatively study the predictive performance, we
-run 10 times 5-fold cross validation, following the same procedure
+run 3 times 5-fold cross validation, following the same procedure
 described above---training, variable selection and refitting.  A plot
 of the mean and standard deviation of the predictive mean squared
 error (MSE) is shown in Figure \ref{Boston}(d). Since for AC/DC the same
@@ -201,9 +200,9 @@ as a convex program, guaranteeing a global optimum.
 \begin{center}
 \begin{tabular}{cc}
 %\hskip-10pt
-  \includegraphics[width=.37\textwidth]{figs/acdc_path} &
+  \includegraphics[width=.38\textwidth]{figs/acdc_path} &
 %\hskip-25pt
-  \includegraphics[width=.37\textwidth]{figs/lasso_path} 
+  \includegraphics[width=.38\textwidth]{figs/lasso_path} 
 \\
 %\hskip-10pt 
 AC/DC $\|f_k\|_\infty$ paths & 
@@ -211,8 +210,9 @@ AC/DC $\|f_k\|_\infty$ paths &
 LASSO $|\beta_k|$ paths \\
 %\end{tabular}
 %\begin{tabular}{cc}
-  \includegraphics[width=.37\textwidth]{figs/MSEacdc} &
-  \includegraphics[width=.43\textwidth]{figs/acdc_functs}
+  \includegraphics[width=.38\textwidth]{figs/MSEacdc} &
+%\hskip 5pt
+  \includegraphics[width=.45\textwidth]{figs/acdc_functs}
 \\
 predictive MSE & estimated functions from AC/DC
 \end{tabular}

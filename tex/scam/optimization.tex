@@ -153,14 +153,18 @@ non-increasing: $\beta_{\perm{i+1}k} \leq \beta_{\perm{i}k}$.
 
 \subsection{Alternative Formulation}
 Optimization \eqref{np} can be reformulated in terms of the second
-derivatives.  We exploit this form in our theoretical analysis. 
-
-The alternative formulation replaces the order constraints
+derivatives. The alternative formulation replaces the order constraints
 $\beta_{\perm{i+1}k} \geq \beta_{\perm{i}k}$ with positivity constraints, which
-simplifies the analysis.  Define $d_{\perm{i}k}$ as the second
+simplifies the analysis.  
+
+
+
+Define $d_{\perm{i}k}$ as the second
 derivative: $d_{\perm{1}k} = \beta_{\perm{1}k}$, and $d_{\perm{i}k} = \beta_{\perm{i}k} -
 \beta_{\perm{i-1}k}$ for $i > 1$. The convexity constraint is equivalent to the
 constraint that $d_{\perm{i}k} \geq 0$ for all $i > 1$.
+
+
 
 It is easy to verify that $\beta_{\perm{i}k} = \sum_{j \leq i} d_{\perm{j}k}$ and 
 \begin{align*}
