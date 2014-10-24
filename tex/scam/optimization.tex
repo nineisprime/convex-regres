@@ -28,7 +28,7 @@ characterized by the condition that the subgradient, which is a scalar, must
 increase monotonically. This observation leads to the  optimization
 \begin{equation}
 \begin{split}
-       \min_{f,\beta,\mu} & \;\; \frac{1}{2n}\sum_{i=1}^{n}
+       \min_{\{f_k,\beta_k\},\mu} & \;\; \frac{1}{2n}\sum_{i=1}^{n}
                      \Bigl( y_{i}-\mu - \sum_{k=1}^{p}f_{ik}\Bigr)^{2} 
                          + \lambda\sum_{k=1}^{p}\|f_k\|_{\infty} \\
        \textrm{subject to} &\;\; \textrm{for all $k=1,\ldots, p$:}\\
@@ -51,23 +51,23 @@ We can solve for $\mu$ explicitly as
 $\mu = \frac{1}{n} \sum_{i=1}^n y_i = \bar{y}$.  This follows from the
 KKT conditions
 and the constraints $\sum_i f_{ki} = 0$.
-It is easy to verify that the constraints in \eqref{np} satisfy the
-supporting hyperplane constraints, since
-for all $j > i$
-\begin{align*}
-  f_{\perm{j}k}-f_{\perm{i}k}  & = \sum\limits_{t=i}^{j-1}(f_{\perm{t+1}k}-f_{\perm{t}k}) \\
-   &= \sum\limits_{t=i}^{j-1}\beta_{\perm{t}k}(x_{\perm{t+1}k}-x_{\perm{t}k}) \\
-   &\geq \beta_{\perm{i}k}\sum\limits_{t=i}^{j-1}(x_{\perm{t+1}k}-x_{\perm{t}k}) \\
-  & = \beta_{\perm{i}k}(x_{\perm{j}k}-x_{\perm{i}k}) 
-\end{align*}
-and for all $j < i$
-\begin{align*}
-f_{k(j)}-f_{k(i)} & =
-    \sum\limits_{t=j}^{i-1}(f_{k(t)}-f_{k(t+1)}) \\
-     & = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{\perm{t}k}-x_{\perm{t+1}k}) \\
-     &\geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{\perm{t}k}-x_{\perm{t+1}k}) \\
-     & = \beta_{k(i)}(x_{\perm{j}k}-x_{\perm{i}k}).
-\end{align*}
+% It is easy to verify that the constraints in \eqref{np} satisfy the
+% supporting hyperplane constraints, since
+% for all $j > i$
+% \begin{align*}
+%   f_{\perm{j}k}-f_{\perm{i}k}  & = \sum\limits_{t=i}^{j-1}(f_{\perm{t+1}k}-f_{\perm{t}k}) \\
+%    &= \sum\limits_{t=i}^{j-1}\beta_{\perm{t}k}(x_{\perm{t+1}k}-x_{\perm{t}k}) \\
+%    &\geq \beta_{\perm{i}k}\sum\limits_{t=i}^{j-1}(x_{\perm{t+1}k}-x_{\perm{t}k}) \\
+%   & = \beta_{\perm{i}k}(x_{\perm{j}k}-x_{\perm{i}k}) 
+% \end{align*}
+% and for all $j < i$
+% \begin{align*}
+% f_{k(j)}-f_{k(i)} & =
+%     \sum\limits_{t=j}^{i-1}(f_{k(t)}-f_{k(t+1)}) \\
+%      & = \sum\limits_{t=j}^{i-1}\beta_{k(t)}(x_{\perm{t}k}-x_{\perm{t+1}k}) \\
+%      &\geq \beta_{k(i)}\sum\limits_{t=j}^{i-1}(x_{\perm{t}k}-x_{\perm{t+1}k}) \\
+%      & = \beta_{k(i)}(x_{\perm{j}k}-x_{\perm{i}k}).
+% \end{align*}
 
 
 %\begin{SCfigure}
@@ -157,6 +157,10 @@ derivatives. The alternative formulation replaces the order constraints
 $\beta_{\perm{i+1}k} \geq \beta_{\perm{i}k}$ with positivity constraints, which
 simplifies the analysis.  
 
+%Let $\{\hat{f}_k, \hat{\beta}_k\}$ be a solution to optimization 4.2 (ref). 
+
+% Let $\hat{d}_k$ be defined as beta difference, then \hat{d}_k is the minimizer of ...
+
 
 
 Define $d_{\perm{i}k}$ as the second
@@ -200,16 +204,21 @@ where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) =
 d_{\perm{n-1}k})$, and $\mu_k = f_k(x_{\perm{1}k}) \mathbf{1}_n$.
 Because $f_k$ has to be centered, $\mu_k = - \frac{1}{n}
 \mathbf{1}_n^\tran \Delta_k d_k$, and therefore
-\[
+\begin{equation}
 \Delta_k d_k + \mu_k \mathbf{1}_n = 
    \Delta_k d_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\tran \Delta_k d_k = 
    \bar{\Delta}_k d_k 
-\]
+\label{eq:deltabar_defn}
+\end{equation}
 where $\bar{\Delta}_k \equiv \Delta_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\tran \Delta_k$ is $\Delta_k$ with the mean of each column subtracted.
 
-We can now reformulate \eqref{np} as an equivalent optimization program with only centering and positivity constraints:
+The above derivations prove the following proposition, which states that \eqref{np} has an alternative formulation.
+
+\begin{proposition} 
+
+Let $\{\hat{f}_k, \hat{\beta}_k\}_{k=1,...,p}$ be an optimal solution to \eqref{np} and suppose $\bar{Y} = 0$. Define vectors $\hat{d}_k \in \R^{n-1}$ such that $\hat{d}_{\pi_k(1)k} = \hat{\beta}_{\pi_k(1)k}$ and $\hat{d}_{\pi_k(i)k} = \hat{\beta}_{\pi_k(i)k} - \hat{\beta}_{\pi_k(i-1)k}$ for $i > 1$. Then $\hat{f}_k = \bar{\Delta}_k \hat{d}_k$ and $\hat{d}_k$ is an optimal solution to the following optimization:
 \begin{align}
-\min_{d_k}\;\; & \frac{1}{2n} 
+\min_{\{d_k \in \R^{n-1}\}_{k=1,...p}}\;\; & \frac{1}{2n} 
        \Bigl\| Y - \sum_{k=1}^p 
               \bar{\Delta}_k d_k \Bigr\|_2^2 
                + \lambda_n \sum_{k=1}^p \|\bar{\Delta}_k d_k \|_\infty   
@@ -217,6 +226,9 @@ We can now reformulate \eqref{np} as an equivalent optimization program with onl
 \trm{such that}\;\;  & d_{\perm{2}k}, \ldots , d_{\perm{n-1}k} \geq 0  	
                \qquad \trm{(convexity).} \nonumber 
 \end{align}
+Likewise, suppose $\{\hat{d}_k\}_{k=1,...p}$ is a solution to \eqref{opt:alternate_opt}, define $\hat{\beta}_{\pi_k(i)k} = \sum_{j\leq i} \hat{d}_{\pi_k(j)k}$ and $\hat{f}_k = \bar{\Delta}_k \hat{d}_k$. Then $\{\hat{f}_k, \hat{\beta}_k\}_{k=1,...,p}$ is an optimal solution to \eqref{np}. $\bar{\Delta}$ is a $n$ by $n-1$ matrix defined by \eqref{eq:deltabar_defn}.
+
+\end{proposition}
 
 The decoupled concave postprocessing stage optimization is again
 similar. Specifically, suppose $\hat{d}_k$ is the output of
