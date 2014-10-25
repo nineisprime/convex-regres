@@ -49,16 +49,39 @@ program
     all $i,j$}.
 \end{split}
 \end{align}
-See \cite{Boyd04}, Section 6.5.5.
 Here $f_i$ is the estimated function value $f(\x_i)$, and the vectors
 $\beta_i \in \reals^d$ represent supporting hyperplanes to the
-epigraph of $f$.  Importantly, this finite dimensional quadratic program does
+epigraph of $f$.  See \cite{Boyd04}, Section 6.5.5.
+Importantly, this finite dimensional quadratic program does
 not have tuning parameters for smoothing the function. 
 
+This formulation of convex regression is subject to the curse
+of dimensionality.  Moreover, attempting to select variables
+by regularizing the subgradient vectors $\beta_i$ with
+a group sparsity penality is not effective.  Intuitively, the reason
+is that all $p$ components of the subgradient $\beta_i$
+appear in every convexity constraint 
+$ f_j \geq f_i + \beta_i^T (\x_j-\x_i)$; small changes to the 
+subgradients may not violate the constraints.  Experimentally,
+we find that regularization with a group sparsity penality
+will make the subgradients of irrelevant variables 
+small, but may not zero them out completely.
+
+This motivates us to consider an additive approximation. 
+Under a convex additive model, each component of the subgradient
+appears only in the convexity constraint for
+the corresponding variable:
+\begin{equation}
+f_{ki'} \geq f_{ki} + \beta_{ki}(x_{ki'}-x_{ki}) 
+\end{equation}
+where $f_{ki} = f_{k}(x_{ki})$ and $\beta_{ki}$ is the
+subgradient at point $x_{ki}$.   As we show, this leads to
+an effective variable selection procedure.  The
+shape constraints play an essential role.
 For general regression, using an additive approximation for variable
 selection may make errors.  In particular, the nonlinearities in the
 regression function may result in an additive component being wrongly
-zeroed out.  We show that this will not happen for convex regression
+zeroed out.  We show that this cannot happen for convex regression
 under appropriate conditions.
 
 We say that a differentiable function $f$ depends on variable $x_k$ if
@@ -216,7 +239,7 @@ we analyze scaling conditions on the regularization parameter
 $\lambda_n$ for 
 group sparsity needed to zero out irrelevant variables
 $k \in S^c$, where $S\subset \{1,\ldots, p\}$ is the set of
-relevant variables. 
+variables selected by the AC/DC algorithm in the population setting.
 To control false negatives, we analyze the restricted regression
 where the variables in $S^c$ are zeroed out, following the primal-dual
 strategy.  
