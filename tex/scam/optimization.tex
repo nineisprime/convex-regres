@@ -215,7 +215,7 @@ where $\bar{\Delta}_k \equiv \Delta_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\t
 The above derivations prove the following proposition, which states that \eqref{np} has an alternative formulation.
 
 \begin{proposition} 
-
+\label{prop:alt_opt_form}
 Let $\{\hat{f}_k, \hat{\beta}_k\}_{k=1,...,p}$ be an optimal solution to \eqref{np} and suppose $\bar{Y} = 0$. Define vectors $\hat{d}_k \in \R^{n-1}$ such that $\hat{d}_{\pi_k(1)k} = \hat{\beta}_{\pi_k(1)k}$ and $\hat{d}_{\pi_k(i)k} = \hat{\beta}_{\pi_k(i)k} - \hat{\beta}_{\pi_k(i-1)k}$ for $i > 1$. Then $\hat{f}_k = \bar{\Delta}_k \hat{d}_k$ and $\hat{d}_k$ is an optimal solution to the following optimization:
 \begin{align}
 \min_{\{d_k \in \R^{n-1}\}_{k=1,...p}}\;\; & \frac{1}{2n} 
@@ -226,7 +226,7 @@ Let $\{\hat{f}_k, \hat{\beta}_k\}_{k=1,...,p}$ be an optimal solution to \eqref{
 \trm{such that}\;\;  & d_{\perm{2}k}, \ldots , d_{\perm{n-1}k} \geq 0  	
                \qquad \trm{(convexity).} \nonumber 
 \end{align}
-Likewise, suppose $\{\hat{d}_k\}_{k=1,...p}$ is a solution to \eqref{opt:alternate_opt}, define $\hat{\beta}_{\pi_k(i)k} = \sum_{j\leq i} \hat{d}_{\pi_k(j)k}$ and $\hat{f}_k = \bar{\Delta}_k \hat{d}_k$. Then $\{\hat{f}_k, \hat{\beta}_k\}_{k=1,...,p}$ is an optimal solution to \eqref{np}. $\bar{\Delta}$ is a $n$ by $n-1$ matrix defined by \eqref{eq:deltabar_defn}.
+Likewise, suppose $\{\hat{d}_k\}_{k=1,...p}$ is a solution to \eqref{opt:alternate_opt}, define $\hat{\beta}_{\pi_k(i)k} = \sum_{j\leq i} \hat{d}_{\pi_k(j)k}$ and $\hat{f}_k = \bar{\Delta}_k \hat{d}_k$. Then $\{\hat{f}_k, \hat{\beta}_k\}_{k=1,...,p}$ is an optimal solution to \eqref{np}. $\bar{\Delta}$ is the $n$ by $n-1$ matrix defined by \eqref{eq:deltabar_defn}.
 
 \end{proposition}
 
@@ -252,19 +252,6 @@ We can use either the off-centered $\Delta_k$ matrix or the centered
 $\bar{\Delta}_k$ matrix because the concave estimations are decoupled
 and hence are not subject to non-identifiability under additive constants.
 
-\begin{remark}
-  In our analysis, we assume that an upper bound $B$ to
-  $\| f^*_k \|_\infty$ is known, and that we constrain our estimate
-  $\hat{f}$ to obey the same boundedness condition.  That is, for each
-  $k$, we require that $\|\hat{f}_k\|_\infty \leq B$. This boundedness
-  constraint can be easily added to our optimization program. In
-  optimization~\eqref{opt:alternate_opt}, we can enforce the boundedness
-  condition by adding $p$ constraints $\| \bar{\Delta}_k d_k
-  \|_\infty \leq B$ for $k=1,\ldots,p$ (and similarly for
-  optimization~\eqref{opt:alternate_opt_concave}). We emphasize that we
-  use the boundedness constraint only in our theoretical analysis; 
-  our experiments do not impose any such condition.
-\end{remark}
 
 
 % DO NOT CHANGE; RefTex variables -minx
