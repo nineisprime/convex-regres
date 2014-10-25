@@ -5,8 +5,7 @@
 
 We divide our analysis into two parts. We first establish a sufficient
 deterministic condition for consistency of the sparsity pattern
-selection procedure---a property sometimes called \textit{sparsistency}.
-We then consider the
+screening procedure.  We then consider the
 stochastic setting and argue that the deterministic conditions hold
 with high probability. Note that in all of our results and analysis, we let $c,
 C$ represent absolute constants; the actual values of $c,C$ may change from line to line. 
@@ -218,12 +217,12 @@ Then with probability at least $1-\frac{C}{n}$
 for some constant $C$.
 
 \end{corollary}
-The above corollary implies that sparsistency is achievable at the
-same exponential scaling of the ambient dimension scaling attained
-with parametric models, $p = O(\exp(n^c))$ for $c<1$.  The cost of
-nonparametric modeling through shape constraints 
-is reflected in the scaling with respect to
-the number of relevant variables, which can scale as $s = o(n^{4/25})$.
+The above corollary implies that consistent variable selection is
+achievable at the same exponential scaling of the ambient dimension
+scaling attained with parametric models, $p = O(\exp(n^c))$ for $c<1$.
+The cost of nonparametric modeling through shape constraints is
+reflected in the scaling with respect to the number of relevant
+variables, which can scale as $s = o(n^{4/25})$.
 
 \begin{remark}
   \citet{dalalyan:12} have shown that under tradtional smoothness
