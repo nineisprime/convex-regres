@@ -329,12 +329,11 @@ Where $c, C$ are constants, possibly dependent on $c_1, b$.
 
 
 \begin{proof}
-
-\textbf{Step 1.} We start from the definition. 
+\textbf{Step 1.} $\hat{f}$ minimizes the penalized empricial risk by definition. We would thus like to say that the penalized empirical risk of $\hat{f}$ is no larger than that of $f^*$. We cannot do a direct comparison because the empirical mean $\frac{1}{n} \sum_i f^*_k(x_{ik})$ is close to but not exactly zero. We thus have to work first with the function $f^* - \bar{f}^*$. 
 
 \begin{align*}
 \| y - \hat{f} \|_n^2 + \lambda \sum_{k=1}^s \| \hat{f}_k \|_\infty &\leq
-  \| y - f^* + \bar{f}^* \|_n^2 + \lambda \sum_{k=1}^s \| f^*_k - \bar{f}^* \|_\infty 
+  \| y - f^* + \bar{f}^* \|_n^2 + \lambda \sum_{k=1}^s \| f^*_k - \bar{f}^*_k \|_\infty 
 \end{align*}
 We plug in $y = f_0 + w$:
 \begin{align*}

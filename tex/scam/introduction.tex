@@ -26,7 +26,7 @@ procedure is faithful in the population setting, meaning that it
 results in no false negatives, under mild assumptions on the density
 of the covariates.  Our second result is a finite sample statistical
 analysis of the procedure, where we upper bound the statistical rate
-of convergence.  An additional contribution is to show how the
+of variable screening consistency.  An additional contribution is to show how the
 required quadratic programs can be formulated to be more scalable.  We
 give simulations to illustrate our method, showing that it performs in
 a manner that is consistent with our analysis.
@@ -42,6 +42,8 @@ other applications.
 Beyond cases where the assumption of convexity is
 natural, the convexity assumption can be attractive as a
 tractable, nonparamametric relaxation of the linear model.  
+
+Recently, there has been a flurry of research activity on shape-constrained estimation. \cite{seijo2011nonparametric} and \cite{Lim:12} independently established the consistency of multivariate convex regression, though without an explicit rate. \cite{Cule:10} and \cite{kim2014global} analyzed log-concave density estimation and showed consistency of the MLE with a rate of [TODO:find rate]. Additive shape-constrained modeled were studied by \cite{chen2014generalised} and \cite{pya2014shape}. To the best of our knowledge however, there has been no work on variable selection for shape-constrained estimation. 
 
 Variable selection in general nonparametric regression or function
 estimation is a notoriously difficult problem. \citet{lafferty2008rodeo} develop a greedy procedure for
@@ -76,7 +78,7 @@ possible if $n < \log p$ or if $n < \exp s$, where $s$ is the number
 of relevant variables.  Variable selection over kernel classes is
 studied by \citet{Kolch:10}.
 
-Perhaps most closely related to the present work is the framework
+Perhaps more closely related to the present work is the framework
 studied by \cite{Raskutti:12} for sparse additive models, where sparse
 regression is considered under an additive assumption, with each
 component function belonging to an RKHS.  An advantage of working over

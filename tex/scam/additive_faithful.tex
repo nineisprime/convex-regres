@@ -154,24 +154,25 @@ $\displaystyle\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_2$; therefore, we ex
 
 In order to exploit additive models in variable selection, it is important to understand when the
 additive approximation accurately captures all of the relevant variables.
-We call this property \textit{additive faithfulness}. We first formalize the intuitive notion that a multivariate function $f$ \emph{depends on} a coordinate $x_k$.
+We call this property \textit{additive faithfulness}. We first formalize the intuitive notion that a multivariate function $f$ \emph{does not depends on} a coordinate $x_k$.
 
 \begin{definition}
-  Let $F$ be a distribution on $C=[0,1]^p$, and $f:C \rightarrow \R$. 
-We say that $f$ \textit{depends on coordinate $k$} if, for all $x_k \in [0,1]$, the set 
-$\big\{ x'_k \in [0, 1] \,:\, f(x_k, \mathbf{x}_{-k}) = f(x'_k, \mathbf{x}_{-k}) 
-\trm{ for almost all  $\mathbf{x}_{-k}$} \big\}$ 
-has probability strictly less than one.
-If $f$ is differentiable, then $f$ depends on $k$ if $\partial_{x_k} f \neq 0$ with probability greater than zero.
+%   Let $F$ be a distribution on $C=[0,1]^p$, and $f:C \rightarrow \R$. 
+% We say that $f$ \textit{depends on coordinate $k$} if, for all $x_k \in [0,1]$, the set 
+% $\big\{ x'_k \in [0, 1] \,:\, f(x_k, \mathbf{x}_{-k}) = f(x'_k, \mathbf{x}_{-k}) 
+% \trm{ for almost all  $\mathbf{x}_{-k}$} \big\}$ 
+% has probability strictly less than one.
+% If $f$ is differentiable, then $f$ depends on $k$ if $\partial_{x_k} f \neq 0$ with probability greater than zero.
+Let $C = [0,1]^p$ and let $f: C \rightarrow \R$. We say that $f$ \textit{does not depends on coordinate $k$} if for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a constant as a function of $x_k$. If $f$ is differentiable, then $f$ does not depend on $k$ if $\partial_{x_k} f(x_k, \mathbf{x}_{-k})$ is 0 for all $\mathbf{x}_{-k}$.
 
-Suppose we have the additive approximation
+In addition, suppose we have a distribution over $C$ and the additive approximation
 \begin{equation}
 \label{eqn:unconstrained_additive}
 f_k^*, \mu^* \coloneqq \argmin_{f_1,\ldots, f_p, \mu} \Bigl\{ 
              \E \Bigl[\Bigl( f(X) - \sum_{k=1}^p f_k(X_k) -\mu \Bigr)^2 \Bigr]
          \,:\, \E f_k(X_k) = 0 \Bigr\}.
 \end{equation}
-We say that $f$ is \textit{additively faithful} under $F$ in case
+We say that $f$ is \textit{additively faithful} under $F$ if
 $f^*_k = 0$ implies that $f$ does not depend on coordinate $k$.
 \end{definition}
 
@@ -208,7 +209,7 @@ The boundary flatness condition is a weak condition. For instance, it is
 satisfied when the density is flat at the boundary of support---more
 precisely, when the joint density satisfies the property that
 $\frac{\partial p(x_j,\mathbf{x}_{-j})}{\partial x_j} =
-\frac{\partial^2 p(x_j, \mathbf{x}_{-j})}{\partial x_j^2} = 0$ at
+\frac{\partial^2 p(x_j, \mathbf{x}_{-j})}{\partial x_j^2} = 0$ at boundary
 points $x_j = 0, x_j=1$. The boundary flatness property is also
 trivially satisfied when $p$ is a product density.
 
@@ -417,7 +418,7 @@ Since the true regression function $f$ is convex, we approximate the additive mo
 \end{equation}
 where $\mathcal{C}^1$ is the set of univariate convex functions. 
 The convex functions $\{f^*_k\}$ are not additively faithful by
-themselves, i.e., it could be that $f$ depends on variable $k$ but $f^*_k = 0$. But, faithfulness can be restored by coupling the $f^*_k$'s with a set of concave fits on the \emph{residual} $f - f^*$:
+themselves, i.e., it could be that the true function $f$ depends on variable $k$ but $f^*_k = 0$. However, faithfulness can be restored by coupling the $f^*_k$'s with a set of univariate concave fits on the \emph{residual} $f - f^*$:
 \begin{equation}
 \label{eqn:concave_postprocess}
 g^*_k = \arg\min \Big\{
@@ -439,7 +440,7 @@ $f^*_k = 0$ and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x})
 = 0$, that is, $f$ does not depend on~$x_k$. 
 \end{theorem}
 
-Uniqueness of $f^*_k$ and $g^*_k$ follows from the fact that $p(\mathbf{x})$ is a positive density and thus the objective is strongly convex (see proof of Lemma~\ref{lem:general_int_reduction}). Before we can prove the rest of the theorem however, we need a lemma that generalizes Theorem~\ref{thm:convex_faithful}.
+Before we can prove the theorem, we need a lemma that generalizes Theorem~\ref{thm:convex_faithful}.
 
 \begin{lemma}
 \label{cor:faithfulness_extension}
@@ -492,7 +493,7 @@ where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either conv
 
 We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$.
 
-Under the derivative continuity conditions in the theorem, we apply Lemma~\ref{lem:acdc_derivative_bound} and know that $h^*_k(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$. Therefore, for a large enough positive scalar $\alpha$, $h^*_k(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex.
+Under the derivative continuity conditions in the theorem, we apply Lemma~\ref{lem:acdc_derivative_bound} in the appendix and know that $h^*_k(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$. Therefore, for a large enough positive scalar $\alpha$, $h^*_k(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex.
 
 Because we assumed $f^* = g^* = 0$, it must be that
 \[
@@ -513,7 +514,9 @@ Again, $c^* = \frac{\mathbb{E}[(f(X)-\phi(X_{-k}))\big(
 where the first equality follows because $\E[ (f(X) - \phi(X_{-k})) (X_k^2 - m_k^2)] = 0$. Therefore, we get that $h^*_k = 0$. Now we use
 Lemma~\ref{cor:faithfulness_extension} with $\phi(\mathbf{x}_{-k}) =
 f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})$ and conclude that
-$f^*_k = 0$ and $g^*_k = 0$ together imply that $f$ does not depend on $x_k$.
+$f^*_k = 0$ and $g^*_k = 0$ together imply that $f$ does not depend on $x_k$.\\
+
+Now we turn to uniqueness. Suppose for sake of contradiction that $f^*$ and $f'$ are optimal solutions to (\ref{eqn:convex_additive}) and $\E (f'-f^*)^2 > 0$.  $f^* + \lambda ( f' - f^*)$ for any $\lambda \in [0,1]$ must then also be an optimal solution by convexity of the objective and constraint. However, the second derivative of the objective $\E( f - f^* - \lambda(f' - f^*))^2$ with respect to $\lambda$ is $2 \E( f' - f^*)^2 > 0$. The objective is thus strongly convex and $f^*, f'$ cannot both be optimal. The uniqueness of $g^*$ is proved similarly.
 \end{proof}
 
 

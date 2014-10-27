@@ -8,7 +8,7 @@ deterministic condition for consistency of the sparsity pattern
 screening procedure.  We then consider the stochastic setting and argue that the 
 deterministic conditions hold with high probability. Note that in all of our results 
 and analysis, we let $c,
-C$ represent absolute constants; the actual values of $c,C$ may change from line to line. We derived two equivalent optimizations for AC/DC: \eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and \eqref{opt:alternate_opt} outputs the second derivatives $\hat{d}_k$. Their equivalence is established in Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and $\hat{f}_k$ in our analysis without further stating their relationships.
+C$ represent absolute constants; the actual values of $c,C$ may change from line to line. We derived two equivalent optimizations for AC/DC: \eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and \eqref{opt:alternate_opt} outputs the second derivatives $\hat{d}_k$. Their equivalence is established in Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and $\hat{f}_k$ in our analysis.
 
 In our analysis, we assume that an upper bound $B$ to $\| \hat{f}_k \|_\infty$ 
 is imposed in the optimization procedure, where $B \geq \| f^*_k \|_\infty$. This $B$-boundedness constraint is added so that we may use the convex function bracketing results from~\cite{kim2014global} to establish uniform convergence between the empirical risk and the population risk. We emphasize that this constraint is not needed in practice and we do not use it for any of our simulations. 
@@ -103,12 +103,12 @@ minimizer in $\mathcal{C}_1^p$,
 f^* = \arg\min_{f \in \mathcal{C}_1^p} \E\big(f_0(X) - f^*(X)
 \big)^2.
 \end{equation}
-$f^*$ is the unique minimizer since the density is positive and thus the objective is strongly convex on $\mathcal{X}$. Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-b, b]$ and define
+$f^*$ is the unique minimizer by Theorem~\ref{thm:acdc_faithful}. Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-b, b]$ and define
 \begin{equation}
 g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X)
 - g_k(X_k) \big)^2.
 \end{equation}
-The set $\{\hat{g}_k\}$ is the unique minimizer as well. We let $S = \{ k = 1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$ and let $s = |S|$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$ and thus $s \geq s_0$. In some cases such as when $X_{S_0}, X_{S^c_0}$ are independent, we have $S = S_0$.
+The $\hat{g}_k$'s are unique minimizers as well. We let $S = \{ k = 1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$ and let $s = |S|$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$ and thus $s \geq s_0$. In some cases, such as when $X_{S_0}, X_{S^c_0}$ are independent, we have $S = S_0$.
 Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
@@ -200,9 +200,7 @@ for all $k \in S$.
 This is a finite sample version of
 Theorem~\ref{thm:convex_faithful}. We need stronger assumptions in
 Theorem~\ref{thm:false_negative} to use our additive faithfulness
-result, Theorem~\ref{thm:convex_faithful}. We also include an extra
-boundedness constraint so that we can use recent bracketing number
-results \cite{kim2014global}. The full proof of Theorem~\ref{thm:false_negative} is in Section~\ref{sec:false_negative_proof} of the appendix.
+result, Theorem~\ref{thm:convex_faithful}. The full proof of Theorem~\ref{thm:false_negative} is in Section~\ref{sec:false_negative_proof} of the appendix.
 
 Combining Theorems~\ref{thm:false_positive} and
 ~\ref{thm:false_negative} 
