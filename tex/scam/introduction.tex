@@ -43,7 +43,8 @@ Beyond cases where the assumption of convexity is
 natural, the convexity assumption can be attractive as a
 tractable, nonparamametric relaxation of the linear model.  
 
-Recently, there has been increased research activity on shape-constrained estimation. \cite{guntusen:13} analyze univariate convex regression and show surprisingly that the risk of the MLE is adaptive to the complexity of the true function. \cite{seijo2011nonparametric} and \cite{Lim:12} study maximum likelihood estimation of multivariate convex regression and independently establish its consistency. \cite{Cule:10} and \cite{kim2014global} analyze log-concave density estimation and prove consistency of the MLE; the latter further show that log-concave density estimation has minimax risk lower bounded by $n^{-2/(d+1)}$ for $d \geq 2$, refuting a common notion that the condition of convexity is equivalent, in estimation difficulty, to the condition of having two bounded derivatives. \cite{pya2014shape} and then \cite{chen2014generalised} both look at additive shape-constrained models. To the best of our knowledge though, there has not yet been any work on variable selection and high-dimensional estimation of convex functions.
+Recently, there has been increased research activity on shape-constrained estimation. \cite{guntusen:13} analyze univariate convex regression and show surprisingly that the risk of the MLE is adaptive to the complexity of the true function. \cite{seijo2011nonparametric} and \cite{Lim:12} study maximum likelihood estimation of multivariate convex regression and independently establish its consistency. \cite{Cule:10} and \cite{kim2014global} analyze log-concave density estimation and prove consistency of the MLE; the latter further show that log-concave density estimation has minimax risk lower bounded by $n^{-2/(d+1)}$ for $d \geq 2$, refuting a common notion that the condition of convexity is equivalent, in estimation difficulty, to the condition of having two bounded derivatives. Additive shape-constrained estimation has also been studied; \cite{pya2014shape} propose a penalized B-spline estimator while \cite{chen2014generalised} show the consistency of the MLE. To the best of our knowledge however, there has been no work on variable selection and high-dimensional estimation of convex functions.
+
 
 Variable selection in general nonparametric regression or function
 estimation is a notoriously difficult problem. \citet{lafferty2008rodeo} develop a greedy procedure for
@@ -86,18 +87,19 @@ an RKHS is that nonparametric regression with a sparsity-inducing
 regularization penalty can be formulated as a finite dimensional
 convex cone optimization.  On the other hand, smoothing parameters for
 the component Hilbert spaces must be chosen, leading to extra tuning
-parameters that are difficult to select in practice.  In addition, the
-additive model must be assumed to be correct for consistent variable
-selection. 
+parameters that are difficult to select in practice. \cite{huang2010variable} 
+too formulate sparse additive spline fitting as a convex optimization but
+their procedure too requires a smoothing parameter in the form of 
+a truncation level for the spline basis.
 
 While nonparametric, the convex regression problem is naturally
 formulated using finite dimensional convex optimization, with no
-additional tuning parameters.  The convex additive model can be used
+additional tuning parameters. The convex additive model can be used
 for convenience, without assuming it to actually hold, for the purpose
-of variable selection.  As we show, our method scales to high
+of variable selection. As we show, our method scales to high
 dimensions, with a dependence on the intrinsic dimension $s$ that
 scales polynomially, rather than exponentially as in the general case
-analyzed in \cite{dalalyan:12}.
+analyzed in \cite{dalalyan:12}. 
 
 
 
