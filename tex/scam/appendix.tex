@@ -167,80 +167,86 @@ The same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT conditions
  
  
  
- 
- 
- 
  \subsection{Proof of False Positive Control}
  \label{sec:false_positive_proof}
  
-\textbf{Note:} the symbols $c,C$ represent absolute constants. We will often abuse notation and ``absorb'' new absolute constants into $c, C$; the actual value of $c, C$ could thus vary from line to line.
-
- We first restate the theorem for convenience. 
- 
+ We note that in the following analysis the symbols $c,C$ represent
+ absolute constants. We will often abuse notation and ``absorb'' new
+ absolute constants into $c, C$; the actual value of $c, C$ could thus
+ vary from line to line.
+We first restate the theorem for convenience. 
 
 \begin{theorem} 
-Suppose assumptions A1-A4 hold. Suppose $\sqrt{\log 2np} \geq 1$. Define $\tilde{\sigma} \equiv \max(\sigma, B)$.
+Suppose assumptions A1-A4 hold. Suppose $\sqrt{\log 2np} \geq 1$, and define $\tilde{\sigma} \equiv \max(\sigma, B)$.
 
-Suppose $\lambda_n \geq 8 s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$, then, with probability at least $ 1 - \frac{12}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$:
+If $\lambda_n \geq 8 s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$ then, with probability at least $ 1 - \frac{12}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$
 \[
-\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big|
+\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big|.
 \]
-
-And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from optimization~\ref{opt:alternate_opt}, and the DC solution $\hat{g}_k$, from optimization~\ref{opt:alternate_opt_concave} are zero. 
+Therefore, for all $k \in S^c$, both the AC solution $\hat{f}_k$ from optimization~\ref{opt:alternate_opt}, and the DC solution $\hat{g}_k$ from optimization~\ref{opt:alternate_opt_concave} are zero. 
 \end{theorem}
 
 \begin{proof}
 The key is to note that $\hat{r}$ and $\Delta_{k,j}$ are independent for all $k \in S^c,j=1,...,n$ because $\hat{r}$ is only dependent on $X_{S}$.
 
-Fix $j$ and $i$. $\hat{r}^\tran \mathbf{1}_{(i':n)_k}$ is then the sum of $n-i'+1$ random coordinates of $\hat{r}$. We will then use Serfling's theorem on the concentration of measure of sampling without replacement. (corollary~\ref{cor:serfling}) We must first bound $\| \hat{r} \|_\infty$ and $\frac{1}{n} \sum_{i=1}^n \hat{r}_i$ before we can use Serfling's results however.
+Fix $j$ and $i$. Then $\hat{r}^\tran \mathbf{1}_{(i':n)_k}$ is the sum
+of $n-i'+1$ random coordinates of $\hat{r}$. We will use
+Serfling's theorem on the concentration of measure of sampling without
+replacement (Corollary~\ref{cor:serfling}). We must first bound $\|
+\hat{r} \|_\infty$ and $\frac{1}{n} \sum_{i=1}^n \hat{r}_i$ before we
+can use Serfling's results however.
 
-\textbf{Step 1}: Bounding $\| \hat{r} \|_\infty$. 
-
-$\hat{r}_i = f_0(x_i) + w_i - \hat{f}(x_i)$ where $\hat{f}(x_i) = \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ is the convex additive function outputted by the restricted regression.
-
-Both $f_0(x_i)$ and $\hat{f}(x_i)$ are bounded by $sB$.
-
+\vskip5pt
+\textbf{Step 1}: {\it Bounding $\| \hat{r} \|_\infty$.} We have $\hat{r}_i = f_0(x_i) + w_i - \hat{f}(x_i)$ where
+$\hat{f}(x_i) = \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ is the convex
+additive function outputted by the restricted regression. Note that
+both $f_0(x_i)$ and $\hat{f}(x_i)$ are bounded by $sB$. 
 Because $w_i$ is sub-Gaussian, $|w_i| \leq  \sigma \sqrt{2\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq \sigma \sqrt{ 2 \log \frac{2n}{\delta}}$ with probability at most $1 - \delta$.
 
-We now put this together: 
+Putting these observations together,
 %and take another union bound across all $j$ and all $i'$:
 \begin{align}
 \| \hat{r} \|_\infty &\leq 2sB + \sigma \sqrt{ 2\log \frac{2n}{\delta}}) \nonumber \\
       &\leq 4 s \tilde{\sigma} \sqrt{\log \frac{2n}{\delta}} \label{eqn:stepone_rhat}
 \end{align}
-with probability at least $1 - \delta$. We define $\tilde{\sigma} = \max(\sigma, B)$. We also supposed that $\sqrt{\log \frac{2np}{\delta}} \geq 1$, which is acceptable since $\delta \leq 1$ and the theorem presupposes that $\sqrt{ \log 2np } \geq 1$.
+with probability at least $1 - \delta$, where we have defined
+$\tilde{\sigma} = \max(\sigma, B)$,
+and assumed that $\sqrt{\log \frac{2np}{\delta}} \geq 1$, which is acceptable since $\delta \leq 1$ and the theorem presupposes that $\sqrt{ \log 2np } \geq 1$.
 
-\textbf{Step 2}: Bounding $| \frac{1}{n} \hat{r}^\tran \mathbf{1} |$. 
-
+\vskip5pt
+\textbf{Step 2}: {\it Bounding $| \frac{1}{n} \hat{r}^\tran \mathbf{1}
+  |$.}  We have that 
 \begin{align*}
 \frac{1}{n} \hat{r}^\tran \mathbf{1} &= 
     \frac{1}{n} \sum_{i=1}^n f_0(x_i) + w_i - \hat{f}(x_i) \\
-  &= \frac{1}{n} \sum_{i=1}^n f_0(x_i) + w_i \quad \trm{ ($\hat{f}$ is centered)}
+  &= \frac{1}{n} \sum_{i=1}^n f_0(x_i) + w_i \quad \trm{ ($\hat{f}$ is centered)}.
 \end{align*}
-
-Because $|f_0(x_i)| \leq sB$, the first term $| \frac{1}{n} \sum_{i=1}^n f_0(x_i)|$ is at most $sB \sqrt{\frac{2}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$ by Hoeffding Inequality.
-
-Because $w_i$ is sub-Gaussian, the second term $|\frac{1}{n} \sum_{i=1}^n w_i|$ is at most $\sigma \sqrt{ \frac{2}{n} \log \frac{2}{\delta}}$ with probability at most $1-\delta$.
-
-Taking an union bound, we have that 
-
+Since $|f_0(x_i)| \leq sB$, the first term $| \frac{1}{n} \sum_{i=1}^n
+f_0(x_i)|$ is at most $sB \sqrt{\frac{2}{n} \log \frac{2}{\delta}}$
+with probability at most $1-\delta$ by Hoeffding's inequality. Since
+$w_i$ is sub-Gaussian, the second term $|\frac{1}{n} \sum_{i=1}^n
+w_i|$ is at most $\sigma \sqrt{ \frac{2}{n} \log \frac{2}{\delta}}$
+with probability at most $1-\delta$.  
+Taking a union bound, we have that 
 \begin{align}
 | \frac{1}{n} \hat{r}^\tran \mathbf{1}| &\leq sB \sqrt{\frac{2}{n} \log \frac{4}{\delta}} +  \sigma \sqrt{\frac{2}{n} \log \frac{4}{\delta}} \nonumber \\
   &\leq 4 s \tilde{\sigma} \sqrt{\frac{1}{n} \log \frac{4}{\delta}} \label{eqn:steptwo_rhat}
 \end{align}
-with probability at least $1-\delta$.\\
+with probability at least $1-\delta$.
 
-\textbf{Step 3}: We now apply Serfling's theorem.
-
-For any $k \in S^c$, Serfling's theorem states that with probability at least $1 - \delta$:
+\vskip5pt
+\textbf{Step 3}: {\it Apply Serfling's theorem.}  
+For any $k \in S^c$, Serfling's theorem states that with probability at least $1 - \delta$
 \begin{align*}
 \Big
 |\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)_k}\Big| \leq
    2\| \hat{r} \|_\infty \sqrt{ \frac{1}{n} \log \frac{2}{\delta}} + 
    \Big|\frac{1}{n} \hat{r}^\tran \mathbf{1} \Big|
 \end{align*}
-
-We need Serfling's theorem to hold for all $k = 1,...,p$ and $i' = 1,...,n$. We also need the events that $\|\hat{r}\|_\infty$ and $| \frac{1}{n} \hat{r}^\tran \mathbf{1}|$ are small to hold. The following follows from a union bound. With probability at least $1-\delta$, for all $k,i'$,
+We need Serfling's theorem to hold for all $k = 1,...,p$ and $i' =
+1,...,n$. We also need the events that $\|\hat{r}\|_\infty$ and $|
+\frac{1}{n} \hat{r}^\tran \mathbf{1}|$ are small to hold. Using a
+union bound, with probability at least $1-\delta$, for all $k,i'$,
 \begin{align*}
 \Big
 |\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)_k}\Big| &\leq
@@ -249,10 +255,10 @@ We need Serfling's theorem to hold for all $k = 1,...,p$ and $i' = 1,...,n$. We 
   &\leq 4s\tilde{\sigma}\sqrt{\log \frac{6n}{\delta}} \sqrt{\frac{1}{n}\log \frac{6np}{\delta}} + 4 s \tilde{\sigma} \sqrt{\frac{1}{n}\log \frac{12}{\delta}} \\
   &\leq 8 s\tilde{\sigma} \sqrt{ \frac{1}{n} \log^2 \frac{12np}{\delta}}
 \end{align*}
-
-In the second inequality, we used equation~\ref{eqn:stepone_rhat} and equation~\ref{eqn:steptwo_rhat} from step 1 and 2 respectively. Setting $\delta = \frac{12}{n}$ gives the desired result.
-
-
+In the second inequality, we used equation~\eqref{eqn:stepone_rhat}
+and equation~\eqref{eqn:steptwo_rhat} from steps 1 and 2
+respectively. Setting $\delta = \frac{12}{n}$ gives the desired
+result.
 \end{proof}
 
  
@@ -265,10 +271,7 @@ In the second inequality, we used equation~\ref{eqn:stepone_rhat} and equation~\
  
  \subsection{Proof of False Negative Control}
  \label{sec:false_negative_proof}
- 
-\textbf{Note:} the symbols $c,C$ represent absolute constants. We will often abuse notation and ``absorb'' new absolute constants into $c, C$; the actual value of $c, C$ could thus vary from line to line.
-
- We first introduce notations.
+ We begin by introducing some notation.
  \subsubsection{Notation} 
 \label{sec:false_negative_proof_notations}
 
