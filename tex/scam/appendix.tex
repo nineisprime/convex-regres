@@ -274,49 +274,47 @@ result.
  We begin by introducing some notation.
  \subsubsection{Notation} 
 \label{sec:false_negative_proof_notations}
-
-Let $f : \mathbb{R}^s \rightarrow \R$, we denote $\| f \|_P \equiv \E f(X)^2$. \\
-Given samples $X_1,...,X_n$, we denote $\| f \|_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i)^2$ and $\langle f, g \rangle_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i) g(X_i)$. \\
+If $f : \mathbb{R}^s \rightarrow \R$, we define $\| f \|_P \equiv \E f(X)^2$. 
+Given samples $X_1,...,X_n$, we denote $\| f \|_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i)^2$ and $\langle f, g \rangle_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i) g(X_i)$. 
 
 Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_B \equiv \{ f \in \mathcal{C}^1 \,:\, \| f \|_\infty \leq B \}$ denote the set of $B$-bounded univariate convex functions. 
-
-Define $\mathcal{C}^s$ as the set of convex additive functions and $\mathcal{C}^s_B$ likewise as the set of convex additive functions whose components are $B$-bounded.
+Define $\mathcal{C}^s$ as the set of convex additive functions and
+$\mathcal{C}^s_B$ likewise as the set of convex additive functions
+whose components are $B$-bounded:
 \begin{align*}
 \mathcal{C}^s &\equiv \{ f \,:\, f = \sum_{k=1}^s f_k, \,
    f_k \in \mathcal{C}^1 \} \\
 \mathcal{C}^s_B &\equiv \{ f \in \mathcal{C}^s \,:\, 
-f = \sum_{k=1}^s f_k, \, \| f_k \|_\infty \leq B \}
+f = \sum_{k=1}^s f_k, \, \| f_k \|_\infty \leq B \}.
 \end{align*}
-
 Let $f^*(x) = \sum_{k=1}^s f^*_k(x_k)$ be the population risk minimizer:
 \[
 f^* = \arg\min_{f \in \mathcal{C}^s} \| f_0 - f^* \|_P^2
 \]
-
-We let $sB$ be an upper bound on $\| f_0 \|_\infty$ and $B$ be an upper bound on $\| f^*_k \|_\infty$. It follows that $\|f^* \|_\infty \leq s B$.
+We let $sB$ be an upper bound on $\| f_0 \|_\infty$ and $B$ be an
+upper bound on $\| f^*_k \|_\infty$. 
+It follows that $\|f^* \|_\infty \leq s B$.
 
 We define $\hat{f}$ as the empirical risk minimizer:
 \[
 \hat{f} = \arg\min \Big \{ \| y - f \|_n^2 + \lambda \sum_{k=1}^s \| f_k \|_\infty 
     \,:\, f \in \mathcal{C}^s_B,\, \mathbf{1}_n^\tran f_k = 0 \Big \}
 \]
-
-For $k \in \{1,...,s\}$, define $g^*_k$ to be decoupled concave population risk minimizer
+For $k \in \{1,...,s\}$, define $g^*_k$ to be the decoupled concave population risk minimizer
 \[
-g^*_k \equiv \argmin_{g_k \in \mh \mathcal{C}^1} \| f_0 - f^* - g_k \|_P^2 
+g^*_k \equiv \argmin_{g_k \in \mh \mathcal{C}^1} \| f_0 - f^* - g_k \|_P^2 .
 \]
-In our proof, we will analyze $g^*_k$ for $k$'s such that $f^*_k = 0$. Likewise, we define the empirical version:
+In our proof, we will analyze $g^*_k$ for each $k$ such that $f^*_k = 0$. Likewise, we define the empirical version:
 \[
-\hat{g}_k \equiv \argmin \Big\{ \| f_0 - \hat{f} - g_k \|_n^2 \,:\, g_k \in \mh \mathcal{C}^1_B \,, \mathbf{1}_n^\tran g_k = 0 \Big\}
+\hat{g}_k \equiv \argmin \Big\{ \| f_0 - \hat{f} - g_k \|_n^2 \,:\, g_k \in \mh \mathcal{C}^1_B \,, \mathbf{1}_n^\tran g_k = 0 \Big\}.
 \]
-By the definition of the ACDC procedure, $\hat{g}_k$ exist only for $k$ that have zero in their convex additive approximation.
+By the definition of the AC/DC procedure, $\hat{g}_k$ is defined only
+for an index $k$ that has zero as the convex additive approximation.
 
 
 \subsubsection{Proof}
  
 By additive faithfulness of the AC/DC procedure, it is known that $f^*_k \neq 0$ or $g^*_k \neq 0$ for all $k \in S$. 
-
-
 Intuitively, we would like to show that the risks of the AC/DC estimators $\hat{f}, \hat{g}$ tends to the risks of the population optimal functions $f^*, g^*$:
 \begin{align*}
 \| f_0 - \hat{f} \|^2_P & = \| f_0 - f^* \|^2_P + \trm{err}_+(n) \\
