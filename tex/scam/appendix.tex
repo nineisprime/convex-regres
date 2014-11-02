@@ -5,30 +5,31 @@
  \label{sec:deterministic_proof}
  
 We restate Theorem~\ref{thm:deterministic} first for convenience. 
- 
-\begin{theorem} 
 The following holds regardless of whether we impose the Lipschitz condition in optimization~\ref{opt:alternate_opt} and optimization~\ref{opt:alternate_opt_concave}.
 
+ 
+\begin{theorem} 
 Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. 
-Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. \\
+Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. 
 
-Suppose for all $k\in S^c$, for all $i=1,...,n$, $\lambda_n > | \frac{1}{2n}
-\hat{r}^\tran \mathbf{1}_{(i:n)}|$ where $\mathbf{1}_{(i:n)}$ is 1 on the coordinates of the $i$-th largest to the $n$-th largest entries of $X_k$ and 0 elsewhere.\\
-
+Suppose for all $k\in S^c$ and for all $i=1,...,n$, $\lambda_n > | \frac{1}{2n}
+\hat{r}^\tran \mathbf{1}_{(i:n)}|$ where $\mathbf{1}_{(i:n)}$ is 1 on the coordinates of the $i$-th largest to the $n$-th largest entries of $X_k$ and 0 elsewhere.
 Then the following are true:
 \begin{enumerate}
 \item Let $\hat{d}_k = 0$ for $k \in S^c$, then \{$\hat{d}_k\}_{k=1,...,p}$ is an optimal solution to optimization~\ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
-\item For all $k \in S^c$, the solution to optimization~\ref{opt:alternate_opt_concave} must be 0 and must be unique.
+\item For all $k \in S^c$, the solution to optimization~\ref{opt:alternate_opt_concave} must be zero and must be unique.
 \end{enumerate}
 \end{theorem}
 
 
 \begin{proof} 
-We will omit the Lipschitz constraint in our proof here. It is easy to add that in and check that the result of the theorem still holds.\\
+We will omit the Lipschitz constraint in our proof here. It can be
+added in and easily verified that the result of the theorem still holds.
 
-We first consider the first item in the conclusion of the theorem.
-
-We will show that with $\{\hat{d}_k\}_{k=1,..,p}$ as constructed, we can set the dual variables to satisfy complementary slackness and stationary conditions: $\nabla_{d_k} \mathcal{L}(\hat{d})  = 0$ for all $k$.\\ 
+We begin by considering the first item in the conclusion of the theorem.
+We will show that with $\{\hat{d}_k\}_{k=1,..,p}$ as constructed, we
+can set the dual variables to satisfy the 
+complementary slackness and stationary conditions: $\nabla_{d_k} \mathcal{L}(\hat{d})  = 0$ for all $k$. 
 
 The Lagrangian is
 \begin{equation}
@@ -44,7 +45,6 @@ with the constraint that $\nu_{ki} \geq 0$ for all $k,i$.
 Because $\{\hat{d}_k\}_{k \in S}$ is by definition the optimal solution of the restricted regression, it is a consequence that stationarity holds for $k \in S$, that is, $\partial_{ \{ d_k \}_{k \in S} } \mathcal{L}(d) = 0$, and that the dual variables $\nu_k$ for $k \in S$ satisfy complementary slackness.
 
 We now verify that stationarity holds also for $k \in S^c$. We fix one dimension $k \in S^c$ and let $\hat{r} = Y - \sum_{k' \in S} \bar{\Delta}_{k'} \hat{d}_{k'}$. 
-
 The Lagrangian form of the optimization, in terms of just $d_k$, is
 \[
 \mathcal{L}(d_k, \nu_k) =
@@ -55,7 +55,7 @@ The Lagrangian form of the optimization, in terms of just $d_k$, is
 \]
 with the constraint that $v_i \geq 0$ for all $i$. 
 
-The derivative of the Lagrangian is:
+The derivative of the Lagrangian is
 \begin{align*}
 \partial_{d_k} \mathcal{L}(d_k) =  -\frac{1}{n} \bar{\Delta}_k^\tran ( Y - \sum_{k'\in S} \bar{\Delta}_{k'} d_{k'}  - \bar{\Delta}_k d_k )
         + \lambda \bar{\Delta}_k^\tran \mathbf{u}
@@ -63,17 +63,18 @@ The derivative of the Lagrangian is:
 \end{align*}
 where $\mathbf{u}$ is the subgradient of $\| \bar{\Delta}_k d_k \|_\infty$, an $n$-vector such that $\| \mathbf{u}_T \|_1 = 1$ where $T = \{ i \,:\,  (\bar{\Delta}_k d_k)_i = \| \bar{\Delta}_k d_k \|_\infty \}$.
 
-We now substitute in $d_{k'} = \hat{d}_{k'}$ for $k' \in S$, $d_k = 0$ for $k \in S$, and $r = \hat{r}$ and show that the duals can be set in a way to ensure that the derivatives are equal to 0.
-
+We now substitute in $d_{k'} = \hat{d}_{k'}$ for $k' \in S$, $d_k = 0$ for $k \in S$, and $r = \hat{r}$ and show that the duals can be set in a way to ensure that the derivatives are equal to zero,
 \begin{align*}
 \partial_{d_k} \mathcal{L}(\hat{d}_k) = -\frac{1}{n} \bar{\Delta}_k^\tran\hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u}
            - \nu_k = 0 
 \end{align*}
-where $\| \mathbf{u} \| \leq 1$ and $\nu_k \geq 0$. It clear that to show stationarity, we only need to show that $-\frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u} \geq 0$ hwere the inequality is element-wise.
+where $\| \mathbf{u} \| \leq 1$ and $\nu_k \geq 0$. It clear that to show stationarity, we only need to show that $-\frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u} \geq 0$ where the inequality is element-wise.
 
-Let us reorder the samples so that the $i$-th sample is the $i$-smallest sample. \\
-
-We will construct $\gamma = 0$, and $\mathbf{u} = (-a, 0, ..., a)$ for some $0 < a < 1/2$. (coordinates of $\mathbf{u}$ correspond to the new sample ordering) We then just need to show that
+Let us reorder the samples so that the $i$-th sample is the $i$-th smallest sample. 
+We will construct $\gamma = 0$, and $\mathbf{u} = (-a, 0, ..., a)$ for
+some $0 < a < 1/2$, where the coordinates of $\mathbf{u}$ correspond
+to the new sample ordering. 
+We then just need to show that
 \begin{align*}
 - \frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u} &\geq 0 \quad \Leftrightarrow \\
 - \frac{1}{n} \Delta_k^\tran \hat{r} + \lambda \Delta_k^\tran \mathbf{u} &\geq 0 \quad \Leftrightarrow\\
@@ -86,67 +87,82 @@ We will construct $\gamma = 0$, and $\mathbf{u} = (-a, 0, ..., a)$ for some $0 <
 - \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{(i':n)}^\tran \hat{r} 
    + \lambda (X_{kn} - X_{kj})a &\geq 0 
 \end{align*}
-where $\mathsf{gap}_i = X_{ki} - X_{k,i-1}$. If $\frac{1}{2n} |\mathbf{1}_{(i:n)}^\tran \hat{r}| \leq \lambda a$ for all $i=1,...,n$, then we have that:
-
+where $\mathsf{gap}_i = X_{ki} - X_{k,i-1}$. If $\frac{1}{2n} |\mathbf{1}_{(i:n)}^\tran \hat{r}| \leq \lambda a$ for all $i=1,...,n$, then we have that
 \begin{align*}
 - \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran \hat{r}
    + \lambda (X_{kn} - X_{kj})a &\geq 0 \quad \Leftrightarrow \\
 - \sum_{i' > j} \mathsf{gap}_{i'} \lambda a + \lambda (X_{kn} - X_{kj}) a &\geq 0\\
-- (X_{kn} - X_{kj}) \lambda a + \lambda (X_{kn} - X_{kj}) a &\geq 0
+- (X_{kn} - X_{kj}) \lambda a + \lambda (X_{kn} - X_{kj}) a &\geq 0.
 \end{align*}
+We have thus proven that there exists one solution $\{ \hat{d}_k
+\}_{k=1,...,p}$ such that $\hat{d}_k = 0$ for all $k \in
+S^c$. Furthermore, we have shown that the subgradient variables
+$\mathbf{u}_k$ of the solution $\{ \hat{d}_k \}$ can be chosen such
+that $\| \mathbf{u}_k \|_1 < 1$ for all $k \in S^c$.  
 
-We have thus proven that there exist one solution $\{ \hat{d}_k \}_{k=1,...,p}$ such that $\hat{d}_k = 0$ for all $k \in S^c$. Furthermore, we have shown that the subgradient variables $\mathbf{u}_k$ of the solution $\{ \hat{d}_k \}$ can be chosen such that $\| \mathbf{u}_k \|_1 < 1$ for all $k \in S^c$.  We now prove that if $\{ \hat{d}'_k \}_{k = 1,..., p}$ is another solution, then it must be that $\hat{d}'_k = 0$ for all $k \in S^c$ as well.  \\
+We now prove that if $\{ \hat{d}'_k \}_{k = 1,..., p}$ is another
+solution, then it must be that $\hat{d}'_k = 0$ for all $k \in S^c$ as
+well.  We first claim that $\sum_{k=1}^p \bar{\Delta}_k \hat{d}_k =
+\sum_{k=1}^p \bar{\Delta}_k \hat{d}'_k$. If this were not true, then a
+convex combination of $\hat{d}_k, \hat{d}'_k$ would achieve a strictly
+lower objective on the quadratic term. More precisely, let $\zeta \in
+[0,1]$. If $\sum_{k=1}^p \bar{\Delta}_k \hat{d}'_k \neq \sum_{k=1}^p
+\bar{\Delta}_k \hat{d}_k$, then $\| Y - \sum_{k=1}^p \bar{\Delta}_k
+\big( \hat{d}_k + \zeta ( \hat{d}'_k - \hat{d}_k) \big) \|_2^2$ is
+strongly convex as a function of $\nu$. Thus, it cannot be that
+$\hat{d}_k$ and $\hat{d}'_k$ both achieve optimal objective, and we
+have reached a contradiction.
 
-%% prove uniqueness of sparsity pattern.
-
-We first claim that $\sum_{k=1}^p \bar{\Delta}_k \hat{d}_k = \sum_{k=1}^p \bar{\Delta}_k \hat{d}'_k$. If this were not true, then a convex combination of $\hat{d}_k, \hat{d}'_k$ would achieve a strictly lower objective on the quadratic term. More precisely, let $\zeta \in [0,1]$. If $\sum_{k=1}^p \bar{\Delta}_k \hat{d}'_k \neq \sum_{k=1}^p \bar{\Delta}_k \hat{d}_k$, then $\| Y - \sum_{k=1}^p \bar{\Delta}_k \big( \hat{d}_k + \zeta ( \hat{d}'_k - \hat{d}_k) \big) \|_2^2$ is strongly convex as a function of $\nu$. Thus, it cannot be that $\hat{d}_k$ and $\hat{d}'_k$ both achieve optimal objective and we have reached a contradiction.\\
-
-Now, we look at the stationarity condition for both $\{ \hat{d}_k \}$ and $\{ \hat{d}'_k \}$. Let $\mathbf{u}_k \in \partial \| \bar{\Delta}_k \hat{d}_k \|_\infty$ and let $\mathbf{u}'_k \in \partial \| \bar{\Delta}_k \hat{d}'_k \|_\infty$ be the two sets of subgradients. Let $\{ \nu_{ki} \}_{k=1,..,p,\, i=1,...n-1}$ and $\{ \nu'_{ki} \}$ be the two sets of positivity dual variables. \footnote{since there is no positivity constraint on $d_{k1}$, we let $\nu_{k1} = 0$ always.}
+Now, we look at the stationarity condition for both $\{ \hat{d}_k \}$
+and $\{ \hat{d}'_k \}$. Let $\mathbf{u}_k \in \partial \|
+\bar{\Delta}_k \hat{d}_k \|_\infty$ and let $\mathbf{u}'_k
+\in \partial \| \bar{\Delta}_k \hat{d}'_k \|_\infty$ be the two sets
+of subgradients. Let $\{ \nu_{ki} \}$ and $\{
+\nu'_{ki} \}$ be the two sets of positivity dual
+variables, for $k=1,..,p$ and $i=1,...n-1$.  Note that since there is no positivity constraint on
+$d_{k1}$, we let $\nu_{k1} = 0$ always.
 
 Let us define $\bar{\Delta}$, a $n \times p(n-1)$ matrix, to denote the column-wise concatenation of $\{ \bar{\Delta}_k \}_k$ and $\hat{d}$, a $p(n-1)$ dimensional vector, to denote the concatenation of $\{ \hat{d}_k \}_k$. With this notation, we can express $\sum_{k=1}^p \bar{\Delta}_k \hat{d}_k = \bar{\Delta} \hat{d}$.
 
-Since both solutions $(\hat{d}, \mathbf{u}, \nu)$ and $(\hat{d}', \mathbf{u}', \nu')$ must satisfy the stationarity condition, we have that:
+Since both solutions $(\hat{d}, \mathbf{u}, \nu)$ and $(\hat{d}',
+\mathbf{u}', \nu')$ must satisfy the stationarity condition, we have
+that
 \[
 \bar{\Delta}^\tran ( Y - \bar{\Delta} \hat{d} ) 
    + \lambda \sum_{k=1}^p \bar{\Delta}_k^\tran \mathbf{u}_k - \nu = 
 \bar{\Delta}^\tran ( Y - \bar{\Delta} \hat{d}' ) 
-   + \lambda \sum_{k=1}^p \bar{\Delta}_k^\tran \mathbf{u}'_k - \nu' = 0
+   + \lambda \sum_{k=1}^p \bar{\Delta}_k^\tran \mathbf{u}'_k - \nu' = 0.
 \] 
-We multiply both sides of the above equation by $\hat{d}'$:
+Multiplying both sides of the above equation by $\hat{d}'$,
 \[
 \hat{d}'^{\tran}  \bar{\Delta}^\tran ( Y - \bar{\Delta} \hat{d} ) 
     + \lambda \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k - \hat{d}'^\tran \nu = \hat{d}'^{\tran}  \bar{\Delta}^\tran ( Y - \bar{\Delta} \hat{d}' ) 
-    + \lambda \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}'_k - \hat{d}'^\tran \nu'
+    + \lambda \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}'_k - \hat{d}'^\tran \nu'.
 \]
-Since $\bar{\Delta} \hat{d}_k = \bar{\Delta} \hat{d}$, $\hat{d}'^\tran \nu' = 0$ (complementary slackness), and $\hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}'_k  = \| \hat{f}'_k \|_\infty$ (where $\hat{f}'_k = \bar{\Delta}_k \hat{d}'_k$), we have that:
+Since $\bar{\Delta} \hat{d}_k = \bar{\Delta} \hat{d}$, $\hat{d}'^\tran \nu' = 0$ (complementary slackness), and $\hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}'_k  = \| \hat{f}'_k \|_\infty$ (where $\hat{f}'_k = \bar{\Delta}_k \hat{d}'_k$), we have that
 \[
-\lambda \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k - \hat{d}'^\tran \nu = \lambda \sum_{k=1}^p \| \hat{f}'_k \|_\infty
+\lambda \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k - \hat{d}'^\tran \nu = \lambda \sum_{k=1}^p \| \hat{f}'_k \|_\infty.
 \]
 On one hand, $\hat{d}'$ is a feasible solution so $\hat{d}'^\tran \nu \geq 0$ and so 
 \[
 \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k \geq \sum_{k=1}^p \| \hat{f}'_k \|_\infty .
 \]
-
-On the other hand, by Holder's inequality:
+On the other hand, by H\"older's inequality,
 \begin{align*}
 \sum_{k=1}^p \hat{d}'^\tran_k \bar{\Delta}_k^\tran \mathbf{u}_k &\leq 
-   \sum_{k=1}^p \| \hat{f}'_k \|_\infty \|\mathbf{u}_k \|_1 
+   \sum_{k=1}^p \| \hat{f}'_k \|_\infty \|\mathbf{u}_k \|_1 .
 \end{align*}
-
-Since $\mathbf{u}_k$ can be chosen so that $\| \mathbf{u}_k \|_1 < 1$ for all $k \in S^c$, we would get a contradiction if $\| \hat{f}'_k \|_\infty > 0$ for some $k \in S^c$. We thus conclude that $\hat{d}'$ must follow the same sparsity pattern.\\
+Since $\mathbf{u}_k$ can be chosen so that $\| \mathbf{u}_k \|_1 < 1$ for all $k \in S^c$, we would get a contradiction if $\| \hat{f}'_k \|_\infty > 0$ for some $k \in S^c$. We thus conclude that $\hat{d}'$ must follow the same sparsity pattern.
 
 
 The second item in the theorem concerning optimization~\ref{opt:alternate_opt_concave} is proven in exactly the same way. 
-
-The Lagrangian of optimization~\ref{opt:alternate_opt_concave} is:
+The Lagrangian of optimization~\ref{opt:alternate_opt_concave} is
 \[
 \mathcal{L}_{\trm{cave}}(d_k, \nu_k) = 
   \frac{1}{2n} \big\| \hat{r} - \bar{\Delta}_k d_k \big \|_2^2 + 
-  \lambda \| \bar{\Delta}_k d_k \|_\infty + \sum_{k=1}^p \sum_{i=2}^{n-1} \nu_{ki} d_{ki}
+  \lambda \| \bar{\Delta}_k d_k \|_\infty + \sum_{k=1}^p \sum_{i=2}^{n-1} \nu_{ki} d_{ki}.
 \]
-
-The exact same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT conditions sufficient for optimality.
-
+The same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT conditions sufficient for optimality.
 \end{proof}
  
  
@@ -176,7 +192,7 @@ And therefore，for all $k \in S^c$, both the AC solution $\hat{f}_k$, from opti
 \begin{proof}
 The key is to note that $\hat{r}$ and $\Delta_{k,j}$ are independent for all $k \in S^c,j=1,...,n$ because $\hat{r}$ is only dependent on $X_{S}$.
 
-Fix $j$ and $i$. $\hat{r}^\tran \mathbf{1}_{(i':n)_k}$ is then the sum of $n-i'+1$ random coordinates of $\hat{r}$. We will then use Serfling's theorem on the concentration of measure of sampling without replacement. (corollary~\ref{cor:serfling}) We must first bound $\| \hat{r} \|_\infty$ and $\frac{1}{n} \sum_{i=1}^n \hat{r}_i$ before we can use Serfling's results however.\\
+Fix $j$ and $i$. $\hat{r}^\tran \mathbf{1}_{(i':n)_k}$ is then the sum of $n-i'+1$ random coordinates of $\hat{r}$. We will then use Serfling's theorem on the concentration of measure of sampling without replacement. (corollary~\ref{cor:serfling}) We must first bound $\| \hat{r} \|_\infty$ and $\frac{1}{n} \sum_{i=1}^n \hat{r}_i$ before we can use Serfling's results however.
 
 \textbf{Step 1}: Bounding $\| \hat{r} \|_\infty$. 
 
@@ -259,7 +275,7 @@ In the second inequality, we used equation~\ref{eqn:stepone_rhat} and equation~\
 Let $f : \mathbb{R}^s \rightarrow \R$, we denote $\| f \|_P \equiv \E f(X)^2$. \\
 Given samples $X_1,...,X_n$, we denote $\| f \|_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i)^2$ and $\langle f, g \rangle_n \equiv \frac{1}{n} \sum_{i=1}^n f(X_i) g(X_i)$. \\
 
-Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_B \equiv \{ f \in \mathcal{C}^1 \,:\, \| f \|_\infty \leq B \}$ denote the set of $B$-bounded univariate convex functions. \\
+Let $\mathcal{C}^1$ denote the set of univariate convex functions supported on $[-b,b]$. Let $\mathcal{C}^1_B \equiv \{ f \in \mathcal{C}^1 \,:\, \| f \|_\infty \leq B \}$ denote the set of $B$-bounded univariate convex functions. 
 
 Define $\mathcal{C}^s$ as the set of convex additive functions and $\mathcal{C}^s_B$ likewise as the set of convex additive functions whose components are $B$-bounded.
 \begin{align*}
@@ -295,7 +311,7 @@ By the definition of the ACDC procedure, $\hat{g}_k$ exist only for $k$ that hav
 
 \subsubsection{Proof}
  
-By additive faithfulness of the AC/DC procedure, it is known that $f^*_k \neq 0$ or $g^*_k \neq 0$ for all $k \in S$. \\
+By additive faithfulness of the AC/DC procedure, it is known that $f^*_k \neq 0$ or $g^*_k \neq 0$ for all $k \in S$. 
 
 
 Intuitively, we would like to show that the risks of the AC/DC estimators $\hat{f}, \hat{g}$ tends to the risks of the population optimal functions $f^*, g^*$:
@@ -308,7 +324,7 @@ where the estimation errors $\trm{err}_+(n), \trm{err}_-(n)$ decrease with $n$ a
 
 Suppose $\hat{f}_k = 0$ and $f^*_k \neq 0$, then, when $n$ is large enough such that $\trm{err}_+(n)$ and $\trm{err}_-(n)$ are smaller than $\alpha_+, \alpha_-$ (defined in equation~\ref{eqn:signal_level_defn}), there must exist a contradiction because the risk of $f^*$, $\| f_0 - f^* \|_P$, is strictly larger by $\alpha_+$ than the risk of the best approximation whose $k$-th component is constrained to be zero. 
 
-Suppose $f^*_k = 0$, then $g^*_k \neq 0$. When $n$ is large enough, $\hat{g}_k$ must not be zero or we would have another contradiction. \\
+Suppose $f^*_k = 0$, then $g^*_k \neq 0$. When $n$ is large enough, $\hat{g}_k$ must not be zero or we would have another contradiction. 
 
 Theorem~\ref{thm:convex_consistent} and theorem~\ref{thm:concave_consistent} characterize $\trm{err}_+(n)$ and $\trm{err}_-(n)$ respectively.
 
@@ -388,7 +404,7 @@ $$
 \frac{1}{n} \sum_{i=1}^n |h(X_i) - h_L(X_i)| \leq \frac{1}{n} \sum_{i=1}^n | h_U(X_i) - h_L(X_i)| \leq 2\epsilon +  (sB) \sqrt{ \frac{sK^{**}(2sbB)^{1/2} \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}
 $$.
 
-We denote $\epsilon_{n,\delta} \equiv (sB) \sqrt{ \frac{sK^{**}(2sbB)^{1/2} \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}$. Let $\mathcal{E}_{[\,]}$ denote the event that for each $h \in \mathcal{G}$, there exists $h_L$ in the $\epsilon$-bracketing such that $\|h-h_L\|_{L_{P_n}} \leq 2\epsilon + \epsilon_{n, \delta}$. $\mathcal{E}_{[\,]}$ has probability at most $1-\delta$ as shown.\\
+We denote $\epsilon_{n,\delta} \equiv (sB) \sqrt{ \frac{sK^{**}(2sbB)^{1/2} \log \frac{1}{\delta}}{2\epsilon^{1/2} n}}$. Let $\mathcal{E}_{[\,]}$ denote the event that for each $h \in \mathcal{G}$, there exists $h_L$ in the $\epsilon$-bracketing such that $\|h-h_L\|_{L_{P_n}} \leq 2\epsilon + \epsilon_{n, \delta}$. $\mathcal{E}_{[\,]}$ has probability at most $1-\delta$ as shown.
 
 Let $\mathcal{E}_{\|w\|_\infty}$ denote the event that $\| w \|_\infty \leq \sigma \sqrt{ 2\log \frac{2n}{\delta}}$; $\mathcal{E}_{\|w\|_\infty}$ has probability at most $1-\delta$. We take an union bound between $\mathcal{E}_{\|w\|_\infty}$ and $\mathcal{E}_{[\,]}$ and get that, with probability at most $1-2\delta$, for all $h$:
 \[
@@ -625,7 +641,7 @@ With probability at least $1-\delta$:
 \end{lemma}
 
 \begin{proof}
-Let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s - f_0$. Note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s B$.\\
+Let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s - f_0$. Note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s B$.
 
 There exists an $\epsilon$-bracketing of $\mathcal{G}$. 
 
@@ -694,7 +710,7 @@ We have then that, with probability at least $1-\delta$,
   c B^3 \sqrt{ \frac{s^5 b^{1/2} \log \frac{2}{\delta}}{n^{4/5}}}
 \end{align*}
 
-%For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-bracketing of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.\\
+%For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-bracketing of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.
 
 % Because $\| h \|_n = \| h - h^L + h^L \|_n$, we have that
 % \begin{align*}
@@ -811,7 +827,7 @@ Therefore, with probability at least $1 - 2\delta$,
 
 \begin{lemma}
 \label{lem:acdc_derivative_bound}
-Let $f : [0,1]^p \rightarrow \R$ be a twice differentiable function. Suppose $p(\mathbf{x})$ is a density on $[0,1]^p$ such that $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$ and $\partial_{x_k}^2 p(\mathbf{x}_{-k} \given x_k)$ are all continuous as functions of $x_k$. Let $\phi(\mathbf{x}_{-k})$ be a continuous function not dependent on $x_k$.\\
+Let $f : [0,1]^p \rightarrow \R$ be a twice differentiable function. Suppose $p(\mathbf{x})$ is a density on $[0,1]^p$ such that $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$ and $\partial_{x_k}^2 p(\mathbf{x}_{-k} \given x_k)$ are all continuous as functions of $x_k$. Let $\phi(\mathbf{x}_{-k})$ be a continuous function not dependent on $x_k$.
 
 Then, $h^*_k(x_k) \equiv \E[ f(X) - \phi(X_{-k}) \given x_k]$ is twice differentiable and has a second derivative lower bounded, that is, bounded away from $-\infty$.
 \end{lemma}
@@ -940,7 +956,7 @@ Let $\mathcal{C}$ be a set of functions. For a given $\epsilon$ and metric $\rho
 We let $N_{[]}(\epsilon, \mathbf{C}, \rho)$ denote the size of the smallest bracketing of $\mathcal{C}$
 \end{definition}
 
-\begin{proposition} (Proposition 16 in \cite{kim2014global})\\
+\begin{proposition} (Proposition 16 in \cite{kim2014global})
 \label{prop:convexbracket}
 Let $\mathcal{C}$ be the set of convex functions supported on $[-b, b]^d$ and uniformly bounded by $B$. Then there exist constants $\epsilon_3$ and $K^{**}$, dependent on $d$, such that
 \[
@@ -1012,7 +1028,7 @@ sB \sqrt{ \frac{ \log N_{[]}(2\epsilon, \mathcal{C}^s, L_2(P)) + \log \frac{1}{\
 \end{corollary}
 
 \begin{proof}
-$|f_L(X_i) - f_U(X_i)|$ is at most $sB$. There are $N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P))$ pairs $(f_L, f_U)$. The inequality follows from a direct application of union bound and Hoeffding Inequality.\\
+$|f_L(X_i) - f_U(X_i)|$ is at most $sB$. There are $N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P))$ pairs $(f_L, f_U)$. The inequality follows from a direct application of union bound and Hoeffding Inequality.
 \end{proof}
 
 To make the expression in this corollary easier to work with, we derive an upper bound for $\epsilon_{n, \delta}$. Suppose 
