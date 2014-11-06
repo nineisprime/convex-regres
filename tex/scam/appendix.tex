@@ -671,19 +671,14 @@ With probability at least $1-\delta$:
 
 \begin{proof}
 Let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s - f_0$. Note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s B$.
-
-There exists an $\epsilon$-bracketing of $\mathcal{G}$. 
-
+There exists an $\epsilon$-bracketing of $\mathcal{G}$, and
 %For every $h \in \mathcal{G}$, there exists $h^L$ in the bracketing such that $\| h^U - h^L \|_{L_1(P)} \leq \epsilon$. 
-
-By Corollary~\ref{cor:convexadditive_lp}, the bracketing has size at most $\log N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P)) \leq s K^{**}\left( \frac{2sbB}{\epsilon} \right)^{1/2}$. By Corollary~\ref{cor:convexbracket_ln}, we know that with probability at least $1-\delta$, we have that $\|h_U - h_L\|_{L_1(P_n)} \leq \epsilon + \epsilon_{n,\delta}$ for all pairs $(h_U, h_L)$ in the bracketing, where $\epsilon_{n,\delta} = sB \sqrt{ \frac{K^{**} (2sbB)^{1/2} \log \frac{2}{\delta}}{2 \epsilon^{1/2} n}}$.
-
+by Corollary~\ref{cor:convexadditive_lp}, the bracketing has size at most $\log N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P)) \leq s K^{**}\left( \frac{2sbB}{\epsilon} \right)^{1/2}$. By Corollary~\ref{cor:convexbracket_ln}, we know that with probability at least $1-\delta$, we have that $\|h_U - h_L\|_{L_1(P_n)} \leq \epsilon + \epsilon_{n,\delta}$ for all pairs $(h_U, h_L)$ in the bracketing, where $\epsilon_{n,\delta} = sB \sqrt{ \frac{K^{**} (2sbB)^{1/2} \log \frac{2}{\delta}}{2 \epsilon^{1/2} n}}$.
 For a particular function $h \in \mathcal{G}$, we can construct $\psi_L \equiv \min( |h_U|, |h_L|)$ and $\psi_U \equiv \max( |h_U|, |h_L| )$ so that
 \[
-\psi_L^2 \leq h^2 \leq \psi_U^2
+\psi_L^2 \leq h^2 \leq \psi_U^2.
 \]
-
-We can then bound the $L_1(P)$ norm of $\psi_U^2 - \psi_L^2$.
+We can then bound the $L_1(P)$ norm of $\psi_U^2 - \psi_L^2$ as
 \begin{align*}
 \int (\psi_U^2(x) - \psi_L^2(x)) p(x)dx  &\leq  \int | h_U^2(x) - h_L^2(x)| p(x) dx \\
    &\leq \int | h_U(x) - h_L(x) | \, |h_U(x) + h_L(x)| p(x) dx \\
@@ -697,16 +692,16 @@ We can then bound the $L_1(P)$ norm of $\psi_U^2 - \psi_L^2$.
 %   &\leq \frac{1}{n}\sum_{i=1}^n | h_U(X_i) - h_L(X_i)| \, |h_U(X_i) + h_L(X_i)| \\
 %   &\leq 2sB(\epsilon + \epsilon_{n,\delta})
 % \end{align*}
-
-Now we can bound $\| h \|_n^2 - \| h \|_P^2$.
-
+Now we can bound $\| h \|_n^2 - \| h \|_P^2$ as
 \begin{align}
 \frac{1}{n} \sum_{i=1}^n \psi_L(X_i)^2 - \E \psi_U(X)^2  \leq
     \| h \|_n^2 - \| h \|_P^2 \leq
   \frac{1}{n} \sum_{i=1}^n \psi_U(X_i)^2 - \E \psi_L(X)^2  \label{eqn:hpsi_bound}
 \end{align}
-
-$\psi_L(X_i)^2$ and $\psi_U(X_i)^2$ are bounded random variables with upper bound $(sB)^2$. By Hoeffding's inequality and union bound, we have that, with probability at least $1-\delta$,, for all $\psi_L$ (and likewise $\psi_U$):
+Since 
+$\psi_L(X_i)^2$ and $\psi_U(X_i)^2$ are bounded random variables with
+upper bound $(sB)^2$, Hoeffding's inequality and union bound give that,
+with probability at least $1-\delta$,, for all $\psi_L$ (and likewise $\psi_U$)
 \[
 \left| \frac{1}{n} \sum_{i=1}^n \psi_L(X_i)^2 - 
    \E \psi_L(X)^2 \right| \leq (sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{2}{\delta}}{ \epsilon^{1/2} n} }
@@ -719,10 +714,9 @@ Plugging this into equation~\eqref{eqn:hpsi_bound} above, we have that:
  & \leq 
  \| h \|_n^2 - \| h \|_P^2 \leq
 \E \psi_U(X)^2 - \E \psi_L(X)^2 + 
-(sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{2}{\delta}}{ \epsilon^{1/2} n} }
+(sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{2}{\delta}}{ \epsilon^{1/2} n} }.
 \end{align*}
-
-Using the $L_1(P)$ norm of $\psi_U^2 - \psi_L^2$ result, we have:
+Using the $L_1(P)$ norm of $\psi_U^2 - \psi_L^2$ result, we have
 \begin{align*}
 -sB\epsilon - 
 (sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{2}{\delta}}{ \epsilon^{1/2} n} } \leq 
@@ -732,7 +726,6 @@ sB\epsilon +
 \end{align*}
 
 We balance the terms by choosing $\epsilon = \left( \frac{ (sB)^2 sK^{**} (sBb)^{1/2}}{n} \right)^{2/5}$.
-
 We have then that, with probability at least $1-\delta$,
 \begin{align*}
 \big| \| h \|_n^2 - \| h \|_P^2  \big| \leq
@@ -799,9 +792,7 @@ We have then that, with probability at least $1-\delta$,
 
 \begin{lemma}
 \label{lem:remove_centering}
-
-Let $f_0, f^*$ be defined as in section~\ref{sec:false_negative_proof_notations}. Define $\bar{f}^* = \frac{1}{n} \sum_{i=1}^n f^*(X_i)$.
-
+Let $f_0$ and $f^*$ be defined as in Section~\ref{sec:false_negative_proof_notations}. Define $\bar{f}^* = \frac{1}{n} \sum_{i=1}^n f^*(X_i)$.
 Then, with probability at least $1 - 2\delta$,
 \[
 \Big | \| f_0 - f^* \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 \Big| \leq
@@ -809,34 +800,30 @@ Then, with probability at least $1 - 2\delta$,
 \]
 \end{lemma}
 
-\begin{proof} (of lemma~\ref{lem:remove_centering})
+\begin{proof}
+We decompose the empirical norm as
 \begin{align*}
 \| f_0 - f^* + \bar{f}^* \|_n^2 &= \| f_0 - f^* \|_n^2 
     + 2 \langle f_0 - f^*, \bar{f}^* \rangle + \bar{f}^{*2} \\
   &= \| f_0 - f^* \|_n^2 + 2 \bar{f}^* \langle f_0 - f^*, \mathbf{1} \rangle_n + 
     \bar{f}^{*2} \\
-  &= \| f_0 - f^* \|_n^2 + 2 \bar{f}^* \bar{f}_0 - \bar{f}^{*2}
+  &= \| f_0 - f^* \|_n^2 + 2 \bar{f}^* \bar{f}_0 - \bar{f}^{*2}.
 \end{align*}
-
-
+Now
 $\bar{f}^* = \frac{1}{n} \sum_{i=1}^n f^*(X_i)$ is the average of $n$ bounded mean-zero random variables and therefore, with probability at least $1-\delta$, $| \bar{f}^* | \leq 4 sB \sqrt{ \frac{1}{n} \log \frac{2}{\delta} }$.
-
 The same reasoning likewise applies to $\bar{f}_0 = \frac{1}{n} \sum_{i=1}^n f_0(X_i)$.
 
 Taking a union bound and we have that, with probability at least $1- 2\delta$, 
-
 \begin{align*}
 | \bar{f}^* | | \bar{f}_0 | &\leq c (sB)^2 \frac{1}{n} \log \frac{2}{\delta} \\
 \bar{f}^{*2} &\leq c (sB)^2 \frac{1}{n} \log \frac{2}{\delta}
 \end{align*}
-
 Therefore, with probability at least $1 - 2\delta$,
 \[
 \|f_0 - f^*\|_n^2 - c (sB)^2 \frac{1}{n} \log \frac{2}{\delta} \leq
     \| f_0 - f^* + \bar{f}^* \|_n^2 \leq 
 \|f_0 - f^*\|_n^2 + c (sB)^2 \frac{1}{n} \log \frac{2}{\delta}
 \]
-
 \end{proof}
 
 
@@ -850,7 +837,7 @@ Therefore, with probability at least $1 - 2\delta$,
 %%
 %%%%%%%%%%%%%%%%%%%% 
 
- \subsection{Supporting Technical Material}
+% \subsection{Supporting Technical Material}
  
 \subsubsection{Supporting Lemma for Theorem~\ref{thm:acdc_faithful}}
 
@@ -858,15 +845,16 @@ Therefore, with probability at least $1 - 2\delta$,
 \label{lem:acdc_derivative_bound}
 Let $f : [0,1]^p \rightarrow \R$ be a twice differentiable function. Suppose $p(\mathbf{x})$ is a density on $[0,1]^p$ such that $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$ and $\partial_{x_k}^2 p(\mathbf{x}_{-k} \given x_k)$ are all continuous as functions of $x_k$. Let $\phi(\mathbf{x}_{-k})$ be a continuous function not dependent on $x_k$.
 
-Then, $h^*_k(x_k) \equiv \E[ f(X) - \phi(X_{-k}) \given x_k]$ is twice differentiable and has a second derivative lower bounded, that is, bounded away from $-\infty$.
+Then, $h^*_k(x_k) \equiv \E[ f(X) - \phi(X_{-k}) \given x_k]$ is twice
+differentiable and has a second derivative lower 
+bounded away from $-\infty$.
 \end{lemma}
 
 \begin{proof}
-
+We can write
 \[
 h^*_k(x_k) = \int_{\mathbf{x}_{-k}} \big(f(\mathbf{x}) - \phi(\mathbf{x}_{-k})\big) p(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}
 \]
-
 The integrand is bounded because it is a sum-product of continuous functions over a compact set. Therefore, we can differentiate under the integral and derive that
 \begin{align*}
 \partial_{x_k} h^*_k(x_k) &= 
@@ -874,20 +862,24 @@ The integrand is bounded because it is a sum-product of continuous functions ove
 \partial_{x_k}^2 h^*_k(x_k) &= 
     \int_{\mathbf{x}_{-k}} f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) + 2f'(\mathbf{x}) p'(\mathbf{x}_{-k} \given x_k)  + (f(\mathbf{x}) - \phi(\mathbf{x}_{-k}) p''(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}
 \end{align*}
-
-We used the shorthand $f'(\mathbf{x}), p'(\mathbf{x}_{-k} \given x_k), etc$ to denote $\partial_{x_k} f(\mathbf{x})$, $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$, etc. 
+where we have used the shorthand $f'(\mathbf{x}), p'(\mathbf{x}_{-k}
+\given x_k)$ to denote $\partial_{x_k} f(\mathbf{x})$, $\partial_{x_k}
+p(\mathbf{x}_{-k} \given x_k)$, etc.
 
 This proves that $h^*_k(x_k)$ is twice-differentiable. To see that the second derivative is lower bounded, we note that $f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k)$ is non-negative and the other terms in the second-derivative are all continuous functions on a compact set and thus bounded. 
-
 \end{proof}
 
 
- \subsubsection{Concentration of Measure}
+subsubsection{Concentration of Measure}
 
-\textbf{Sub-Exponential} random variable is the square of a sub-Gaussian random variable\cite{vershynin2010introduction}.
+A sub-exponential random is the square of a sub-Gaussian random
+variable \cite{vershynin2010introduction}.
 
-\begin{proposition} (Subexponential Concentration \cite{vershynin2010introduction})
-Let $X_1,...,X_n$ be zero-mean independent subexponential random variables with subexponential scale $K$. 
+\begin{proposition} (Subexponential Concentration
+  \cite{vershynin2010introduction})
+Let $X_1,...,X_n$ be zero-mean independent subexponential random
+variables with subexponential scale $K$. 
+Then
 \[
 P( | \frac{1}{n} \sum_{i=1}^n X_i | \geq \epsilon) \leq
 	2 \exp \left[ -c n \min\left( \frac{\epsilon^2}{K^2}, \frac{\epsilon}{K} \right) \right]
@@ -896,23 +888,21 @@ where $c > 0$ is an absolute constant.
 \end{proposition}
 
 For uncentered subexponential random variables, we can use the following fact. If $X_i$ subexponential with scale $K$, then $X_i - \E[X_i]$ is also subexponential with scale at most $2K$.
-
-\textbf{Restating}. We can set
+Restating, we can set
 \[
 c \min\left( \frac{\epsilon^2}{K^2}, \frac{\epsilon}{K} \right) = \frac{1}{n} \log \frac{1}{\delta}.
 \]
-Thus, with probability at least $1-\delta$, the deviation at most
+Thus, with probability at least $1-\delta$, the deviation is at most
 \[
-K \max\left( \sqrt{\frac{1}{cn} \log \frac{C}{\delta}},  \frac{1}{cn} \log \frac{C}{\delta} \right)
+K \max\left( \sqrt{\frac{1}{cn} \log \frac{C}{\delta}},  \frac{1}{cn} \log \frac{C}{\delta} \right).
 \]
 
 
 \begin{corollary}
-Let $w_1,...,w_n$ be $n$ independent sub-Gaussian random variables with sub-Gaussian scale $\sigma$. 
-
+Let $W_1,...,W_n$ be $n$ independent sub-Gaussian random variables with sub-Gaussian scale $\sigma$. 
 Then, for all $n > n_0$, with probability at least $1- \frac{1}{n}$,
 \[
-\frac{1}{n} \sum_{i=1}^n w_i^2 \leq c \sigma^2 
+\frac{1}{n} \sum_{i=1}^n W_i^2 \leq c \sigma^2 .
 \]
 \end{corollary}
 
@@ -920,28 +910,27 @@ Then, for all $n > n_0$, with probability at least $1- \frac{1}{n}$,
 Using the subexponential concentration inequality, we know that, with probability at least $1-\frac{1}{n}$, 
 
 \[
-| \frac{1}{n} \sum_{i=1}^n w_i^2 - \E w^2 | \leq \sigma^2 \max\left( \sqrt{\frac{1}{cn} \log \frac{C}{\delta}}, \frac{1}{cn}\log \frac{C}{\delta} \right)
+\left| \frac{1}{n} \sum_{i=1}^n W_i^2 - \E W^2\right| \leq \sigma^2 \max\left( \sqrt{\frac{1}{cn} \log \frac{C}{\delta}}, \frac{1}{cn}\log \frac{C}{\delta} \right).
 \]
 
 First, let $\delta = \frac{1}{n}$. Suppose $n$ is large enough such that $ \frac{1}{cn} \log Cn < 1$. Then, we have, with probability at least $1-\frac{1}{n}$,
 \begin{align*}
- \frac{1}{n} \sum_{i=1}^n w_i^2 &\leq c\sigma^2 \Big(1+\sqrt{\frac{1}{cn} \log Cn}\Big) \\
-		&\leq 2 c \sigma^2
+ \frac{1}{n} \sum_{i=1}^n W_i^2 &\leq c\sigma^2 \Big(1+\sqrt{\frac{1}{cn} \log Cn}\Big) \\
+		&\leq 2 c \sigma^2.
  \end{align*}
- 
 \end{proof}
 
 
 
 \subsubsection{Sampling Without Replacement}
 
-\begin{lemma} (Serfling \cite{serfling1974probability}) 
+\begin{lemma} (\cite{serfling1974probability}) 
 Let $x_1,..., x_N$ be a finite list, $\bar{x} = \mu$. Let $X_1,...,X_n$ be sampled from $x$ without replacement. 
 
 Let $b = \max_i x_i$ and $a = \min_i x_i$. Let $r_n = 1- \frac{n-1}{N}$. Let $S_n = \sum_i X_i$.
 Then we have that
 \[
-P( S_n - n \mu \geq n \epsilon) \leq \exp( - 2 n \epsilon^2 \frac{1}{r_n (b-a)^2})
+\P( S_n - n \mu \geq n \epsilon) \leq \exp\left( - 2 n \epsilon^2 \frac{1}{r_n (b-a)^2}\right).
 \]
 \end{lemma}
 
@@ -949,29 +938,26 @@ P( S_n - n \mu \geq n \epsilon) \leq \exp( - 2 n \epsilon^2 \frac{1}{r_n (b-a)^2
 \label{cor:serfling}
 Suppose $\mu = 0$. 
 \[
-P( \frac{1}{N} S_n \geq \epsilon) \leq \exp( -2 N \epsilon^2 \frac{1}{(b-a)^2})
+\P\left( \frac{1}{N} S_n \geq \epsilon\right) \leq \exp\left( -2 N \epsilon^2 \frac{1}{(b-a)^2}\right)
 \]
-
 And, by union bound, we have that
 \[
-P( | \frac{1}{N} S_n| \geq \epsilon) \leq 2 \exp( -2 N \epsilon^2 \frac{1}{(b-a)^2})
+\P\left( | \frac{1}{N} S_n| \geq \epsilon\right) \leq 2 \exp\left( -2 N \epsilon^2 \frac{1}{(b-a)^2}\right)
 \]
 
 \end{corollary}
 
-A simple restatement. With probability at least $1- \delta$, the deviation $| \frac{1}{N} S_n|$ is at most $ (b-a) \sqrt{ \frac{1}{2N} \log \frac{2}{\delta}}$.
+A simple restatement is that with probability at least $1- \delta$, the deviation $| \frac{1}{N} S_n|$ is at most $ (b-a) \sqrt{ \frac{1}{2N} \log \frac{2}{\delta}}$.
 
 \begin{proof}
 \[
-P( \frac{1}{N} S_n \geq \epsilon) = P( S_n \geq \frac{N}{n} n \epsilon) \leq \exp( - 2 n \frac{N^2}{n^2} \epsilon^2 \frac{1}{r_n (b-a)^2} ) 
+\P\left( \frac{1}{N} S_n \geq \epsilon\right) = \P\left( S_n \geq \frac{N}{n} n \epsilon\right) \leq \exp\left( - 2 n \frac{N^2}{n^2} \epsilon^2 \frac{1}{r_n (b-a)^2} \right).
 \]
-
-We note that $r_n \leq 1$ always, and $n \leq N$ always. 
+We note that $r_n \leq 1$ always, and $n \leq N$ always.   Thus,
 \[
-\exp( - 2 n \frac{N^2}{n^2} \epsilon^2 \frac{1}{r_n (b-a)^2} )  \leq \exp( - 2 N \epsilon^2 \frac{1}{(b-a)^2})
+\exp\left( - 2 n \frac{N^2}{n^2} \epsilon^2 \frac{1}{r_n (b-a)^2} \right)  \leq \exp\left( - 2 N \epsilon^2 \frac{1}{(b-a)^2}\right)
 \]
-This completes the proof.
-
+completing the proof.
 \end{proof}
 
 \subsubsection{Bracketing Number for Convex Functions}
@@ -1120,9 +1106,7 @@ T_1 - a_2 \alpha^2 &= a_1 \\
 T_2 - a_1 \alpha^2 &= a_2 
 \end{align*}
 where $T_1 = H_{11} + 2H_{12} \alpha + H_{22} \alpha^2$ and $T_2 = H_{22} + 2H_{12} \alpha + H_{11} \alpha^2$.
-
-It is then trivial to solve the system and verify that $a_1, a_2$ are as specified.
-
+It is then simple to solve the system and verify that $a_1, a_2$ are as specified.
 \end{proof}
 
 
