@@ -960,13 +960,13 @@ We note that $r_n \leq 1$ always, and $n \leq N$ always.   Thus,
 completing the proof.
 \end{proof}
 
-\subsubsection{Bracketing Number for Convex Functions}
+\subsubsection{Bracketing Numbers for Convex Functions}
 
 \begin{definition}
 % upper, lower, epsilon room
 % metric
 % function space
-Let $\mathcal{C}$ be a set of functions. For a given $\epsilon$ and metric $\rho$ (which we take to be $L_2$ or $L_2(P)$), we define a \textbf{bracketing} of $\mathcal{C}$ to be a set of pairs of functions $\{ (f_L, f_U) \}$ satisfying (1) $\rho( f_L, f_U) \leq \epsilon$ and (2) for any $f \in \mathcal{C}$, there exist a pair $(f_L, f_U)$ where $f^U \geq f \geq f^L$. 
+Let $\mathcal{C}$ be a set of functions. For a given $\epsilon$ and metric $\rho$ (which we take to be $L_2$ or $L_2(P)$), we define a \textit{bracketing} of $\mathcal{C}$ to be a set of pairs of functions $\{ (f_L, f_U) \}$ satisfying (1) $\rho( f_L, f_U) \leq \epsilon$ and (2) for any $f \in \mathcal{C}$, there exist a pair $(f_L, f_U)$ where $f^U \geq f \geq f^L$. 
 
 We let $N_{[]}(\epsilon, \mathbf{C}, \rho)$ denote the size of the smallest bracketing of $\mathcal{C}$
 \end{definition}
@@ -980,7 +980,7 @@ Let $\mathcal{C}$ be the set of convex functions supported on $[-b, b]^d$ and un
 for all $\epsilon \in (0, B \epsilon_3]$.
 \end{proposition}
 
-It is trivial to extend Kim and Samworth's result to $L_2(P)$ norm for an absolutely continuous distribution $P$.
+It is trivial to extend Kim and Samworth's result to the $L_2(P)$ norm for an absolutely continuous distribution $P$.
 
 \begin{proposition}
 \label{prop:convexbracket_lp}
@@ -988,7 +988,7 @@ Let $P$ be a distribution with a density $p$. Let $\mathcal{C}, b, B, \epsilon_3
 \[
 \log N_{[]} (2\epsilon, \mathcal{C}, L_1(P)) \leq K^{**} \left( \frac{2bB}{\epsilon} \right)^{d/2}
 \]
-For all $\epsilon \in (0, B\epsilon_3]$.
+for all $\epsilon \in (0, B\epsilon_3]$.
 \end{proposition}
 
 \begin{proof}
@@ -1000,7 +1000,7 @@ Let $(f_L, f_U) \in \mathcal{C}_\epsilon$. Then we have that:
    &\leq \left( \int | f_L(x) - f_U(x) |^2 dx \right)^{1/2}
       \left( \int p(x)^2 dx \right)^{1/2} \\
   &\leq \left( \int | f_L(x) - f_U(x)|^2 dx \right)^{1/2}\\
- &\leq \| f_L - f_U \|_{L_2} \leq \epsilon
+ &\leq \| f_L - f_U \|_{L_2} \leq \epsilon.
 \end{align*}
 On the third line, we used the fact that $\int p(x)^2 dx \leq \left( \int p(x) dx \right)^2 \leq 1$.
 \end{proof}
@@ -1014,7 +1014,7 @@ Let $P$ be a distribution with a density $p$ upper bounded by $c_u$. Let $b, B, 
 \log N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P)) \leq s K^{**} 
     \left( \frac{2sbB}{\epsilon} \right)^{1/2}
 \]
-For all $\epsilon \in (0, s B \epsilon_3]$.
+for all $\epsilon \in (0, s B \epsilon_3]$.
 \end{corollary}
 
 \begin{proof}
@@ -1024,36 +1024,35 @@ It is clear that $f_U \geq f \geq f_L$. It is also clear that $\| f_U - f_L \|_{
 \end{proof}
 
 
-The following result follows from Corollary~\ref{prop:convexbracket_lp} directly by an union bound. 
+The following result follows from Corollary~\ref{prop:convexbracket_lp} directly by a union bound. 
 
 \begin{corollary}
 \label{cor:convexbracket_ln}
 Let $X_1,...,X_n$ be random samples from a distribution $P$. Let $1 > \delta > 0$. Let $\mathcal{C}^s_\epsilon$ be an $\epsilon$-bracketing of $\mathcal{C}^s$ with respect to the $L_1(P)$-norm whose size is at most $N_{[]}( 2\epsilon, \mathcal{C}^s, L_1(P))$. Let $\epsilon \in (0, s B \epsilon_3]$.
 
 Then, with probability at least $1-\delta$, for all pairs $(f_L, f_U) \in \mathcal{C}^s_\epsilon$, we have that
-
 \begin{align*}
 \frac{1}{n} \sum_{i=1}^n |f_L(X_i) - f_U(X_i)| &\leq \epsilon + \epsilon_{n, \delta}
 \end{align*}
-
 where 
-$\epsilon_{n,\delta} \equiv 
+$$\epsilon_{n,\delta} \equiv 
 sB \sqrt{ \frac{ \log N_{[]}(2\epsilon, \mathcal{C}^s, L_2(P)) + \log \frac{1}{\delta}}{2n}} 
-= \sqrt{ \frac{ sK^{**}(sBb)^{1/2}}{2\epsilon^{1/2}n} + \frac{1}{2n} \log \frac{1}{\delta}}$
+= \sqrt{ \frac{ sK^{**}(sBb)^{1/2}}{2\epsilon^{1/2}n} + \frac{1}{2n} \log \frac{1}{\delta}}.$$
 \end{corollary}
 
 \begin{proof}
-$|f_L(X_i) - f_U(X_i)|$ is at most $sB$. There are $N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P))$ pairs $(f_L, f_U)$. The inequality follows from a direct application of union bound and Hoeffding Inequality.
+Noting that $|f_L(X_i) - f_U(X_i)|$ is at most $sB$ and there are
+$N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P))$ pairs $(f_L, f_U)$, the
+inequality follows from a direct application of a union bound and Hoeffding's Inequality.
 \end{proof}
 
 To make the expression in this corollary easier to work with, we derive an upper bound for $\epsilon_{n, \delta}$. Suppose 
 \begin{align}
-\epsilon^{1/2} \leq 2sK^{**} (sBb)^{1/2} \quad \trm{and} \quad \log \frac{1}{\delta} \geq 2. \label{cond:simplify_covering_number}
+\epsilon^{1/2} \leq 2sK^{**} (sBb)^{1/2} \quad \trm{and} \quad \log \frac{1}{\delta} \geq 2 \label{cond:simplify_covering_number}.
 \end{align}
-
 Then we have that
 \begin{align*}
-\epsilon_n \leq sB \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{1}{\delta}}{\epsilon^{1/2}n}}
+\epsilon_n \leq sB \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{1}{\delta}}{\epsilon^{1/2}n}}.
 \end{align*}
 
 \section{Gaussian Example}
@@ -1072,35 +1071,29 @@ Then, we have that
 f^*_1(x_1) &= \left( \frac{T_1 - T_2 \alpha^2}{1 - \alpha^4} \right) x_1^2 + c_1 \\
 f^*_2(x_2) &= \left( \frac{T_2 - T_1\alpha^2}{1 - \alpha^4} \right) x_2^2 + c_2
 \end{align*}
-Where $T_1 = H_{11} + 2H_{12} \alpha + H_{22} \alpha^2$ and $T_2 = H_{22} + 2H_{12} \alpha + H_{11} \alpha^2$ and $c_1,c_2$ are constants such that $\E[f_1^*(X_1)] = \E[f_2^*(X_2)] = 0$.
-
+where $T_1 = H_{11} + 2H_{12} \alpha + H_{22} \alpha^2$ and $T_2 = H_{22} + 2H_{12} \alpha + H_{11} \alpha^2$ and $c_1,c_2$ are constants such that $\E[f_1^*(X_1)] = \E[f_2^*(X_2)] = 0$.
 \end{proposition}
 
 \begin{proof}
 By Lemma~\ref{lem:general_int_reduction}, we need only verify that $f^*_1, f^*_2$ satisfy
 \begin{align*}
 f^*_1(x_1) &= \E[ f(X) - f_2^*(X_2) \given x_1] \\
-f^*_2(x_2) &= \E[ f(X) - f_1^*(X_1) \given x_2 ] 
+f^*_2(x_2) &= \E[ f(X) - f_1^*(X_1) \given x_2 ] .
 \end{align*}
-
-
 Let us guess that $f^*_1, f^*_2$ are quadratic forms $f^*_1(x_1) = a_1 x_1^2 + c_1$, $f^*_2(x_2) = a_2 x_2^2 + c_2$ and verify that there exist $a_1, a_2$ to satisfy the above equations. Since we are not interested in constants, we define $\simeq$ to be equality up to a constant. 
-
 Then, 
 \begin{align*}
 &\E[ f(X) - f_2^*(X_2) \given x_1]\\
 & \simeq \E[ H_{11} X_1^2 + 2H_{12}X_1 X_2 + H_{22}X_2^2 - a_2 X_2^2 \given x_1 ] \\ 
     &\simeq H_{11} x_1^2 + 2 H_{12} x_1 \E[X_2 \given x_1] + H_{22} \E[X_2^2 \given x_1] - a_2\E[X_2^2 \given x_1] \\
    &\simeq H_{11} x_1^2 + 2H_{12} \alpha x_1^2 + H_{22} \alpha^2 x_1^2 - a_2 \alpha^2 x_1^2\\
-   &\simeq (H_{11} + 2 H_{12} \alpha + H_{22} \alpha^2 - a_2 \alpha^2) x_1^2
+   &\simeq (H_{11} + 2 H_{12} \alpha + H_{22} \alpha^2 - a_2 \alpha^2) x_1^2.
 \end{align*}
-
 Likewise, we have that
 \[
-\E[ f(X) - f_1^2(X_1) \given x_2] \simeq (H_{22} + 2H_{12}\alpha + H_{22}\alpha^2 - a_1 \alpha^2) x_2^2
+\E[ f(X) - f_1^2(X_1) \given x_2] \simeq (H_{22} + 2H_{12}\alpha + H_{22}\alpha^2 - a_1 \alpha^2) x_2^2.
 \]
-
-Thus, $a_1, a_2$ need only satisfy the linear system:
+Thus, $a_1, a_2$ need only satisfy the linear system
 \begin{align*}
 T_1 - a_2 \alpha^2 &= a_1 \\
 T_2 - a_1 \alpha^2 &= a_2 
