@@ -1,0 +1,81 @@
+\documentclass[12pt,pdftex,aos,noinfoline,addressasfootnote]{imsart}
+%\documentclass[12pt,pdftex,generic,noinfoline]{imsart}
+
+\RequirePackage[OT1]{fontenc}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb}
+\RequirePackage{hypernat}
+\usepackage[ruled,section]{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{graphicx}
+\usepackage[hscale=0.7,vscale=0.8]{geometry}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{yhmath}
+
+
+
+\renewcommand{\baselinestretch}{1.05}
+%\parskip12pt
+%\parindent0pt
+\setcounter{tocdepth}{2}
+
+\input{macros}
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Faithful Variable Screening for\\ High-Dimensional Convex Regression}
+\runtitle{Faithful Variable Screening for Convex Regression}
+
+\begin{aug}
+\vskip10pt
+\author{\fnms{Min} \snm{Xu}\ead[label=e1]{minx@cs.cmu.edu}}
+\comma 
+\author{\fnms{Minhua} \snm{Chen}\ead[label=e2]{minhua@galton.uchicago.edu}}
+\and
+\author{\fnms{John}
+  \snm{Lafferty}\ead[label=e3]{lafferty@galton.uchicago.edu}}
+\address{Machine Learning Department, Carnegie Mellon University,
+  Pittsburgh PA 15213}
+\address{Department of Statistics, University of Chicago, Chicago IL 60637}
+\end{aug}
+
+\input{abstract} 
+%\tableofcontents
+\vskip20pt
+\end{frontmatter}
+
+\maketitle
+\vskip10pt
+
+%\tableofcontents
+
+\input{introduction}
+\input{summary}
+\input{additive_faithful}
+\input{estimation}
+\input{optimization}
+\input{sparsistency}
+\input{experiments}
+\input{discussion}
+%\newpage
+%\input{notes}
+
+
+\section*{Acknowledgements}
+Research supported in part by NSF grants IIS-1116730, 
+AFOSR grant FA9550-09-1-0373, ONR grant
+N000141210762, and an Amazon AWS in Education Machine Learning
+Research grant.
+
+
+\bibliographystyle{imsart-nameyear}
+\bibliography{local}
+
+\clearpage
+\input{supplement}
+
+
+
+\end{document}
