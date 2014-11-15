@@ -6,15 +6,17 @@
  \label{sec:deterministic_proof}
  
 We restate Theorem~\ref{thm:deterministic} first for convenience. 
-The following holds regardless of whether we impose the Lipschitz condition in optimization~\ref{opt:alternate_opt} and optimization~\ref{opt:alternate_opt_concave}.
-
+The following holds regardless of whether we impose the $B$-boundedness condition (see discussion at beginning of Section~\ref{sec:finitesample} for definition of the $B$-boundedness condition).
  
 \begin{theorem} 
 Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. 
 Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. 
 
-Suppose for all $k\in S^c$ and for all $i=1,...,n$, $\lambda_n > | \frac{1}{2n}
-\hat{r}^\tran \mathbf{1}_{(i:n)}|$ where $\mathbf{1}_{(i:n)}$ is 1 on the coordinates of the $i$-th largest to the $n$-th largest entries of $X_k$ and 0 elsewhere.
+
+Let $\pi_k(i)$ be an reordering of $X_k$ in ascending order so that $X_{k \pi_k(n)}$ is the largest entry. Let $\mathbf{1}_{\pi_k(i:n)}$ be 1 on the coordinates $\pi_k(i),\pi_k(i+1),...,\pi_k(n)$ and 0 elsewhere. 
+
+Suppose for all $k\in S^c$ and for all $i=1,...,n$, $\lambda_n \geq (X_{k\pi_k(n)} - X_{k\pi_k(1)})| \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$ and that $\max_{i=1,...,n-1} \frac{X_{k\pi_k(i+1)} - X_{k\pi_k(i)}}{X_{k\pi_k(n)} - X_{k\pi_k(1)}} \geq \frac{1}{16}$.
+
 Then the following are true:
 \begin{enumerate}
 \item Let $\hat{d}_k = 0$ for $k \in S^c$, then \{$\hat{d}_k\}_{k=1,...,p}$ is an optimal solution to optimization~\ref{opt:alternate_opt}. Furthermore, any solution to the optimization program \ref{opt:alternate_opt} must be zero on $S^c$.
@@ -24,8 +26,7 @@ Then the following are true:
 
 
 \begin{proof} 
-We will omit the Lipschitz constraint in our proof here. It can be
-added in and easily verified that the result of the theorem still holds.
+We will omit the $B$-boundedness constraint in our proof here. It is easy to verify that the result of the theorem still holds with the constraint added in.
 
 We begin by considering the first item in the conclusion of the theorem.
 We will show that with $\{\hat{d}_k\}_{k=1,..,p}$ as constructed, we
@@ -54,47 +55,137 @@ The Lagrangian form of the optimization, in terms of just $d_k$, is
    + \lambda \| \bar{\Delta}_k d_k\|_\infty
   - \sum_{i=2}^{n-1} \nu_{ki} d_{ki}
 \]
-with the constraint that $v_i \geq 0$ for all $i$. 
+with the constraint that $v_{ki} \geq 0$ for $i=2,...,n-1$. 
 
 The derivative of the Lagrangian is
 \begin{align*}
 \partial_{d_k} \mathcal{L}(d_k) =  -\frac{1}{n} \bar{\Delta}_k^\tran ( Y - \sum_{k'\in S} \bar{\Delta}_{k'} d_{k'}  - \bar{\Delta}_k d_k )
         + \lambda \bar{\Delta}_k^\tran \mathbf{u}
-      - \nu_k
+      - \left( \begin{array}{c} 0 \\ \nu_k \end{array} \right)
 \end{align*}
-where $\mathbf{u}$ is the subgradient of $\| \bar{\Delta}_k d_k \|_\infty$, an $n$-vector such that $\| \mathbf{u}_T \|_1 = 1$ where $T = \{ i \,:\,  (\bar{\Delta}_k d_k)_i = \| \bar{\Delta}_k d_k \|_\infty \}$.
+where $\mathbf{u}$ is the subgradient of $\| \bar{\Delta}_k d_k \|_\infty$. If $\bar{\Delta}_k d_k = 0$, then $\mathbf{u}$ can be any vector whose $L_1$ norm is less than or equal to $1$. $\nu_k \geq 0$ is a vector of Lagrangian multipliers. $\nu_{k1}$ does not exist because $d_{k1}$ is not constrained to be non-negative.
 
-We now substitute in $d_{k'} = \hat{d}_{k'}$ for $k' \in S$, $d_k = 0$ for $k \in S$, and $r = \hat{r}$ and show that the duals can be set in a way to ensure that the derivatives are equal to zero,
+We now substitute in $d_{k'} = \hat{d}_{k'}$ for $k' \in S$, $d_k = 0$ for $k \in S$, and $r = \hat{r}$ and show that the $\mathbf{u}, \nu_k$ dual variables can be set in a way to ensure that stationarity:
 \begin{align*}
 \partial_{d_k} \mathcal{L}(\hat{d}_k) = -\frac{1}{n} \bar{\Delta}_k^\tran\hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u}
-           - \nu_k = 0 
+           - \left( \begin{array}{c} 0 \\ \nu_k \end{array} \right) = 0 
 \end{align*}
-where $\| \mathbf{u} \| \leq 1$ and $\nu_k \geq 0$. It clear that to show stationarity, we only need to show that $-\frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u} \geq 0$ where the inequality is element-wise.
+where $\| \mathbf{u} \| \leq 1$ and $\nu_k \geq 0$. It clear that to show stationarity, we only need to show that $[-\frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u}]_j = 0$ for $j=1$ and $\geq 0$ for $j=2,...,n-1$.
 
-Let us reorder the samples so that the $i$-th sample is the $i$-th smallest sample. 
-We will construct $\gamma = 0$, and $\mathbf{u} = (-a, 0, ..., a)$ for
-some $0 < a < 1/2$, where the coordinates of $\mathbf{u}$ correspond
+To ease notational burden, let us reorder the samples in ascending order so that the $i$-th sample is the $i$-th smallest sample. We will from here on write $X_{ki}$ to denote $X_{k \pi_k(i)}$.
+
+Define $i^*$ as the largest index such that $\frac{X_{kn} - X_{ki^*}}{X_{kn} - X_{k1}} \geq 1/2$. 
+We will construct $\mathbf{u} = (a - a', 0, ..., -a, 0,..., a')$ where
+$a,a'$ are positive scalars, where $-a$ lies at the $i^*$-th coordinate, and where the coordinates of $\mathbf{u}$ correspond
 to the new sample ordering. 
-We then just need to show that
+
+We define
+
 \begin{align*}
-- \frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u} &\geq 0 \quad \Leftrightarrow \\
-- \frac{1}{n} \Delta_k^\tran \hat{r} + \lambda \Delta_k^\tran \mathbf{u} &\geq 0 \quad \Leftrightarrow\\
-- \frac{1}{n} \sum_{i > j} (X_{ki} - X_{kj}) \hat{r}_i + \lambda (X_{kn} - X_{kj})a &\geq 0 \quad 
-   \textrm{for each } j \\
-- \frac{1}{n} \sum_{i > j} \sum_{j < i' \leq i} \mathsf{gap}_{i'} \hat{r}_i 
-    + \lambda (X_{kn} - X_{kj})a &\geq 0 \\
-- \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \sum_{i \geq i'} \hat{r}_i 
-    + \lambda (X_{kn} - X_{kj})a &\geq 0 \\
-- \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{(i':n)}^\tran \hat{r} 
-   + \lambda (X_{kn} - X_{kj})a &\geq 0 
+\kappa &= \frac{1}{\lambda n} \big[ \Delta_k^\tran \hat{r} \big]_1 \\
+a' &= \frac{X_{kn} - X_{k1}}{X_{kn} -  X_{ki^*}} \kappa + 
+     \frac{X_{ki^*}-X_{k1}}{X_{kn} - X_{k i^*}} \frac{1}{8} \\
+a &= \frac{X_{kn} - X_{k1}}{X_{kn} -  X_{ki^*}} \kappa + 
+     \frac{X_{kn}-X_{k1}}{X_{kn} - X_{ki^*}} \frac{1}{8} \\
 \end{align*}
-where $\mathsf{gap}_i = X_{ki} - X_{k,i-1}$. If $\frac{1}{2n} |\mathbf{1}_{(i:n)}^\tran \hat{r}| \leq \lambda a$ for all $i=1,...,n$, then we have that
+
+and we verify two facts: first that the KKT stationarity is satisfied and second, that $\| \mathbf{u} \|_1 < 1$ with high probability. Our claim is proved immediately by combining these two facts.
+
+Because $\hat{r}$ and $\mathbf{u}$ are both centered vectors, $\bar{\Delta}_k^\tran \hat{r} = \Delta_k^\tran \hat{r}$ and likewise for $\mathbf{u}$. Therefore, we need only show that for $j=1$, $\lambda \big[ \Delta_k^\tran \mathbf{u} \big]_j = \big[ \frac{1}{n} \Delta_k^\tran \hat{r} \big]_j$ and that for $j = 2,..., n-1$, $\lambda \big[ \Delta_k^\tran \mathbf{u} \big]_j \geq \big[ \frac{1}{n} \Delta_k^\tran \hat{r} \big]_j$.
+
+With our explicitly defined form of $\mathbf{u}$, we can characterize
+\begin{align}
+\big[ \Delta_k^\tran \mathbf{u} \big]_j = 
+  \left \{ \begin{array}{cc} 
+   (-a + a')(X_{k i^*} - X_{kj})+ a'(X_{kn} - X_{k i^*})
+   & \trm{ if } j \leq i^* \\
+   a'(X_{kn} - X_{kj}) & \trm{ if } j \geq i^* 
+     \end{array} \right.
+\end{align} 
+
+It is straightforward to check that $\big[ \lambda \Delta_k^\tran \mathbf{u} \big]_1 = \lambda \kappa = \frac{1}{n} \big[ \Delta_k^\tran \hat{r} \big]_1$.
+
+To check that other rows of stationarity condition holds, we characterize $[\frac{1}{n} \Delta_k^\tran \hat{r}]_j$:
 \begin{align*}
-- \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran \hat{r}
-   + \lambda (X_{kn} - X_{kj})a &\geq 0 \quad \Leftrightarrow \\
-- \sum_{i' > j} \mathsf{gap}_{i'} \lambda a + \lambda (X_{kn} - X_{kj}) a &\geq 0\\
-- (X_{kn} - X_{kj}) \lambda a + \lambda (X_{kn} - X_{kj}) a &\geq 0.
+[\frac{1}{n} \Delta_k^\tran \hat{r}]_j &= \frac{1}{n} \sum_{i > j} (X_{ki} - X_{kj}) \hat{r}_i \\
+  & = \frac{1}{n} \sum_{i > j} \sum_{j < i' \leq i} \mathsf{gap}_{i'} \hat{r}_i \\
+ & = \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \sum_{i \geq i'} \hat{r}_i \\
+ & = \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran \hat{r} 
 \end{align*}
+where we denote $\mathsf{gap}_{i'} = X_{ki'} - X_{k(i'-1)}$.
+
+We pause for a second here to give a summary of our proof strategy. We leverage two critical observations: first, any two adjacent terms in the sequence $\frac{1}{n} \Delta_k^\tran \hat{r}$ cannot differ by too much. Second, we defined $a, a'$ such that $-a+a' = -\frac{1}{8}$ so that $\lambda \Delta_k^\tran \mathbf{u}$ is a sequence that strictly increases in the first half (for coordinates in $\{1,...,i^*\}$) and strictly decreases in the second half. 
+
+We know $\frac{1}{n} \Delta_k^\tran \hat{r}$ and $\lambda \Delta_k^\tran \mathbf{u}$ are equal in the first coordinate. We will show that the second sequence increases faster than the first sequence which will imply that the second sequence is larger than the first in the first half of the coordinates. We will then work similarly but backwards for the second half. 
+
+
+Following our strategy, We first compare $[\lambda \Delta_k^\tran \mathbf{u}]_j$ and $[\frac{1}{n} \Delta_k^\tran \hat{r}]_j$ for $j=1,..., i^*-1$.
+
+For $j = 1,..., i^*-1$, we have that
+\begin{align*}
+\lambda [ \Delta_k^\tran \mathbf{u}]_{j+1} - \lambda [ \Delta_k^\tran \mathbf{u}]_{j} &= \lambda (a - a') \mathsf{gap}_{j+1} \\
+ &\geq -\mathsf{gap}_{j+1} \frac{1}{n} \mathbf{1}_{(j+1):n}^\tran \hat{r} \\
+& = [ \frac{1}{n} \Delta_k^\tran \hat{r} ]_{j+1} - [ \frac{1}{n} \Delta_k^\tran \hat{r} ]_{j}
+\end{align*}
+
+The inequality follows because $a - a' = \frac{1}{8}$ and thus $\lambda (a - a') \geq \left| \frac{1}{n} \mathbf{1}_{(j+1):n}^\tran \hat{r} \right|$. Therefore, for all $j = 1,...,i^*$:
+\begin{align*}
+[ \lambda \Delta_k^\tran \mathbf{u}]_j &\geq [ \frac{1}{n} \Delta_k^\tran \hat{r} ]_j
+\end{align*}
+
+For $j \geq i^*$, we start our comparison from $j=n-1$. First, we claim that $a' > \frac{1}{32}$. To prove this claim, note that
+\begin{align}
+|\kappa| &= \Big|\frac{1}{\lambda n} \sum_{i' > 1} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran \hat{r}\Big| \leq \frac{1}{X_{kn} - X_{k1}}\frac{1}{32} \sum_{i' > 1} \mathsf{gap}_{i'} 
+ = \frac{1}{32} 
+\end{align}
+and that
+\begin{align*}
+\frac{X_{kn} - X_{ki^*}}{X_{kn} - X_{k1}} &= \frac{X_{kn} - X_{k(i^*+1)} + X_{k(i^*+1)} - X_{ki^*}}{X_{kn} - X_{k1}} \leq \frac{1}{2} + \frac{1}{16}
+\end{align*}
+where the inequality follows because we had assumed that $\frac{X_{k(i+1)} - X_{ki}}{X_{k(n)} - X_{k(1)}} \leq \frac{1}{16}$ for all $i = 1,...,n-1$.
+
+So, we have 
+\begin{align*}
+a' &= \frac{X_{kn} - X_{k1}}{X_{kn} - X_{ki^*}} \kappa 
+   + \frac{ X_{ki^*} - X_{k1}}{X_{kn} - X_{ki^*}} \frac{1}{8} \\
+ &= \frac{X_{kn} - X_{k1}}{X_{kn} - X_{ki^*}} \left(
+  \kappa + \frac{X_{ki^*} - X_{k1}}{X_{kn} - X_{k1}} \frac{1}{8} \right) \\
+&\geq \frac{X_{kn} - X_{k1}}{X_{kn} - X_{ki^*}} \left(
+  -\frac{1}{32} + (\frac{1}{2} - \frac{1}{16}) \frac{1}{8} \right) \\
+&\geq \frac{1}{1/2 + 1/16} \left(
+  -\frac{1}{32} + (\frac{1}{2} - \frac{1}{16}) \frac{1}{8} \right) \\
+&\geq \frac{1}{32}
+\end{align*}
+In the first inequality of the above derivation, we used the fact that $\frac{X_{ki^*} - X_{k1}}{X_{kn} - X_{k1}} \leq \frac{1}{2} - \frac{1}{16}$. In the second inequality, we used the fact that the quantity inside the parentheses is positive and $\frac{X_{kn} - X_{k1}}{X_{kn} - X_{ki^*}} \geq \frac{1}{1/2 + 1/16}$.
+
+Now consider $j=n-1$. 
+\[
+[ \frac{1}{n} \Delta_k^\tran \hat{r} ]_{n-1} = \frac{1}{n} \mathsf{gap}_n \hat{r}_n 
+ \leq \mathsf{gap}_n \frac{\lambda }{32} \leq \lambda \mathsf{gap}_n a' = \lambda [\Delta_k^\tran \mathbf{u}]_{n-1} 
+\]
+
+For $j = i^*, ..., n-2$, we have that 
+\begin{align*}
+\lambda [\Delta_k^\tran \mathbf{u} ]_j - \lambda [\Delta_k^\tran \mathbf{u}]_{j+1} &= 
+ \lambda a' \mathsf{gap}_{j+1}  \\
+ &\geq \mathsf{gap}_{j+1} \frac{1}{n} \mathbf{1}_{(j+1):n}^\tran \hat{r}  \\
+ &\geq  [\frac{1}{n} \Delta_k^\tran \hat{r}]_j - [\frac{1}{n} \Delta_k^\tran \hat{r}]_{j+1}
+\end{align*}
+
+Therefore, for $j = i^*,...,n-2$,
+\begin{align*}
+\lambda [\Delta_k^\tran \mathbf{u}]_j \geq \frac{1}{n} [ \Delta_k^\tran \hat{r}]_j
+\end{align*}
+
+We conclude then that $\lambda [\Delta_k^\tran \mathbf{u} ]_j \geq [\frac{1}{n} \Delta_k^\tran \hat{r}]_j$ for all $j = 2,...,n-1$. 
+
+We have thus verified that the stationarity equations hold and now will bound $\| \mathbf{u} \|_1$.
+
+\begin{align*}
+\| \mathbf{u} \|_1 = | a - a'| + a + a' \leq \frac{1}{8} + 2 a \leq \frac{1}{8} + 4 |\kappa| + \frac{1}{2}  \leq \frac{1}{8} + \frac{1}{8} + \frac{1}{2} < 1
+\end{align*}
+In the third inequality, we used the fact that $|\kappa| \leq \frac{1}{32}$.
+
 We have thus proven that there exists one solution $\{ \hat{d}_k
 \}_{k=1,...,p}$ such that $\hat{d}_k = 0$ for all $k \in
 S^c$. Furthermore, we have shown that the subgradient variables
@@ -163,6 +254,7 @@ The Lagrangian of optimization~\ref{opt:alternate_opt_concave} is
   \frac{1}{2n} \big\| \hat{r} - \bar{\Delta}_k d_k \big \|_2^2 + 
   \lambda \| \bar{\Delta}_k d_k \|_\infty + \sum_{k=1}^p \sum_{i=2}^{n-1} \nu_{ki} d_{ki}.
 \]
+with $\nu_{ki} \geq 0$.
 The same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT conditions sufficient for optimality.
 \end{proof}
  
@@ -178,19 +270,21 @@ The same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT conditions
 We first restate the theorem for convenience. 
 
 \begin{theorem} 
-Suppose assumptions A1-A4 hold. Suppose $\sqrt{\log 2np} \geq 1$, and define $\tilde{\sigma} \equiv \max(\sigma, B)$.
+Suppose assumptions A1-A4 hold. Suppose $\sqrt{\log 2np} \geq 1$, and define $\tilde{\sigma} \equiv \max(\sigma, B)$. Suppose that $p \leq O\exp( c'' n)$ for some $c'' > 0$ and that $n \geq C''$ for some constant $C''$ possibly dependent on $b$. 
 
-If $\lambda_n \geq 8 s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$ then, with probability at least $ 1 - \frac{12}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$
-\[
-\lambda_n > \Big| \frac{1}{2n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big|.
-\]
+If $\lambda_n \geq (8 \cdot 32) 2 b s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$ then, with probability at least $ 1 - \frac{24}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$
+\begin{align*}
+& \lambda_n > (X_{k\pi_k(n)} - X_{k\pi_k(1)}) \Big| \frac{32}{n}\hat{r}^\tran \mathbf{1}_{\pi_k(i':n)} \Big|  
+\end{align*}
+and for all $k \in S^c$ and $i' = 1, ..., n-1$, $\frac{X_{k\pi_k(i'+1)} - X_{k \pi_k(i')}}{X_{k\pi_k(n)} - X_{k\pi_k(1)}} \leq \frac{1}{16}$.
+
 Therefore, for all $k \in S^c$, both the AC solution $\hat{f}_k$ from optimization~\ref{opt:alternate_opt}, and the DC solution $\hat{g}_k$ from optimization~\ref{opt:alternate_opt_concave} are zero. 
 \end{theorem}
 
 \begin{proof}
 The key is to note that $\hat{r}$ and $\Delta_{k,j}$ are independent for all $k \in S^c,j=1,...,n$ because $\hat{r}$ is only dependent on $X_{S}$.
 
-Fix $j$ and $i$. Then $\hat{r}^\tran \mathbf{1}_{(i':n)_k}$ is the sum
+Fix $j$ and $i$. Then $\hat{r}^\tran \mathbf{1}_{\pi_k(i':n)}$ is the sum
 of $n-i'+1$ random coordinates of $\hat{r}$. We will use
 Serfling's theorem on the concentration of measure of sampling without
 replacement (Corollary~\ref{cor:serfling}). We must first bound $\|
@@ -240,7 +334,7 @@ with probability at least $1-\delta$.
 For any $k \in S^c$, Serfling's theorem states that with probability at least $1 - \delta$
 \begin{align*}
 \Big
-|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)_k}\Big| \leq
+|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i':n)}\Big| \leq
    2\| \hat{r} \|_\infty \sqrt{ \frac{1}{n} \log \frac{2}{\delta}} + 
    \Big|\frac{1}{n} \hat{r}^\tran \mathbf{1} \Big|
 \end{align*}
@@ -250,7 +344,7 @@ We need Serfling's theorem to hold for all $k = 1,...,p$ and $i' =
 union bound, with probability at least $1-\delta$, for all $k,i'$,
 \begin{align*}
 \Big
-|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{(i':n)_k}\Big| &\leq
+|\frac{1}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i':n)}\Big| &\leq
    2\| \hat{r} \|_\infty \sqrt{ \frac{1}{n} \log \frac{6np}{\delta}} + 
    \Big|\frac{1}{n} \hat{r}^\tran \mathbf{1} \Big|\\
   &\leq 4s\tilde{\sigma}\sqrt{\log \frac{6n}{\delta}} \sqrt{\frac{1}{n}\log \frac{6np}{\delta}} + 4 s \tilde{\sigma} \sqrt{\frac{1}{n}\log \frac{12}{\delta}} \\
@@ -260,6 +354,28 @@ In the second inequality, we used equation~\eqref{eqn:stepone_rhat}
 and equation~\eqref{eqn:steptwo_rhat} from steps 1 and 2
 respectively. Setting $\delta = \frac{12}{n}$ gives the desired
 result.
+
+Finally, we note that $2b \geq (X_{k\pi_k(n)} - X_{k\pi_k(1)})$ by definition. This concludes the proof for the first part of the theorem. 
+
+To prove the second claim, let the interval $[-b, b]$ be divided into $64$ non-overlapping segments each of length $b/32$. Because $X_k$ is drawn from a continuous density, the density has a lower bound $c_l > 0$ and the probability that every segment contains some samples $X_{ki}$'s is at least $1-64 \left( 1 - \frac{b}{32} c_l \right)^n$. Let $\mathcal{E}_k$ denote the event that every segment contains some samples. 
+
+Define $\mathsf{gap}_i = X_{k \pi_k(i+1)} - X_{k \pi_k(i)}$ where $\mathsf{gap}_0 = X_{k \pi_k(1)} - (-b)$ and $\mathsf{gap}_{n} = b - X_{k\pi_k(n)}$. 
+
+If any $\mathsf{gap}_i \geq \frac{b}{16}$, then $\mathsf{gap}_i$ has to contain one of the segments. Therefore, under event $\mathcal{E}_k$, it must be that $\mathsf{gap}_i \leq \frac{b}{16}$ for all $i$.
+
+Thus, we have that, for all $i$:
+
+\[
+\frac{X_{k\pi_k(i+1)} - X_{k \pi_k(i)}}{X_{k\pi_k(n)} - X_{k \pi_k(1)}} \geq 
+\frac{ b/16 }{ 2b - b/8} \geq 1/16
+\]
+
+Taking an union bound for each $k \in S^c$, the probability of that all $\mathcal{E}_k$ hold is at least $1 - p 64 \left( 1 - \frac{b}{32} c_l \right)^n$.
+
+$64 \left( 1 - \frac{b}{32} c_l \right)^n = C' p \exp( - c' n)$ for some positive constants $c', C'$ dependent on $b, c_l$. Therefore, if $p \leq exp( c'' n)$ for some $c'' < c'$ and if $n$ is large enough, $C' p \exp( - c' n) \leq C' \exp( - (c' - c'') n) \leq \frac{12}{n}$.
+
+Taking an union bound with the event that $\lambda_n$ upper bounds the partial sums of $\hat{r}$ and we establish the claim. 
+
 \end{proof}
 
  
@@ -343,13 +459,13 @@ $\trm{err}_-(n)$ respectively.
 Let $\tilde{\sigma} \equiv \max(\sigma, B)$, and let $\hat{f}$ be the
 minimizer of the restricted regression with $\lambda \leq 9 s
 \tilde{\sigma} \sqrt{ \frac{1}{n} \log^2 np}$.
-Suppose $n \geq c_1 \max(\sqrt{sB}, B)$.
+Suppose $n \geq c_1 s \sqrt{sB}$.
 Then with probability at least $1-\frac{C}{n}$,
 \begin{align}
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
 &\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np},
 \end{align}
-where $c, C$ are constants, possibly dependent on $c_1, b$.
+where $c_1$ is an absolute constant and $c, C$ are constants possibly dependent on $b$.
 \end{theorem}
 
 
@@ -461,22 +577,20 @@ Putting this together, we have that
    2\sigma\sqrt{2 \log \frac{2n}{\delta}} \epsilon + sB \sigma \sqrt{2 \frac{sK^{**} (2sbB)^{1/2}\log \frac{1}{\delta}}{n \epsilon^{1/2}} \log \frac{2n}{\delta}} \\
    &\leq 2\sigma\sqrt{2\log \frac{2n}{\delta}} \epsilon + 2 sB \sigma \sqrt{ \frac{sK^{**} (2sbB)^{1/2} \log^2 \frac{2n}{\delta}}{n \epsilon^{1/2}}}.
 \end{align*}
-We require that $n$ is large enough so that $\epsilon \in (0, sB
-\epsilon_3]$, and to ensure that
-conditions~\eqref{cond:simplify_covering_number} hold, we need that
-$\log n \geq 2$ and $n \geq c B$ where $c$ is a constant dependent
-only on $K^{**}$ and $b$.
-The conditions are satisfied if we set $\epsilon = sB \sqrt{ \frac{(s
-    K^{**} (sBb)^{1/2})^{4/5}}{n^{4/5}} }$ and assume 
-$n \geq c_1 \max( \sqrt{sB}, B)$, as stated in the theorem. 
-%% ?? Setting $\epsilon$ in this way thus also balances the two terms.
+To balance the two terms, we set $\epsilon = sB \sqrt{ \frac{(s
+    K^{**} (sBb)^{1/2})^{4/5}}{n^{4/5}} }$. It is easy to verify that
+if $n \geq c_1 s \sqrt{sB}$ for some absolute constant $c_1$, then 
+$\epsilon \in (0, sB \epsilon_3]$ for some absolute constant $\epsilon_3$ as required by the bracketing number results (Corollary~\ref{cor:convexadditive_lp}). Furthermore, conditions~\eqref{cond:simplify_covering_number} also hold. 
+
 
 In summary, we have that probability at least $1-\delta$,
 \[
 |\sup_{h \in \mathcal{G}} \langle w, h \rangle | \leq c sB \sigma \sqrt{ 
-   \frac{s b^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
+   \frac{s^{6/5} B^{2/5} \log^2 \frac{Cn}{\delta}}{n^{4/5}}} \leq 
+  c sB \sigma \sqrt{ 
+   \frac{s (sB)^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
 \]
-where we absorbed $K^{**}$ into the constant $c$ and the union bound multipliers into the constant $C$.
+where we absorbed $b, K^{**}$ into the constant $c$ and the union bound multipliers into the constant $C$.
 % Then, $\| h \|_n \leq \| h \|_\infty \leq 4sLb$ for all $h \in \mathcal{G}$.\\
 % According to theorem~\ref{thm:chaining}, for all $\epsilon > \frac{1}{\sqrt{n}}\sigma c \int_0^R \sqrt{ \log N_2(t, \mathcal{G}) }dt \vee R$,
 % \[
@@ -513,14 +627,14 @@ we get that, with probability at least $1 - 2\delta$,
 \begin{align}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
    &\leq c sB \sigma \sqrt{ 
-   \frac{s b^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
+   \frac{s (sB)^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
    + \lambda 2 s B + c (sB)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
    &\leq c sB \sigma \sqrt{ 
-   \frac{s b^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
+   \frac{s (sB)^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
    + \lambda 2 s B \nonumber\\   
    &\leq c B \sigma 
-    \sqrt{ \frac{s^3 b^{1/2}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 2 sB
+    \sqrt{ \frac{s^4 B^{1/2}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 2 sB
 \label{eqn:second_step_inequality}
 \end{align}
 
@@ -538,10 +652,10 @@ that, with probability at least $1-3\delta$,
 \begin{align}
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
    &\leq cB^2 \sigma 
-    \sqrt{ \frac{s^3 b^{2/5}}{n^{4/5}} \log^2 \frac{Cn}{\delta}}
+    \sqrt{ \frac{s^4}{n^{4/5}} \log^2 \frac{Cn}{\delta}}
  +\lambda 2 s B + c B^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
     \nonumber \\
-&\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5 b^{2/5}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 2 sB \nonumber
+&\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 2 sB \nonumber
 \end{align}
 Substituting in $\lambda \leq 9 s \tilde{\sigma} \sqrt{\frac{1}{n}
   \log^2 np}$ and $\delta = \frac{C}{n}$ we obtain the statement of
@@ -558,17 +672,16 @@ the theorem.
 \begin{theorem}
 \label{thm:concave_consistent}
 Let $\hat{g}_k$ denote the minimizer of the concave postprocessing
-step with $\lambda_n \leq 9 sB \sqrt{\frac{1}{n} \log^2 np}$. Let $\tilde{\sigma} \equiv \max(\sigma, B)$.
-Suppose $n$ is sufficiently large that $\frac{n^{4/5}}{\log^2 np} \geq B^4 \tilde{\sigma}^2 s^5$.
+step with $\lambda_n \leq 9 s\tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}$. Let $\tilde{\sigma} \equiv \max(\sigma, B)$.
+Suppose $n$ is sufficiently large that $\frac{n^{4/5}}{\log^2 np} \geq c_1 B^4 \tilde{\sigma}^2 s^5$ where $c_1 \geq 1$ is an absolute constant.
 Then with probability at least $1- \frac{C}{n}$, for all $k=1,...,s$,
 \[
-\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  c B^2 \sigma^{1/2} \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 np}.
+\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  c B^2 \tilde{\sigma}^{1/2} \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 np}.
 \]
 \end{theorem}
 
 \begin{proof}
-
-Because we fit $\hat{g}_k$ against $f_0 - \hat{f}$ instead of $f_0 - f^*$, we need the following decomposition:
+This proof is similar to that of Theorem \ref{thm:convex_consistent}; it requires a few more steps because $\hat{g}_k$ is fitted against $f_0 - \hat{f}$ instead of $f_0 - f^*$. We start with the following decomposition:
 \begin{align}
 \| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 = & \underbrace{\| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \| f_0 - \hat{f} - g^*_k \|_P^2}_{\trm{term 1}} + \nonumber \\
    & \underbrace{\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - \hat{f} - \hat{g}_k \|_P^2}_{\trm{term 2}} + \nonumber \\
@@ -576,7 +689,7 @@ Because we fit $\hat{g}_k$ against $f_0 - \hat{f}$ instead of $f_0 - f^*$, we ne
 \end{align}
 We now bound each of the terms. The proof proceeds almost identically to that of Theorem~\ref{thm:convex_consistent}, because convex and concave functions have the same bracketing number.
 
-\textbf{Step 1.} To bound term 2, we start from the definition of
+\textbf{Step 1.} To bound term 1, we start from the definition of
 $\hat{g}_k$ and obtain
 \begin{align*}
 \| y - \hat{f} - \hat{g}_k \|_n^2 + \lambda_n \| \hat{g} \|_\infty &\leq
@@ -587,18 +700,20 @@ $\hat{g}_k$ and obtain
 \| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 -\hat{f} - g^*_k\|_n^2 &\leq
    2 \langle w, \hat{g}_k - g^*_k \rangle_n + \lambda_n 2B.
 \end{align*}
-Using the same analysis as in Step 2 of the proof of Theorem~\ref{thm:convex_consistent} but setting $s=1$, we have, with probability at least $1-\delta$,
+Using the same bracketing analysis as in Step 2 of the proof of Theorem~\ref{thm:convex_consistent} but setting $s=1$, we have, with probability at least $1-\delta$,
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 - \hat{f} - g^*_k \|_n^2 &\leq
   c B^2 \sigma \sqrt{ \frac{b^{1/2}}{n^{4/5}} \log \frac{C}{\delta} }+ \lambda_n 2 B.
 \end{align*}
-Using the uniform convergence result of Lemma~\ref{lem:uniform_convergence}, with probability at least $1-\delta$,
+The condition $n \geq c_1 s\sqrt{sB}$ in the proof of Theorem~\ref{thm:convex_consistent} is satisfied here because we assume that $n^{4/5} \geq c_1 B^4 \tilde{\sigma}^2 s^5 \log^2 np$ in the statement of the theorem.
+We now integrate terms involving only $b$ into the constant $c$. Using the uniform convergence result of Lemma~\ref{lem:uniform_convergence}, with probability at least $1-\delta$,
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &\leq
   c B^2 \sigma \sqrt{ \frac{1}{n} \log \frac{Cn}{\delta} }+ \lambda_n 2 B +
   c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log \frac{2}{\delta} } \\
  &\leq c B^2 \tilde{\sigma} \sqrt{\frac{s^5}{n^{4/5}} \log \frac{C}{\delta}}+ \lambda_n 2B
 \end{align*}
+
 Finally, plugging in $\lambda_n \leq 9 s \tilde{\sigma} \sqrt{
   \frac{1}{n} \log^2 np}$, we obtain
 \begin{align*}
@@ -610,7 +725,7 @@ Finally, plugging in $\lambda_n \leq 9 s \tilde{\sigma} \sqrt{
 \end{align*}
 with probability at least $1-\delta$.
 
-\textbf{Step 2.} To bound terms 2 and 3 we derive
+\textbf{Step 2.} We now bound term 3.
 \begin{align*}
 \| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 &\leq 
     \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle_P
@@ -631,9 +746,9 @@ we used the fact that $\| \hat{f} - f^* \|^2 \leq \| f_0 - \hat{f}
 \|_P^2 - \|f_0 - f^*\|_P^2$, which follows from the fact that $f^*$ is the
 projection of $f_0$ onto the set of additive convex functions and the
 set of additive convex functions is convex itself.
-The last inequality holds due to the condition of the theorem that $n$
-is large enough so that $B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} \leq 1$.
-The same bound likewise holds for term 2.
+The last inequality holds because there is a condition in the theorem which states $n$
+is large enough such that $B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} \leq 1$.
+The same derivation and the same bound likewise holds for term 2.
 
 \textbf{Step 3.} Collecting the results and plugging them into equation~\eqref{eqn:concave_init_decomposition}, we have, with probability at least $1-2\delta$:
 \begin{align*}
@@ -663,18 +778,19 @@ Taking a union bound across the $s$ dimensions completes the result.
 
 \begin{lemma}
 \label{lem:uniform_convergence}
-With probability at least $1-\delta$:
+Suppose $n \geq c_1 s\sqrt{sB}$ for some absolute constant $c_1$. Then, with probability at least $1-\delta$:
 \begin{align*}
-\sup_{f \in \mathcal{C}^s_L} \Big| \| f_0 - f \|^2_n - \|f_0 - f \|^2_P\Big| \leq
-   c B^3 \sqrt{ \frac{s^5b^{1/2}}{n^{4/5}} \log \frac{2}{\delta}}
+\sup_{f \in \mathcal{C}^s_B} \Big| \| f_0 - f \|^2_n - \|f_0 - f \|^2_P\Big| \leq
+   c B^3 \sqrt{ \frac{s^5}{n^{4/5}} \log \frac{2}{\delta}}
 \end{align*}
+where $c_1$ is some absolute constant and $c,C$ are constants possibly dependent on $b$.
 \end{lemma}
 
 \begin{proof}
 Let $\mathcal{G}$ denote the off-centered set of convex functions, that is, $\mathcal{G} \equiv \mathcal{C}^s - f_0$. Note that if $h \in \mathcal{G}$, then $\| h \|_\infty = \| f_0 - f \|_\infty \leq 4 s B$.
 There exists an $\epsilon$-bracketing of $\mathcal{G}$, and
 %For every $h \in \mathcal{G}$, there exists $h^L$ in the bracketing such that $\| h^U - h^L \|_{L_1(P)} \leq \epsilon$. 
-by Corollary~\ref{cor:convexadditive_lp}, the bracketing has size at most $\log N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P)) \leq s K^{**}\left( \frac{2sbB}{\epsilon} \right)^{1/2}$. By Corollary~\ref{cor:convexbracket_ln}, we know that with probability at least $1-\delta$, we have that $\|h_U - h_L\|_{L_1(P_n)} \leq \epsilon + \epsilon_{n,\delta}$ for all pairs $(h_U, h_L)$ in the bracketing, where $\epsilon_{n,\delta} = sB \sqrt{ \frac{K^{**} (2sbB)^{1/2} \log \frac{2}{\delta}}{2 \epsilon^{1/2} n}}$.
+by Corollary~\ref{cor:convexadditive_lp}, the bracketing has size at most $\log N_{[]}(2\epsilon, \mathcal{C}^s, L_1(P)) \leq s K^{**}\left( \frac{2sbB}{\epsilon} \right)^{1/2}$. By Corollary~\ref{cor:convexbracket_ln}, we know that with probability at least $1-\delta$, $\|h_U - h_L\|_{L_1(P_n)} \leq \epsilon + \epsilon_{n,\delta}$ for all pairs $(h_U, h_L)$ in the bracketing, where $\epsilon_{n,\delta} = sB \sqrt{ \frac{K^{**} (2sbB)^{1/2} \log \frac{2}{\delta}}{2 \epsilon^{1/2} n}}$. Corollary~\ref{cor:convexbracket_ln} necessitates $\epsilon \in (0, sB\epsilon_3]$ for some absolute constant $\epsilon_3$; we will verify that this condition holds for large enough $n$ when we set the actual value of $\epsilon$.
 For a particular function $h \in \mathcal{G}$, we can construct $\psi_L \equiv \min( |h_U|, |h_L|)$ and $\psi_U \equiv \max( |h_U|, |h_L| )$ so that
 \[
 \psi_L^2 \leq h^2 \leq \psi_U^2.
@@ -726,12 +842,14 @@ sB\epsilon +
 (sB)^2 \sqrt{ \frac{ sK^{**} (sBb)^{1/2} \log \frac{2}{\delta}}{ \epsilon^{1/2} n} }
 \end{align*}
 
-We balance the terms by choosing $\epsilon = \left( \frac{ (sB)^2 sK^{**} (sBb)^{1/2}}{n} \right)^{2/5}$.
+We balance the terms by choosing $\epsilon = \left( \frac{ (sB)^2 sK^{**} (sBb)^{1/2}}{n} \right)^{2/5}$. One can easily verify that $\epsilon \leq sB \epsilon_3$ condition needed by Corollary~\ref{cor:convexbracket_ln} is satisfied when $n \geq c_1 s \sqrt{sB}$ for some absolute constant $c_1$.
 We have then that, with probability at least $1-\delta$,
 \begin{align*}
-\big| \| h \|_n^2 - \| h \|_P^2  \big| \leq
+\sup_{h \in \mathcal{G}} \big| \| h \|_n^2 - \| h \|_P^2  \big| \leq
   c B^3 \sqrt{ \frac{s^5 b^{1/2} \log \frac{2}{\delta}}{n^{4/5}}}
 \end{align*}
+
+We fold $b$ into the constant $c$ and the theorem follows. 
 
 %For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-bracketing of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.
 
@@ -920,7 +1038,6 @@ First, let $\delta = \frac{1}{n}$. Suppose $n$ is large enough such that $ \frac
 		&\leq 2 c \sigma^2.
  \end{align*}
 \end{proof}
-
 
 
 \subsubsection{Sampling Without Replacement}
