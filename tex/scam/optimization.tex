@@ -188,9 +188,9 @@ f_k(x_{\perm{2}k}) \\
 f_k(x_{\perm{n}k})
 \end{array} \right] &=
 \left[ \begin{array}{ccc}
-    (x_{k1} - x_{\perm{1}k})_+ & \cdots & (x_{k1} - x_{\perm{n-1}k})_+ \\
+    (x_{1k} - x_{\perm{1}k})_+ & \cdots & (x_{1k} - x_{\perm{n-1}k})_+ \\
     \cdots & & \\
-    (x_{kn} - x_{\perm{1}k})_+ & \cdots & (x_{kn} - x_{\perm{n-1}k})_+ 
+    (x_{nk} - x_{\perm{1}k})_+ & \cdots & (x_{nk} - x_{\perm{n-1}k})_+ 
 \end{array} \right]
 \left[ \begin{array}{c}
     d_{\perm{1}k} \\
@@ -200,7 +200,7 @@ f_k(x_{\perm{n}k})
 & \equiv \Delta_k d_k + \mu_k
 \end{align}
 where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) =
-(x_{\perm{i}k} - x_{\perm{j}k})_+$, $d_k = (d_{\perm{1}k} ,\ldots,
+(x_{ik} - x_{\perm{j}k})_+$, $d_k = (d_{\perm{1}k} ,\ldots,
 d_{\perm{n-1}k})$, and $\mu_k = f_k(x_{\perm{1}k}) \mathbf{1}_n$.
 Because $f_k$ has to be centered, $\mu_k = - \frac{1}{n}
 \mathbf{1}_n^\tran \Delta_k d_k$, and therefore

@@ -250,6 +250,7 @@ Each of our theorems uses a subset of the following assumptions:
 \item[A2:] $f_0$ is convex and twice-differentiable. 
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\|f^*_k \| \leq B$ for all $k$.
 \item[A4:] The noise is mean-zero sub-Gaussian, independent of $X$.
+\item[A5:] The density $p(\mathbf{x})$ is bounded away from 0 and satisfies the boundary flatness condition.
 \end{packed_enum}
 In Assumption A3, $f^*=\sum_k f^*_k$ denotes the optimal additive projection of $f_0$ in the population setting.
 
@@ -279,7 +280,7 @@ results \citep{kim2014global}.
 
 Our main result is the following.
 \begin{stheorem}
-Suppose assumptions A1-A4 hold. Let $\{\hat{f}_i\}$ be any AC solution and
+Suppose assumptions A1-A5 hold. Let $\{\hat{f}_i\}$ be any AC solution and
 let $\{\hat{g}_k\}$ be any DC solution, both estimated with 
 regularization parameter $\lambda$ scaling as
 $\lambda = \Theta \Big( sB \sqrt{\frac{1}{n} \log^2 np} \Big)$. 
@@ -305,7 +306,7 @@ Then, for sufficiently large $n$, with probability at least $1-\frac{1}{n}$:
 
 This shows that variable selection consistency is achievable under
 exponential scaling of the ambient dimension, $p = O(\exp(n^c))$
-for $c<1$, as for linear models. The cost of nonparametric estimation is
+for some $0<c<1$, as for linear models. The cost of nonparametric estimation is
 reflected in the scaling with respect to $s=|S|$, which can grow only
 as $o(n^{4/25})$.
 

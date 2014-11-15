@@ -44,9 +44,9 @@ relevant variables.
 Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression as defined above.
 Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. 
 
-Let $\pi_k(i)$ be a reordering of $X_k$ in ascending order so that $X_{k \pi_k(n)}$ is the largest entry. Let $\mathbf{1}_{\pi_k(i:n)}$ be 1 on the coordinates $\pi_k(i),\pi_k(i+1),...,\pi_k(n)$ and 0 elsewhere. Assume without loss of generality that $X_{k\pi_k(n)} - X_{k\pi_k(1)} \geq 1$.
+Let $\pi_k(i)$ be a reordering of $X_k$ in ascending order so that $X_{k \pi_k(n)}$ is the largest entry. Let $\mathbf{1}_{\pi_k(i:n)}$ be 1 on the coordinates $\pi_k(i),\pi_k(i+1),...,\pi_k(n)$ and 0 elsewhere. Define $\mathsf{range}_k = X_{k\pi_k(n)} - X_{k\pi_k(1)}$.
 
-Suppose for all $k\in S^c$, for all $i=1,\ldots,n$, $\lambda_n > (X_{k\pi_k(n)} - X_{k\pi_k(1)})| \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$ and $\max_{i=1,...,n-1} \frac{X_{k\pi_k(i+1)} - X_{k\pi_k(i)}}{X_{k\pi_k(n)} - X_{k\pi_k(1)}} \geq \frac{1}{16}$.
+Suppose for all $k\in S^c$, for all $i=1,\ldots,n$, $\lambda_n > \mathsf{range}_k| \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$. Suppose also that for all $k \in S^c$, $\max_{i=1,...,n-1} \frac{X_{k\pi_k(i+1)} - X_{k\pi_k(i)}}{\mathsf{range}_k} \geq \frac{1}{16}$, and $\mathsf{range}_k \geq 1$.
 
 Then the following two statements hold.
 \begin{enumerate}
@@ -86,7 +86,7 @@ adopt the following standard setup:
 
 \begin{enumerate}
 \item The data $X^{(1)},\ldots, X^{(n)} \sim F$ are iid from
-a distribution $F$ with a density $p(\mathbf{x})$ that is supported and strictly positive on $\mathcal{X}=[-b,b]^p$.
+a distribution $F$ with a density $p(\mathbf{x})$ that is supported and strictly positive on $\mathcal{X}=[-1,1]^p$.
 \item The response is $Y = f_0(X) + W$ where $W$ is
   independent, zero-mean noise; thus $Y^{(i)} = f_0(X^{(i)}) + W^{(i)}$.
 \item The regression function $f_0$ satisfies
@@ -96,7 +96,7 @@ relevant variables.
 
 
 Let $\mathcal{C}^1$ denote the set of univariate convex functions
-supported on $[-b,b]$, 
+supported on $[-1,1]$, 
 and let  $\mathcal{C}_1^{p}$ denote the set of convex additive functions
 $\mathcal{C}_1^p \equiv \{ f \,:\, f = \sum_{k=1}^p f_k, \,
    f_k \in \mathcal{C}^1 \} $.  
@@ -106,7 +106,7 @@ minimizer in $\mathcal{C}_1^p$,
 f^* = \arg\min_{f \in \mathcal{C}_1^p} \E\big(f_0(X) - f^*(X)
 \big)^2.
 \end{equation}
-$f^*$ is the unique minimizer by Theorem~\ref{thm:acdc_faithful}. Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-b, b]$ and define
+$f^*$ is the unique minimizer by Theorem~\ref{thm:acdc_faithful}. Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-1, 1]$ and define
 \begin{equation}
 g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X)
 - g_k(X_k) \big)^2.
@@ -151,16 +151,16 @@ of the procedure.
 
 \begin{theorem}[Controlling false positives]
 \label{thm:false_positive}
-Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$. Suppose $p \leq O\big( \exp(c n) \big)$ and $n \geq C$ for some positive constants $c, C$ dependent on $b$.  Suppose also
+Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$ and define $\mathsf{range}_k = X_{k \pi_k(n)} - X_{k \pi_k(1)}$. Suppose $p \leq O\big( \exp(c n) \big)$ and $n \geq C$ for some positive constants $c, C$ dependent on $b$.  Suppose also
 \begin{equation}
-\lambda_n \geq 512 b s \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
+\lambda_n \geq 512 s \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
 \end{equation}  
 Then with probability at least $ 1 - \frac{24}{n}$, for all $k \in
 S^c$, for all $i=1,\ldots,n$,
 \begin{equation}
-\lambda_n \geq (X_{k\pi_k(n)} - X_{k \pi_k(1)}) \Big| \frac{32}{n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big| ,
+\lambda_n \geq \mathsf{range}_k \Big| \frac{32}{n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big| ,
 \end{equation}
-$\max_{i'} \frac{X_{k\pi_k(i'+1)} - X_{k \pi_k(i')}}{X_{k\pi_k(n)} - X_{k\pi_k(1)}} \leq \frac{1}{16}$, and both the AC solution $\hat{f}_k$ from optimization~\eqref{opt:alternate_opt} and the DC solution $\hat{g}_k$ from optimization~\eqref{opt:alternate_opt_concave} are zero. 
+$\max_{i'} \frac{X_{k\pi_k(i'+1)} - X_{k \pi_k(i')}}{\mathsf{range}_k} \leq \frac{1}{16}$, $\mathsf{range}_k \geq 1$, and both the AC solution $\hat{f}_k$ from optimization~\eqref{opt:alternate_opt} and the DC solution $\hat{g}_k$ from optimization~\eqref{opt:alternate_opt_concave} are zero. 
 \end{theorem}
 
 The proof of Theorem~\ref{thm:false_positive} exploits independence of
@@ -181,7 +181,7 @@ $\hat{g}_k$ be any DC solution to the restricted regression with
 $B$-boundedness constraint. Let $\tilde{\sigma}$ denote $\max(\sigma,
 B)$.  Suppose 
 \begin{equation}
-\lambda_n \leq 512 b s \tilde{\sigma} \sqrt{\frac{\log^2 np}{n}}
+\lambda_n \leq 512 s \tilde{\sigma} \sqrt{\frac{\log^2 np}{n}}
 \end{equation}
 and that $n$ is sufficiently large so that, for some constant $c' > 1$,
 \begin{equation}

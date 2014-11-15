@@ -2,14 +2,14 @@
 \section{Additive Faithfulness}
 \label{sec:additivefaithful}
 
-For general regression, an additive approximation may result in a
+For a general regression function, an additive approximation may result in a
 relevant variable being incorrectly marked as irrelevant. Such
 mistakes are inherent to the approximation and may persist even in
 the population setting.  In this section we give
 examples of this phenomenon, and then show how the convexity
 assumption
-changes the behavior of the additive approximation. We begin
-with a lemma that characterizes the components of the additive approximation under mild conditions.
+changes the behavior of the additive approximation. We work with $C=[0,1]^p$ as the support of the distribution in this section but all of our results apply to general hypercubes. We begin
+with a lemma that characterizes the components of the additive approximation under mild conditions. 
 
 % OLD lemma, requires product distribution
 % \begin{lemma}
@@ -516,7 +516,7 @@ Lemma~\ref{cor:faithfulness_extension} with $\phi(\mathbf{x}_{-k}) =
 f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})$ and conclude that
 $f^*_k = 0$ and $g^*_k = 0$ together imply that $f$ does not depend on $x_k$.\\
 
-Now we turn to uniqueness. Suppose for sake of contradiction that $f^*$ and $f'$ are optimal solutions to (\ref{eqn:convex_additive}) and $\E (f'-f^*)^2 > 0$.  $f^* + \lambda ( f' - f^*)$ for any $\lambda \in [0,1]$ must then also be an optimal solution by convexity of the objective and constraint. However, the second derivative of the objective $\E( f - f^* - \lambda(f' - f^*))^2$ with respect to $\lambda$ is $2 \E( f' - f^*)^2 > 0$. The objective is thus strongly convex and $f^*, f'$ cannot both be optimal. The uniqueness of $g^*$ is proved similarly.
+Now we turn to uniqueness. Suppose for sake of contradiction that $f^*$ and $f'$ are optimal solutions to (\ref{eqn:convex_additive}) and $\E (f'-f^*)^2 > 0$.  $f^* + \lambda ( f' - f^*)$ for any $\lambda \in [0,1]$ must then also be an optimal solution by convexity of the objective and constraint. However, the second derivative of the objective $\E( f - f^* - \lambda(f' - f^*))^2$ with respect to $\lambda$ is $2 \E( f' - f^*)^2 > 0$. The objective is thus strongly convex and $\E(f^* - f')^2 = 0$. We now apply Lemma~\ref{lem:additive_uniqueness} by letting $\phi_k = f^*_k - f'_k$. We conclude that $\E (f^*_k - f'_k)^2 = 0$ for all $k$. The uniqueness of $g^*$ is proved similarly.
 \end{proof}
 
 
