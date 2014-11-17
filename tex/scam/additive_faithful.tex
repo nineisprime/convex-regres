@@ -154,7 +154,7 @@ $\displaystyle\int_{x_1} f(x_1, x_2) d x_1 = 0$ for each $x_2$; therefore, we ex
 
 In order to exploit additive models in variable selection, it is important to understand when the
 additive approximation accurately captures all of the relevant variables.
-We call this property \textit{additive faithfulness}. We first formalize the intuitive notion that a multivariate function $f$ \emph{does not depends on} a coordinate $x_k$.
+We call this property \textit{additive faithfulness}. We first formalize the concept that a multivariate function $f$ \emph{does not depend on} a coordinate $x_k$.
 
 \begin{definition}
 %   Let $F$ be a distribution on $C=[0,1]^p$, and $f:C \rightarrow \R$. 
@@ -163,7 +163,7 @@ We call this property \textit{additive faithfulness}. We first formalize the int
 % \trm{ for almost all  $\mathbf{x}_{-k}$} \big\}$ 
 % has probability strictly less than one.
 % If $f$ is differentiable, then $f$ depends on $k$ if $\partial_{x_k} f \neq 0$ with probability greater than zero.
-Let $C = [0,1]^p$ and let $f: C \rightarrow \R$. We say that $f$ \textit{does not depends on coordinate $k$} if for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a constant as a function of $x_k$. If $f$ is differentiable, then $f$ does not depend on $k$ if $\partial_{x_k} f(x_k, \mathbf{x}_{-k})$ is 0 for all $\mathbf{x}_{-k}$.
+Let $C = [0,1]^p$ and let $f: C \rightarrow \R$. We say that $f$ \textit{does not depend on coordinate $k$} if for all $\mathbf{x}_{-k}$, $f(x_k, \mathbf{x}_{-k})$ is a constant as a function of $x_k$. If $f$ is differentiable, then $f$ does not depend on $k$ if $\partial_{x_k} f(x_k, \mathbf{x}_{-k})$ is 0 for all $\mathbf{x}_{-k}$.
 
 In addition, suppose we have a distribution over $C$ and the additive approximation
 \begin{equation}
@@ -182,7 +182,7 @@ $f^*_k = 0$ implies that $f$ does not depend on coordinate $k$.
 
 Additive faithfulness is an attractive property because it implies
 that, in the population setting, the additive approximation yields
-consistent variable selection.
+a consistent variable screening.
 
 \subsection{Additive Faithfulness of Convex Functions}
 
@@ -319,7 +319,7 @@ Therefore $f$ does not depend on $x_k$.
 
 Theorem~\ref{thm:convex_faithful} plays an important role in our
 finite sample analysis, where we show that the additive
-approximation is variable selection consistent (or ``sparsistent''), even when the true function is not
+approximation is variable screening consistent, even when the true function is not
 additive.
 
 
@@ -347,7 +347,7 @@ additive.
 
 
 \begin{remark}
-In Theorem~\ref{thm:convex_faithful}, we do not assume a parametric form for the additive components. The additive approximations may not be faithful if we use parametric components. For example, suppose we approximate a convex function $f(X)$ by a linear form $X \beta$. The optimal linear function in the population setting is $\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$. Suppose the $X$'s are independent and follow a symmetric distribution and suppose $f(\mathbf{x}) = x_1^2 - \E[X_1^2]$, then $\beta^*_1 = \E[ X_1 f(X)] = \E[ X_1^3 - X_1 \E[X_1^2]] = 0$.
+In Theorem~\ref{thm:convex_faithful}, we do not assume a parametric form for the additive components. The additive approximations may not be faithful if we assume a parametric form for each of the components. For example, suppose we approximate a convex function $f(X)$ by a linear form $X \beta$. The optimal linear function in the population setting is $\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$. Suppose the $X$'s are independent and follow a symmetric distribution and suppose $f(\mathbf{x}) = x_1^2 - \E[X_1^2]$, then $\beta^*_1 = \E[ X_1 f(X)] = \E[ X_1^3 - X_1 \E[X_1^2]] = 0$.
 \end{remark}
 
 
@@ -404,8 +404,8 @@ When $b$ is large, $\epsilon$ is small, and $\lambda$ is small, the mixture clos
 Although convex functions are additively faithful---under appropriate conditions---it is difficult to
 estimate the optimal additive functions $f^*_k$s as defined in
 equation~\eqref{eqn:unconstrained_additive}.  The reason is that $f^*_k$ need not be
-a convex function, as example~\ref{examp:gaussian_counterexample}
-shows. It may be possible to estimate $f^*_k$ via smoothing, but we prefer an approach that is free of smoothing parameters. 
+a convex function, as example~\ref{examp:gaussian_counterexample} and example~\ref{examp:boundaryflat_example} 
+show. It may be possible to estimate $f^*_k$ via smoothing, but we prefer an approach that is free of smoothing parameters. 
 %The function $f^*_k$ can be shown to be smooth but it is preferable to use
 %shape-constraints whenever possible to avoid the introduction of the
 %additional smoothing bandwidth.

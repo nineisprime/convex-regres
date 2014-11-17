@@ -187,7 +187,7 @@ the AC stage we fit an additive convex model.  In the DC
 stage we fit decoupled concave functions on the residuals.  The
 decoupled nature of the DC stage allows all of the fits to
 be carried out in parallel. The entire process involves no smoothing parameters.
-Our next results concern the required optimizations, and their finite
+Our next result concerns the required optimizations, and their finite
 sample statistical performance.
 
 
@@ -225,7 +225,7 @@ are given in Section~\ref{sec:optimization}.
 
 In Section~\ref{sec:finitesample} 
 we analyze the finite sample variable selection consistency of convex
-additive modeling, without making the assumption that the true
+additive modeling, without assuming that the true
 regression function $f_0$ is additive.  Our analysis first establishes
 a sufficient deterministic condition for variable selection 
 consistency, and then considers a stochastic setting.
@@ -247,7 +247,7 @@ strategy.
 Each of our theorems uses a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
-\item[A2:] $f_0$ is convex and twice-differentiable. 
+\item[A2:] $f_0$ is convex and twice-differentiable. $\E f_0(X) = 0$.
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\|f^*_k \| \leq B$ for all $k$.
 \item[A4:] The noise is mean-zero sub-Gaussian, independent of $X$.
 \item[A5:] The density $p(\mathbf{x})$ is bounded away from 0 and satisfies the boundary flatness condition.

@@ -8,7 +8,7 @@ deterministic condition for consistency of the sparsity pattern
 screening procedure.  We then consider the stochastic setting and argue that the 
 deterministic conditions hold with high probability. Note that in all of our results 
 and analysis, we let $c,
-C$ represent absolute constants; the actual values of $c,C$ may change from line to line. We derived two equivalent optimizations for AC/DC: \eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and \eqref{opt:alternate_opt} outputs the second derivatives $\hat{d}_k$. Their equivalence is established in Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and $\hat{f}_k$ in our analysis.
+C$ represent absolute constants; the actual values of $c,C$ may change from line to line. We derived two equivalent optimizations for AC/DC: \eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and \eqref{opt:alternate_opt} outputs the second derivatives $\hat{d}_k$. Their equivalence is established in Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and $\hat{f}_k$ in our analysis. We will also assume in this section that the true regression function $f_0$ has mean-zero and therefore, we will omit the intercept term $\hat{mu}$ from our estimation procedure.
 
 In our analysis, we assume that an upper bound $B$ to $\| \hat{f}_k \|_\infty$ 
 is imposed in the optimization procedure, where $B$ is chosen to also upper bound $\| f^*_k \|_\infty$. This $B$-boundedness constraint is added so that we may use the convex function bracketing results from~\cite{kim2014global} to establish uniform convergence between the empirical risk and the population risk. We emphasize that this constraint is not needed in practice and we do not use it for any of our simulations. 
@@ -115,7 +115,7 @@ The $\hat{g}_k$'s are unique minimizers as well. We let $S = \{ k = 1,\ldots,p \
 Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
-\item[A2:] $f_0$ is convex and twice-differentiable. 
+\item[A2:] $f_0$ is convex and twice-differentiable. $\E f_0(X) = 0$.
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\| f^*_k \|_\infty \leq B$ for all $k$.
 \item[A4:] $W$ is mean-zero sub-Gaussian, independent of $X$, with scale $\sigma$; i.e., for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
 \item[A5:] The density $p(\mathbf{x})$ is bounded away from 0 and satisfies the boundary flatness condition. (Definition~\ref{defn:boundary-point})
@@ -151,7 +151,7 @@ of the procedure.
 
 \begin{theorem}[Controlling false positives]
 \label{thm:false_positive}
-Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$ and define $\mathsf{range}_k = X_{k \pi_k(n)} - X_{k \pi_k(1)}$. Suppose $p \leq O\big( \exp(c n) \big)$ and $n \geq C$ for some positive constants $c, C$ dependent on $b$.  Suppose also
+Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$ and define $\mathsf{range}_k = X_{k \pi_k(n)} - X_{k \pi_k(1)}$. Suppose $p \leq O\big( \exp(c n) \big)$ and $n \geq C$ for some positive constants $0 < c <1$ and $C$.  Suppose also
 \begin{equation}
 \lambda_n \geq 512 s \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
 \end{equation}  

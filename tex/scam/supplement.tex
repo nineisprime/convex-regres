@@ -114,7 +114,7 @@ To check that other rows of stationarity condition holds, we characterize $[\fra
 \end{align*}
 where we denote $\mathsf{gap}_{i'} = X_{ki'} - X_{k(i'-1)}$.
 
-We pause for a second here to give a summary of our proof strategy. We leverage two critical observations: first, any two adjacent terms in the sequence $\frac{1}{n} \Delta_k^\tran \hat{r}$ cannot differ by too much. Second, we defined $a, a'$ such that $-a+a' = -\frac{1}{8}$ so that $\lambda \Delta_k^\tran \mathbf{u}$ is a sequence that strictly increases in the first half (for coordinates in $\{1,...,i^*\}$) and strictly decreases in the second half. 
+We pause for a second here to give a summary of our proof strategy. We leverage two critical observations: first, any two adjacent coordinates in the vector $\frac{1}{n} \Delta_k^\tran \hat{r}$ cannot differ by too much. Second, we defined $a, a'$ such that $-a+a' = -\frac{1}{8}$ so that $\lambda \Delta_k^\tran \mathbf{u}$ is a sequence that strictly increases in the first half (for coordinates in $\{1,...,i^*\}$) and strictly decreases in the second half. 
 
 We know $\frac{1}{n} \Delta_k^\tran \hat{r}$ and $\lambda \Delta_k^\tran \mathbf{u}$ are equal in the first coordinate. We will show that the second sequence increases faster than the first sequence which will imply that the second sequence is larger than the first in the first half of the coordinates. We will then work similarly but backwards for the second half. 
 
@@ -270,7 +270,7 @@ The same reasoning applies to show that $\hat{d}_k = 0$ satisfies KKT conditions
 We first restate the theorem for convenience. 
 
 \begin{theorem} 
-Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$. Suppose that $p \leq O\big( \exp( c n) \big)$ and $n \geq C$ for some constants $c,C$. Define $\mathsf{range}_k = X_{k\pi_k(n)} - X_{k\pi_k(1)}$.
+Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$. Suppose that $p \leq O\big( \exp( c n) \big)$ and $n \geq C$ for some constants $0<c<1$ and $C$. Define $\mathsf{range}_k = X_{k\pi_k(n)} - X_{k\pi_k(1)}$.
 
 If $\lambda_n \geq 2 (8 \cdot 32) s \tilde{\sigma}  \sqrt{ \frac{1}{n} \log^2 np}$ then, with probability at least $ 1 - \frac{24}{n}$, for all $k \in S^c$, and for all $i'=1,...,n$
 \begin{align*}
@@ -295,8 +295,8 @@ can use Serfling's results however.
 \textbf{Step 1}: {\it Bounding $\| \hat{r} \|_\infty$.} We have $\hat{r}_i = f_0(x_i) + w_i - \hat{f}(x_i)$ where
 $\hat{f}(x_i) = \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ is the convex
 additive function outputted by the restricted regression. Note that
-both $f_0(x_i)$ and $\hat{f}(x_i)$ are bounded by $sB$. 
-Because $w_i$ is sub-Gaussian, $|w_i| \leq  \sigma \sqrt{2\log \frac{2}{\delta}}$ with probability at most $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq \sigma \sqrt{ 2 \log \frac{2n}{\delta}}$ with probability at most $1 - \delta$.
+both $f_0(x_i)$ and $\hat{f}(x_i)$ are bounded by $2sB$. 
+Because $w_i$ is sub-Gaussian, $|w_i| \leq  \sigma \sqrt{2\log \frac{2}{\delta}}$ with probability at least $1-\delta$. By union bound across $i=1,...,n$, we have that $\| w\|_\infty \leq \sigma \sqrt{ 2 \log \frac{2n}{\delta}}$ with probability at least $1 - \delta$.
 
 Putting these observations together,
 %and take another union bound across all $j$ and all $i'$:
@@ -306,7 +306,7 @@ Putting these observations together,
 \end{align}
 with probability at least $1 - \delta$, where we have defined
 $\tilde{\sigma} = \max(\sigma, B)$,
-and assumed that $\sqrt{\log \frac{2np}{\delta}} \geq 1$, which is acceptable since $\delta \leq 1$ and the theorem presupposes that $\sqrt{ \log 2np } \geq 1$.
+and assumed that $\sqrt{\log \frac{2np}{\delta}} \geq 1$. This assumption holds under the conditions in the theorem which state that $p \leq \exp( c n)$ and $n \geq C$ for some small constant $c$ and large constant $C$.
 
 \vskip5pt
 \textbf{Step 2}: {\it Bounding $| \frac{1}{n} \hat{r}^\tran \mathbf{1}
@@ -352,18 +352,17 @@ union bound, with probability at least $1-\delta$, for all $k,i'$,
 \end{align*}
 In the second inequality, we used equation~\eqref{eqn:stepone_rhat}
 and equation~\eqref{eqn:steptwo_rhat} from steps 1 and 2
-respectively. Setting $\delta = \frac{12}{n}$ gives the desired
-result.
+respectively. Setting $\delta = \frac{12}{n}$ gives the desired expression.
 
 Finally, we note that $2 \geq (X_{k\pi_k(n)} - X_{k\pi_k(1)})$ since $X_k \subset [-1,1]$. This concludes the proof for the first part of the theorem. 
 
-To prove the second and third claim, let the interval $[-1, 1]$ be divided into $64$ non-overlapping segments each of length $1/32$. Because $X_k$ is drawn from a density with a lower bound $c_l > 0$, the probability that every segment contains some samples $X_{ki}$'s is at least $1-64 \left( 1 - \frac{1}{32} c_l \right)^n$. Let $\mathcal{E}_k$ denote the event that every segment contains some samples. 
+To prove the second and the third claims, let the interval $[-1, 1]$ be divided into $64$ non-overlapping segments each of length $1/32$. Because $X_k$ is drawn from a density with a lower bound $c_l > 0$, the probability that every segment contains some samples $X_{ki}$'s is at least $1-64 \left( 1 - \frac{1}{32} c_l \right)^n$. Let $\mathcal{E}_k$ denote the event that every segment contains some samples. 
 
 Define $\mathsf{gap}_i = X_{k \pi_k(i+1)} - X_{k \pi_k(i)}$ for $i=1,...,n-1$ and define $\mathsf{gap}_0 = X_{k \pi_k(1)} - (-1)$ and $\mathsf{gap}_{n} = 1 - X_{k\pi_k(n)}$. 
 
 If any $\mathsf{gap}_i \geq \frac{1}{16}$, then $\mathsf{gap}_i$ has to contain one of the segments. Therefore, under event $\mathcal{E}_k$, it must be that $\mathsf{gap}_i \leq \frac{1}{16}$ for all $i$.
 
-Thus, we have that $\mathsf{range}_k \geq 2 - 1/8 \geq 1$ and that for all $i$:
+Thus, we have that $\mathsf{range}_k \geq 2 - 1/8 \geq 1$ and that for all $i$,
 
 \[
 \frac{X_{k\pi_k(i+1)} - X_{k \pi_k(i)}}{\mathsf{range}_k} \geq 
@@ -372,7 +371,7 @@ Thus, we have that $\mathsf{range}_k \geq 2 - 1/8 \geq 1$ and that for all $i$:
 
 Taking an union bound for each $k \in S^c$, the probability of that all $\mathcal{E}_k$ hold is at least $1 - p 64 \left( 1 - \frac{1}{32} c_l \right)^n$.
 
-$64 \left( 1 - \frac{1}{32} c_l \right)^n = C' p \exp( - c' n)$ for some positive constants $c', C'$ dependent on $c_l$. Therefore, if $p \leq exp( c'' n)$ for some $c'' < c'$ and if $n$ is large enough, $C' p \exp( - c' n) \leq C' \exp( - (c' - c'') n) \leq \frac{12}{n}$.
+$p64 \left( 1 - \frac{1}{32} c_l \right)^n = 64 p \exp( - c' n)$ for some positive constants $0< c' < 1$ dependent on $c_l$. Therefore, if $p \leq exp( c n)$ for some $0<c < c'$ and if $n$ is larger than some constant $C$, $64 p \exp( - c' n) \leq 64 \exp( - (c' - c'') n) \leq \frac{12}{n}$.
 
 Taking an union bound with the event that $\lambda_n$ upper bounds the partial sums of $\hat{r}$ and we establish the claim. 
 
@@ -850,7 +849,7 @@ We have then that, with probability at least $1-\delta$,
   c B^3 \sqrt{ \frac{s^5 \log \frac{2}{\delta}}{n^{4/5}}}
 \end{align*}
 
-We fold $b$ into the constant $c$ and the theorem follows. 
+The theorem follows immediately.
 
 %For a $h \in \mathcal{G}$, let $h_\epsilon$ denote a function in the $\epsilon$-bracketing of $\mathcal{G}$ closest to $h$. It obviously must be that $\| h - h_\epsilon \|_n \leq \| h - h_\epsilon \|_\infty \leq \epsilon$.
 
@@ -963,7 +962,7 @@ Therefore, with probability at least $1 - 2\delta$,
 
 \begin{lemma}
 \label{lem:acdc_derivative_bound}
-Let $f : [0,1]^p \rightarrow \R$ be a twice differentiable function. Suppose $p(\mathbf{x})$ is a density on $[0,1]^p$ such that $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$ and $\partial_{x_k}^2 p(\mathbf{x}_{-k} \given x_k)$ are all continuous as functions of $x_k$. Let $\phi(\mathbf{x}_{-k})$ be a continuous function not dependent on $x_k$.
+Let $f : [0,1]^p \rightarrow \R$ be a twice differentiable function. Suppose $p(\mathbf{x})$ is a density on $[0,1]^p$ such that $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$ and $\partial_{x_k}^2 p(\mathbf{x}_{-k} \given x_k)$ are continuous as functions of $x_k$. Let $\phi(\mathbf{x}_{-k})$ be a continuous function not dependent on $x_k$.
 
 Then, $h^*_k(x_k) \equiv \E[ f(X) - \phi(X_{-k}) \given x_k]$ is twice
 differentiable and has a second derivative lower 
