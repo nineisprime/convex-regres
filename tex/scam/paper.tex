@@ -1,4 +1,4 @@
-\documentclass[12pt,pdftex,aos,noinfoline]{imsart}
+\documentclass[12pt,pdftex,aos,noinfoline,addressasfootnote]{imsart}
 %\documentclass[12pt,pdftex,generic,noinfoline]{imsart}
 
 \RequirePackage[OT1]{fontenc}
@@ -15,12 +15,13 @@
 
 
 
-\renewcommand{\baselinestretch}{1.1}
+\renewcommand{\baselinestretch}{1.05}
 %\parskip12pt
 %\parindent0pt
 \setcounter{tocdepth}{2}
 
 \input{macros}
+\arxiv{1411.1805}
 
 \begin{document}
 
@@ -30,29 +31,24 @@
 
 \begin{aug}
 \vskip10pt
-\author{\fnms{Min} \snm{Xu}\ead[label=e1]{minx@cs.cmu.edu}}
+\author{\fnms{Min} \snm{Xu${}^*$}\ead[label=e1]{minx@cs.cmu.edu}}
 \comma 
-\author{\fnms{Minhua} \snm{Chen}\ead[label=e2]{minhua@galton.uchicago.edu}}
+\author{\fnms{Minhua} \snm{Chen${}^\dag$}\ead[label=e2]{minhua@galton.uchicago.edu}}
 \and
-\author{\fnms{John} \snm{Lafferty}\ead[label=e3]{lafferty@galton.uchicago.edu}}
-\address{
-\begin{tabular}{ccc}
-\\[10pt]
-Machine Learning Department & Department of Statistics & Department of Statistics\\
-Carnegie Mellon University  & University of Chicago & Department of Computer Science\\
-& & University of Chicago
-\end{tabular}
-%\\[20pt]
-%\printead{e1,e2,e3}
-}
+\author{\fnms{John}
+  \snm{Lafferty${}^\dag$}\ead[label=e3]{lafferty@galton.uchicago.edu}}
+\address{${}^*$Machine Learning Department, Carnegie Mellon University,
+  Pittsburgh PA 15213}
+\address{${}^\dag$Department of Statistics, University of Chicago, Chicago IL 60637}
 \end{aug}
 
 \input{abstract} 
 %\tableofcontents
-\vskip20pt
+\vskip20pt 
 \end{frontmatter}
 
 \maketitle
+
 \vskip10pt
 
 %\tableofcontents
@@ -65,8 +61,6 @@ Carnegie Mellon University  & University of Chicago & Department of Computer Sci
 \input{sparsistency}
 \input{experiments}
 \input{discussion}
-\input{appendix}
-
 %\newpage
 %\input{notes}
 
@@ -78,8 +72,13 @@ N000141210762, and an Amazon AWS in Education Machine Learning
 Research grant.
 
 
+\clearpage
 \bibliographystyle{imsart-nameyear}
 \bibliography{local}
+
+\clearpage
+\input{supplement} 
+
 
 
 \end{document}
