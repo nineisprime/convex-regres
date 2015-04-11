@@ -12,7 +12,7 @@ format long; randn('state',15); rand('state',0);
 addpath('../simdata', '-end')
 
 switch version
-    case 01, n = 400; p = 128;
+    case 01, n = 4000; p = 128;
     case 02, n = 800; p = 128;
     case 03, n = 1400; p = 128;
     case 04, n = 2000; p = 128;
