@@ -1,3 +1,7 @@
+% backup copy of an outdated file
+% 
+% **DEPRECATED**
+
 function C1(version)
 % Non-diagonal quadratic with noise.
 clc; close all; format long; randn('state',0); rand('state',0); 

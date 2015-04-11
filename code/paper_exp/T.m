@@ -99,11 +99,13 @@ for version = 1:40
     end
     prob(version) = suc/nrun;
 end
+
 figure(2); set(gca,'FontSize',12); 
 plot(100:100:1000,prob(1:10),'r.-',100:100:1000,prob(11:20),'b.-',...
     100:100:1000,prob(21:30),'g.-',100:100:1000,prob(31:40),'k.-','LineWidth',2);
 legend('p=64','p=128','p=256','p=512');
-xlabel('Number of Samples'); ylabel('Probability of Recovery');
+xlabel('Number of Samples'); 
+ylabel('Probability of Recovery');
 title('Probability of Recovery');
 
 

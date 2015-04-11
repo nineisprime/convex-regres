@@ -1,3 +1,4 @@
+% INPUT: X is (p--by--n)
 
 % OUTPUT:   beta is p--by--(n-1)
 %           z is p--by--n
@@ -5,8 +6,15 @@
 
 % can cause problem when lambda=0
 
+% Uses block coordinate descent to solve an additive convex
+% regression. with regularization.
+% 
+
 function [beta,z,obj,Ln] = SCAM_QP(X,y,lambda,maxit,tol)
-[p,n] = size(X); z = zeros(p,n); Ln = zeros(p,1); beta = zeros(p,n-1);
+[p,n] = size(X); 
+z = zeros(p,n); 
+Ln = zeros(p,1); 
+beta = zeros(p,n-1);
 
 z2 = zeros(p,n);
 Ln2 = zeros(p,1);
@@ -21,21 +29,8 @@ while iter < maxit && change > tol
         % MOSEK_f is much slower
         % both sometimes errs
         % 
-        
-        %disp('new')
-        %[z2(d,:), Ln2(d)] = SCAM_MOSEK_f(res, X(d,:), lambda);
-        %disp('old')
-        [beta(d,:),z(d,:),Ln(d)] = SCAM_MOSEK(res,X(d,:),lambda);
 
-        
-        %[Xd, ord] = sort(X(d,:));
-        %'test'
-        %diff_magn = norm(z(d,:)-z2(d,:))/norm(z(d,:));
-        %disp(['diff:' num2str( diff_magn )])
-        
-        %if (diff_magn > 1)
-        %    'err'
-        %end
+        [beta(d,:),z(d,:),Ln(d)] = SCAM_MOSEK(res,X(d,:),lambda);
         
         res = res - z(d,:)'; 
     end
@@ -98,41 +93,98 @@ z = z(ordrev);
 
 return
 
+
+
+
+%IN: y is n-vector
+%    x is n-vector
+
 function [beta,z,Ln] = SCAM_MOSEK(y,x,lambda)
-n = length(x); [Xd,ord] = sort(x'); dX = Xd(2:n)-Xd(1:n-1);
+n = length(x); 
+[Xd,ord] = sort(x'); 
 
-Hi = 1:n; Hj = 1:n; Hs = ones(1,n)/n; 
-H = sparse(Hi,Hj,Hs,2*n,2*n); f = [-y/n; zeros(n-1,1); lambda];
+dX = Xd(2:n)-Xd(1:n-1);
 
-Ai = []; Aj = []; As = []; row = 0; ndx = 0;
+Hi = 1:n; 
+Hj = 1:n; 
+Hs = ones(1,n)/n; 
+H = sparse(Hi,Hj,Hs,2*n,2*n); 
+f = [-y/n; zeros(n-1,1); lambda];
+
+Ai = []; 
+Aj = []; 
+As = []; 
+row = 0; 
+ndx = 0;
+
+% beta increasing constraints
+
 valmat = [ones(n-2,1) -ones(n-2,1)];
 rowmat = [(1:(n-2))' (1:(n-2))'] + row;
 colmat = [((n+1):(2*n-2))' ((n+2):(2*n-1))'];
-rg = (ndx+1):(ndx+2*(n-2)); row = row + (n-2); ndx = ndx + 2*(n-2);
-Ai(rg) = rowmat(:); Aj(rg) = colmat(:); As(rg) = valmat(:);
 
-valmat = [ones(n-1,1) -ones(n-1,1) -ones(n-1,1) -ones(n-1,1)];
-rowmat = [(1:(n-1))' (1:(n-1))' (n:(2*n-2))' (n:(2*n-2))'] + row;
-colmat = [((n+1):(2*n-1))' 2*n*ones(n-1,1) ((n+1):(2*n-1))' 2*n*ones(n-1,1)];
-rg = (ndx+1):(ndx+4*(n-1)); row = row + 2*(n-1); ndx = ndx + 4*(n-1);
-Ai(rg) = rowmat(:); Aj(rg) = colmat(:); As(rg) = valmat(:);
+rg = (ndx+1):(ndx+2*(n-2)); 
+row = row + (n-2); 
+ndx = ndx + 2*(n-2);
+Ai(rg) = rowmat(:); 
+Aj(rg) = colmat(:); 
+As(rg) = valmat(:);
 
-A = sparse(Ai,Aj,As,row,2*n); b = zeros(row,1); 
 
-Bi = []; Bj = []; Bs = []; row = 0; ndx = 0;
+% regularization penalty constraint
+
+valmat = [ones(n-1,1) -ones(n-1,1)
+          -ones(n-1,1) -ones(n-1,1)];
+rowmat = [(1:(n-1))' (1:(n-1))' (n:(2*n-2))' 
+          (n:(2*n-2))'] + row;
+colmat = [((n+1):(2*n-1))' 2*n*ones(n-1,1) 
+           ((n+1):(2*n-1))' 2*n*ones(n-1,1)];
+rg = (ndx+1):(ndx+4*(n-1)); 
+row = row + 2*(n-1); 
+ndx = ndx + 4*(n-1);
+Ai(rg) = rowmat(:); 
+Aj(rg) = colmat(:); 
+As(rg) = valmat(:);
+
+A = sparse(Ai,Aj,As,row,2*n); 
+b = zeros(row,1); 
+
+
+
+
+
+Bi = []; 
+Bj = []; 
+Bs = []; 
+row = 0; 
+ndx = 0;
+
+% centering constraint
+
 valmat = ones(n,1); 
 rowmat = ones(n,1) + row;
 colmat = (1:n)';
-rg = (ndx+1):(ndx+n); row = row + 1; ndx = ndx + n;
-Bi(rg) = rowmat(:); Bj(rg) = colmat(:); Bs(rg) = valmat(:);
+rg = (ndx+1):(ndx+n); 
+row = row + 1; 
+ndx = ndx + n;
+Bi(rg) = rowmat(:); 
+Bj(rg) = colmat(:); 
+Bs(rg) = valmat(:);
+
+% linear interpolation constraint
 
 valmat = [-ones(n-1,1) ones(n-1,1) -dX]; 
 rowmat = [(1:n-1)' (1:n-1)' (1:n-1)'] + row;
 colmat = [ord(1:n-1) ord(2:n) ((n+1):(2*n-1))'];
-rg = (ndx+1):(ndx+3*(n-1)); row = row + n-1; ndx = ndx + 3*(n-1);
-Bi(rg) = rowmat(:); Bj(rg) = colmat(:); Bs(rg) = valmat(:);
+rg = (ndx+1):(ndx+3*(n-1)); 
+row = row + n-1; 
+ndx = ndx + 3*(n-1);
+Bi(rg) = rowmat(:); 
+Bj(rg) = colmat(:); 
+Bs(rg) = valmat(:);
 
-B = sparse(Bi,Bj,Bs,row,2*n); c = zeros(row,1); 
+B = sparse(Bi,Bj,Bs,row,2*n); 
+c = zeros(row,1); 
 tstart = tic;
 [h, fval, exitflag] = quadprog(H,f,A,b,B,c); % MOSEK call of quadprog
 exitflag

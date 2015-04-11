@@ -1,6 +1,8 @@
 % Run SCAM on Boston housing data. 
 % Use 5-fold CV and plot prediction error
 
+% **DEPRECATED** replaced by acdc_boston.m
+
 function SCAM(version)
 clc; close all; format long; randn('state',0); rand('state',0);
 lambda0 = {[0.00 .005 0.01 .015 0.02 0.04 0.06 ...

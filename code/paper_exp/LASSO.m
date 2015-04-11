@@ -1,3 +1,6 @@
+
+% evaluate Lasso on Boston housing data
+
 function LASSO(data)
 clc; close all; format long; randn('state',0); rand('state',0);
 
@@ -51,8 +54,10 @@ for j = 1:q+1 % Refitting
     row = find(num==j-1,1); 
     active = find(abs(beta0(row,:))>10^-8); 
     beta1 = (X1(active,:)')\(y1-ym); % beta1 = beta0(row,active)';
+    
     yo(~ndx,j) = X1(active,:)'*beta1+ym; 
     yo(ndx,j) = X2(active,:)'*beta1+ym;
+    
     err(:,j) = [sum((yo(~ndx,j)-y1).^2); sum((yo(ndx,j)-y2).^2)]/n;
 end
 return

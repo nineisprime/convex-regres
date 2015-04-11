@@ -1,3 +1,9 @@
+
+% ** DEPRECATED **
+%  
+% 
+% 
+
 % IN:
 %  "Xt" -- (p--by--nt) test data
 

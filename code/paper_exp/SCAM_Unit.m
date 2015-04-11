@@ -1,4 +1,7 @@
 
+% ** DEPRECATED **
+% replaced by "cv_standardize.m"
+
 % OUT:
 % "X1 = transformed X(:,ndx) "
 % "X2 = transformed X(:,~ndx)"

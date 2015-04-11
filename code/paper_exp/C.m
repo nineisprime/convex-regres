@@ -2,6 +2,9 @@ function C(version)
 % correlation changes
 % Non-diagonal quadratic with noise.
 % Correlated
+%
+% bounded Gaussian and uniform mixture
+%
 
 clc; close all; format long; randn('state',0); rand('state',0); 
 switch version
@@ -53,6 +56,8 @@ switch version
 end
 
 p = 128; k = 5; 
+SNR = 5;
+
 lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
 
 alpha = 0.5;
@@ -75,9 +80,16 @@ for run = 1:nrun
     Q = Q + Q';
     
     ord = randperm(p); J(ord(1:k),run) = 1==1; 
-    X = mvnrnd(zeros(1,p),toeplitz(v.^(0:p-1)),n)';
+    %X = mvnrnd(zeros(1,p),toeplitz(v.^(0:p-1)),n)';
+    Sigma = toeplitz(v.^(0:p-1));
+    unif_weight = 0.05;
+    X = simulateBoundedGauss(p, n, unif_weight, Sigma);
     
-    y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)' + randn(n,1);
+    y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)'; 
+    y = y - mean(y);
+    y = SNR*y / std(y);
+    
+    y = y+ randn(n,1);
     % MODIFY
     [beta,h,obj,Lnvex,Lncave] = acdc_QP(X,y-mean(y),lambda,maxit,tol); 
     Ln(:,run) = max(Lnvex, Lncave);
@@ -96,7 +108,8 @@ for version = 1:40
     load(['C_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
-        if max(Ln(~J(:,run),run)) < epsil && min(Ln(J(:,run),run)) > epsil
+        if max(Ln(~J(:,run),run)) < epsil && 
+           min(Ln(J(:,run),run)) > epsil
             suc = suc + 1;
         end
     end
@@ -105,8 +118,10 @@ end
 figure(2); set(gca,'FontSize',12); 
 plot(100:100:1000,prob(1:10),'r.-',100:100:1000,prob(11:20),'b.-',...
     100:100:1000,prob(21:30),'g.-',100:100:1000,prob(31:40),'k.-','LineWidth',2);
+
 legend('v=0.0','v=0.2','v=0.5','v=0.9');
-xlabel('Number of Samples'); ylabel('Probability of Recovery');
+xlabel('Number of Samples'); 
+ylabel('Probability of Recovery');
 title('Probability of Recovery');
 %set(gca, 'LooseInset', get(gca, 'TightInset'));
 

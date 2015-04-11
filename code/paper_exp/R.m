@@ -3,6 +3,9 @@ function R(version)
 % Non-diagonal quadratic with noise.
 % Independent
 
+%
+%
+%
 
 clc; close all; format long; randn('state',0); rand('state',0); 
 switch version
@@ -88,6 +91,8 @@ save(['R_' num2str(version) '.mat'],'J','Ln'); %MODIFY
 %save('tmp.mat', 'J', 'Ln');
 return
 
+
+
 %% Reading the result:
 clc; clear all; close all; 
 alpha = [0.0 0.2 0.5 1.0]; k = 5;
@@ -129,8 +134,10 @@ end
 figure(2); set(gca,'FontSize',12); 
 plot(100:100:1000,prob(1:10),'r.-',100:100:1000,prob(11:20),'b.-',...
     100:100:1000,prob(21:30),'g.-',100:100:1000,prob(31:40),'k.-','LineWidth',2);
+
 legend('\alpha=0.0','\alpha=0.2','\alpha=0.5','\alpha=1.0');
-xlabel('Number of samples'); ylabel('Probability of recovery');
+xlabel('Number of samples'); 
+ylabel('Probability of recovery');
 title('Probability of support recovery');
 
 
