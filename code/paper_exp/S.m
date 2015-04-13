@@ -44,7 +44,7 @@ SNR = 5;
 
 maxit = 20; tol = 10^-6;
 
-nrun = 20; % MODIFY
+nrun = 30; % MODIFY
 
 J = ones(p,nrun)==0; Ln = zeros(p,nrun); 
 
