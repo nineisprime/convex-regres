@@ -100,6 +100,8 @@ for version = 1:num_versions
     prob(version) = suc/nrun;
 end
 
+% figures need to be edited
+
 figure(2); set(gca,'FontSize',12); 
 plot(100:100:1000,prob(1:5),'r.-',...
     100:100:1000,prob(5:10),'b.-',...

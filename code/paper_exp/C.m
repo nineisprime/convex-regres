@@ -8,52 +8,40 @@ function C(version)
 
 clc; close all; format long; randn('state',0); rand('state',0); 
 switch version
-    case 00, n = 100; v = 0.0;
-    case 01, n = 100; v = 0.0;
-    case 02, n = 200; v = 0.0;
-    case 03, n = 300; v = 0.0;
-    case 04, n = 400; v = 0.0;
-    case 05, n = 500; v = 0.0;
-    case 06, n = 600; v = 0.0;
-    case 07, n = 700; v = 0.0;
-    case 08, n = 800; v = 0.0;
-    case 09, n = 900; v = 0.0;
-    case 10, n =1000; v = 0.0;
+    case 01, n = 200; v = 0.0;
+    case 02, n = 400; v = 0.0;
+    case 03, n = 600; v = 0.0;
+    case 04, n = 800; v = 0.0;
+    case 05, n = 1000; v = 0.0;
+    case 06, n = 1200; v = 0.0;
+    case 07, n = 1400; v = 0.0;
         
-    case 11, n = 100; v = 0.2;
-    case 12, n = 200; v = 0.2;
-    case 13, n = 300; v = 0.2;
-    case 14, n = 400; v = 0.2;
-    case 15, n = 500; v = 0.2;
-    case 16, n = 600; v = 0.2;
-    case 17, n = 700; v = 0.2;
-    case 18, n = 800; v = 0.2;
-    case 19, n = 900; v = 0.2;
-    case 20, n =1000; v = 0.2;
+    case 08, n = 200; v = 0.2;
+    case 09, n = 400; v = 0.2;
+    case 10, n = 600; v = 0.2;
+    case 11, n = 800; v = 0.2;
+    case 12, n = 1000; v = 0.2;
+    case 13, n = 1200; v = 0.2;
+    case 14, n = 1400; v = 0.2;
         
-    case 21, n = 100; v = 0.5;
-    case 22, n = 200; v = 0.5;
-    case 23, n = 300; v = 0.5;
-    case 24, n = 400; v = 0.5;
-    case 25, n = 500; v = 0.5;
-    case 26, n = 600; v = 0.5;
-    case 27, n = 700; v = 0.5;
-    case 28, n = 800; v = 0.5;
-    case 29, n = 900; v = 0.5;
-    case 30, n =1000; v = 0.5;
+    case 15, n = 200; v = 0.5;
+    case 16, n = 400; v = 0.5;
+    case 17, n = 600; v = 0.5;
+    case 18, n = 800; v = 0.5;
+    case 19, n = 1000; v = 0.5;
+    case 20, n = 1200; v = 0.5;
+    case 21, n = 1400; v = 0.5;
   
-    case 31, n = 100; v = 0.9;
-    case 32, n = 200; v = 0.9;
-    case 33, n = 300; v = 0.9;
-    case 34, n = 400; v = 0.9;
-    case 35, n = 500; v = 0.9;
-    case 36, n = 600; v = 0.9;
-    case 37, n = 700; v = 0.9;
-    case 38, n = 800; v = 0.9;
-    case 39, n = 900; v = 0.9;
-    case 40, n =1000; v = 0.9;
+    case 22, n = 200; v = 0.9;
+    case 23, n = 400; v = 0.9;
+    case 24, n = 600; v = 0.9;
+    case 25, n = 800; v = 0.9;
+    case 26, n = 1000; v = 0.9;
+    case 27, n = 1200; v = 0.9;
+    case 28, n = 1400; v = 0.9;
     otherwise, return
 end
+num_versions = 28;
 
 p = 128; k = 5; 
 SNR = 5;
@@ -63,7 +51,7 @@ lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
 alpha = 0.5;
 
 maxit = 20; tol = 10^-6;
-nrun = 1; % MODIFY
+nrun = 40; % MODIFY
 J = ones(p,nrun)==0; Ln = zeros(p,nrun); 
 
 
@@ -83,7 +71,7 @@ for run = 1:nrun
     %X = mvnrnd(zeros(1,p),toeplitz(v.^(0:p-1)),n)';
     Sigma = toeplitz(v.^(0:p-1));
     unif_weight = 0.05;
-    X = simulateBoundedGauss(p, n, unif_weight, Sigma);
+    X = simulateBoundedGaussCopula(p, n, unif_weight, Sigma);
     
     y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)'; 
     y = y - mean(y);
@@ -92,6 +80,11 @@ for run = 1:nrun
     y = y+ randn(n,1);
     % MODIFY
     [beta,h,obj,Lnvex,Lncave] = acdc_QP(X,y-mean(y),lambda,maxit,tol); 
+    
+    epsil = 1e-6;
+    succ1 = min(Ln(J(:,run),run)) > epsil
+    succ2 = sum(Ln(:,run) > epsil) < 11    
+    
     Ln(:,run) = max(Lnvex, Lncave);
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
@@ -102,19 +95,22 @@ return
 
 %% Reading the result:
 clc; clear all; close all; 
-prob = zeros(1,40); 
+prob = zeros(1,num_versions); 
 epsil = 1e-6;
-for version = 1:40
+for version = 1:num_versions
     load(['C_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
-        if max(Ln(~J(:,run),run)) < epsil && 
-           min(Ln(J(:,run),run)) > epsil
+        if min(Ln(J(:,run), run)) > epsil && ...
+           sum(Ln(:,run) > epsil) < 11
             suc = suc + 1;
         end
     end
     prob(version) = suc/nrun;
 end
+
+% much of the figures still need to be edited
+
 figure(2); set(gca,'FontSize',12); 
 plot(100:100:1000,prob(1:10),'r.-',100:100:1000,prob(11:20),'b.-',...
     100:100:1000,prob(21:30),'g.-',100:100:1000,prob(31:40),'k.-','LineWidth',2);
