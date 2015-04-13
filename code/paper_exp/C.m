@@ -73,7 +73,7 @@ for run = 1:nrun
     Sigma = toeplitz(v.^(0:p-1));
     unif_weight = 0.05;
     X = simulateBoundedGaussCopula(p, n, unif_weight, Sigma);
-    
+    X = X';
     y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)'; 
     y = y - mean(y);
     y = SNR*y / std(y);
