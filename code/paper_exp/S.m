@@ -12,23 +12,26 @@ format long; randn('state',15); rand('state',0);
 addpath('../simdata', '-end')
 
 switch version
-    case 01, n = 4000; p = 128;
+    case 01, n = 400; p = 128;
     case 02, n = 800; p = 128;
-    case 03, n = 1400; p = 128;
-    case 04, n = 2000; p = 128;
-    case 05, n = 2800; p = 128;
+    case 03, n = 1200; p = 128;
+    case 04, n = 1600; p = 128;
+    case 05, n = 2000; p = 128;
+    case 06, n = 2400; p = 128;
         
-    case 06, n = 400; p = 256;
-    case 07, n = 800; p = 256;
-    case 08, n = 1400; p = 256;
-    case 09, n = 2000; p = 256;
-    case 10, n = 2800; p = 256;
-  
-    case 11, n = 400; p = 512;
-    case 12, n = 800; p = 512;
-    case 13, n = 1400; p = 512;
-    case 14, n = 2000; p = 512;
-    case 15, n = 2800; p = 512;
+    case 07, n = 400; p = 256;
+    case 08, n = 800; p = 256;
+    case 09, n = 1200; p = 256;
+    case 10, n = 1600; p = 256;
+    case 11, n = 2000; p = 256;
+    case 12, n = 2400; p = 256;
+        
+    case 13, n = 400; p = 512;
+    case 14, n = 800; p = 512;
+    case 15, n = 1200; p = 512;
+    case 16, n = 1600; p = 512;
+    case 17, n = 2000; p = 512;
+    case 18, n = 2400; p = 512;
         
     otherwise, return
 end
@@ -67,14 +70,9 @@ for run = 1:nrun
                        SNR*lambda/5, maxit,tol); 
     Ln(:,run) = max(Lnvex, Lncave);
     
-    max(Ln(~J(:,run),run))
-    min(Ln(J(:,run),run))
-    %if (max(Ln(~J(:,run),run)) < 1e-5 && ...
-    %    min(Ln(J(:,run),run)) > 1e-4)
-    %    disp('succ!')
-    %else
-    %    disp('fail!')
-    %end
+    epsil = 1e-6;
+    succ1 = min(Ln(J(:,run),run)) > epsil
+    succ2 = sum(Ln(:,run) > epsil) < 11
     
     
     disp(['version=' num2str(version) ' run=' num2str(run)]);
@@ -86,7 +84,7 @@ return
 
 %% Reading the result:
 %clc; clear all; close all; 
-num_versions = 15;
+num_versions = 18;
 prob = zeros(1,num_versions); 
 epsil = 1e-6;
 
@@ -94,8 +92,8 @@ for version = 1:num_versions
     load(['mat/S_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
-        if max(Ln(~J(:,run),run)) < epsil && ... 
-           min(Ln(J(:,run),run)) > 10*epsil
+        if sum(Ln(:,run) > epsil) < 11 && ... 
+           min(Ln(J(:,run),run)) > epsil
             suc = suc + 1;
         end
     end
@@ -111,8 +109,8 @@ plot(100:100:1000,prob(1:5),'r.-',...
 
 legend('p=128','p=256','p=518');
 xlabel('Number of Samples'); 
-ylabel('Probability of Recovery');
-title('Probability of Recovery');
+ylabel('Probability of Screening');
+title('Probability of Screening');
 %set(gca, 'LooseInset', get(gca, 'TightInset'));
 
 tightInset = get(gca, 'TightInset');
