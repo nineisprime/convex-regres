@@ -12,26 +12,26 @@ format long; randn('state',15); rand('state',0);
 addpath('../simdata', '-end')
 
 switch version
-    case 01, n = 400; p = 128;
-    case 02, n = 800; p = 128;
-    case 03, n = 1200; p = 128;
-    case 04, n = 1600; p = 128;
-    case 05, n = 2000; p = 128;
-    case 06, n = 2400; p = 128;
+    case 01, n = 200; p = 128;
+    case 02, n = 500; p = 128;
+    case 03, n = 800; p = 128;
+    case 04, n = 1100; p = 128;
+    case 05, n = 1500; p = 128;
+    case 06, n = 2000; p = 128;
         
-    case 07, n = 400; p = 256;
-    case 08, n = 800; p = 256;
-    case 09, n = 1200; p = 256;
-    case 10, n = 1600; p = 256;
-    case 11, n = 2000; p = 256;
-    case 12, n = 2400; p = 256;
+    case 07, n = 200; p = 256;
+    case 08, n = 500; p = 256;
+    case 09, n = 800; p = 256;
+    case 10, n = 1100; p = 256;
+    case 11, n = 1500; p = 256;
+    case 12, n = 2000; p = 256;
         
-    case 13, n = 400; p = 512;
-    case 14, n = 800; p = 512;
-    case 15, n = 1200; p = 512;
-    case 16, n = 1600; p = 512;
-    case 17, n = 2000; p = 512;
-    case 18, n = 2400; p = 512;
+    case 13, n = 200; p = 512;
+    case 14, n = 500; p = 512;
+    case 15, n = 800; p = 512;
+    case 16, n = 1100; p = 512;
+    case 17, n = 1500; p = 512;
+    case 18, n = 2000; p = 512;
         
     otherwise, return
 end
