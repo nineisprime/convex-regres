@@ -12,7 +12,7 @@ function [Y] = softmaxAffine(X, K, supp)
 [n,p] = size(X);
 
 beta_stars = randn(p,K);
-beta_stars = sign(beta_stars).*(abs(beta_stars)+0.2);
+beta_stars = sign(beta_stars).*(abs(beta_stars)+0.5);
 
 %normalization
 beta_stars = 2*beta_stars./(ones(p,1)*sqrt(sum(beta_stars.^2,1)));
@@ -22,7 +22,7 @@ tmp(supp,:) = beta_stars(supp,:);
 beta_stars = tmp;
 %beta_stars((s+1):p,:) = 0; %only the first s coordinates are relevant
 
-alpha_stars = randn(K,1)*0.2;
+alpha_stars = randn(K,1)*0.1;
 
 Y = softmax(X*beta_stars + ones(n,1)*alpha_stars');
 
