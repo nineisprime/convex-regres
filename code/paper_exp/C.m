@@ -5,6 +5,7 @@ function C(version)
 %
 % bounded Gaussian and uniform mixture
 %
+addpath('../simdata');
 
 clc; close all; format long; randn('state',0); rand('state',0); 
 switch version
