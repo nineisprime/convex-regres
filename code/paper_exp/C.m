@@ -81,15 +81,16 @@ for run = 1:nrun
     y = y+ randn(n,1);
     % MODIFY
     [beta,h,obj,Lnvex,Lncave] = acdc_QP(X,y-mean(y),lambda,maxit,tol); 
-    
+        
+    Ln(:,run) = max(Lnvex, Lncave);
     epsil = 1e-6;
     succ1 = min(Ln(J(:,run),run)) > epsil
-    succ2 = sum(Ln(:,run) > epsil) < 11    
+    succ2 = sum(Ln(:,run) > epsil) < 11
     
-    Ln(:,run) = max(Lnvex, Lncave);
+    
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
-%save(['C_' num2str(version) '.mat'],'J','Ln');
+save(['mat/C_' num2str(version) '.mat'],'J','Ln');
 return
 
 
