@@ -6,16 +6,16 @@
  \label{sec:deterministic_proof}
  
 We restate Theorem~\ref{thm:deterministic} first for convenience. 
-The following holds regardless of whether we impose the $B$-boundedness condition (see discussion at beginning of Section~\ref{sec:finitesample} for definition of the $B$-boundedness condition).
+The following holds regardless of whether we impose the $B$-boundedness condition (see discussion at the beginning of Section~\ref{sec:finitesample} for definition of the $B$-boundedness condition).
  
 \begin{theorem} 
 Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. 
 Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. 
 
 
-Let $\pi_k(i)$ be an reordering of $X_k$ in ascending order so that $X_{k \pi_k(n)}$ is the largest entry. Let $\mathbf{1}_{\pi_k(i:n)}$ be 1 on the coordinates $\pi_k(i),\pi_k(i+1),...,\pi_k(n)$ and 0 elsewhere. Define $\mathsf{range}_k = X_{k\pi_k(n)} - X_{k \pi_k(1)}$.
+Let $\pi_k(i)$ be an reordering of $X_k$ in ascending order so that $X_{\pi_k(n)k}$ is the largest entry. Let $\mathbf{1}_{\pi_k(i:n)}$ be 1 on the coordinates $\pi_k(i),\pi_k(i+1),...,\pi_k(n)$ and 0 elsewhere. Define $\mathsf{range}_k = X_{\pi_k(n)k} - X_{\pi_k(1)k}$.
 
-Suppose for all $k\in S^c$ and for all $i=1,...,n$, $\lambda_n \geq \mathsf{range}_k | \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$, and $\max_{i=1,...,n-1} \frac{X_{k\pi_k(i+1)} - X_{k\pi_k(i)}}{\mathsf{range}_k} \geq \frac{1}{16}$, and $\mathsf{range}_k \geq 1$.
+Suppose for all $k\in S^c$ and for all $i=1,...,n$, $\lambda_n \geq \mathsf{range}_k | \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$, and $\max_{i=1,...,n-1} \frac{X_{\pi_k(i+1)k} - X_{\pi_k(i)k}}{\mathsf{range}_k} \geq \frac{1}{16}$, and $\mathsf{range}_k \geq 1$.
 
 Then the following are true:
 \begin{enumerate}
@@ -26,7 +26,9 @@ Then the following are true:
 
 
 \begin{proof} 
-We will omit the $B$-boundedness constraint in our proof here. It is easy to verify that the result of the theorem still holds with the constraint added in.
+We will omit the $B$-boundedness constraint in our proof here. It is easy to verify that the result of the theorem still holds with the constraint added in. 
+
+
 
 We begin by considering the first item in the conclusion of the theorem.
 We will show that with $\{\hat{d}_k\}_{k=1,..,p}$ as constructed, we
@@ -40,22 +42,25 @@ The Lagrangian is
   \frac{1}{2n} \Big\| 
     Y - \sum_{k=1}^p  \bar{\Delta}_k d_k  \Big\|_2^2 + 
     \lambda \sum_{k=1}^p \| \bar{\Delta}_k d_k \|_\infty -
-    \sum_{k=1}^p \sum_{i=2}^{n-1} \nu_{ki} d_{ki} 
+    \sum_{k=1}^p \sum_{i=2}^{n-1} \nu_{\pi_k(i)k} d_{\pi_k(i)k} 
 \end{equation}
-with the constraint that $\nu_{ki} \geq 0$ for all $k,i$.
+with the constraint that $\nu_{\pi_k(i)k} \geq 0$ for all $k,i$.
 
 Because $\{\hat{d}_k\}_{k \in S}$ is by definition the optimal solution of the restricted regression, it is a consequence that stationarity holds for $k \in S$, that is, $\partial_{ \{ d_k \}_{k \in S} } \mathcal{L}(d) = 0$, and that the dual variables $\nu_k$ for $k \in S$ satisfy complementary slackness.
 
 We now verify that stationarity holds also for $k \in S^c$. We fix one dimension $k \in S^c$ and let $\hat{r} = Y - \sum_{k' \in S} \bar{\Delta}_{k'} \hat{d}_{k'}$. 
+
+To ease notational burden, let us reorder the samples $\{X_{ik}\}_{i=1,...,n}$ in ascending order so that the $i$-th sample is the $i$-th smallest sample. We will from here on write $X_{ik}$ to denote $X_{\pi_k(i)k}$, $d_{ik}$ to denote $d_{\pi_k(i)k}$, etc.
+
 The Lagrangian form of the optimization, in terms of just $d_k$, is
 \[
 \mathcal{L}(d_k, \nu_k) =
   \frac{1}{2n} \big\| Y - \sum_{k' \in S} \bar{\Delta}_{k'} d_{k'} 
   -  \bar{\Delta}_k d_k \big\|_2^2 
    + \lambda \| \bar{\Delta}_k d_k\|_\infty
-  - \sum_{i=2}^{n-1} \nu_{ki} d_{ki}
+  - \sum_{i=2}^{n-1} \nu_{ik} d_{ik}
 \]
-with the constraint that $v_{ki} \geq 0$ for $i=2,...,n-1$. 
+with the constraint that $\nu_{ik} \geq 0$ for $i=2,...,n-1$. 
 
 The derivative of the Lagrangian is
 \begin{align*}
@@ -65,16 +70,15 @@ The derivative of the Lagrangian is
 \end{align*}
 where $\mathbf{u}$ is the subgradient of $\| \bar{\Delta}_k d_k \|_\infty$. If $\bar{\Delta}_k d_k = 0$, then $\mathbf{u}$ can be any vector whose $L_1$ norm is less than or equal to $1$. $\nu_k \geq 0$ is a vector of Lagrangian multipliers. $\nu_{k1}$ does not exist because $d_{k1}$ is not constrained to be non-negative.
 
-We now substitute in $d_{k'} = \hat{d}_{k'}$ for $k' \in S$, $d_k = 0$ for $k \in S$, and $r = \hat{r}$ and show that the $\mathbf{u}, \nu_k$ dual variables can be set in a way to ensure that stationarity:
+We now substitute in $d_{k'} = \hat{d}_{k'}$ for $k' \in S$, $d_k = 0$ for $k \in S^c$, and $r = \hat{r}$ and show that the $\mathbf{u}, \nu_k$ dual variables can be set in a way to ensure that stationarity:
 \begin{align*}
 \partial_{d_k} \mathcal{L}(\hat{d}_k) = -\frac{1}{n} \bar{\Delta}_k^\tran\hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u}
            - \left( \begin{array}{c} 0 \\ \nu_k \end{array} \right) = 0 
 \end{align*}
-where $\| \mathbf{u} \| \leq 1$ and $\nu_k \geq 0$. It clear that to show stationarity, we only need to show that $[-\frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u}]_j = 0$ for $j=1$ and $\geq 0$ for $j=2,...,n-1$.
+where $\| \mathbf{u} \|_1 \leq 1$ and $\nu_k \geq 0$. It is clear that to show stationarity, we only need to show that $[-\frac{1}{n} \bar{\Delta}_k^\tran \hat{r} + \lambda \bar{\Delta}_k^\tran \mathbf{u}]_j = 0$ for $j=1$ and $\geq 0$ for $j=2,...,n-1$.
 
-To ease notational burden, let us reorder the samples in ascending order so that the $i$-th sample is the $i$-th smallest sample. We will from here on write $X_{ki}$ to denote $X_{k \pi_k(i)}$.
 
-Define $i^*$ as the largest index such that $\frac{X_{kn} - X_{ki^*}}{X_{kn} - X_{k1}} \geq 1/2$. 
+Define $i^*$ as the largest index such that $\frac{X_{nk} - X_{i^*k}}{X_{nk} - X_{1k}} \geq 1/2$. 
 We will construct $\mathbf{u} = (a - a', 0, ..., -a, 0,..., a')$ where
 $a,a'$ are positive scalars, where $-a$ lies at the $i^*$-th coordinate, and where the coordinates of $\mathbf{u}$ correspond
 to the new sample ordering. 
@@ -82,37 +86,43 @@ to the new sample ordering.
 We define
 
 \begin{align*}
-\kappa &= \frac{1}{\lambda n} \big[ \Delta_k^\tran \hat{r} \big]_1 \\
-a' &= \frac{X_{kn} - X_{k1}}{X_{kn} -  X_{ki^*}} \kappa + 
-     \frac{X_{ki^*}-X_{k1}}{X_{kn} - X_{k i^*}} \frac{1}{8} \\
-a &= \frac{X_{kn} - X_{k1}}{X_{kn} -  X_{ki^*}} \kappa + 
-     \frac{X_{kn}-X_{k1}}{X_{kn} - X_{ki^*}} \frac{1}{8} \\
+\kappa &= \frac{1}{\lambda n (X_{nk} - X_{1k})} \big[ \Delta_k^\tran \hat{r} \big]_1 \\
+a' &= \frac{X_{nk} - X_{1k}}{X_{nk} -  X_{i^*k}} \kappa + 
+     \frac{X_{i^*k}-X_{1k}}{X_{nk} - X_{i^*k}} \frac{1}{8} \\
+a &= \frac{X_{nk} - X_{1k}}{X_{nk} -  X_{i^*k}} \kappa + 
+     \frac{X_{nk}-X_{1k}}{X_{nk} - X_{i^*k}} \frac{1}{8} \\
 \end{align*}
 
 and we verify two facts: first that the KKT stationarity is satisfied and second, that $\| \mathbf{u} \|_1 < 1$ with high probability. Our claim is proved immediately by combining these two facts.
 
 Because $\hat{r}$ and $\mathbf{u}$ are both centered vectors, $\bar{\Delta}_k^\tran \hat{r} = \Delta_k^\tran \hat{r}$ and likewise for $\mathbf{u}$. Therefore, we need only show that for $j=1$, $\lambda \big[ \Delta_k^\tran \mathbf{u} \big]_j = \big[ \frac{1}{n} \Delta_k^\tran \hat{r} \big]_j$ and that for $j = 2,..., n-1$, $\lambda \big[ \Delta_k^\tran \mathbf{u} \big]_j \geq \big[ \frac{1}{n} \Delta_k^\tran \hat{r} \big]_j$.
 
-With our explicitly defined form of $\mathbf{u}$, we can characterize
+With our explicitly defined form of $\mathbf{u}$, we can characterize $\Delta_k^\tran \mathbf{u}$. Note that under sample reordering, the $j$-th column of $\Delta_k$ is $(0, ..., x_{(j+1)k} - x_{jk},\, x_{(j+2)k} - x_{jk},\, ...,\, x_{nk} - x_{jk} )$ where the first $j$-th entries are all 0. 
+\begin{align*}
+\Delta_k^\tran \mathbf{u}]_j &= \sum_{i > j} (X_{ik} - X_{jk}) \mathbf{u}_i \\
+  &= \mathbf{u}_{i^*} (X_{i^*k} - X_{jk}) \delta_{i^* \geq j} + \mathbf{u}_n (X_{nk} - X_{jk})\\ 
+  &= -a (X_{i^*k} - X_{jk}) \delta_{i^* \geq j} + a' (X_{nk} - X_{jk}) \\
+\end{align*}
+Simple algebra shows then that
 \begin{align}
 \big[ \Delta_k^\tran \mathbf{u} \big]_j = 
   \left \{ \begin{array}{cc} 
-   (-a + a')(X_{k i^*} - X_{kj})+ a'(X_{kn} - X_{k i^*})
+   (-a + a')(X_{i^*k} - X_{jk})+ a'(X_{nk} - X_{ i^*k})
    & \trm{ if } j \leq i^* \\
-   a'(X_{kn} - X_{kj}) & \trm{ if } j \geq i^* 
+   a'(X_{nk} - X_{jk}) & \trm{ if } j \geq i^* 
      \end{array} \right.
 \end{align} 
 
-It is straightforward to check that $\big[ \lambda \Delta_k^\tran \mathbf{u} \big]_1 = \lambda \kappa = \frac{1}{n} \big[ \Delta_k^\tran \hat{r} \big]_1$.
+It is straightforward to check that $\big[ \lambda \Delta_k^\tran \mathbf{u} \big]_1 = \lambda (X_{nk} - X_{1k}) \kappa = \frac{1}{n} \big[ \Delta_k^\tran \hat{r} \big]_1$.
 
 To check that other rows of stationarity condition holds, we characterize $[\frac{1}{n} \Delta_k^\tran \hat{r}]_j$:
 \begin{align*}
-[\frac{1}{n} \Delta_k^\tran \hat{r}]_j &= \frac{1}{n} \sum_{i > j} (X_{ki} - X_{kj}) \hat{r}_i \\
+[\frac{1}{n} \Delta_k^\tran \hat{r}]_j &= \frac{1}{n} \sum_{i > j} (X_{ik} - X_{jk}) \hat{r}_i \\
   & = \frac{1}{n} \sum_{i > j} \sum_{j < i' \leq i} \mathsf{gap}_{i'} \hat{r}_i \\
  & = \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \sum_{i \geq i'} \hat{r}_i \\
  & = \frac{1}{n} \sum_{i' > j} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran \hat{r} 
 \end{align*}
-where we denote $\mathsf{gap}_{i'} = X_{ki'} - X_{k(i'-1)}$.
+where we denote $\mathsf{gap}_{i'} = X_{i'k} - X_{(i'-1)k}$.
 
 We pause for a second here to give a summary of our proof strategy. We leverage two critical observations: first, any two adjacent coordinates in the vector $\frac{1}{n} \Delta_k^\tran \hat{r}$ cannot differ by too much. Second, we defined $a, a'$ such that $-a+a' = -\frac{1}{8}$ so that $\lambda \Delta_k^\tran \mathbf{u}$ is a sequence that strictly increases in the first half (for coordinates in $\{1,...,i^*\}$) and strictly decreases in the second half. 
 
@@ -135,28 +145,28 @@ The inequality follows because $a - a' = \frac{1}{8}$ and thus $\lambda (a - a')
 
 For $j \geq i^*$, we start our comparison from $j=n-1$. First, we claim that $a' > \frac{1}{32}$. To prove this claim, note that
 \begin{align}
-|\kappa| &= \Big|\frac{1}{\lambda n} \sum_{i' > 1} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran \hat{r}\Big| \leq \frac{1}{X_{kn} - X_{k1}}\frac{1}{32} \sum_{i' > 1} \mathsf{gap}_{i'} 
+|\kappa| &= \Big|\frac{1}{\lambda n} \sum_{i' > 1} \mathsf{gap}_{i'} \mathbf{1}_{i':n}^\tran \hat{r}\Big| \leq \frac{1}{(X_{kn} - X_{k1})^2}\frac{1}{32} \sum_{i' > 1} \mathsf{gap}_{i'} 
  = \frac{1}{32} 
 \end{align}
-and that
+because $\sum_{i'>1} \mathsf{gap}_{i'} = X_{nk} - X_{1k}$ by definition and $X_{nk} - X_{1k} \geq 1$ by assumption of the theorem. We note also that
 \begin{align*}
-\frac{X_{kn} - X_{ki^*}}{X_{kn} - X_{k1}} &= \frac{X_{kn} - X_{k(i^*+1)} + X_{k(i^*+1)} - X_{ki^*}}{X_{kn} - X_{k1}} \leq \frac{1}{2} + \frac{1}{16}
+\frac{X_{nk} - X_{i^*k}}{X_{nk} - X_{1k}} &= \frac{X_{nk} - X_{(i^*+1)k} + X_{(i^*+1)k} - X_{i^*}k}{X_{nk} - X_{1k}} \leq \frac{1}{2} + \frac{1}{16}
 \end{align*}
-where the inequality follows because we had assumed that $\frac{X_{k(i+1)} - X_{ki}}{X_{k(n)} - X_{k(1)}} \leq \frac{1}{16}$ for all $i = 1,...,n-1$.
+where the inequality follows because we had assumed that $\frac{X_{(i+1)k} - X_{ik}}{X_{nk} - X_{1k}} \leq \frac{1}{16}$ for all $i = 1,...,n-1$.
 
 So, we have 
 \begin{align*}
-a' &= \frac{X_{kn} - X_{k1}}{X_{kn} - X_{ki^*}} \kappa 
-   + \frac{ X_{ki^*} - X_{k1}}{X_{kn} - X_{ki^*}} \frac{1}{8} \\
- &= \frac{X_{kn} - X_{k1}}{X_{kn} - X_{ki^*}} \left(
-  \kappa + \frac{X_{ki^*} - X_{k1}}{X_{kn} - X_{k1}} \frac{1}{8} \right) \\
-&\geq \frac{X_{kn} - X_{k1}}{X_{kn} - X_{ki^*}} \left(
+a' &= \frac{X_{nk} - X_{1k}}{X_{nk} - X_{i^*k}} \kappa 
+   + \frac{ X_{i^*k} - X_{1k}}{X_{nk} - X_{i^*k}} \frac{1}{8} \\
+ &= \frac{X_{nk} - X_{1k}}{X_{nk} - X_{i^*k}} \left(
+  \kappa + \frac{X_{i^*k} - X_{1k}}{X_{nk} - X_{1k}} \frac{1}{8} \right) \\
+&\geq \frac{X_{nk} - X_{1k}}{X_{nk} - X_{i^*k}} \left(
   -\frac{1}{32} + (\frac{1}{2} - \frac{1}{16}) \frac{1}{8} \right) \\
 &\geq \frac{1}{1/2 + 1/16} \left(
   -\frac{1}{32} + (\frac{1}{2} - \frac{1}{16}) \frac{1}{8} \right) \\
 &\geq \frac{1}{32}
 \end{align*}
-In the first inequality of the above derivation, we used the fact that $\frac{X_{ki^*} - X_{k1}}{X_{kn} - X_{k1}} \leq \frac{1}{2} - \frac{1}{16}$. In the second inequality, we used the fact that the quantity inside the parentheses is positive and $\frac{X_{kn} - X_{k1}}{X_{kn} - X_{ki^*}} \geq \frac{1}{1/2 + 1/16}$.
+In the first inequality of the above derivation, we used the fact that $\frac{X_{i^*k} - X_{1k}}{X_{nk} - X_{1k}} \leq \frac{1}{2} - \frac{1}{16}$. In the second inequality, we used the fact that the quantity inside the parentheses is positive and $\frac{X_{nk} - X_{1k}}{X_{nk} - X_{i^*k}} \geq \frac{1}{1/2 + 1/16}$.
 
 Now consider $j=n-1$. 
 \[
@@ -957,58 +967,90 @@ Therefore, with probability at least $1 - 2\delta$,
 %%%%%%%%%%%%%%%%%%%% 
 
 % \subsection{Supporting Technical Material}
- 
-\subsubsection{Supporting Lemma for Theorem~\ref{thm:acdc_faithful}}
+\subsubsection{Detail for Proof of Theorem~\ref{thm:convex_faithful}} 
+\label{sec:dominated_condition}
 
-\begin{lemma}
-\label{lem:acdc_derivative_bound}
-Let $f : [0,1]^p \rightarrow \R$ be a twice differentiable function. Suppose $p(\mathbf{x})$ is a density on $[0,1]^p$ such that $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$ and $\partial_{x_k}^2 p(\mathbf{x}_{-k} \given x_k)$ are continuous as functions of $x_k$. Let $\phi(\mathbf{x}_{-k})$ be a continuous function not dependent on $x_k$.
+Let $p(\mathbf{x}_{-k} \given x_k), f(\mathbf{x}), r(\mathbf{x}_{-k})$ be defined as in the proof of Theorem~\ref{thm:convex_faithful}.
 
-Then, $h^*_k(x_k) \equiv \E[ f(X) - \phi(X_{-k}) \given x_k]$ is twice
-differentiable and has a second derivative lower 
-bounded away from $-\infty$.
-\end{lemma}
-
-\begin{proof}
-We can write
+We claim that 
 \[
-h^*_k(x_k) = \int_{\mathbf{x}_{-k}} \big(f(\mathbf{x}) - \phi(\mathbf{x}_{-k})\big) p(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}
+\partial_{x_k} \int_{\mathbf{x}_{-k}} 
+  p(\mathbf{x}_{-k} \given x_k)\left( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \right) d\mathbf{x}_{-k} 
+ = \int_{\mathbf{x}_{-k}} \partial_{x_k} \Big( p(\mathbf{x}_{-k} \given x_k)\left( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \right) \Big) d \mathbf{x}_{-k}
 \]
-The integrand is bounded because it is a sum-product of continuous functions over a compact set. Therefore, we can differentiate under the integral and derive that
-\begin{align*}
-\partial_{x_k} h^*_k(x_k) &= 
-    \int_{\mathbf{x}_{-k}} f'(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) + (f(\mathbf{x}) - \phi(\mathbf{x}_{-k}) p'(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}\\
-\partial_{x_k}^2 h^*_k(x_k) &= 
-    \int_{\mathbf{x}_{-k}} f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) + 2f'(\mathbf{x}) p'(\mathbf{x}_{-k} \given x_k)  + (f(\mathbf{x}) - \phi(\mathbf{x}_{-k}) p''(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}
-\end{align*}
-where we have used the shorthand $f'(\mathbf{x}), p'(\mathbf{x}_{-k}
-\given x_k)$ to denote $\partial_{x_k} f(\mathbf{x})$, $\partial_{x_k}
-p(\mathbf{x}_{-k} \given x_k)$, etc.
+And likewise for the second derivative.\\
 
-This proves that $h^*_k(x_k)$ is twice-differentiable. To see that the second derivative is lower bounded, we note that $f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k)$ is non-negative and the other terms in the second-derivative are all continuous functions on a compact set and thus bounded. 
-\end{proof}
+
+ The first derivative of the integrand is 
+$$
+p'(\mathbf{x}_{-k} \given x_k)\left( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \right) + p(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}).
+$$
+$f(\mathbf{x})$ is continuous and bounded and $p'(\mathbf{x}_{-k} \given x_k)$ is bounded for all $\mathbf{x}_{-k}$ and all $x_k \in [0,\epsilon) \cup (1-\epsilon, 1]$ by boundary flatness. Thus, $p'(\mathbf{x}_{-k} \given x_k) f(\mathbf{x})$ is bounded for all $\mathbf{x}_{-k}$ and all $x_k \in [0,\epsilon) \cup (1-\epsilon, 1]$.\\
+
+$r(\mathbf{x}_{-k}) p(\mathbf{x})$ is integrable, and since $\inf_{\mathbf{x}} p(\mathbf{x}) > 0$, $r(\mathbf{x}_{-k})$ is integrable. Since $p'(\mathbf{x}_{-k} \given x_k)$ is bounded, $r(\mathbf{x}_{-k}) p'(\mathbf{x}_{-k} \given x_k) \leq |r(\mathbf{x}_{-k})|M$ for some constant $M$ for all $\mathbf{x}_{-k}$ and $x_k \in [0, \epsilon) \cup (1-\epsilon, 1]$. \\
+
+$f'(x_k, \mathbf{x}_{-k})$ is continuous and thus bounded, therefore, $p(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k})$ is bounded for all $\mathbf{x}_{-k}$ and $x_k \in [0, \epsilon) \cup (1-\epsilon, 1]$. 
+
+This verifies that, for all $\mathbf{x}_{-k}$ and for all $x_k \in [0, \epsilon) \cup (1-\epsilon, 1]$, the first derivative is less than $M |r(\mathbf{x}_{-k})| + C$, which is integrable. By dominated convergence theorem, we can thus exchange the derivative with the integral. \\
+
+The second derivative of the integrand is 
+$$
+p''(\mathbf{x}_{-k} \given x_k) \left( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \right) + 
+  2 p'(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) + p(\mathbf{x}_{-k} \given x_k) f''(x_k, \mathbf{x}_{-k})
+$$
+
+We just need to remember that $p''(\mathbf{x}_{-k} \given x_k)$ is bounded for all $\mathbf{x}_{-k}$ and $x_k \in [0, \epsilon) \cup (1-\epsilon, 1]$ by boundary flatness, that $f''(x_k, \mathbf{x}_{-k})$ is a continuous function of $\mathbf{x}$, and the same argument applies.
+
+
+% \subsubsection{Supporting Lemma for Theorem~\ref{thm:acdc_faithful}}
+
+% \begin{lemma}
+% \label{lem:acdc_derivative_bound}
+% Let $f : [0,1]^p \rightarrow \R$ be a twice differentiable function. Suppose $p(\mathbf{x})$ is a density on $[0,1]^p$ such that $\partial_{x_k} p(\mathbf{x}_{-k} \given x_k)$ and $\partial_{x_k}^2 p(\mathbf{x}_{-k} \given x_k)$ are continuous as functions of $x_k$. Let $\phi(\mathbf{x}_{-k})$ be a continuous function not dependent on $x_k$.
+
+% Then, $h^*_k(x_k) \equiv \E[ f(X) - \phi(X_{-k}) \given x_k]$ is twice
+% differentiable and has a second derivative lower 
+% bounded away from $-\infty$.
+% \end{lemma}
+
+% \begin{proof}
+% We can write
+% \[
+% h^*_k(x_k) = \int_{\mathbf{x}_{-k}} \big(f(\mathbf{x}) - \phi(\mathbf{x}_{-k})\big) p(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}
+% \]
+% The integrand is bounded because it is a sum-product of continuous functions over a compact set. Therefore, we can differentiate under the integral and derive that
+% \begin{align*}
+% \partial_{x_k} h^*_k(x_k) &= 
+%     \int_{\mathbf{x}_{-k}} f'(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) + (f(\mathbf{x}) - \phi(\mathbf{x}_{-k}) p'(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}\\
+% \partial_{x_k}^2 h^*_k(x_k) &= 
+%     \int_{\mathbf{x}_{-k}} f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k) + 2f'(\mathbf{x}) p'(\mathbf{x}_{-k} \given x_k)  + (f(\mathbf{x}) - \phi(\mathbf{x}_{-k}) p''(\mathbf{x}_{-k} \given x_k) d \mathbf{x}_{-k}
+% \end{align*}
+% where we have used the shorthand $f'(\mathbf{x}), p'(\mathbf{x}_{-k}
+% \given x_k)$ to denote $\partial_{x_k} f(\mathbf{x})$, $\partial_{x_k}
+% p(\mathbf{x}_{-k} \given x_k)$, etc.
+
+% This proves that $h^*_k(x_k)$ is twice-differentiable. To see that the second derivative is lower bounded, we note that $f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k)$ is non-negative and the other terms in the second-derivative are all continuous functions on a compact set and thus bounded. 
+% \end{proof}
 
  
 \begin{lemma}
 \label{lem:additive_uniqueness}
-Let $p(\mathbf{x})$ be a positive density over $[0,1]^p$. Let $\phi(\mathbf{x}) = \sum_{j=1}^p \phi_j(x_j)$ be an additive function.
-
-Suppose that for all $j$, $\phi_j(x_j)$ is bounded and $\E \phi_j(X_j) = 0$. Suppose for some $j$, $\E \phi_j(X_j)^2 > 0$, then it must be that $\E \phi(X)^2 > 0$. 
+Let $p(\mathbf{x})$ be a positive density over $[0,1]^p$. Let $f(\mathbf{x}) = \sum_{j=1}^p f_j(x_j)$ and $h(\mathbf{x}) = \sum_{j=1}^d h_j(x_j)$ be two additive functions such that $\E( f(X) - h(X) )^2 = 0$. Suppose also that $\E f_j(X_j) = 0, \E h_j(X_j) = 0$ for all $j$. Then, it must be that $\E( f_j(X_j) - h_j(X_j))^2 = 0$ for all $j$.
 \end{lemma}
 
 \begin{proof}
 
-Suppose, for sake of contradiction, that
+Let $\phi(\mathbf{x}) = f(\mathbf{x}) - g(\mathbf{x})$ and it is clear that $\phi(\mathbf{x}) = \sum_{j=1}^d \phi_j(x_j)$ with $\phi_j(x_j) = f_j(x_j) - h_j(x_j)$ and $\E \phi_j(X_j) = 0$. It is also immediate that $E \phi(X)^2 = 0$. \\
 
-\begin{align*}
-\E \phi(X)^2 = \E \left( \phi_j(X_j) + \phi_{-j} (X_{-j}) \right)^2 = 0.
-\end{align*}
+Let $P$ be the probability measure induced by the density $p$, so that $P(A) = \int_A p(\mathbf{x}) d\lambda$ where $\lambda$ is the Lebesgue measure. Since $p > 0$, $\lambda(A) > 0$ implies that $P(A) > 0$ as well. \\
 
-Let $A_+ = \{ x_j \,:\, \phi_j(x_j) \geq 0 \}$. Since $\E \phi_j(X_j) = 0$, $\E \phi_j(X_j)^2 > 0$, and $\phi_j$ is bounded, it must be that both $A_+$ has probability greater than 0.
+For sake of contradiction, let us assume that for some $j$, $\E \phi_j(X_j)^2 > 0$. Then, $P(A_j ) > 0$ where $A_j = \{ \mathbf{x} \in [0,1]^p \,:\, \phi_j(x_j) > 0 \}$. To see this, suppose that $\phi_j \leq 0$ almost surely. Then, $\E \phi_j = 0$ implies that $\phi_j = 0$ almost surely, contradicting the assumption that $\E \phi_j(X_j)^2 > 0$.\\
 
-Now, define $B_+ = \{ x_{-j} \,:\, \phi_{-j}(x_{-j}) \geq 0 \}$. $B_+$ then must have probability greater than 0 as well. 
+For $j' \neq j$, define $B_{j'} = \{ \mathbf{x} \in [0,1]^p \,:\, \phi_{j'}(x_{j'}) \geq 0 \}$. $P( B_{j'} ) > 0$ because, if not, then $\phi_{j'} < 0$ almost surely and that contradicts the $\E \phi_{j'}(X_{j'}) = 0$ assumption. \\
 
-Since $p(\mathbf{x})$ is a positive density, the set $A_+ \times B_+$ must have a positive probability. However, $\phi > 0$ on $A_+ \times B_+ \subset [0,1]^p$ which implies $\E \phi(X)^2 > 0$.
+Since the probability measure $P$ is absolutely continuous with respect to the Lebesgue measure on $[0, 1]^p$, $\lambda (A_j) > 0$. Let $\lambda_1$ be the one dimensional Lebesgue measure on $[0,1]$ and let $A^1_j = \{ x_j \in [0,1] \,:\, \phi_j(x_j) > 0\}$. From the fact that $\lambda(A_j) > 0$, and that $A_j = A^1_j \times [0,1]^{p-1}$, $\lambda_1(A^1_j) > 0$. Same reasoning show that $\lambda_1(B^1_{j'}) > 0$ where $B^1_{j'}$ is similarly defined.\\
+
+$A_j \cap \left( \bigcap_{j'} B_{j'} \right) = A^1_j \times \prod_{j'} B^1_{j'}$. Therefore, $\lambda ( A_j \cap \left( \bigcap_{j'} B_{j'} \right) ) = \lambda_1(A^1_j)  \prod_{j'} \lambda_1 (B_{j'}) > 0$. Since the density of $P$ is positive, $P( A_j \cap \left( \bigcap_{j'} B_{j'} \right) ) > 0$ and since $\phi > 0$ on this event, we conclude that $\E \phi(X)^2 > 0$, thus giving us the desired contradiction.
 
 \end{proof}
 
@@ -1308,6 +1350,6 @@ It is then simple to solve the system and verify that $a_1, a_2$ are as specifie
  
 %%% Local Variables: ***
 %%% mode:latex ***
-%%% TeX-master: "paper.tex" ***
+%%% TeX-master: "paper-submit.tex" ***
 %%% End: ***
 

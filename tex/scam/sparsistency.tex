@@ -8,7 +8,7 @@ deterministic condition for consistency of the sparsity pattern
 screening procedure.  We then consider the stochastic setting and argue that the 
 deterministic conditions hold with high probability. Note that in all of our results 
 and analysis, we let $c,
-C$ represent absolute constants; the actual values of $c,C$ may change from line to line. We derived two equivalent optimizations for AC/DC: \eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and \eqref{opt:alternate_opt} outputs the second derivatives $\hat{d}_k$. Their equivalence is established in Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and $\hat{f}_k$ in our analysis. We will also assume in this section that the true regression function $f_0$ has mean-zero and therefore, we will omit the intercept term $\hat{mu}$ from our estimation procedure.
+C$ represent absolute constants; the actual values of $c,C$ may change from line to line. We derived two equivalent optimizations for AC/DC: \eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and \eqref{opt:alternate_opt} outputs the second derivatives $\hat{d}_k$. Their equivalence is established in Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and $\hat{f}_k$ in our analysis. We will also assume in this section that the true regression function $f_0$ has mean-zero and therefore, we will omit the intercept term $\hat{\mu}$ from our estimation procedure.
 
 In our analysis, we assume that an upper bound $B$ to $\| \hat{f}_k \|_\infty$ 
 is imposed in the optimization procedure, where $B$ is chosen to also upper bound $\| f^*_k \|_\infty$. This $B$-boundedness constraint is added so that we may use the convex function bracketing results from~\cite{kim2014global} to establish uniform convergence between the empirical risk and the population risk. We emphasize that this constraint is not needed in practice and we do not use it for any of our simulations. 
@@ -30,7 +30,7 @@ optimization~\eqref{opt:alternate_opt_concave} for all $k \in S^c$.
 We define the \emph{restricted regression} problem 
 \[
 \min_{d_k} \frac{1}{n} \Big\| Y - \sum_{k \in S} \bar{\Delta}_k d_k \Big\|_2^2 + 
-   \lambda_n \sum_{k \in S} \| \bar{\Delta}_k d_k \|_\infty \quad \trm{such that} \, d_{k,1}, \ldots, d_{k,n-1} \geq 0
+   \lambda_n \sum_{k \in S} \| \bar{\Delta}_k d_k \|_\infty \quad \trm{such that} \, d_{\pi_k(2)k}, \ldots, d_{\pi_k(n-1)k} \geq 0
 \]
 where we restrict the indices $k$ in
 optimization \eqref{opt:alternate_opt} to lie in some set $S$ which contains the true
@@ -44,9 +44,9 @@ relevant variables.
 Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression as defined above.
 Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restricted regression residual. 
 
-Let $\pi_k(i)$ be a reordering of $X_k$ in ascending order so that $X_{k \pi_k(n)}$ is the largest entry. Let $\mathbf{1}_{\pi_k(i:n)}$ be 1 on the coordinates $\pi_k(i),\pi_k(i+1),...,\pi_k(n)$ and 0 elsewhere. Define $\mathsf{range}_k = X_{k\pi_k(n)} - X_{k\pi_k(1)}$.
+Let $\pi_k(i)$ be a reordering of $X_k$ in ascending order so that $X_{\pi_k(n)k}$ is the largest entry. Let $\mathbf{1}_{\pi_k(i:n)}$ be 1 on the coordinates $\pi_k(i),\pi_k(i+1),...,\pi_k(n)$ and 0 elsewhere. Define $\mathsf{range}_k = X_{\pi_k(n)k} - X_{\pi_k(1)k}$.
 
-Suppose for all $k\in S^c$, for all $i=1,\ldots,n$, $\lambda_n > \mathsf{range}_k| \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$. Suppose also that for all $k \in S^c$, $\max_{i=1,...,n-1} \frac{X_{k\pi_k(i+1)} - X_{k\pi_k(i)}}{\mathsf{range}_k} \geq \frac{1}{16}$, and $\mathsf{range}_k \geq 1$.
+Suppose for all $k\in S^c$, for all $i=1,\ldots,n$, $\lambda_n > \mathsf{range}_k| \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$. Suppose also that for all $k \in S^c$, $\max_{i=1,...,n-1} \frac{X_{\pi_k(i+1)k} - X_{\pi_k(i)k}}{\mathsf{range}_k} \leq \frac{1}{16}$, and $\mathsf{range}_k \geq 1$.
 
 Then the following two statements hold.
 \begin{enumerate}
@@ -103,7 +103,7 @@ $\mathcal{C}_1^p \equiv \{ f \,:\, f = \sum_{k=1}^p f_k, \,
 Let $f^*(\mathbf{x}) = \sum_{k=1}^p f^*_k(x_k)$ be the population risk
 minimizer in $\mathcal{C}_1^p$, 
 \begin{equation}
-f^* = \arg\min_{f \in \mathcal{C}_1^p} \E\big(f_0(X) - f^*(X)
+f^* = \arg\min_{f \in \mathcal{C}_1^p} \E\big(f_0(X) - f(X)
 \big)^2.
 \end{equation}
 $f^*$ is the unique minimizer by Theorem~\ref{thm:acdc_faithful}. Similarly, we define $\mh \mathcal{C}^1$ as the set of univariate concave functions supported on $[-1, 1]$ and define
@@ -139,7 +139,7 @@ of the procedure.
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make
   weak assumptions on the true regression function $f_0$ in
-  A2. In particular, we do not assume that $f_0$ is additive. In
+  A2. In particular, we do not assume that $f_0$ is additive. An
   important direction for future work is to weaken assumption A1.
   Our simulation experiments indicate that the procedure can be
   effective even when the relevant and irrelevant variables are correlated.
@@ -221,7 +221,7 @@ for some constant $C$.
 \end{corollary}
 The above corollary implies that consistent variable selection is
 achievable with an exponential scaling of the ambient dimension
-scaling, $p = O(\exp(n^c))$ for some $0<c<1$, just as in parametric models.
+scaling, $p = O(\exp(cn))$ for some $0<c<1$, just as in parametric models.
 The cost of nonparametric modeling through shape constraints is
 reflected in the scaling with respect to the number of relevant
 variables, which can scale as $s = o(n^{4/25})$.
@@ -243,5 +243,5 @@ variables, which can scale as $s = o(n^{4/25})$.
  
 %%% Local Variables: ***
 %%% mode:latex ***
-%%% TeX-master: "paper.tex" ***
+%%% TeX-master: "paper-submit.tex" ***
 %%% End: ***

@@ -7,15 +7,15 @@ Theorem~\ref{thm:acdc_faithful} naturally suggests
 a two-stage screening procedure for variable selection in the population setting. In the first stage, we fit a convex additive model. 
 \begin{equation}
 \label{eqn:scam2_pop}
-f^*_1, ..., f^*_p = \argmin_{f_1,...,f_p \in \C^1_0} 
-   \E \Big( f(X)  - \sum_{k=1}^p f_k(X_k) \Big)^2 
+f^*_1, ..., f^*_p = \argmin_{f_1,...,f_p \in \C^1_0, \mu} 
+   \E \Big( f(X) - \mu - \sum_{k=1}^p f_k(X_k) \Big)^2 
 \end{equation}
 where we denote $\C^1_0$ ($\mh{}\C^1_0$) as the set of one-dimensional convex (resp. concave) functions with population mean zero. In the second stage, for every variable marked as irrelevant in the first stage, we fit a univariate \emph{concave} function separately on the residual for that variable.
- for each $k$ such that $ f^*_k = 0$:
+ For each $k$ such that $ f^*_k = 0$:
 \begin{equation}
 \label{eqn:dc2}
 g^*_k = \argmin_{g_k \in \mh{}\C^1_0} 
-   \E \Big( f(X) - \sum_{k'} f^*_{k'}(X_{k'}) 
+   \E \Big( f(X) - \mu^* - \sum_{k'} f^*_{k'}(X_{k'}) 
     - g_k(X_{k})\Big)^2 
 \end{equation}
 We screen out $S^C$, any variable $k$ that is zero after the second stage, and output $S$.

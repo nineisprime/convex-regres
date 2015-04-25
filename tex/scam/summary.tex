@@ -23,7 +23,8 @@ is the all ones vector. If $X \in \R^p$ is a random variable and $S \subset
 the coordinates in $S$. Given $n$ samples $X^{(1)},...,X^{(n)}$, we use
 $\bar{X}$ to denote the sample mean. Given a random variable
 $X_k$ and a scalar $x_k$, we use $\E[\,\cdot \given x_k]$ as a shorthand
-for $\E[\, \cdot \given X_k = x_k]$.
+for $\E[\, \cdot \given X_k = x_k]$. If we say a function is integrable, we 
+mean it is Lebesgue integrable.
 
 
 \subsection{Faithful screening}
@@ -167,7 +168,7 @@ Define
 functions, and, with respective to $f^*_k$'s from above, define
 \begin{equation}
 g^*_k = \arg\min_{g_k} \Big\{ \E\Bigl( f(X) - \mu^* - 
-\sum_{k' \neq k} f^*_{k'}(X_{k'}) - g_k \Bigr)^2 \,:\, g_k \in \mh
+\sum_{k' \neq k} f^*_{k'}(X_{k'}) - g_k(X_k) \Bigr)^2 \,:\, g_k \in \mh
 \mathcal{C}^1, \E g_k(X_k) = 0 \Big\},
 \end{equation}
 with $\mh{}\mathcal{C}^1$ denoting the set of univariate concave

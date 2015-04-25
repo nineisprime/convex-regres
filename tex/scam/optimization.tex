@@ -35,7 +35,7 @@ increase monotonically. This observation leads to the  optimization
        & \;\; f_{\perm{i+1} k} = f_{\perm{i} k} +
        \beta_{\perm{i} k}(x_{\perm{i+1} k}-x_{\perm{i} k}),\;\textrm{for $i=1,\ldots, n-1$}\\
        & \;\; \sum_{i=1}^{n}f_{ik}=0,\\
-       & \;\; \beta_{\perm{i+1} k} \geq \beta_{\perm{i} k}\;\textrm{for $i=1,\ldots, n-1$}.
+       & \;\; \beta_{\perm{i+1} k} \geq \beta_{\perm{i} k}\;\textrm{for $i=1,\ldots, n-2$}.
 \end{split}
 \label{np}
 \end{equation}
@@ -50,7 +50,7 @@ x_{\perm{1} k} \leq{} x_{\perm{2} k} \leq \cdots \leq{} x_{\perm{n} k}.
 We can solve for $\mu$ explicitly as  
 $\mu = \frac{1}{n} \sum_{i=1}^n y_i = \bar{y}$.  This follows from the
 KKT conditions
-and the constraints $\sum_i f_{ki} = 0$.
+and the constraints $\sum_i f_{ik} = 0$.
 % It is easy to verify that the constraints in \eqref{np} satisfy the
 % supporting hyperplane constraints, since
 % for all $j > i$
@@ -173,19 +173,19 @@ constraint that $d_{\perm{i}k} \geq 0$ for all $i > 1$.
 It is easy to verify that $\beta_{\perm{i}k} = \sum_{j \leq i} d_{\perm{j}k}$ and 
 \begin{align*}
 f_k(x_{\perm{i}k}) = & f_k(x_{\perm{i-1}k}) + \beta_{\perm{i-1}k}(x_{\perm{i}k} - x_{\perm{i-1}k}) \\
- =& f_k(x_{\perm{1}k}) + \sum_{j < i} \beta_{\perm{j}k} (x_{\perm{j}k} - x_{\perm{j-1}k}) \\
- =& f_k(x_{\perm{1}k}) + \sum_{j < i} \sum_{j' \leq j} d_{\perm{j'}k} (x_{\perm{j}k} - x_{\perm{j-1}k})\\
- =& f_k(x_{\perm{1}k}) + \sum_{j' < i} d_{\perm{j'}k} \sum_{i > j \geq j'} (x_{\perm{j}k} - x_{\perm{j-1}k}) \\
+ =& f_k(x_{\perm{1}k}) + \sum_{j < i} \beta_{\perm{j}k} (x_{\perm{j+1}k} - x_{\perm{j}k}) \\
+ =& f_k(x_{\perm{1}k}) + \sum_{j < i} \sum_{j' \leq j} d_{\perm{j'}k} (x_{\perm{j+1}k} - x_{\perm{j}k})\\
+ =& f_k(x_{\perm{1}k}) + \sum_{j' < i} d_{\perm{j'}k} \sum_{i > j \geq j'} (x_{\perm{j+1}k} - x_{\perm{j}k}) \\
  =& f_k(x_{\perm{1}k}) + \sum_{j' < i} d_{\perm{j'}k} (x_{\perm{i}k} - x_{\perm{j'}k}).
 \end{align*}
 We can write this more compactly in matrix notation as
 \begin{align}
 \nonumber
 \left[ \begin{array}{c}
-f_k(x_{\perm{1}k}) \\
-f_k(x_{\perm{2}k}) \\
+f_k(x_{1k}) \\
+f_k(x_{2k}) \\
 \vdots \\
-f_k(x_{\perm{n}k})
+f_k(x_{nk})
 \end{array} \right] &=
 \left[ \begin{array}{ccc}
     (x_{1k} - x_{\perm{1}k})_+ & \cdots & (x_{1k} - x_{\perm{n-1}k})_+ \\
@@ -203,9 +203,9 @@ where $\Delta_k$ is a $n\times n-1$ matrix such that $\Delta_k(i,j) =
 (x_{ik} - x_{\perm{j}k})_+$, $d_k = (d_{\perm{1}k} ,\ldots,
 d_{\perm{n-1}k})$, and $\mu_k = f_k(x_{\perm{1}k}) \mathbf{1}_n$.
 Because $f_k$ has to be centered, $\mu_k = - \frac{1}{n}
-\mathbf{1}_n^\tran \Delta_k d_k$, and therefore
+\mathbf{1}_n \mathbf{1}_n^\tran \Delta_k d_k$, and therefore
 \begin{equation}
-\Delta_k d_k + \mu_k \mathbf{1}_n = 
+\Delta_k d_k + \mu_k  = 
    \Delta_k d_k - \frac{1}{n} \mathbf{1}_n \mathbf{1}_n^\tran \Delta_k d_k = 
    \bar{\Delta}_k d_k 
 \label{eq:deltabar_defn}
@@ -258,5 +258,5 @@ and hence are not subject to non-identifiability under additive constants.
 
 %%% Local Variables: ***
 %%% mode:latex ***
-%%% TeX-master: "paper.tex" ***
+%%% TeX-master: "paper-submit.tex" ***
 %%% End: ***

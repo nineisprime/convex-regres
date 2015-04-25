@@ -30,20 +30,19 @@ with a lemma that characterizes the components of the additive approximation und
 \begin{lemma}
 \label{lem:general_int_reduction}
 Let $F$ be a distribution on $C=[0,1]^p$ with a positive density
-function $p$. Let $f: C \rightarrow \R$ be an integrable function,
-and define 
+function $p$. Let $f: C \rightarrow \R$ be in $L^2(F)$. Let
 \begin{align*}
 f^*_1,...,&f^*_p, \mu^* \coloneqq  \\
 &\arg\min \left\{ \E \Bigl( f(X) - \mu - \sum_{k=1}^p f_k(X_k)\Bigr)^2 \,:\,
-\E f_k(X_k) = 0,\; \forall k=1,\ldots, p \right\}.
+f_k \in L^2(F),\, \E f_k(X_k) = 0,\; k=1,\ldots, p \right\}.
 \end{align*}
-Then $\mu^* = \E f(X)$, 
+With $\mu^* = \E f(X)$, 
 \begin{equation}
 \label{eq:backfit}
 f^*_k(x_k) = \E\Bigl[ f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) \given
 x_k\Bigr] - \E f(X), 
 \end{equation}
-and this solution is unique.
+and this solution is unique. 
 \end{lemma}
 
 
@@ -55,7 +54,7 @@ a proof as our results build on it.
 % perhaps include this in an appendix??
 
 \begin{proof}
-  Let $f^*_1,...,f^*_p, \mu^*$ be the minimizers as defined.  We first
+  Let $f^*_1,...,f^*_p, \mu^*$ be the minimizers as defined; they exist since the set of mean zero additive functions is a closed subspace of $L^2(F)$.  We first
   show that the optimal $\mu$ is $\mu^* = \E f(X)$ for any $f_1, ...,
   f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity
   condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] =
@@ -65,14 +64,14 @@ a proof as our results build on it.
   We now turn our attention toward the $f^*_k$s.  It must be that
   $f^*_k$ minimizes 
 \begin{equation}
-\E\Bigl[ \big( f(X) - \mu^* - \sum_{k' \neq k}
-  f^*_{k'} (X_{k'}) - f_k (X_k) \big)^2\Bigr]
+\min_{f_k} \E  \big( f(X) - \mu^* - \sum_{k' \neq k}
+  f^*_{k'} (X_{k'}) - f_k (X_k) \big)^2 
 \end{equation}
 subject to $\E f_k(X_k) = 0$.
 Fixing $x_k$, we will show that the value 
 \begin{equation}
 \E[ f(X) - \sum_{k' \neq k}
-f_{k'}(X_{k'}) \given x_k] - \mu^*
+f_{k'}^*(X_{k'}) \given x_k] - \mu^*
 \end{equation} 
 uniquely minimizes
 \begin{equation}
@@ -91,13 +90,15 @@ p(x_k) f_k(x_k) &= \int_{\mathbf{x}_{-k}} p(x_k)
               d \mathbf{x}_{-k} \\
 f_k(x_k) &= \int_{\mathbf{x}_{-k}} 
        p(\mathbf{x}_{-k} \given x_k ) 
-     (f(\mathbf{x}) - \sum_{k'\neq k} f_{k'} (x_{k'})  -\mu^*) d \mathbf{x}_{-k} 
+     (f(\mathbf{x}) - \sum_{k'\neq k} f^*_{k'} (x_{k'})  -\mu^*) d \mathbf{x}_{-k} 
  \end{align}
-The square error objective is strongly convex,
-and the second derivative with respect to $f_k(x_k)$ is $2 p(x_k)$, which is always positive under the assumption that $p$ is positive. Therefore, the solution $f^*_k(x_k) = \E[ f(X) \given x_k ] - \E f(X)$ is unique.
-Noting that $\E[ f(X) -\sum_{k'\neq k} f_{k'}(X_{k'}) | x_k] - \E f(X)$ has mean zero as a function of $x_k$
-completes the proof.
-\end{proof}
+
+
+To prove uniqueness, suppose $\tilde{f} = \sum_{j=1}^p \tilde{f}_j$ is another additive function that achieves the same square error. Let $\nu \in [0,1]$, consider $\E\left( f(X) - \mu^* - (f^* + \nu (\tilde{f} - f^*)) \right)^2$ as a function of $\nu$. The objective is strongly convex if $\E (\tilde{f} - f^*)^2$, and so $\E( \tilde{f} - f^*)^2 = 0$ by the assumption that $f^*$ and $\tilde{f}$ are both optimal solutions. By Lemma~\ref{lem:additive_uniqueness}, we conclude that $\E( f^*_j - \tilde{f}_j )^2 = 0$ as well and thus, $f^*_j = \tilde{f}_j$ almost everywhere.
+
+We note that $\E[ f(X) -\sum_{k'\neq k} f^*_{k'}(X_{k'}) | x_k] - \E f(X)$ has mean zero as a function of $x_k$, which shows that $f^*_k$'s are feasible. 
+
+\end{proof} 
 
 In the case that the distribution in
 Lemma~\ref{lem:general_int_reduction} is a product distribution, 
@@ -111,12 +112,11 @@ Let $\mu^*, f^*_k(x_k)$ be defined as in Lemma~\ref{lem:general_int_reduction}.
 Then $\mu^* = \E f(X)$ and $f^*_k(x_k) = \E[ f(X) \given x_k] - \E f(X)$ and this solution is unique.
 \end{corollary}
 
-In particular, if $F$ is the uniform distribution,
-then $f^*_k(x_k) = \displaystyle\int f(x_k, \mathbf{x}_{-k})
-d\mathbf{x}_{-k}$.
+In particular, under the uniform distribution, $f^*_k(x_k) = \displaystyle\int f(x_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k} - \int f(\mathbf{x}) d\mathbf{x}$.
+
 
 \begin{example} Using Corollary~\ref{cor:product_int_reduction}, we
-  give two examples of \emph{additively unfaithfulness} under the
+  give two examples of \emph{additive unfaithfulness} under the
   uniform distribution---where relevant variables are
   erroneously marked as irrelevant under an additive
   approximation. First, consider the following function:
@@ -193,8 +193,7 @@ faithful.
 \begin{definition}
 \label{defn:boundary-point}
 Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. $p(\mathbf{x})$ satisfies
-the \emph{boundary flatness condition} if for all $j$, and for all $\mathbf{x}_{-j}$,
-
+the \emph{boundary flatness condition} if $0 < \inf_{\mathbf{x}} p(\mathbf{x}) \leq \sup_{\mathbf{x}} p(\mathbf{x}) < \infty$, and for all $j$, there exists some $\epsilon > 0$ such that for all $\mathbf{x}_{-j}$, and for all $x_j \in [0, \epsilon) \cup (1-\epsilon, 1]$, $p(\mathbf{x}_{-j} \given x_j)$ is twice differentiable in $x_j$, that $p(\mathbf{x}_{-j} \given x_j), \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}, \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j) }{\partial^2 x_j}$ are bounded, and that
 \begin{equation}
 \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
 \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0
@@ -203,15 +202,37 @@ the \emph{boundary flatness condition} if for all $j$, and for all $\mathbf{x}_{
 
 \end{definition}
 
+The boundary flatness condition intuitively states that
+the conditional effect of $X_k$ weakens as $\mathbf{x}$ approaches the boundary. It is a weak condition because it affects only an $\epsilon$-small region around the boundary; $p(\mathbf{x}_{-j} \given x_j)$ can take arbitrary shapes away from the boundary; it can induce arbitrary correlation structure (provided $p(\mathbf{x}) >0$) and need not be continuous. Before presenting the main theorem, let us see some examples of boundary flat distributions.
+
+\begin{example} The following densities satisfy boundary flatness.
+\begin{enumerate}
+\item If $\mathbf{p}$ is a product density, then boundary flatness is trivially
+satisfied.
+\item Let $p(\mathbf{x})$ be a joint density such that $0 < \inf_{\mathbf{x}} p(\mathbf{x}) \leq \sup_{\mathbf{x}} p(\mathbf{x}) < \infty$. Suppose $p(\mathbf{x})$ has a bounded second derivative for all $\mathbf{x}$. If, for all $j$,
+$\partial_{x_j} p(x_j,\mathbf{x}_{-j}) =
+\partial_{x_j}^2 p(x_j, \mathbf{x}_{-j}) = 0$ at $x_j = 0, 1$. Then it is possible to show that the two derivatives of $p(\mathbf{x}_{-j} \given x_j) = \frac{p(x_j, \mathbf{x}_{-j})}{p(x_j)}$ are 0 at $x_j = 0,1$; boundary flatness thus holds.
+\item Suppose $p(\mathbf{x})$ is a bounded density over $[\epsilon, 1-\epsilon]^p$ for some $0 < \epsilon < 1/2$. Let $q(\mathbf{x})$ be a boundary flat density over $[0,1]^p$, take the uniform distribution for instance. Define a mixture $p_{\lambda, \epsilon}(\mathbf{x}) = \lambda q(\mathbf{x}) + (1-\lambda) p(\mathbf{x})$ where $0 < \lambda \leq 1$, then $p_{\lambda, \epsilon}(\mathbf{x})$ is boundary flat over $[0,1]^p$. Furthermore, $\epsilon$ and $\lambda$ can be made arbitrarily small and therefore, any bounded density over a hypercube can be approximated arbitrarily well by a boundary flat distribution.
+
+% $$
+% p'(\mathbf{x}_{-j} \given x_j) = \frac{ p(x_j, \mathbf{x}_{-j}) p'(x_j) - 
+%    p'(x_j, \mathbf{x}_{-j}) p(x_j)}{ p(x_j)^2 } = 0 
+% $$
+% \begin{align*}
+% p''(\mathbf{x}_{-j} \given x_j) = &
+%     \frac{ p(x_j)^2 \left( p(x_j, x_{-j}) p''(x_j) - p''(x_j, x_{-j}) p(x_j) \right) - 2p(x_j)p'(x_j) \left(p(x_j, x_{-j})p'(x_j) - p'(x_j, x_{-j}) p(x_j)  \right) }{p(x_j)^4}
+%  \end{align*}
+\end{enumerate}
+\end{example}
 
 
-The boundary flatness condition is a weak condition. For instance, it is
-satisfied when the density is flat at the boundary of support---more
-precisely, when the joint density satisfies the property that
-$\frac{\partial p(x_j,\mathbf{x}_{-j})}{\partial x_j} =
-\frac{\partial^2 p(x_j, \mathbf{x}_{-j})}{\partial x_j^2} = 0$ at boundary
-points $x_j = 0, x_j=1$. The boundary flatness property is also
-trivially satisfied when $p$ is a product density.
+% For instance, it is
+% satisfied when the density is flat at the boundary of support---more
+% precisely, when the joint density satisfies the property that
+% $\frac{\partial p(x_j,\mathbf{x}_{-j})}{\partial x_j} =
+% \frac{\partial^2 p(x_j, \mathbf{x}_{-j})}{\partial x_j^2} = 0$ at boundary
+% points $x_j = 0, x_j=1$. The boundary flatness property is also
+% trivially satisfied when $p$ is a product density.
 
 The following theorem is the main result of this section.
 
@@ -219,13 +240,13 @@ The following theorem is the main result of this section.
 \label{thm:convex_faithful}
 Let $p$ be a positive density supported on $C=[0,1]^p$ that satisfies
 the boundary flatness property. 
-If $f$ is convex and twice differentiable, then $f$ is additively faithful under $p$.
+If $f$ is convex and continuously twice differentiable, then $f$ is additively faithful under $p$.
 \end{theorem}
 
 % We give the full proof in Section~\ref{sec:faithful_proof} of the
 % Appendix, but pause here to provide some intuition. 
 
-We pause to give some intuition before we presenting the full proof.
+We pause to give some intuition before we present the full proof.
 Suppose that the underlying distribution has a product density.
 Then we know from Lemma~\ref{lem:general_int_reduction} that the
 additive approximation zeroes out $k$ when, fixing $x_k$, every
@@ -257,8 +278,10 @@ $\frac{\partial p(\mathbf{\scriptstyle x}_{-k} \given x_k)}{\partial x_k}$ and
 $p''(\mathbf{x}_{-k} \given x_k)$ denote 
 $\frac{\partial^2 p(\mathbf{\scriptstyle x}_{-k} \given x_k)}{\partial x_k^2}$ and
 likewise for $f'(x_k, \mathbf{x}_{-k})$ and $f''(x_k,
-\mathbf{x}_{-k})$. We then differentiate under the integral, valid
-because all functions are bounded, and obtain
+\mathbf{x}_{-k})$. \\
+
+We differentiate with respect to $x_k$ at $x_k = 0,1$ under the integral. The detail necessary to verify the validity of this operation is technical and given in Section~\ref{sec:dominated_condition} of the supplementary material.
+
 \begin{gather}
 \int_{\mathbf{x}_{-k}} p'(\mathbf{x}_{-k} \given x_k) 
 \big( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big) + 
@@ -326,7 +349,7 @@ additive.
 \begin{remark}
   We assume twice differentiability in
   Theorems~\ref{thm:convex_faithful} to simplify the proof.  We
-  expect, however, that this this smoothness condition is not
+  expect, however, that this smoothness condition is not
   necessary---every convex function can be approximated arbitrarily
   well by a smooth convex function.
 \end{remark}
@@ -347,7 +370,7 @@ additive.
 
 
 \begin{remark}
-In Theorem~\ref{thm:convex_faithful}, we do not assume a parametric form for the additive components. The additive approximations may not be faithful if we assume a parametric form for each of the components. For example, suppose we approximate a convex function $f(X)$ by a linear form $X \beta$. The optimal linear function in the population setting is $\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$. Suppose the $X$'s are independent and follow a symmetric distribution and suppose $f(\mathbf{x}) = x_1^2 - \E[X_1^2]$, then $\beta^*_1 = \E[ X_1 f(X)] = \E[ X_1^3 - X_1 \E[X_1^2]] = 0$.
+In Theorem~\ref{thm:convex_faithful}, we do not assume a parametric form for the additive components; the additive approximations may not be faithful if we take a parametric form. For example, suppose we approximate a convex function $f(X)$ by a linear form $X \beta$. The optimal linear function in the population setting is $\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$ where $\Sigma$ is the covariance matrix. Suppose the $X$'s are independent, follow a symmetric distribution, have unit variance, and suppose $f(\mathbf{x}) = x_1^2 - \E[X_1^2]$, then $\beta^*_1 = \E[ X_1 f(X)] = \E[ X_1^3 - X_1 \E[X_1^2]] = 0$.
 \end{remark}
 
 
@@ -355,12 +378,12 @@ In Theorem~\ref{thm:convex_faithful}, we do not assume a parametric form for the
 It is possible to get a similar result for distributions with
 unbounded support, by using a limit condition $\lim_{|x_k| \rightarrow
   \infty} \frac{\partial p(\mathbf{\scriptstyle x}_{-k} \given x_k)}{\partial x_k}
-= 0$.  Such a limit condition however is not obeyed by many common distributions such as the multivariate Gaussian distribution. The next example shows that certain convex functions are not additive faithful under certain multivariate Gaussian distributions.
+= 0$.  Such a limit condition however is not obeyed by many common distributions such as the multivariate Gaussian distribution. The next example shows that certain convex functions are not additively faithful under certain multivariate Gaussian distributions.
 \end{remark}
 
 \begin{example}
 \label{examp:gaussian_counterexample}
-Consider a two dimensional quadratic function $f( \mathbf{x}) = \mathbf{x}^\tran H \mathbf{x} + c$ where $H = \begin{pmatrix} H_{11} & H_{12} \\ H_{12} & H_{22}\end{pmatrix}$ is positive definite and a Gaussian distribution $X \sim N(0, \Sigma)$ where $\Sigma = \begin{pmatrix}1 & \alpha \\ \alpha & 1 \end{pmatrix}$.
+Consider a two dimensional quadratic function $f( \mathbf{x}) = \mathbf{x}^\tran H \mathbf{x} + c$ with zero mean where $H = \begin{pmatrix} H_{11} & H_{12} \\ H_{12} & H_{22}\end{pmatrix}$ is positive definite and a Gaussian distribution $X \sim N(0, \Sigma)$ where $\Sigma = \begin{pmatrix}1 & \alpha \\ \alpha & 1 \end{pmatrix}$.
 As we show in Section~\ref{sec:gaussian_example} of the Appendix, the additive approximation has the
 following closed form.
 \begin{align*}
@@ -417,12 +440,14 @@ Since the true regression function $f$ is convex, we approximate the additive mo
     \E\Bigl( f(X) - \sum_{k=1}^p f_k(X_k) \Bigr)^2 \,:\, f_k \in \mathcal{C}^1, \, \E f_k(X_k) = 0 \Big \}
 \end{equation}
 where $\mathcal{C}^1$ is the set of univariate convex functions. 
-The convex functions $\{f^*_k\}$ are not additively faithful by
-themselves, i.e., it could be that the true function $f$ depends on variable $k$ but $f^*_k = 0$. However, faithfulness can be restored by coupling the $f^*_k$'s with a set of univariate concave fits on the \emph{residual} $f - f^*$:
+
+If $p(\mathbf{x})$ is a product density, then $\E[ f(X) \given x_k]$ is convex in $x_k$ and the additive projection is simultaneously the convex additive projection. Thus, in this case, additive faithfulness trivially holds for the convex additive projection.  For a general boundary flat density $p(\mathbf{x})$ however, the additive projection need not be convex and we thus cannot say anything about additive faithfulness of the convex additive projection.
+
+Luckily, we can restore faithfulness by coupling the $f^*_k$'s with a set of univariate concave fits on the \emph{residual} $f - f^*$:
 \begin{equation}
 \label{eqn:concave_postprocess}
 g^*_k = \arg\min \Big\{
-   \E\Bigl( f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) - g_k \Bigr)^2
+   \E\Bigl( f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) - g_k(X_k) \Bigr)^2
     \,:\, g_k \in \mh \mathcal{C}^1, \E g_k(X_k) = 0 
   \Big\}.
 \end{equation}
@@ -432,9 +457,7 @@ g^*_k = \arg\min \Big\{
 \label{thm:acdc_faithful}
 Suppose $p(\mathbf{x})$ is a positive density on $C=[0,1]^p$ that
 satisfies the boundary flatness condition. Suppose that $f$ is convex
-and twice differentiable, and that $\partial_{x_k} p( \mathbf{x}_{-k} \given x_k )$, and
-$\partial_{x_k}^2 p( \mathbf{x}_{-k} \given x_k)$ are all continuous
-as functions of $x_k$.  Let $f^*_k$ and $g^*_k$ be as defined in equations
+and continuously twice differentiable. Let $f^*_k$ and $g^*_k$ be as defined in equations
 \eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}, then the $f^*_k$'s and the $g^*_k$'s are unique. Furthermore, 
 $f^*_k = 0$ and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x})
 = 0$, that is, $f$ does not depend on~$x_k$. 
@@ -444,8 +467,8 @@ Before we can prove the theorem, we need a lemma that generalizes Theorem~\ref{t
 
 \begin{lemma}
 \label{cor:faithfulness_extension}
-Suppose $p(x)$ is a positive density on $C=[0,1]^p$ satisfying the boundary flatness condition.
-Let $f(\mathbf{x})$ be a convex twice differentiable function on $C$. Let $\phi(\mathbf{x}_{-k})$ be any function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
+Suppose $p(\mathbf{x})$ is a positive density on $C=[0,1]^p$ satisfying the boundary flatness condition.
+Let $f(\mathbf{x})$ be a convex and continuously twice differentiable function on $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
  \begin{align}
 h^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X) 
            - \phi(X_{-k}) - h_k(X_k) \bigr)^2\Bigr]
@@ -466,9 +489,9 @@ and $ h^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x}) = 0$.
 
 Fix $k$. Let $f^*_k$ and $g^*_k$ be defined as in
 equation~\ref{eqn:convex_additive} and
-equation~\ref{eqn:concave_postprocess}. Let $\phi(\mathbf{x}_{-k}) \equiv \sum_{k' \neq k} f^*_{k'}(x_{k'})$.
+equation~\ref{eqn:concave_postprocess}. Let $\phi(\mathbf{x}_{-k}) \equiv \sum_{k' \neq k} f^*_{k'}(x_{k'})$. Each $f^*_{k'}$ is convex and thus continuous on $(0,1)$. $f^*_{k'}(x_{k'})$ is defined at $x_{k'} = 0,1$; thus, $f^*_{k'}$ must be bounded and $\phi(\mathbf{x}_{-k})$ is bounded.
 
-Then we have that
+We have that
 \begin{align}
 f^*_k &= \arg\min_{f_k} \Big\{
    \E\big( f(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) - f_k \big)^2 
@@ -484,39 +507,49 @@ Let us suppose that $f^*_k = g^*_k = 0$. It must be then that
 \begin{align*}
 \argmin_{c \in \R} \E \left( f(X) - \phi(X_{-k}) - c (X_k^2 - m_k^2) \right)^2 = 0
 \end{align*}
-where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either convex or concave in $x_k$ and it is centered, i.e. $\E[ X_k^2 - m_k^2] = 0$. Since the optimum has a closed form $c^* = \frac{\E\big[(f(X) -\phi(X_{-k}))(X_k^2 - m^2_k)\big]}{\E X_k^2}$, we deduce that 
+where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either convex or concave in $x_k$ and it is centered, i.e. $\E[ X_k^2 - m_k^2] = 0$. Since the optimum has a closed form $c^* = \frac{\E\big[(f(X) -\phi(X_{-k}))(X_k^2 - m^2_k)\big]}{\E X_k^2 - m^2_k}$, we deduce that 
 \begin{align*}
 \E \big[ (f(X) - \phi(X_{-k})) &(X_k^2 - m_k^2) \big] \\
    &= \E[ (f(X) - \phi(X_{-k})) X^2_k] = 
  \E[ \E[ f(X) - \phi(X_{-k}) \given X_k] X^2_k] = 0
 \end{align*}
 
-We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$.
+We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$. $f(\mathbf{x})$ and $\phi(\mathbf{x}_{-k})$ are both bounded and so $h^*_k(x_k)$ is bounded as well. Therefore, $h^*_k$ is square integrable and there exists a fourier series $s_n(x_k)$ convergent to $h^*_k$ in $L_2$. Since $p(\mathbf{x})$ is bounded, $\lim_{n \rightarrow \infty} \E ( s_n(X_k) - h^*_k(X_k )^2 \rightarrow 0$ as well.
 
-Under the derivative continuity conditions in the theorem, we apply Lemma~\ref{lem:acdc_derivative_bound} in the appendix and know that $h^*_k(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$. Therefore, for a large enough positive scalar $\alpha$, $h^*_k(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex.
+%Under the derivative continuity conditions in the theorem, we apply Lemma~\ref{lem:acdc_derivative_bound} in the appendix and know that $h^*_k(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$. Therefore, for a large enough positive scalar $\alpha$, $h^*_k(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex.
+
+If we can show that $\E h^*_k(X_k)^2 = 0$, we would apply Lemma~\ref{cor:faithfulness_extension} and finish the proof. So let us suppose for sake of contradiction that $\E h^*_k(X_k)^2 > 0$.\\
+
+Let $0 < \epsilon < 1$ be fixed and let $n$ be large enough such that $\E( s_n(X_k) - h^*_k(X_k))^2 \leq \epsilon \E h^*_k(X_k)^2 $.
+
+Since $s_n(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$, there exist some positive scalar $\alpha$ such that $s_n(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex. 
 
 Because we assumed $f^* = g^* = 0$, it must be that
 \[
 \argmin_{c \in \R} 
-\E\Big( f(X) - \phi(X_{-k}) - c\big( h^*_k(X_k) + \alpha(X_k^2 - m_k^2)\big) \Big)^2 = 0
+\E\Big( f(X) - \phi(X_{-k}) - c\big( s_n(X_k) + \alpha(X_k^2 - m_k^2)\big) \Big)^2 = 0
 \]
-This is because $c\big( h^*_k(x_k) + \alpha(x_k^2 - m_k^2) \big)$ is convex for $c \geq 0$ and concave for $c \leq 0$ and it is a centered function.
+This is because $c\big( s_n(x_k) + \alpha(x_k^2 - m_k^2) \big)$ is convex for $c \geq 0$ and concave for $c \leq 0$ and it is a centered function.
 
 Again, $c^* = \frac{\mathbb{E}[(f(X)-\phi(X_{-k}))\big( 
-           h^*_k(X_k) + \alpha (X_k^2 - m_k^2) \big)]}{\mathbb{E}
-       \big( h^*_k(X_k) + \alpha (X_k^2 - m_k^2) \big)^2} = 0$, so
+           s_n(X_k) + \alpha (X_k^2 - m_k^2) \big)]}{\mathbb{E}
+       \big( s_n(X_k) + \alpha (X_k^2 - m_k^2) \big)^2} = 0$, so
 \begin{align*}
-\mathbb{E}[ (f(X)-\phi(X_{-k})) \big( h^*_k(X_k) + \alpha (X_k^2-m_k^2) \big) ] &= 
-\mathbb{E}[ (f(X) - \phi(X_{-k})) h^*_k(X_k) ] \\
-& = \mathbb{E}\Big[ \mathbb{E}[ f(X) - \phi(X_{-k}) \given X_k]  h^*_k(X_k) \Big] \\
-& = \mathbb{E} h^*_k(X_k)^2 = 0
+\mathbb{E}[ (f(X)-\phi(X_{-k})) \big( s_n(X_k) + \alpha (X_k^2-m_k^2) \big) ] &= 
+\mathbb{E}[ (f(X) - \phi(X_{-k})) s_n(X_k) ] \\
+& = \mathbb{E}\Big[ \mathbb{E}[ f(X) - \phi(X_{-k}) \given X_k]  s_n(X_k) \Big] \\
+& = \mathbb{E} h^*_k(X_k) s_n(X_k)  = 0
 \end{align*}
-where the first equality follows because $\E[ (f(X) - \phi(X_{-k})) (X_k^2 - m_k^2)] = 0$. Therefore, we get that $h^*_k = 0$. Now we use
+where the first equality follows because $\E[ (f(X) - \phi(X_{-k})) (X_k^2 - m_k^2)] = 0$. \\
+
+We have chosen $s_n$ such that $\E(h^*_k(X_k) - s_n(X_k))^2 \leq \epsilon \E h^*_k(X_k)^2$ for some $\epsilon < 1$. But, $\E (h^*_k(X_k) - s_n(X_k))^2 = \E h^*_k(X_k)^2 - 2 \E h^*_k(X_k)s_n(X_k) + \E s_n(X_k)^2 \geq \E h^*_k(X_k)^2$. This is a contradiction and therefore, $\E h^*_k(X_k)^2 = 0$.\\
+
+Now we use
 Lemma~\ref{cor:faithfulness_extension} with $\phi(\mathbf{x}_{-k}) =
 f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})$ and conclude that
 $f^*_k = 0$ and $g^*_k = 0$ together imply that $f$ does not depend on $x_k$.\\
 
-Now we turn to uniqueness. Suppose for sake of contradiction that $f^*$ and $f'$ are optimal solutions to (\ref{eqn:convex_additive}) and $\E (f'-f^*)^2 > 0$.  $f^* + \lambda ( f' - f^*)$ for any $\lambda \in [0,1]$ must then also be an optimal solution by convexity of the objective and constraint. However, the second derivative of the objective $\E( f - f^* - \lambda(f' - f^*))^2$ with respect to $\lambda$ is $2 \E( f' - f^*)^2 > 0$. The objective is thus strongly convex and $\E(f^* - f')^2 = 0$. We now apply Lemma~\ref{lem:additive_uniqueness} by letting $\phi_k = f^*_k - f'_k$. We conclude that $\E (f^*_k - f'_k)^2 = 0$ for all $k$. The uniqueness of $g^*$ is proved similarly.
+Now we turn to uniqueness. Suppose for sake of contradiction that $f^*$ and $\tilde{f}$ are optimal solutions to (\ref{eqn:convex_additive}) and $\E (\tilde{f} - f^*)^2 > 0$.  $f^* + \lambda ( \tilde{f}  - f^*)$ for any $\lambda \in [0,1]$ must then also be an optimal solution by convexity of the objective and constraint. However, the second derivative of the objective $\E( f - f^* - \lambda(\tilde{f} - f^*))^2$ with respect to $\lambda$ is $2 \E( \tilde{f} - f^*)^2 > 0$. The objective is thus strongly convex and $\E(f^* - \tilde{f})^2 = 0$. We now apply Lemma~\ref{lem:additive_uniqueness} by letting $\phi_k = f^*_k - \tilde{f}_k$. We conclude that $\E (f^*_k - \tilde{f}_k)^2 = 0$ for all $k$. The uniqueness of $g^*$ is proved similarly.
 \end{proof}
 
 
@@ -600,6 +633,6 @@ Now we turn to uniqueness. Suppose for sake of contradiction that $f^*$ and $f'$
  
 %%% Local Variables: ***
 %%% mode:latex ***
-%%% TeX-master: "paper.tex" ***
+%%% TeX-master: "paper-submit.tex" ***
 %%% End: ***
 
