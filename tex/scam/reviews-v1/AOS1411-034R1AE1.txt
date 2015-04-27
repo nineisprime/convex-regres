@@ -1,0 +1,50 @@
+
+The authors study the problem of variable selection in
+high-dimensional convex non-parametric regression.  Concretely,
+suppose that we observe noisy samples of a convex function from $R^p$
+to $R$, but one that happens to depend only on $s \ll p$ of its
+coordinates.  The goal is to estimate these $s$ coordinates.  Previous
+work by Comminges and Dalalyan suggested that without convexity
+constraints, the required sample size can grow exponentially in $s$.
+This paper provides a simple procedure that, when applied to a convex
+function satisfying a certain additive faithfulness condition, has a
+required sample size depending only polynomially on the sparsiity.
+The procedure is easy to describe, consisting of two stages that can
+be implemented in polynomial time.
+
+Three expert referees have now reviewed the paper, and all agree that
+the paper has a number of results that are of interest to AOS, but
+that some major revisions are required.  Below I recapitulate a few
+point of the reviewers', along with some questions/comments of my own.
+These (as well as other points in the reviews) need to be thoroughly
+addressed in the revised manuscript.
+
+-- Boundary flatness condition: much of the paper's analysis hinges on
+this condition.  Reviewer 3 raises some concerns about when it holds,
+especially for functions that are not necessarily supported on the
+unit hypercube.  See also the point below.
+
+-- Intuitively, variable selection is very closely related to
+estimating a function (or possibly its partial derivatives) in the
+sup-norm.  It is well-known that accurate estimation of functions
+(whether in L^2 or the sup-norm) with bounded smoothness in dimension
+$s$ requires a sample size that grows exponentially in $s$.  For this
+reason, the past result of Comminges and Dalalyan (suggesting an
+exponential growth for variable selection) is to be expected.
+However, in terms of metric entropy, the class of convex functions
+behaves roughly like the class of two-smooth functions (e.g., Dryanov
+(2009)).  So at first glance, this makes the result of this paper
+rather surprising---namely, that one can somehow side-step any
+exponential growth in $s$, even though the metric entropy is still
+scaling as badly as the case of 2-smooth functions.  I wondered if the
+authors could comment and shed insight on this fact, which seems a
+little counterintuitive.  What I suspect that it could mean is that
+the additive faithfulness (AF) condition, or one of the sufficient
+conditions for AF (namely boundary flatness) are somehow very
+restrictive.  Could the authors comment on these issues?
+
+-- Writing and proofs need to be tidied up in places to make it easier
+to follow.  See various comments of referees, particularly the
+detailed ones of R2.  Also, in Theorem 3, please remind the author of
+when/where the AC/DC estimators were defined.  (I was forced to dig
+back through.)
