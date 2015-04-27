@@ -1,0 +1,241 @@
+
+\documentclass[pdftex,12pt]{article}
+
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage{graphicx,subfigure}
+\usepackage[pdftex]{color}
+\usepackage{epic,eepic,eepicemu}
+\usepackage{epsf}
+\usepackage{epsfig}
+\usepackage{fancyhdr}
+\usepackage{graphics}
+\usepackage{psfrag,latexsym}
+\usepackage{times}
+\newcommand{\thetamin}{\ensuremath{\theta^*_{min}}}
+\newcommand{\mutinc}{\ensuremath{\alpha}}
+\bibliographystyle{abbrv}
+
+
+\setlength{\textwidth}{\paperwidth}
+\addtolength{\textwidth}{-6cm}
+\setlength{\textheight}{\paperheight}
+\addtolength{\textheight}{-4cm}
+\addtolength{\textheight}{-1.1\headheight}
+\addtolength{\textheight}{-\headsep}
+\addtolength{\textheight}{-\footskip}
+\setlength{\oddsidemargin}{0.5cm}
+\setlength{\evensidemargin}{0.5cm}
+\def\P{{\mathbb P}}
+\def\E{{\mathbb E}}
+\def\degmax{d}
+\def\pdim{p}
+\def\numobs{n}
+\let\hat\widehat
+\definecolor{blue}{rgb}{0.01,0.01,0.75}
+\def\reviewercomment#1{{\it\textcolor{blue}{#1}}\smallskip}
+\parindent0pt
+\parskip12pt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\vspace*{5pt}
+
+We thank the reviewers for their helpful comments regarding our
+submission. We have carefully addressed all these comments. The
+following describes the revisions made to the manuscript in response
+to the reviews.
+
+\subsection*{Associate Editor}
+
+\reviewercomment{Below I recapitulate a few
+point of the reviewers', along with some questions/comments of my own.
+These (as well as other points in the reviews) need to be thoroughly
+addressed in the revised manuscript.}
+
+\begin{enumerate}
+\item \reviewercomment{Boundary flatness condition: much of the paper's analysis hinges on
+this condition.  Reviewer 3 raises some concerns about when it holds,
+especially for functions that are not necessarily supported on the
+unit hypercube.  See also the point below.}
+
+We have added commentary on this here and here.
+
+\item \reviewercomment{Intuitively, variable selection is very closely related to
+estimating a function (or possibly its partial derivatives) in the
+sup-norm.  It is well-known that accurate estimation of functions
+(whether in $L^2$ or the sup-norm) with bounded smoothness in dimension
+$s$ requires a sample size that grows exponentially in $s$.  For this
+reason, the past result of Comminges and Dalalyan (suggesting an
+exponential growth for variable selection) is to be expected.
+However, in terms of metric entropy, the class of convex functions
+behaves roughly like the class of two-smooth functions (e.g., Dryanov
+(2009)).  So at first glance, this makes the result of this paper
+rather surprising---namely, that one can somehow side-step any
+exponential growth in $s$, even though the metric entropy is still
+scaling as badly as the case of 2-smooth functions.  I wondered if the
+authors could comment and shed insight on this fact, which seems a
+little counterintuitive.  What I suspect that it could mean is that
+the additive faithfulness (AF) condition, or one of the sufficient
+conditions for AF (namely boundary flatness) are somehow very
+restrictive.  Could the authors comment on these issues?}
+
+We have made these revisions.
+
+\item \reviewercomment{Writing and proofs need to be tidied up in places to make it easier
+to follow.  See various comments of referees, particularly the
+detailed ones of R2.  Also, in Theorem 3, please remind the author of
+when/where the AC/DC estimators were defined.  (I was forced to dig
+back through.)}
+
+We have tidied up.
+
+\end{enumerate}
+
+\subsection*{Reviewer 1}
+
+\reviewercomment{Conceptually, I have a few questions for the authors to address:}
+
+\begin{enumerate}[(1)]
+\item \reviewercomment{If the true regression function $f_0$ can actually be written as a
+sum of univariate convex functions (plus noise), are there natural
+conditions that one can provide for when additive faithfulness will
+hold? Similarly, is there a simpler version of Theorem 3 that can be
+stated when $f_0$ is actually a sum of univariate convex functions? This
+would seem to depend on an appropriate statement for Assumption (A3).}
+
+\item \reviewercomment{If we actually wish to fit smooth convex univariate components, is
+it easy to add this condition as a regularization term and incorporate
+it into the analysis?}
+
+\item \reviewercomment{Assuming model selection consistency, can one derive prediction
+error bounds using the fitted $f_k$'s and $g_k$'s, as well? Prediction error
+bounds seem quite relevant due to possible model misspecification when
+$f_0$ is not actually a sum of univariate convex functions.}
+
+\item \reviewercomment{In order to improve clarity, the authors should define the convex
+additive model at the top of page 5: $f(x_i) = \sum_{k=1}^p f_k(x_{ik})$, where the
+$f_k$'s are convex.  Otherwise, the notation in equation (2.3) is
+initially a bit confusing.}
+
+\item \reviewercomment{Another notational comment: the use of the
+distribution function $F$ seems unnecessary (e.g., Lemma 3.1 and
+Corollary 3.1), since everything is already defined in terms of the
+joint density function $p(x)$. (An additional suggestion would be to use
+a different letter to represent the joint density function, since $p$ is
+already used to represent the dimensionality of the distribution.)}
+
+\item \reviewercomment{I would suggest including the dependence on the positive-valued lower
+bound on $p(x)$ (as assumed in (A5)) in the statement of Theorem 3. This
+is a point worth commenting upon, since the earlier theorems only
+require $p(x)$ to be strictly positive. Assumption (A5) seems like it
+could also be interpreted as a sort of minimum signal strength
+requirement for successful variable selection.}
+
+\item \reviewercomment{It would be good to point to Assumption (A3) at the beginning of
+Section 5 when discussing the $B$-boundedness condition. In the third
+paragraph, the authors might note that the $B$-boundedness condition
+arises from the analysis of Theorem 5.2. To clarify, the penultimate
+paragraph on page 22 should state that Theorem 5.1 controls false
+positives alone, whereas Theorem 5.3 (to follow) provides
+finite-sample results controlling the false negative rate.}
+
+\item \reviewercomment{At the top
+of page 23, the remark regarding mutual incoherence conditions is a
+bit confusing. Aren’t the conditions imposed in Theorem 5.1 on the
+covariates essentially analogous to the mutual incoherence conditions
+in this case? }
+
+\item \reviewercomment{In the simulation section, the authors might consider comparing the
+set of variables selected after the AC step only with the set of
+variables selected via the entire AC/DC algorithm. This would help
+illustrate the necessity of the concave fitting step in addition to
+the convex additive fit alone.}
+
+Minor typos:
+\begin{enumerate}[(i)]
+\item \reviewercomment{In Section 2.3, it would be good to actually state the regularized
+objective function being analyzed, rather than waiting until Section
+4.}
+\item \reviewercomment{Assumption (A3) on page 7 is missing the subscript $\infty$.}
+\item \reviewercomment{The parameter $\sigma$ is never defined in Section 2.3. Reading ahead,
+it seems to be the sub-Gaussian parameter of the additive noise.}
+\item \reviewercomment{Perhaps Section 3 should be titled something other than ``Additive
+faithfulness'' (maybe ``Population- level results''?).}
+\item \reviewercomment{The first paragraph of Section 5 should read
+  ``Figure 3'' rather than ``Algorithm 3.''}
+
+\item \reviewercomment{The second paragraph of Section 5 has $m\hat{}u$ instead of $\hat\mu$.}
+\item \reviewercomment{The first sentence of Section 5.1 should read optimization (4.8).}
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection*{Reviewer 2}
+
+\reviewercomment{I found many (unimportant) mistakes in the proofs (I
+  did not mention them all in the minor comments), which need to be
+  read again carefully.}
+
+\begin{enumerate}
+\item \reviewercomment{I have a problem with the assertion of
+  uniqueness in Lemma 3.1 and Therorem 3.2. First, in Lemma 3.1, it is
+  clear that $f^∗$ is unique. But $(f_1^∗, \ldots, f_p^∗)$ is not. What is
+  shown is that, for $k$ fixed and given $(f_j^*)_{j\neq k}$, $f_k^*$ is unique. Next,
+  in Theorem 3.2, the proof of uniqueness (bottom of page 16 and top
+  of page 17) is not at all correct.
+   Now, to see why I think that, with the assumtions made on $X$, there is
+   not uniqueness, simply suppose for instance that $p = 2$ and $X_2 = g(X_1)$
+   for a certain function $g$. Then if $(f_1^∗, f_2^∗)$ is a solution,
+   $(f_1^∗ + f_2^ \circ g, 0)$ is also a solution.}
+
+\end{enumerate}
+
+\subsection*{Reviewer 3}
+
+
+Major comments:
+
+\begin{enumerate}
+\item \reviewercomment{The basis of all the results seem to be the boundary flatness
+condition. This condition seems to be an artifact of the analysis and
+based on my reading, it is unclear how restrctive this assumption
+is. The authors claim it is weak just after stating it and then
+present several straightforward examples in which it doesn't hold
+(e.g. $f(x_1,x_2)=x_1 x_2$) and multivariate Gaussian examples. Hence it is unclear to me how
+likely a given function is likely to fit into this framework.}
+
+\item \reviewercomment{Following on from the previous point, the simulation study also does
+not add any further insight to this issue since the simulations are
+for multivariate Gaussians where other parametric approaches that deal
+with covariance seem more suitable. It is puzzling to me that the
+authors did not consider non-parametric examples where the additive
+model framework seems more suitable.}
+
+\end{enumerate}
+
+Minor comments:
+
+\begin{enumerate}
+\item \reviewercomment{I didn't think there was any need for Section 2
+  since it feels very repetitive and slightly confusing that parts of
+  the text are repeated almost verbatim. I would suggest removing this section.}
+
+\item \reviewercomment{Page 2, second last paragraph `and and.'}
+\end{enumerate}
+
+
+\vspace*{10pt}
+
+Sincerely, 
+
+
+Min Xu, Minhua Chen, and John Lafferty\\[1pt]
+\today{}
+
+\bibliography{local}
+\end{document}
