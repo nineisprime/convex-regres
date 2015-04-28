@@ -84,7 +84,7 @@ the additive faithfulness (AF) condition, or one of the sufficient
 conditions for AF (namely boundary flatness) are somehow very
 restrictive.  Could the authors comment on these issues?}
 
-We have made these revisions.
+The boundary flatness condition does not artificially make the variable selection problem easy. Comminges and Dalalyan showed that variable selection for general two-smooth functions is difficult even if the underlying distribution is a product distribution, and boundary flat distributions are much more general than product distributions. 
 
 \item \reviewercomment{Writing and proofs need to be tidied up in places to make it easier
 to follow.  See various comments of referees, particularly the
@@ -108,9 +108,16 @@ hold? Similarly, is there a simpler version of Theorem 3 that can be
 stated when $f_0$ is actually a sum of univariate convex functions? This
 would seem to depend on an appropriate statement for Assumption (A3).}
 
+If the true regression function is a convex additive function, then additive faithfulness holds trivially--the best additive approximation to an additive function is the function itself. The estimation procedure becomes simpler--the DC stage is no longer necessary and can be safely removed. 
+
+In the finite sample analysis, the assumptions would not change except that A3 would be $\| f^*_k \|_\infty \leq B$ for all $k$ since $f_0 = f^*$ in this case. The signal strength definition can be made simpler: $\alpha^+ = \min_k \mathbb{E}( f^*_k(X_k)^2 )$. The rates would not improve.
+
+
 \item \reviewercomment{If we actually wish to fit smooth convex univariate components, is
 it easy to add this condition as a regularization term and incorporate
 it into the analysis?}
+
+Smoothness can be incorporated by using B-spline basis with uniformly spaced knots. The details are described in a paper by Pya and Wood which we cited. We chose not to discuss estimating smooth convex functions because it would introduce an additional tuning parameter, which negates some of the advantages of doing shape-constrained estimation.
 
 \item \reviewercomment{Assuming model selection consistency, can one derive prediction
 error bounds using the fitted $f_k$'s and $g_k$'s, as well? Prediction error
@@ -270,6 +277,9 @@ for multivariate Gaussians where other parametric approaches that deal
 with covariance seem more suitable. It is puzzling to me that the
 authors did not consider non-parametric examples where the additive
 model framework seems more suitable.}
+
+We consider only densities with support in a hypercube. We have modified old experiments and added new experiments to use boundary flat distributions instead of the correlated multivariate Gaussian distribution. 
+
 
 \end{enumerate}
 
