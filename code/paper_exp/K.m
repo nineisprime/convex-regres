@@ -22,7 +22,7 @@ switch version
     case 07, s = 4; p = 256;
     case 08, s = 8; p = 256;
     case 09, s = 12; p = 256;
-    case 010, s = 16; p = 256;
+    case 10, s = 16; p = 256;
 
     otherwise, return
 end
