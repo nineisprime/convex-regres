@@ -83,14 +83,14 @@ for run = 1:nrun
     Ln(:,run) = max(Lnvex, Lncave);
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
-save(['T_' num2str(version) '.mat'],'J','Ln');
+save(['mat/T_' num2str(version) '.mat'],'J','Ln');
 return
 
 %% Reading the result:
 clc; clear all; close all; 
 prob = zeros(1,40); epsil = 10^-6;
 for version = 1:40
-    load(['T_' num2str(version) '.mat']);
+    load(['mat/T_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
         if max(Ln(~J(:,run),run)) < epsil && min(Ln(J(:,run),run)) > epsil
@@ -100,10 +100,10 @@ for version = 1:40
     prob(version) = suc/nrun;
 end
 
-figure(2); set(gca,'FontSize',12); 
+figure(2); set(gca,'FontSize',14); 
 plot(100:100:1000,prob(1:10),'r.-',100:100:1000,prob(11:20),'b.-',...
     100:100:1000,prob(21:30),'g.-',100:100:1000,prob(31:40),'k.-','LineWidth',2);
-legend('p=64','p=128','p=256','p=512');
+legend('p=64','p=128','p=256','p=512','Location','SouthEast');
 xlabel('Number of Samples'); 
 ylabel('Probability of Recovery');
 title('Probability of Recovery');
@@ -125,4 +125,6 @@ set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition',[0 0 pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
 
 h = gcf;
-saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/Curve1.pdf')
+saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/CurveT.pdf')
+
+

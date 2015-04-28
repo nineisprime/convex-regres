@@ -5,9 +5,7 @@
 % OUTPUT: 
 %       X should be (p--by--n)
 %
-% mixture of uniform [-2, 2] and max-divided Gaussian
-% Gaussian is truncated at 2.4
-% then divided by maximum to sit between [-2.7, 2.7]
+% mixture of uniform [-2, 2] of Gaussian copula
 
 function [X] = simulateBoundedGaussCopula(p, n, unif_weight, Sigma)
 

@@ -96,31 +96,43 @@ return
 
 
 %% Reading the result:
-clc; clear all; close all; 
+%clc; clear all; close all; 
+num_versions = 28;
 prob = zeros(1,num_versions); 
+supp = zeros(nrun, num_versions);
+
+success_supp = 20;
+
 epsil = 1e-6;
+
 for version = 1:num_versions
-    load(['C_' num2str(version) '.mat']);
+    load(['mat/C_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
-        if min(Ln(J(:,run), run)) > epsil && ...
-           sum(Ln(:,run) > epsil) < 11
+        cur_supp = sum(Ln(:,run) > 1e-5);
+        if min(Ln(J(:,run),run)) > epsil && ...
+            cur_supp < success_supp
             suc = suc + 1;
         end
+        supp(run,version) = cur_supp;
     end
     prob(version) = suc/nrun;
 end
 
+
+samples = 200:200:1400;
+
 % much of the figures still need to be edited
+figure(2); set(gca,'FontSize',14); 
+plot(samples,prob(1:7),'r.-',...
+     samples,prob(8:14),'b.-',...
+     samples,prob(15:21),'g.-',...
+     samples,prob(22:28),'k.-','LineWidth',2);
 
-figure(2); set(gca,'FontSize',12); 
-plot(100:100:1000,prob(1:10),'r.-',100:100:1000,prob(11:20),'b.-',...
-    100:100:1000,prob(21:30),'g.-',100:100:1000,prob(31:40),'k.-','LineWidth',2);
-
-legend('v=0.0','v=0.2','v=0.5','v=0.9');
+legend('v=0.0','v=0.2','v=0.5','v=0.9','Location','SouthEast');
 xlabel('Number of Samples'); 
-ylabel('Probability of Recovery');
-title('Probability of Recovery');
+ylabel('Probability of Screening');
+title('Probability of Screening');
 %set(gca, 'LooseInset', get(gca, 'TightInset'));
 
 tightInset = get(gca, 'TightInset');
@@ -139,4 +151,40 @@ set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition',[0 0 pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
 
 h = gcf;
-%saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/Curve4.pdf');
+saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/CurveC.pdf');
+
+%% box plots
+figure;
+set(gca,'FontSize',14);
+
+boxplot(supp(:,15:21));
+set(gca, 'XTick', 1:7);
+set(gca, 'XTickLabel', {'200','400','600','800','1000','1200','1400'});
+
+
+xlabel('Number of Samples');
+ylabel('Number of Selected Variables');
+title('Number of Selected Variables, \nu=0.5');
+
+%print settings
+tightInset = get(gca, 'TightInset');
+tightInset(2) = tightInset(2) + 0.05;
+position(1) = tightInset(1);
+position(2) = tightInset(2);
+position(3) = 1 - tightInset(1) - tightInset(3);
+position(4) = 1 - tightInset(2) - tightInset(4);
+set(gca, 'Position', position);
+set(gca,'units','centimeters')
+
+pos = get(gca,'Position');
+ti = get(gca,'TightInset');
+ti(2) = ti(2) + 1;
+set(gcf, 'PaperUnits','centimeters');
+set(gcf, 'PaperSize', [pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
+set(gcf, 'PaperPositionMode', 'manual');
+set(gcf, 'PaperPosition',[0 0 pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
+
+h = gcf;
+saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/C_support_box.pdf');
+
+

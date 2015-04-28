@@ -1,4 +1,4 @@
-function S(version)
+function K(version)
 % p changes
 % softmax of affine with noise.
 % Correlated
@@ -12,39 +12,31 @@ clc;
 addpath('../simdata', '-end')
 
 switch version
-    case 01, n = 200; p = 128;
-    case 02, n = 500; p = 128;
-    case 03, n = 800; p = 128;
-    case 04, n = 1100; p = 128;
-    case 05, n = 1500; p = 128;
-    case 06, n = 2000; p = 128;
+    case 01, s = 2; p = 128;
+    case 02, s = 4; p = 128;
+    case 03, s = 8; p = 128;
+    case 04, s = 12; p = 128;
+    case 05, s = 16; p = 128;
         
-    case 07, n = 200; p = 256;
-    case 08, n = 500; p = 256;
-    case 09, n = 800; p = 256;
-    case 10, n = 1100; p = 256;
-    case 11, n = 1500; p = 256;
-    case 12, n = 2000; p = 256;
-        
-    case 13, n = 200; p = 512;
-    case 14, n = 500; p = 512;
-    case 15, n = 800; p = 512;
-    case 16, n = 1100; p = 512;
-    case 17, n = 1500; p = 512;
-    case 18, n = 2000; p = 512;
-        
+    case 06, s = 2; p = 256;
+    case 07, s = 4; p = 256;
+    case 08, s = 8; p = 256;
+    case 09, s = 12; p = 256;
+    case 010, s = 16; p = 256;
+
     otherwise, return
 end
 
-v = 0.5;
-k = 5; 
+n = 600;
+v = 0.2;
+k = s;
 K = 7;
 lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
 SNR = 5;
 
 maxit = 20; tol = 10^-6;
 
-nrun = 15; % MODIFY
+nrun = 50; % MODIFY
 
 J = ones(p,nrun)==0; Ln = zeros(p,nrun); 
 
@@ -72,12 +64,12 @@ for run = 1:nrun
     
     epsil = 1e-6;
     succ1 = min(Ln(J(:,run),run)) > epsil
-    succ2 = sum(Ln(:,run) > epsil) < 11
+    succ2 = sum(Ln(:,run) > epsil) < 2*s
     
     
     disp(['version=' num2str(version) ' run=' num2str(run)]);
 end
-save(['mat/Stmp_' num2str(version) '.mat'],'J','Ln');
+save(['mat/K_' num2str(version) '.mat'],'J','Ln');
 return
 
 

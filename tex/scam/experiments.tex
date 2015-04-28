@@ -5,7 +5,10 @@
 
 \section{Experiments}
 \label{sec:thesims}
-%\subsection{Simulations}
+
+We perform both synthetic and real data experiments.
+
+\subsection{Simulations}
 We first illustrate our methods using a simulation of the model
 \begin{equation}\nonumber
          Y_i = \x_{iS}^{\top}\Q\x_{iS} + \epsilon_i \quad (i=1,2,\ldots,n).
@@ -48,56 +51,32 @@ $\Sigma_{ij}=\nu^{|i-j|}$. We use the non-additive $\Q$, same as in the second e
 design of moderate correlation, AC/DC can still select relevant
 variables well.
 
-
-%\begin{figure}[!htpb]
-%        \centering
-%        \begin{subfigure}[b]{0.45\textwidth}
-%                \centering
-%                \includegraphics[width=\textwidth]{figs/Curve1}
-%                 \caption{Additive model.}
-%                \label{Curve1}
-%        \end{subfigure}
-%        \begin{subfigure}[b]{0.45\textwidth}
-%                \centering
-%                \includegraphics[width=\textwidth]{figs/Q}
-%                \caption{Four $\Q$ matrices.}
-%                \label{Q}
-%        \end{subfigure}\\
-%        \begin{subfigure}[b]{0.45\textwidth}
-%                \centering
-%                \includegraphics[width=\textwidth]{figs/Curve2}
-%                \caption{Additive and non-additive models.}
-%                \label{Curve2}
-%        \end{subfigure}
-%        \begin{subfigure}[b]{0.45\textwidth}
-%                \centering
-%                \includegraphics[width=\textwidth]{figs/Curve3}
-%                \caption{Correlated design for non-additive model.}
-%                \label{Curve3}
-%        \end{subfigure}
-%        \caption{Result of support recovery.}\label{Support}
-%\end{figure}
-
-%\begin{figure}[ht]
-%\begin{center}
-%\begin{tabular}{cccc}
-%\hskip-20pt
-%\includegraphics[width=.27\textwidth]{figs/Curve1} &
-%\hskip-17pt
-%\includegraphics[width=.27\textwidth]{figs/Q} &
-%\hskip-17pt
-%\includegraphics[width=.27\textwidth]{figs/Curve2} &
-%\hskip-17pt
-%\includegraphics[width=.27\textwidth]{figs/Curve3}  \\
-%(a) additive model & (b) four $\Q$ matrices &
-%(c) non-additive models & (d) correlated design
-%\end{tabular}
-%\end{center}
-%\caption{Result of support recovery.}\label{Support}
-%\end{figure}
+\begin{figure*}[!t]
+\begin{center}
+\begin{tabular}{cc}
+%\hskip-10pt
+\includegraphics[width=.42\textwidth]{figs/CurveT} &
+%\hskip-10pt
+\includegraphics[width=.42\textwidth]{figs/CurveR} \\
+(a) additive function & (b) non-additive function \\
+%\hskip-10pt
+\includegraphics[width=.42\textwidth]{figs/Q} &
+%\hskip-10pt
+\includegraphics[width=.42\textwidth]{figs/CurveC}  \\
+(c) four $\Q$ matrices & (d) correlated design \\
+\includegraphics[width=.42\textwidth]{figs/C_support_box} & 
+\includegraphics[width=.42\textwidth]{figs/CurveS}\\
+(e) recovered support size & (f) nonparametric function
+\end{tabular}
+\end{center}
+\caption{Support recovery results where the additive assumption is
+  correct (a), incorrect (b), (c), and with correlated design (d).}\label{Support}
+\vskip10pt
+\end{figure*}
 
 
-%\subsection{Boston housing data}
+
+\subsection{Boston housing data}
 
 We next use the Boston housing data rather than simulated data. This data set
 contains 13 covariates, 506 samples and one response variable
@@ -174,27 +153,8 @@ as a convex program, guaranteeing a global optimum.
 %\end{figure}
 
 
-\begin{figure*}[!t]
-\begin{center}
-\begin{tabular}{cccc}
-\hskip-10pt
-\includegraphics[width=.26\textwidth]{figs/Curve1} &
-\hskip-10pt
-\includegraphics[width=.26\textwidth]{figs/Q} &
-\hskip-10pt
-\includegraphics[width=.26\textwidth]{figs/Curve2} &
-\hskip-10pt
-\includegraphics[width=.26\textwidth]{figs/Curve4}  \\
-\hskip-10pt (a) additive model & 
-\hskip-10pt (b) four $\Q$ matrices &
-\hskip-10pt (c) non-additive models & 
-\hskip-10pt (d) correlated design
-\end{tabular}
-\end{center}
-\caption{Support recovery results where the additive assumption is
-  correct (a), incorrect (b), (c), and with correlated design (d).}\label{Support}
-\vskip10pt
 
+\begin{figure*}
 \begin{center}
 \begin{tabular}{cc}
 %\hskip-10pt
