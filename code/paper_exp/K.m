@@ -12,37 +12,37 @@ clc;
 addpath('../simdata', '-end')
 
 switch version
-    case 01, n = 200;   s = 4;
-    case 02, n = 400;   s = 4;
-    case 03, n = 600;   s = 4;
-    case 04, n = 800;   s = 4;
-    case 05, n = 1000;  s = 4;
+    case 01, n = 200;   s = 3;
+    case 02, n = 500;   s = 3;
+    case 03, n = 800;   s = 3;
+    case 04, n = 1100;   s = 3;
+    case 05, n = 1500;  s = 3;
         
-    case 06, n = 200;   s = 8;
-    case 07, n = 400;   s = 8;
-    case 08, n = 600;   s = 8;
-    case 09, n = 800;   s = 8;
-    case 10, n = 1000;  s = 8;
+    case 06, n = 200;   s = 6;
+    case 07, n = 500;   s = 6;
+    case 08, n = 800;   s = 6;
+    case 09, n = 1100;   s = 6;
+    case 10, n = 1500;  s = 6;
         
-    case 11, n = 200;   s = 12;
-    case 12, n = 400;   s = 12;
-    case 13, n = 600;   s = 12;
-    case 14, n = 800;   s = 12;
-    case 15, n = 1000;  s = 12;
+    case 11, n = 200;   s = 9;
+    case 12, n = 500;   s = 9;
+    case 13, n = 800;   s = 9;
+    case 14, n = 1100;   s = 9;
+    case 15, n = 1500;  s = 9;
 
     otherwise, return
 end
 
 p = 128;
-v = 0;
 k = s;
+
 K = 7;
-lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
+lambda = s*0.05*sqrt(1/n)*log(n*p); % MODIFY
 SNR = 5;
 
 maxit = 20; tol = 10^-6;
 
-nrun = 50; % MODIFY
+nrun = 40; % MODIFY
 
 J = ones(p,nrun)==0; Ln = zeros(p,nrun); 
 
@@ -71,7 +71,7 @@ for run = 1:nrun
     
     epsil = 1e-6;
     succ1 = min(Ln(J(:,run),run)) > epsil
-    succ2 = sum(Ln(:,run) > epsil) < 2*s
+    succ2 = sum(Ln(:,run) > epsil) <= k
     
     
     disp(['version=' num2str(version) ' run=' num2str(run)]);
