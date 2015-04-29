@@ -37,7 +37,7 @@ p = 128;
 k = s;
 
 K = 7;
-lambda = s*0.03*sqrt(1/n)*log(n*p); % MODIFY
+lambda = s*0.1*sqrt(1/n)*log(n*p); % MODIFY
 SNR = 5;
 
 maxit = 20; tol = 10^-6;
