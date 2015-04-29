@@ -55,7 +55,7 @@ for run = 1:nrun
     %Sigma = toeplitz(v.^(0:p-1));
     %unif_weight = 0.1;
     %X = simulateBoundedGaussCopula(p, n, unif_weight, Sigma);
-    X = randn(p, n);
+    X = randn(n, p);
     
     %y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)' + 
     %randn(n,1);
