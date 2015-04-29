@@ -13,49 +13,48 @@ We first illustrate our methods using a simulation of the model
 \begin{equation}\nonumber
          Y_i = f_o(\x_{iS}) + \epsilon_i \quad (i=1,2,\ldots,n).
 \end{equation}
-Here $\x_{i}$ denotes data sample $i$ drawn from some distribution $P$. 
-$\x_{iS}$ is a subset of $\x_i$ with dimension $|S|=s$, where $S$
+Here $\x_{i}$ denotes data sample $i$ drawn from some distribution $P$. $f_0$ is the true regression function. $\x_{iS}$ is a subset of $\x_i$ with dimension $|S|=s$, where $S$
 represents the set of relevant variables, and 
 $\epsilon_i$ is additive noise drawn from $\mathcal{N}(0,\sigma)$. For 
-all simulations, we set $\sigma$ such that the signal-to-noise ratio(SNR, $\frac{\trm{std}(Y)}{\sigma}$) is 5; we
-set $\lambda = \frac{1}{2} \sqrt{ \frac{\log^2(np)}{n} }$.
+all simulations, we set $\sigma$ such that the signal-to-noise ratio(SNR, $\frac{\trm{std}(Y)}{\sigma}$) is 5. Also, for all simulations except the sixth, we choose the set of relevant variables $S$ uniformly at random among all variables $\{1,...,p\}$.
+
+The purpose of the simulations is to see how the probability of variable selection scales with the number of samples $n$, the ambient dimension $p$, and the sparsity level $s$. We study both the independent case where $P = N(0, I_p)$ and the correlated case where $P$ is a correlated Gaussian Copula modified slightly to satisfy boundary flatness. We measure the probability of exact selection in the independent case and the probability of screening in the correlated case. We also study both cases where the regression function is simple (quadratic) and cases where the regression function is complicated (softmax of random linear forms). In all our experiments, we mark a variable as selected if either the AC estimate $\| \hat{f}_j \|_\infty$ or the DC estimate $\| \hat{g}_k \|_\infty$ is larger than $10^{-6}$.
 
 For the first three simulations, we will use the quadratic form as our true regression function.
 \[
 f_0(x_{iS}) = x_{iS}^\tran \Q x_{iS}
 \]
 
-The matrix $\Q$ is a symmetric positive definite matrix of dimension $|S|\times{}|S|$. 
+The matrix $\Q$ is a symmetric positive definite matrix of dimension $s \times{} s$. 
 Note that if $\Q$ is diagonal, then the true function is convex
 additive; 
 otherwise the true function is convex but not additive.
 
 In the \textbf{first simulation}, we vary the ambient dimension $p$. We set $Q$ as one on the diagonal and $1/2$ on the off-diagonal with $0.5$ probability, and choose $n=100, 200,\ldots,1000$ and $p=64,128,256$ and $512$. We use independent $X$ and draw $X \sim N(0, I_p)$.
-For each $(n,p)$ combination, we generate $100$ independent data
-sets. For each data set we use the AC/DC algorithm and mark feature $j$ as irrelevant if both the AC estimate $\| \hat{f}_j \|_\infty$ and the DC estimate $\| \hat{g}_k \|_\infty$ are smaller than $10^{-6}$.
-We plot the probability of exact
-support recovery over the $100$ independent trials in Figure \ref{Support}(a).  We
-observe that the algorithm performs consistent variable selection even if the dimensionality is large. To give the reader a
+For each $(n,p)$ combination, we generate $100$ independent trials. 
+In Figure~\ref{Support}(a), we plot the probability of exact
+support recovery, that is, the probability that the set of the selected variables is exactly equal to the set of true variables.  We observe that the algorithm performs consistent variable selection even if the dimensionality is large. To give the reader a
 sense of the running speed, for a 
 data set with $n=1000$ and $p=512$, the code runs in roughly two 
-minutes on a machine with 2.3 GHz Intel Core i5 CPU and 4 GB memory.
+minutes on a machine with 2.3 GHz Intel Core i5 CPU and 4 GB memory. In this simulation, $s=5$ and we set $\lambda = \frac{1}{2} \sqrt{ \frac{\log^2(np)}{n} }$.
+
 
 In the \textbf{second simulation}, we vary the sparsity of the $Q$ matrix, that is, we vary the extent to which the true function is non-additive. We generate four $\Q$ matrices
 plotted in Figure \ref{Support}(c), where the diagonal elements are all one and
 the off-diagonal elements are $\frac{1}{2}$ with probability $\alpha$
 ($\alpha=0,0.2,0.5,1$ for the four cases). We show the 4 $\Q$ matrices we used in Figure~\ref{Support}(c).
 We fix $p=128$ and choose
-$n=100,200,\ldots,1000$. We use $X \sim N(0,I_p)$. We again run the AC/DC optimization on $100$
-independent trials and plot the probability of recovery
+$n=100,200,\ldots,1000$. We use $X \sim N(0,I_p)$, set $s=5$, and use the same $\lambda$ as before.  We again run the AC/DC optimization on $100$
+independent trials and plot the probability of exact recovery
 in Figure \ref{Support}(b). The results demonstrate that AC/DC performs
 consistent variable selection even if the true function is not additive (but
-still convex).
+still convex). 
 
 In the third, fourth, and fifth simulations, we use correlated design and vary the correlation. We generate $X$ from a non-Gaussian correlated boundary flat distribution. The distribution we used is a mixture of a uniform distribution and a Gaussian Copula.
 \[
 X \sim \gamma U([-2, 2]^p) + (1-\gamma) \trm{Copula}(0, \Sigma, F)
 \]
-Gaussian Copula is a way to customize the marginal distributions of a Gaussian random variable while maintaining the covariance structure. Gaussian Copula results when one applies a monotone transformation $F^{-1} \Phi$ onto each variable of Gaussian random vector where $\Phi$ is the normal CDF and $F$ is the CDF of the new desired marginal distribution. In all our experiments, we set $\gamma = 0.05$ and set the marginal CDF $F$ so that marginal density of the Copula is bimodal and supported on $[-1.8, 1.8]$. The marginal density of the mixture is shown in Figure~\ref{fig:copula_marginal}. Notice that boundary flatness holds because the distribution is uniform in the boundary area $[-2,2]^p \backslash [-1.8, 1.8]^p$.
+Gaussian Copula is a way to customize the marginal distributions of a Gaussian random variable while maintaining the same covariance. Gaussian Copula results when one applies a monotone transformation $F^{-1} \Phi$ onto each variable of Gaussian random vector where $\Phi$ is the normal CDF and $F$ is the CDF of the new desired marginal distribution. In all our experiments, we set $\gamma = 0.05$ and set the marginal CDF $F$ so that marginal density of the Copula is bimodal and supported on $[-1.8, 1.8]$. The resulting marginal density of the mixture is shown in Figure~\ref{fig:copula_marginal}. Notice that boundary flatness holds because the distribution is uniform in the boundary area $[-2,2]^p \backslash [-1.8, 1.8]^p$.
 
 \begin{figure*}
 \includegraphics[width=.4\textwidth]{figs/copula_marginal}
@@ -63,7 +62,7 @@ Gaussian Copula is a way to customize the marginal distributions of a Gaussian r
 \label{fig:copula_marginal}
 \end{figure*}
 
-In the \textbf{third experiment}, we set $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0, 0.2, 0.5, 0.9$. We use the non-additive $\Q$, same as in the first experiment, with $\alpha=0.5$ and fix $p=128$. We measure success not through exact recovery but through approximate recovery. We say that a trial is a successful if (1) all relevant variables were recovered and (2) fewer than $20$ variables were marked as relevant overall. The probabilities of success are computed from 40 independent trials and plotted against various values of $\nu$ in Figure~\ref{Support}(d). Additionally, for $\nu = 0.5$, we show the number of selected variables versus the sample size as a Box-and-Whisker plot in Figure~\ref{Support}(e). As can be seen, AC/DC can successfully recover the relevant variables with only a small number of false positives. 
+In the \textbf{third simulation}, we use the non-Gaussian distribution described above and set the covariance $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0, 0.2, 0.5, 0.9$. We use the non-additive $\Q$, same as in the first experiment, with $\alpha=0.5$ and fix $p=128$. We measure success not through exact recovery but through faithful recovery. We say that a trial is a successful if (1) all relevant variables were recovered and (2) fewer than $20$ variables were marked as relevant overall (true sparsisty $s=5$). We use the same $\lambda$ as before. The probabilities of success are computed from 40 independent trials and plotted against various values of $\nu$ in Figure~\ref{Support}(d). Additionally, for $\nu = 0.5$, we show the number of selected variables versus the sample size as a box-and-whisker plot in Figure~\ref{Support}(e). As seen, for distributions with moderate to small correlations, AC/DC can successfully recover the relevant variables with only a small number of false positives. 
 
 In the fourth, fifth, and sixth simulation, we use a softmax regression function
 \[
@@ -71,11 +70,11 @@ f_0(x_{iS}) = \log \left( \sum_{k=1}^K \exp( \beta_k^\tran x_{iS} ) \right) - \m
 \]
 where $\{\beta_k \in \R^s\}_{k=1,...,K}$ are random unit vectors. $\mu$ is chosen so that $f_0$ has mean-zero. We set $K = 7$ for all the experiments. 
 
-For the \textbf{fourth experiment}, we use the softmax regression function and $X$ drawn from the boundary flat mixture distribution described earlier with correlation level $\nu = 0.5$. We use the same approximate recovery success criteria as the third experiment and plot probability of approximate recovery against the number of samples for $p=128, 256, 512$. The probabilities are computed over 30 independent trials. 
+For the \textbf{fourth simulation}, we use the softmax regression function and $X$ drawn from the boundary flat mixture distribution described earlier with the Toeplitz covariance  $\Sigma_{ij}=\nu^{|i-j|}$ and $\nu = 0.5$. We set $s=5$ and use the same $\lambda$ as before. We use the same faithful recovery criteria as the third simulation and plot the probability of faithful recovery against the number of samples for $p=128, 256, 512$. The probabilities are computed over 30 independent trials. Also, for $p=256$, we show the number of selected variables versus the sample size as a box-and-whisker plot in Figure~\ref{Support}(g). Not surprisingly, the softmax function is harder than the quadratic function; the softmax setting requires about $n > 1500$ to achieve the same success probability as the quadratic setting with $n=1000$. We see that increasing the ambient dimension $p$ does not signficantly affect the recovery probability however.
 
 For the \textbf{fifth experiment}, we use the softmax regression function and $X$ drawn from the boundary flat mixture distribution with correlation level $\nu = 0.2$. 
 
-For the \textbf{sixth experiment}, we compare the variables selected via the AC stage and the variables selected via the DC stage. We use the softmax regression function and $X$ drawn from the boundary flat mixture distribution with correlation level $\nu = -0.7$. We set $n=500, p=128$. We perform 30 independent trials and plot the frequency of variable selection in Figure~\ref{fig:ac_v_dc}. The true variables are $X_j$ for $j=5,6,7,8,9,10$. We plot the frequency of selection among only the first 20 variables, that is, $X_j$ for $j=1,...,20$. We do not plot selection frequencies for variables 21 to 128 because they are almost never selected by either AC or DC. As can be seen, the DC stage is slightly helpful in recovering the true variables but its effect is not significant. We thus believe that the DC stage, though important in theory, is not as important in practice; it may be omitted without significant detriment to the overall result. 
+For the \textbf{sixth experiment}, we compare the variables selected via the AC stage and the variables selected via the DC stage. We use the softmax regression function and $X$ drawn from the boundary flat mixture distribution with a Toeplitz covariance and correlation level $\nu = -0.7$. We set $n=500, p=128$. We perform 30 independent trials and plot the frequency of variable selection in Figure~\ref{fig:ac_v_dc}. The true variables are $X_j$ for $j=5,6,7,8,9,10$. We plot the frequency of selection among only the first 20 variables, that is, $X_j$ for $j=1,...,20$. We do not plot selection frequencies for variables 21 to 128 because they are almost never selected by either AC or DC. As can be seen, the DC stage is slightly helpful in recovering the true variables but its effect is not significant. We thus believe that the DC stage, though important in theory, is not as important in practice; it may be omitted without significant detriment to the overall result. 
 
 \begin{figure*}[!t]
 \begin{center}
