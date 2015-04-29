@@ -35,7 +35,7 @@
 \def\numobs{n}
 \let\hat\widehat
 \definecolor{blue}{rgb}{0.01,0.01,0.75}
-\def\reviewercomment#1{{\it\textcolor{blue}{#1}}\smallskip}
+\def\rc#1{{\it\textcolor{blue}{#1}}\smallskip}
 \parindent0pt
 \parskip12pt
 
@@ -52,20 +52,20 @@ to the reviews.
 
 \subsection*{Associate Editor}
 
-\reviewercomment{Below I recapitulate a few
+\rc{Below I recapitulate a few
 point of the reviewers', along with some questions/comments of my own.
 These (as well as other points in the reviews) need to be thoroughly
 addressed in the revised manuscript.}
 
 \begin{enumerate}
-\item \reviewercomment{Boundary flatness condition: much of the paper's analysis hinges on
+\item \rc{Boundary flatness condition: much of the paper's analysis hinges on
 this condition.  Reviewer 3 raises some concerns about when it holds,
 especially for functions that are not necessarily supported on the
 unit hypercube.  See also the point below.}
 
 We have added commentary on this here and here.
 
-\item \reviewercomment{Intuitively, variable selection is very closely related to
+\item \rc{Intuitively, variable selection is very closely related to
 estimating a function (or possibly its partial derivatives) in the
 sup-norm.  It is well-known that accurate estimation of functions
 (whether in $L^2$ or the sup-norm) with bounded smoothness in dimension
@@ -86,7 +86,7 @@ restrictive.  Could the authors comment on these issues?}
 
 The boundary flatness condition does not artificially make the variable selection problem easy. Comminges and Dalalyan showed that variable selection for general two-smooth functions is difficult even if the underlying distribution is a product distribution, and boundary flat distributions are much more general than product distributions. 
 
-\item \reviewercomment{Writing and proofs need to be tidied up in places to make it easier
+\item \rc{Writing and proofs need to be tidied up in places to make it easier
 to follow.  See various comments of referees, particularly the
 detailed ones of R2.  Also, in Theorem 3, please remind the author of
 when/where the AC/DC estimators were defined.  (I was forced to dig
@@ -98,10 +98,10 @@ We have tidied up.
 
 \subsection*{Reviewer 1}
 
-\reviewercomment{Conceptually, I have a few questions for the authors to address:}
+\rc{Conceptually, I have a few questions for the authors to address:}
 
 \begin{enumerate}[(1)]
-\item \reviewercomment{If the true regression function $f_0$ can actually be written as a
+\item \rc{If the true regression function $f_0$ can actually be written as a
 sum of univariate convex functions (plus noise), are there natural
 conditions that one can provide for when additive faithfulness will
 hold? Similarly, is there a simpler version of Theorem 3 that can be
@@ -113,37 +113,37 @@ If the true regression function is a convex additive function, then additive fai
 In the finite sample analysis, the assumptions would not change except that A3 would be $\| f^*_k \|_\infty \leq B$ for all $k$ since $f_0 = f^*$ in this case. The signal strength definition can be made simpler: $\alpha^+ = \min_k \mathbb{E}( f^*_k(X_k)^2 )$. The rates would not improve.
 
 
-\item \reviewercomment{If we actually wish to fit smooth convex univariate components, is
+\item \rc{If we actually wish to fit smooth convex univariate components, is
 it easy to add this condition as a regularization term and incorporate
 it into the analysis?}
 
 Smoothness can be incorporated by using B-spline basis with uniformly spaced knots. The details are described in a paper by Pya and Wood which we cited. We chose not to discuss estimating smooth convex functions because it would introduce an additional tuning parameter, which negates some of the advantages of doing shape-constrained estimation.
 
-\item \reviewercomment{Assuming model selection consistency, can one derive prediction
+\item \rc{Assuming model selection consistency, can one derive prediction
 error bounds using the fitted $f_k$'s and $g_k$'s, as well? Prediction error
 bounds seem quite relevant due to possible model misspecification when
 $f_0$ is not actually a sum of univariate convex functions.}
 
-\item \reviewercomment{In order to improve clarity, the authors should define the convex
+\item \rc{In order to improve clarity, the authors should define the convex
 additive model at the top of page 5: $f(x_i) = \sum_{k=1}^p f_k(x_{ik})$, where the
 $f_k$'s are convex.  Otherwise, the notation in equation (2.3) is
 initially a bit confusing.}
 
-\item \reviewercomment{Another notational comment: the use of the
+\item \rc{Another notational comment: the use of the
 distribution function $F$ seems unnecessary (e.g., Lemma 3.1 and
 Corollary 3.1), since everything is already defined in terms of the
 joint density function $p(x)$. (An additional suggestion would be to use
 a different letter to represent the joint density function, since $p$ is
 already used to represent the dimensionality of the distribution.)}
 
-\item \reviewercomment{I would suggest including the dependence on the positive-valued lower
+\item \rc{I would suggest including the dependence on the positive-valued lower
 bound on $p(x)$ (as assumed in (A5)) in the statement of Theorem 3. This
 is a point worth commenting upon, since the earlier theorems only
 require $p(x)$ to be strictly positive. Assumption (A5) seems like it
 could also be interpreted as a sort of minimum signal strength
 requirement for successful variable selection.}
 
-\item \reviewercomment{It would be good to point to Assumption (A3) at the beginning of
+\item \rc{It would be good to point to Assumption (A3) at the beginning of
 Section 5 when discussing the $B$-boundedness condition. In the third
 paragraph, the authors might note that the $B$-boundedness condition
 arises from the analysis of Theorem 5.2. To clarify, the penultimate
@@ -151,13 +151,13 @@ paragraph on page 22 should state that Theorem 5.1 controls false
 positives alone, whereas Theorem 5.3 (to follow) provides
 finite-sample results controlling the false negative rate.}
 
-\item \reviewercomment{At the top
+\item \rc{At the top
 of page 23, the remark regarding mutual incoherence conditions is a
 bit confusing. Aren’t the conditions imposed in Theorem 5.1 on the
 covariates essentially analogous to the mutual incoherence conditions
 in this case? }
 
-\item \reviewercomment{In the simulation section, the authors might consider comparing the
+\item \rc{In the simulation section, the authors might consider comparing the
 set of variables selected after the AC step only with the set of
 variables selected via the entire AC/DC algorithm. This would help
 illustrate the necessity of the concave fitting step in addition to
@@ -165,31 +165,31 @@ the convex additive fit alone.}
 
 Minor typos:
 \begin{enumerate}[(i)]
-\item \reviewercomment{In Section 2.3, it would be good to actually state the regularized
+\item \rc{In Section 2.3, it would be good to actually state the regularized
 objective function being analyzed, rather than waiting until Section
 4.}
-\item \reviewercomment{Assumption (A3) on page 7 is missing the subscript $\infty$.}
-\item \reviewercomment{The parameter $\sigma$ is never defined in Section 2.3. Reading ahead,
+\item \rc{Assumption (A3) on page 7 is missing the subscript $\infty$.}
+\item \rc{The parameter $\sigma$ is never defined in Section 2.3. Reading ahead,
 it seems to be the sub-Gaussian parameter of the additive noise.}
-\item \reviewercomment{Perhaps Section 3 should be titled something other than ``Additive
+\item \rc{Perhaps Section 3 should be titled something other than ``Additive
 faithfulness'' (maybe ``Population- level results''?).}
-\item \reviewercomment{The first paragraph of Section 5 should read
+\item \rc{The first paragraph of Section 5 should read
   ``Figure 3'' rather than ``Algorithm 3.''}
 
-\item \reviewercomment{The second paragraph of Section 5 has $m\hat{}u$ instead of $\hat\mu$.}
-\item \reviewercomment{The first sentence of Section 5.1 should read optimization (4.8).}
+\item \rc{The second paragraph of Section 5 has $m\hat{}u$ instead of $\hat\mu$.}
+\item \rc{The first sentence of Section 5.1 should read optimization (4.8).}
 \end{enumerate}
 
 \end{enumerate}
 
 \subsection*{Reviewer 2}
 
-\reviewercomment{I found many (unimportant) mistakes in the proofs (I
+\rc{I found many (unimportant) mistakes in the proofs (I
   did not mention them all in the minor comments), which need to be
   read again carefully.}
 
 \begin{enumerate}
-\item \reviewercomment{I have a problem with the assertion of
+\item \rc{I have a problem with the assertion of
   uniqueness in Lemma 3.1 and Therorem 3.2. First, in Lemma 3.1, it is
   clear that $f^∗$ is unique. But $(f_1^∗, \ldots, f_p^∗)$ is not. What is
   shown is that, for $k$ fixed and given $(f_j^*)_{j\neq k}$, $f_k^*$ is unique. Next,
@@ -198,62 +198,90 @@ faithfulness'' (maybe ``Population- level results''?).}
    Now, to see why I think that, with the assumtions made on $X$, there is
    not uniqueness, simply suppose for instance that $p = 2$ and $X_2 = g(X_1)$
    for a certain function $g$. Then if $(f_1^∗, f_2^∗)$ is a solution,
-   $(f_1^∗ + f_2^ \circ g, 0)$ is also a solution.}
+   $(f_1^∗ + f_2^* \circ g, 0)$ is also a solution.}
 
-\item \reviewercomment{In the definition of $g_k^∗$ on pages 6 and 15, it would be more precise to
+\item \rc{In the definition of $g_k^∗$ on pages 6 and 15, it would be more precise to
 write $g_k(X_k)$ in the sum instead of $g_k$.}
 
-\item \reviewercomment{On page 9, in the proof of Lemma 3.1, the star has been forgotten
+\item \rc{On page 9, in the proof of Lemma 3.1, the star has been forgotten
 twice on $f_{k'}$ in (3.2) and (3.7).}
 
-\item \reviewercomment{On page 10, on line 3, ``therefore the solution $f_k^∗(x_k) = \E[f(X)|x_k]
+\item \rc{On page 10, on line 3, ``therefore the solution $f_k^∗(x_k) = \E[f(X)|x_k]
 − \E f(X)$ is unique'', the term $−\sum_{k'\neq k} f_{k'}(X_{k'})$ has been forgotten.}
 
-\item \reviewercomment{On page 10, on line 14, ``In particular, if $F$ is the uniform
+\item \rc{On page 10, on line 14, ``In particular, if $F$ is the uniform
 distribution etc'', the term $− \int f$ has been forgotten.}
 
-\item \reviewercomment{On page 10, on line 16, ``additively'' should be replaced by
+\item \rc{On page 10, on line 16, ``additively'' should be replaced by
 ``additive''.}
 
-\item \reviewercomment{On page 11, at the bottom of the page, ``before we presenting''}
+\item \rc{On page 11, at the bottom of the page, ``before we presenting''}
 
-\item \reviewercomment{On page 11, after Deônition 3.2, it is written ``when the joint
+\item \rc{On page 11, after Deônition 3.2, it is written ``when the joint
 density satisfies the property that
 $\frac{\partial(x_{-j},x_j)}{\partial x_j} = \frac{\partial^2 p(x_{-j},
   x_j)}{\partial x_j^2} = 0$ at boundary points''.
 I think the condition ``$p(x_{−j}, x_j ) = 0$ at the boundary points'' is
 missing.}
 
-\item \reviewercomment{On page 12, I did not understand why the functions 
+\item \rc{On page 12, I did not understand why the functions 
 $\frac{\partial^2 p(x_{-j} |  x_j)}{\partial x_j^2}$
 and adn 
 $\frac{\partial^2 f(x_{-j} |  x_j)}{\partial x_j^2}$
 are bounded (they are not supposed to be continuous)}
 
-\item \reviewercomment{On page 13, on line 6, ``this this''.}
+\item \rc{On page 13, on line 6, ``this this''.}
 
-\item \reviewercomment{On page 13, on line 23, I do not think $\Sigma$ has been defined. Besides it
+\item \rc{On page 13, on line 23, I do not think $\Sigma$ has been defined. Besides it
 is not speciôed that $Var(X_1) = 1$.}
-\item \reviewercomment{On page 13, on line 29, ``additive'' should be replaced by
+\item \rc{On page 13, on line 29, ``additive'' should be replaced by
 ``additively''.}
-\item \reviewercomment{On page 13, the assumption $\E f(X) = 0$ should be made, or else the
+\item \rc{On page 13, the assumption $\E f(X) = 0$ should be made, or else the
 parameter $\mu$ should be introduced as before.}
-\item \reviewercomment{On page 16, in the expresson of $c^∗$, the
+\item \rc{On page 16, in the expresson of $c^∗$, the
   denominator should be $\E X_k^2 −m_k^2$.}
-\item \reviewercomment{On page 16, in the proof of Theorem 3.2, Lemma 8.3 is used. This
+\item \rc{On page 16, in the proof of Theorem 3.2, Lemma 8.3 is used. This
 lemma supposes that $\phi$ is continuous. Here I do not see why $\phi =
 \sum_{k'\neq k} f_{k'}*$ is continuous (it is convex then continuous on the interior of
 $[0,1]^p$. ).}
-\item \reviewercomment{On page 17, same problem as before with the absence of parameter $\mu$.}
-\item \reviewercomment{On page 17, on line 16 ``for that variable. for each''}
-\item \reviewercomment{On page 18, at the bottom of the page :
+\item \rc{On page 17, same problem as before with the absence of parameter $\mu$.}
+\item \rc{On page 17, on line 16 ``for that variable. for each''}
+\item \rc{On page 18, at the bottom of the page :
   ``$\beta_{\pi_k(i+1)k} 
 \geq \beta_{\pi_k(i)k}$ for $i=1,\ldots, n-1$'' , $n−1$ must be replaced by $n−2$.}
-\item \reviewercomment{On page 19, $\sum_{i} f_{ik}$ instead of $\sum_i
+\item \rc{On page 19, $\sum_{i} f_{ik}$ instead of $\sum_i
   f_{ki}$.}
-\item \reviewercomment{On page 20, in the third paragraph, on the second, third and fourth
+\item \rc{On page 20, in the third paragraph, on the second, third and fourth
 lines, $j$ and $j − 1$ must be replaced by $j + 1$ and $j$ respectively in
 $x_{\pi_k(j)k}$ and $x_{\pi_k(j-1)k}$.}
+
+\item \rc{On page 20, In the central matrix equation, the
+  first vector should be
+  $\left[\begin{matrix}f_k(x_{1k}\\ f_k(x_{2k}\\ \vdots\\f_k(x_{nk}\end{matrix}\right]$. Next
+  in ``$\mu_k = -\frac{1}{n} 1_n^T \Delta_k d_k$``, $1_n$ is missing.}
+\item \rc{On page 21, in Section 5, at the end of the
+  second paragraph, ``$m\hat{}u$ from
+our estimation procedure''.}
+
+\item \rc{On page 22, in Deônition 5.1, the inequalities
+  about $d_k$ must be replaced by the same inequalities as in Proposition 4.1.}
+
+\item \rc{On page 22 (and on page 31), in the statement of Theorem
+  5.1, in\\ $\max_{i=1,\ldots, n} \frac{X_{k\pi_k(i+1)}-
+    X_{k\pi_k(i)}}{\text{range}_k} \geq \frac{1}{16}$ the
+sign $\geq$ must be replaced by $\leq$ . Besides I think it
+is a bad idea to change notation : $X_{k\pi_k(i)}$ should
+be replaced by $X_{\pi_k(i)k}$ as before (page 19 for instance).}
+
+\item \rc{On page 23, in equation (5.1), in ``$f^∗(X)$'', the star must be
+removed.}
+
+\item \rc{On page 24, ``$\alpha_{+} > 0$ since $f$ is the unique risk minimizer'' : I do
+not understand this statement (there is an infimum, not a minimum in
+the definition of $\alpha_{+}$.)}
+\item \rc{On page 24, in Remark 5.1, ``In important direction''.}
+\item \rc{On page 25, in the statement of Theorem 5.3, the square must be
+removed on $\alpha_-$.}
 
 \end{enumerate}
 
@@ -263,7 +291,7 @@ $x_{\pi_k(j)k}$ and $x_{\pi_k(j-1)k}$.}
 Major comments:
 
 \begin{enumerate}
-\item \reviewercomment{The basis of all the results seem to be the boundary flatness
+\item \rc{The basis of all the results seem to be the boundary flatness
 condition. This condition seems to be an artifact of the analysis and
 based on my reading, it is unclear how restrctive this assumption
 is. The authors claim it is weak just after stating it and then
@@ -271,7 +299,7 @@ present several straightforward examples in which it doesn't hold
 (e.g. $f(x_1,x_2)=x_1 x_2$) and multivariate Gaussian examples. Hence it is unclear to me how
 likely a given function is likely to fit into this framework.}
 
-\item \reviewercomment{Following on from the previous point, the simulation study also does
+\item \rc{Following on from the previous point, the simulation study also does
 not add any further insight to this issue since the simulations are
 for multivariate Gaussians where other parametric approaches that deal
 with covariance seem more suitable. It is puzzling to me that the
@@ -286,11 +314,11 @@ We consider only densities with support in a hypercube. We have modified old exp
 Minor comments:
 
 \begin{enumerate}
-\item \reviewercomment{I didn't think there was any need for Section 2
+\item \rc{I didn't think there was any need for Section 2
   since it feels very repetitive and slightly confusing that parts of
   the text are repeated almost verbatim. I would suggest removing this section.}
 
-\item \reviewercomment{Page 2, second last paragraph `and and.'}
+\item \rc{Page 2, second last paragraph `and and.'}
 \end{enumerate}
 
 
