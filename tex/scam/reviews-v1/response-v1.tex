@@ -184,6 +184,8 @@ faithfulness'' (maybe ``Population- level results''?).}
 
 \subsection*{Reviewer 2}
 
+We are grateful to the reviewer for the detailed reading. We have corrected the mistakes found and further proof-read the paper. We discuss some of the issues raised. 
+
 \reviewercomment{I found many (unimportant) mistakes in the proofs (I
   did not mention them all in the minor comments), which need to be
   read again carefully.}
@@ -200,22 +202,7 @@ faithfulness'' (maybe ``Population- level results''?).}
    for a certain function $g$. Then if $(f_1^∗, f_2^∗)$ is a solution,
    $(f_1^∗ + f_2^ \circ g, 0)$ is also a solution.}
 
-\item \reviewercomment{In the definition of $g_k^∗$ on pages 6 and 15, it would be more precise to
-write $g_k(X_k)$ in the sum instead of $g_k$.}
-
-\item \reviewercomment{On page 9, in the proof of Lemma 3.1, the star has been forgotten
-twice on $f_{k'}$ in (3.2) and (3.7).}
-
-\item \reviewercomment{On page 10, on line 3, ``therefore the solution $f_k^∗(x_k) = \E[f(X)|x_k]
-− \E f(X)$ is unique'', the term $−\sum_{k'\neq k} f_{k'}(X_{k'})$ has been forgotten.}
-
-\item \reviewercomment{On page 10, on line 14, ``In particular, if $F$ is the uniform
-distribution etc'', the term $− \int f$ has been forgotten.}
-
-\item \reviewercomment{On page 10, on line 16, ``additively'' should be replaced by
-``additive''.}
-
-\item \reviewercomment{On page 11, at the bottom of the page, ``before we presenting''}
+We have corrected the proof of Lemma 3.1 and we have given a more rigorous proof that the components $f^*_k$'s are unique in a new Lemma 8.3 (old Lemma 8.3 was removed). Our result requires that the density $p(\mathbf{x}) > 0$ and thus, the $X_2 = g(X_1)$ example raised by the reviewer is ruled out. 
 
 \item \reviewercomment{On page 11, after Deônition 3.2, it is written ``when the joint
 density satisfies the property that
@@ -224,26 +211,36 @@ $\frac{\partial(x_{-j},x_j)}{\partial x_j} = \frac{\partial^2 p(x_{-j},
 I think the condition ``$p(x_{−j}, x_j ) = 0$ at the boundary points'' is
 missing.}
 
+It is not necessary that $p(\mathbf{x}_{-j}, x_j) = 0$ at $x_j = 0,1$; it is necessary that $p(\mathbf{x}_{-j}, x_j) > 0$. We have however, added an additional condition that $p(\mathbf{x})$ has a bounded second derivative. This condition ensures that the marginal density $p(x_j)$ is twice differentiable and $p'(x_j) = p''(x_j) = 0$ at $x_j = 0,1$. With this, it is valid to apply the quotient rule for differentiation to show that boundary flatness holds. Please see the second item in Example 3.2 for the relevant modifications. 
+
+
 \item \reviewercomment{On page 12, I did not understand why the functions 
 $\frac{\partial^2 p(x_{-j} |  x_j)}{\partial x_j^2}$
 and adn 
 $\frac{\partial^2 f(x_{-j} |  x_j)}{\partial x_j^2}$
 are bounded (they are not supposed to be continuous)}
 
-\item \reviewercomment{On page 13, on line 6, ``this this''.}
+We have modified the definition of boundary flatness so that $p(\mathbf{x_{-j}} \,|\, x_j)$ is bounded and has a bounded first and second derivative for all $x_j$ in some open set around the boundary points and for all $\mathbf{x}_{-j}$. Dominated convergenc theorem holds without problems because we only exchange the derivative and the integral at $x_j = 0,1$. Just to make sure, we have verified in detail that the domination condition holds in the newly added Section 8.3.4.
 
-\item \reviewercomment{On page 13, on line 23, I do not think $\Sigma$ has been defined. Besides it
-is not speciôed that $Var(X_1) = 1$.}
-\item \reviewercomment{On page 13, on line 29, ``additive'' should be replaced by
-``additively''.}
-\item \reviewercomment{On page 13, the assumption $\E f(X) = 0$ should be made, or else the
-parameter $\mu$ should be introduced as before.}
-\item \reviewercomment{On page 16, in the expresson of $c^∗$, the
-  denominator should be $\E X_k^2 −m_k^2$.}
+%\item \reviewercomment{On page 13, on line 23, I do not think $\Sigma$ has been defined. Besides it
+%is not speciôed that $Var(X_1) = 1$.}
+
+%\item \reviewercomment{On page 13, on line 29, ``additive'' should be replaced by
+%``additively''.}
+
+%\item \reviewercomment{On page 13, the assumption $\E f(X) = 0$ should be made, or else the
+%parameter $\mu$ should be introduced as before.}
+
+%\item \reviewercomment{On page 16, in the expresson of $c^∗$, the
+%  denominator should be $\E X_k^2 −m_k^2$.}
+
 \item \reviewercomment{On page 16, in the proof of Theorem 3.2, Lemma 8.3 is used. This
 lemma supposes that $\phi$ is continuous. Here I do not see why $\phi =
 \sum_{k'\neq k} f_{k'}*$ is continuous (it is convex then continuous on the interior of
 $[0,1]^p$. ).}
+
+We have modified the conditions and the proof of Theorem 3.2 so that $\phi$ need only be bounded. The new proof does not require that $h^*_k$ is differentiable, only that it is in $L^2$. The old Lemma 8.3 has been removed. 
+
 \item \reviewercomment{On page 17, same problem as before with the absence of parameter $\mu$.}
 \item \reviewercomment{On page 17, on line 16 ``for that variable. for each''}
 \item \reviewercomment{On page 18, at the bottom of the page :
