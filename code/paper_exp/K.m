@@ -34,7 +34,7 @@ switch version
 end
 
 p = 128;
-v = 0.2;
+v = 0;
 k = s;
 K = 7;
 lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
@@ -52,9 +52,10 @@ for run = 1:nrun
     ord = randperm(p); 
     J(ord(1:k),run) = 1==1; 
     
-    Sigma = toeplitz(v.^(0:p-1));
-    unif_weight = 0.1;
-    X = simulateBoundedGaussCopula(p, n, unif_weight, Sigma);
+    %Sigma = toeplitz(v.^(0:p-1));
+    %unif_weight = 0.1;
+    %X = simulateBoundedGaussCopula(p, n, unif_weight, Sigma);
+    X = randn(p, n);
     
     %y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)' + 
     %randn(n,1);
