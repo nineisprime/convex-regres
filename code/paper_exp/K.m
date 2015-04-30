@@ -19,19 +19,19 @@ switch version
     case 05, n = 1200;   s = 3;
     case 06, n = 1500;  s = 3;
     
-    case 07, n = 100;   s = 5;
-    case 08, n = 300;   s = 5;
-    case 09, n = 600;   s = 5;
-    case 10, n = 900;   s = 5;
-    case 11, n = 1200;   s = 5;
-    case 12, n = 1500;  s = 5;
+    case 07, n = 100;   s = 4;
+    case 08, n = 300;   s = 4;
+    case 09, n = 600;   s = 4;
+    case 10, n = 900;   s = 4;
+    case 11, n = 1200;   s = 4;
+    case 12, n = 1500;  s = 4;
         
-    case 13, n = 100;  s = 7;
-    case 14, n = 300;   s = 7;
-    case 15, n = 600;   s = 7;
-    case 16, n = 900;   s = 7;
-    case 17, n = 1200;   s = 7;
-    case 18, n = 1500;  s = 7;
+    case 13, n = 100;  s = 5;
+    case 14, n = 300;   s = 5;
+    case 15, n = 600;   s = 5;
+    case 16, n = 900;   s = 5;
+    case 17, n = 1200;   s = 5;
+    case 18, n = 1500;  s = 5;
 
     otherwise, return
 end
@@ -40,7 +40,7 @@ p = 128;
 k = s;
 
 K = 7;
-lambda = 0.3*sqrt(1/n)*log(n*p); % MODIFY
+lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
 SNR = 5;
 
 maxit = 20; tol = 10^-6;
