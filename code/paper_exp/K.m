@@ -19,19 +19,19 @@ switch version
     case 05, n = 1200;   s = 3;
     case 06, n = 1500;  s = 3;
     
-    case 07, n = 100;   s = 4;
-    case 08, n = 300;   s = 4;
-    case 09, n = 600;   s = 4;
-    case 10, n = 900;   s = 4;
-    case 11, n = 1200;   s = 4;
-    case 12, n = 1500;  s = 4;
+    case 07, n = 100;   s = 5;
+    case 08, n = 300;   s = 5;
+    case 09, n = 600;   s = 5;
+    case 10, n = 900;   s = 5;
+    case 11, n = 1200;   s = 5;
+    case 12, n = 1500;  s = 5;
         
-    case 13, n = 100;  s = 6;
-    case 14, n = 300;   s = 6;
-    case 15, n = 600;   s = 6;
-    case 16, n = 900;   s = 6;
-    case 17, n = 1200;   s = 6;
-    case 18, n = 1500;  s = 6;
+    case 13, n = 100;  s = 8;
+    case 14, n = 300;   s = 8;
+    case 15, n = 600;   s = 8;
+    case 16, n = 900;   s = 8;
+    case 17, n = 1200;   s = 8;
+    case 18, n = 1500;  s = 8;
 
     otherwise, return
 end
@@ -40,7 +40,7 @@ p = 128;
 k = s;
 
 K = 7;
-lambda = .5*sqrt(1/n)*log(n*p); % MODIFY
+lambda = .7*sqrt(1/n)*log(n*p); % MODIFY
 SNR = 5;
 
 maxit = 20; tol = 10^-6;
@@ -49,6 +49,15 @@ nrun = 40; % MODIFY
 
 J = ones(p,nrun)==0; Ln = zeros(p,nrun); 
 
+alpha = 0.5;
+Q = 0.5*eye(k); 
+for i = 2:k
+    for j = 1:(i-1)
+        if rand < alpha; 
+            Q(i,j) = 0.5; 
+        end; 
+    end; 
+end; Q = Q + Q';
 
 for run = 1:nrun
     
@@ -62,9 +71,11 @@ for run = 1:nrun
     %X = randn(n, p);
     X = rand(n,p)*2 - 1;
     
-    %y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)' + 
-    %randn(n,1);
-    y = softmaxAffine(X, K, ord(1:k));
+    y1 = sum(X(:,J(:,run))'.*(Q*X(:, J(:,run))'),1);
+    y2 = softmaxAffine(X, K, ord(1:k));
+    
+    y = y1'+y2;
+    
     y = y - mean(y);
     y = SNR*y/std(y);
     
