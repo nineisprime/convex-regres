@@ -26,12 +26,12 @@ switch version
     case 11, n = 1200;   s = 4;
     case 12, n = 1500;  s = 4;
         
-    case 13, n = 100;  s = 5;
-    case 14, n = 300;   s = 5;
-    case 15, n = 600;   s = 5;
-    case 16, n = 900;   s = 5;
-    case 17, n = 1200;   s = 5;
-    case 18, n = 1500;  s = 5;
+    case 13, n = 100;  s = 6;
+    case 14, n = 300;   s = 6;
+    case 15, n = 600;   s = 6;
+    case 16, n = 900;   s = 6;
+    case 17, n = 1200;   s = 6;
+    case 18, n = 1500;  s = 6;
 
     otherwise, return
 end
@@ -40,7 +40,7 @@ p = 128;
 k = s;
 
 K = 7;
-lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
+lambda = .5*sqrt(1/n)*log(n*p); % MODIFY
 SNR = 5;
 
 maxit = 20; tol = 10^-6;
@@ -56,9 +56,11 @@ for run = 1:nrun
     J(ord(1:k),run) = 1==1; 
     
     %Sigma = toeplitz(v.^(0:p-1));
+    %Sigma = eye(p);
     %unif_weight = 0.1;
     %X = simulateBoundedGaussCopula(p, n, unif_weight, Sigma);
-    X = randn(n, p);
+    %X = randn(n, p);
+    X = rand(n,p)*2 - 1;
     
     %y = sum(X(J(:,run),:).*(Q*X(J(:,run),:)),1)' + 
     %randn(n,1);

@@ -7,12 +7,13 @@
 % is normalized to L2 = 2, each coordinate has some basic 
 % strength
 
-function [Y] = softmaxAffine(X, K, supp)
+function [Y, beta_stars] = softmaxAffine(X, K, supp)
 
 [n,p] = size(X);
 
 beta_stars = randn(p,K);
-beta_stars = sign(beta_stars).*(abs(beta_stars)+0.5);
+% was 0.5
+beta_stars = sign(beta_stars).*(abs(beta_stars)+1);
 
 %normalization
 beta_stars = 2*beta_stars./(ones(p,1)*sqrt(sum(beta_stars.^2,1)));
