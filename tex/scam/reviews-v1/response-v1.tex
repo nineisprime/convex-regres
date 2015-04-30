@@ -242,60 +242,61 @@ are bounded (they are not supposed to be continuous)}
 
 We have modified the definition of boundary flatness so that $p(\mathbf{x_{-j}} \,|\, x_j)$ is bounded and has a bounded first and second derivative for all $x_j$ in some open set around the boundary points and for all $\mathbf{x}_{-j}$. Dominated convergenc theorem holds without problems because we only exchange the derivative and the integral at $x_j = 0,1$. Just to make sure, we have verified in detail that the domination condition holds in the newly added Section 8.3.4.
 
-%\item \reviewercomment{On page 13, on line 23, I do not think $\Sigma$ has been defined. Besides it
-%is not speciôed that $Var(X_1) = 1$.}
-
-%\item \reviewercomment{On page 13, on line 29, ``additive'' should be replaced by
-%``additively''.}
-
-%\item \reviewercomment{On page 13, the assumption $\E f(X) = 0$ should be made, or else the
-%parameter $\mu$ should be introduced as before.}
-
-%\item \reviewercomment{On page 16, in the expresson of $c^∗$, the
-%  denominator should be $\E X_k^2 −m_k^2$.}
-
-
 %\item \rc{On page 13, on line 6, ``this this''.}
 
 \item \rc{On page 13, on line 23, I do not think $\Sigma$ has been defined. Besides it
 is not speciôed that $Var(X_1) = 1$.}
 
-\item \rc{On page 13, on line 29, ``additive'' should be replaced by
-``additively''.}
+$\Sigma$ has been defined as the covariance matrix with diagonal entries equal to 1.
+
+%\item \rc{On page 13, on line 29, ``additive'' should be replaced by
+%``additively''.}
 
 \item \rc{On page 13, the assumption $\E f(X) = 0$ should be made, or else the
 parameter $\mu$ should be introduced as before.}
 
-\item \rc{On page 16, in the expresson of $c^∗$, the
-  denominator should be $\E X_k^2 −m_k^2$.}
+We have added the $\E f(X) = 0$ assumption.
+
+%\item \rc{On page 16, in the expresson of $c^∗$, the
+%  denominator should be $\E X_k^2 −m_k^2$.}
 
 \item \rc{On page 16, in the proof of Theorem 3.2, Lemma 8.3 is used. This
 lemma supposes that $\phi$ is continuous. Here I do not see why $\phi =
 \sum_{k'\neq k} f_{k'}*$ is continuous (it is convex then continuous on the interior of
 $[0,1]^p$. ).}
 
-\item \rc{On page 17, same problem as before with the absence of parameter $\mu$.}
-\item \rc{On page 17, on line 16 ``for that variable. for each''}
+We have updated the statement and the proof of Theorem 3.2 so that only boundedness is required of $\phi$. Furthermore, $h^*_k$ is no longer required to be twice differentiable; it need only be square-integrable. The old Lemma 8.3 is no longer necessary and has been removed. 
 
-\item \rc{On page 18, at the bottom of the page :
-  ``$\beta_{\pi_k(i+1)k} 
-\geq \beta_{\pi_k(i)k}$ for $i=1,\ldots, n-1$'' , $n−1$ must be replaced by $n−2$.}
+\item \rc{On page 17, same problem as before with the absence of parameter $\mu$.}
+
+$\mu$ has been added.
+
+%\item \rc{On page 17, on line 16 ``for that variable. for each''}
+
+%\item \rc{On page 18, at the bottom of the page :
+%  ``$\beta_{\pi_k(i+1)k} 
+%\geq \beta_{\pi_k(i)k}$ for $i=1,\ldots, n-1$'' , $n−1$ must be replaced by $n−2$.}
+
 \item \rc{On page 19, $\sum_{i} f_{ik}$ instead of $\sum_i
   f_{ki}$.}
-\item \rc{On page 20, in the third paragraph, on the second, third and fourth
-lines, $j$ and $j − 1$ must be replaced by $j + 1$ and $j$ respectively in
-$x_{\pi_k(j)k}$ and $x_{\pi_k(j-1)k}$.}
 
-\item \rc{On page 20, In the central matrix equation, the
-  first vector should be
-  $\left[\begin{matrix}f_k(x_{1k}\\ f_k(x_{2k}\\ \vdots\\f_k(x_{nk}\end{matrix}\right]$. Next
-  in ``$\mu_k = -\frac{1}{n} 1_n^T \Delta_k d_k$``, $1_n$ is missing.}
-\item \rc{On page 21, in Section 5, at the end of the
-  second paragraph, ``$m\hat{}u$ from
-our estimation procedure''.}
+This has been fixed. We have also gone through the paper and corrected all instances of the $f_{ik}, f_{ki}$ notation inconsistency so that $i$ always come before $k$.
 
-\item \rc{On page 22, in Deônition 5.1, the inequalities
-  about $d_k$ must be replaced by the same inequalities as in Proposition 4.1.}
+%\item \rc{On page 20, in the third paragraph, on the second, third and fourth
+%lines, $j$ and $j − 1$ must be replaced by $j + 1$ and $j$ respectively in
+%$x_{\pi_k(j)k}$ and $x_{\pi_k(j-1)k}$.}
+
+%\item \rc{On page 20, In the central matrix equation, the
+%  first vector should be
+%  $\left[\begin{matrix}f_k(x_{1k}\\ f_k(x_{2k}\\ \vdots\\f_k(x_{nk}\end{matrix}\right]$. N%ext
+%  in ``$\mu_k = -\frac{1}{n} 1_n^T \Delta_k d_k$``, $1_n$ is missing.}
+%\item \rc{On page 21, in Section 5, at the end of the
+%  second paragraph, ``$m\hat{}u$ from
+%our estimation procedure''.}
+
+
+%\item \rc{On page 22, in Deônition 5.1, the inequalities
+%  about $d_k$ must be replaced by the same inequalities as in Proposition 4.1.}
 
 \item \rc{On page 22 (and on page 31), in the statement of Theorem
   5.1, in\\ $\max_{i=1,\ldots, n} \frac{X_{k\pi_k(i+1)}-
@@ -304,15 +305,23 @@ sign $\geq$ must be replaced by $\leq$ . Besides I think it
 is a bad idea to change notation : $X_{k\pi_k(i)}$ should
 be replaced by $X_{\pi_k(i)k}$ as before (page 19 for instance).}
 
-\item \rc{On page 23, in equation (5.1), in ``$f^∗(X)$'', the star must be
-removed.}
+We have corrected all instances of this notation inconsistency.
+
+%\item \rc{On page 23, in equation (5.1), in ``$f^∗(X)$'', the star must be
+%removed.}
 
 \item \rc{On page 24, ``$\alpha_{+} > 0$ since $f$ is the unique risk minimizer'' : I do
 not understand this statement (there is an infimum, not a minimum in
 the definition of $\alpha_{+}$.)}
-\item \rc{On page 24, in Remark 5.1, ``In important direction''.}
+
+TODO
+
+%\item \rc{On page 24, in Remark 5.1, ``In important direction''.}
+
 \item \rc{On page 25, in the statement of Theorem 5.3, the square must be
 removed on $\alpha_-$.}
+
+The square is not an error. 
 
 \item \rc{On page 25, after the statement of Corollary 5.1 : I do not understand
 why ``$p = O(exp(n^c)$'' is written instead of ``$p = O(exp(cn)$.}
