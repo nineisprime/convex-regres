@@ -123,18 +123,18 @@ Each of our theorems will use a subset of the following assumptions:
 By assumption A1, $f^*_k$ must be zero for $k\notin S$.
 We define $\alpha_{+}, \alpha_{-}$ as a measure of the signal strength of the weakest variable:
 \begin{align}
-\alpha_{+} &= \inf_{f \in \mathcal{C}_1^p \,:\, \textrm{supp}(f) \subsetneq \textrm{supp}(f^*)} 
+\alpha_{+} &= \min_{f \in \mathcal{C}_1^p \,:\, \textrm{supp}(f) \subsetneq \textrm{supp}(f^*)} 
        \Big\{ \mathbb{E} \big( f_0(X) - f(X) \big)^2 - 
         \mathbb{E} \big( f_0(X) - f^*(X) \big)^2  \Big\} \label{eqn:signal_level_defn} \\
 \alpha_{-} &=   \min_{k \in S \,:\, g^*_k \neq 0}
       \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
     \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\} \nonumber
 \end{align}
-$\alpha_+$ is a lower bound on the excess risk incurred by any additive convex function whose support is strictly smaller than $f^*$; $\alpha_+ > 0$ since $f^*$ is the unique risk minimizer. Likewise, $\alpha_-$ lower bounds the excess risk of any decoupled concave fit of the residual $f_0 - f^*$ that is strictly more sparse than the optimal decoupled concave fit $\{\hat{g}_k^*\}$; $\alpha_- > 0$ by the uniqueness of $\{g^*_k\}$ as well. These quantities play the role of the absolute value of the smallest nonzero coefficient in the true linear model in lasso theory.  Intuitively, if
+$\alpha_+$ is a lower bound on the excess risk incurred by any additive convex function whose support is strictly smaller than $f^*$. $\alpha_+$ is achieved by some $f \neq f^*$ because the set $\{f\in \mathcal{C}_1^p\,:\, \trm{supp}(f) \subsetneq \textrm{supp}(f^*)\}$ is a finite union of closed convex sets. $\alpha_+ > 0$ since $f^*$ is the unique risk minimizer. Likewise, $\alpha_-$ lower bounds the excess risk of any decoupled concave fit of the residual $f_0 - f^*$ that is strictly more sparse than the optimal decoupled concave fit $\{\hat{g}_k^*\}$; $\alpha_- > 0$ by the uniqueness of $\{g^*_k\}$ as well. These quantities play the role of the absolute value of the smallest nonzero coefficient in the true linear model in lasso theory.  Intuitively, if
 $\alpha_{+}$ is small, then it is easier to make a false omission in the
 additive convex stage of the procedure. If $\alpha_{-}$ is small, then
 it is easier to make a false omission in the decoupled concave stage
-of the procedure.
+of the procedure. If $X$ is independent, then $\alpha_+$ can be simplified to $\min_{k \,:\, f^*_k \neq 0} \E f^*_k(X)^2$ and $\alpha_-$ becomes unnecessary.
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make

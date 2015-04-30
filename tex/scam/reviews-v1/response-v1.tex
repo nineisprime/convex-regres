@@ -314,14 +314,14 @@ We have corrected all instances of this notation inconsistency.
 not understand this statement (there is an infimum, not a minimum in
 the definition of $\alpha_{+}$.)}
 
-TODO
+The infimum is achieved by some $f \neq f^*$ since the constraint set $\{ f \in \mathcal{C}^p_1 \,:\, \textrm{supp}(f) \subsetneq \textrm{supp}(f^*)\}$ is a finite union of closed convex sets. It is $\bigcup_k \{ f \in \mathcal{C}^p_1 \,:\, \textrm{supp}(f) = \textrm{supp}(f^*) - \{k\}\}$. Therefore, the infimum is the minimum of a finite number of projections onto closed convex sets. We have changed the ``inf'' to ``min'' and added an explanation in the paper to remove the confusion.
 
 %\item \rc{On page 24, in Remark 5.1, ``In important direction''.}
 
 \item \rc{On page 25, in the statement of Theorem 5.3, the square must be
 removed on $\alpha_-$.}
 
-The square is not an error. 
+The square is not an error. We have a stronger requirement on the signal strength for the DC stage. This is because the $\hat{g}_k$'s are fitted onto the finite sample residual and thus, we need $\hat{f}$ to be close to $f^*$ in order to be able to prove something about the $\hat{g}_k$'s.
 
 \item \rc{On page 25, after the statement of Corollary 5.1 : I do not understand
 why ``$p = O(exp(n^c)$'' is written instead of ``$p = O(exp(cn)$.}
