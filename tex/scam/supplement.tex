@@ -1064,7 +1064,7 @@ Let $p(\mathbf{x})$ be a positive density over $[0,1]^p$. Let $f(\mathbf{x}) = \
 
 Let $\phi(\mathbf{x}) = f(\mathbf{x}) - g(\mathbf{x})$ and it is clear that $\phi(\mathbf{x}) = \sum_{j=1}^d \phi_j(x_j)$ with $\phi_j(x_j) = f_j(x_j) - h_j(x_j)$ and $\E \phi_j(X_j) = 0$. It is also immediate that $E \phi(X)^2 = 0$. \\
 
-Let $P$ be the probability measure induced by the density $p$, so that $P(A) = \int_A p(\mathbf{x}) d\lambda$ where $\lambda$ is the Lebesgue measure. Since $p > 0$, $\lambda(A) > 0$ implies that $P(A) > 0$ as well. \\
+Let $P$ be the probability measure induced by the density $p(\mathbf{x})$, so that $P(A) = \int_A p(\mathbf{x}) d\lambda$ where $\lambda$ is the Lebesgue measure. Since $p > 0$, $\lambda(A) > 0$ implies that $P(A) > 0$ as well. \\
 
 For sake of contradiction, let us assume that for some $j$, $\E \phi_j(X_j)^2 > 0$. Then, $P(A_j ) > 0$ where $A_j = \{ \mathbf{x} \in [0,1]^p \,:\, \phi_j(x_j) > 0 \}$. To see this, suppose that $\phi_j \leq 0$ almost surely. Then, $\E \phi_j = 0$ implies that $\phi_j = 0$ almost surely, contradicting the assumption that $\E \phi_j(X_j)^2 > 0$.\\
 

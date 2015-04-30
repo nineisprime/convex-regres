@@ -69,14 +69,15 @@ will make the subgradients of irrelevant variables
 small, but may not zero them out completely.
 
 This motivates us to consider an additive approximation. 
-Under a convex additive model, each component of the subgradient
-appears only in the convexity constraint for
-the corresponding variable:
-\begin{equation}
-f_{ki'} \geq f_{ki} + \beta_{ki}(x_{ki'}-x_{ki}) 
-\end{equation}
-where $f_{ki} = f_{k}(x_{ki})$ and $\beta_{ki}$ is the
-subgradient at point $x_{ki}$.   As we show, this leads to
+%Under a convex additive model, each component of the subgradient
+%appears only in the convexity constraint for
+%the corresponding variable:
+%\begin{equation}
+%f_{ki'} \geq f_{ki} + \beta_{ki}(x_{ki'}-x_{ki}) 
+%\end{equation}
+%where $f_{ki} = f_{k}(x_{ki})$ and $\beta_{ki}$ is the
+%subgradient at point $x_{ki}$.   
+As we show, this leads to
 an effective variable selection procedure.  The
 shape constraints play an essential role.
 For general regression, using an additive approximation for variable
@@ -120,7 +121,7 @@ Our first result is that this condition suffices in the population
 setting of convex regression.
 
 \begin{stheorem}
-  Let $p$ be a positive density supported on $C=[0,1]^p$ that
+  Let $p(\mathbf{x})$ be a positive density supported on $C=[0,1]^p$ that
   satisfies the boundary flatness property. If $f$ is convex and twice
   differentiable, then $f$ is additively faithful under $p$.
 \end{stheorem}
@@ -175,7 +176,7 @@ with $\mh{}\mathcal{C}^1$ denoting the set of univariate concave
 functions.  Then $f^*_k = 0$ and $g^*_k = 0$ implies that $f$ does not
 depend on $x_k$, i.e., $\partial_{x_k} f(\mathbf{x}) = 0$ with
 probability one.
-\end{stheorem}
+\end{stheorem}   
 
 This result naturally suggests a two-stage screening
 procedure for variable selection. In the first stage we fit a sparse convex

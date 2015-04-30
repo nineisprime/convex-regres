@@ -85,8 +85,8 @@ In the probabilistic setting we treat the covariates as random.  We
 adopt the following standard setup:
 
 \begin{enumerate}
-\item The data $X^{(1)},\ldots, X^{(n)} \sim F$ are iid from
-a distribution $F$ with a density $p(\mathbf{x})$ that is supported and strictly positive on $\mathcal{X}=[-1,1]^p$.
+\item The data $X^{(1)},\ldots, X^{(n)} \sim P$ are iid from
+a distribution $P$ with a density $p(\mathbf{x})$ that is supported and strictly positive on $\mathcal{X}=[-1,1]^p$.
 \item The response is $Y = f_0(X) + W$ where $W$ is
   independent, zero-mean noise; thus $Y^{(i)} = f_0(X^{(i)}) + W^{(i)}$.
 \item The regression function $f_0$ satisfies
@@ -181,7 +181,7 @@ $\hat{g}_k$ be any DC solution to the restricted regression with
 $B$-boundedness constraint. Let $\tilde{\sigma}$ denote $\max(\sigma,
 B)$.  Suppose 
 \begin{equation}
-\lambda_n \leq 512 s \tilde{\sigma} \sqrt{\frac{\log^2 np}{n}}
+\lambda_n \leq 768 s \tilde{\sigma} \sqrt{\frac{\log^2 np}{n}}
 \end{equation}
 and that $n$ is sufficiently large so that, for some constant $c' > 1$,
 \begin{equation}
