@@ -21,7 +21,7 @@ counter = [0,0];
 while iter < maxit && change > tol
     iter = iter + 1;
     
-    for d = 1:p
+    for d = 1:p           
         res = res + z(d,:)';
         
         % screening for AC 
