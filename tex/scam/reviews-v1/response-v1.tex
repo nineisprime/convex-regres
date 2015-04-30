@@ -124,6 +124,8 @@ error bounds using the fitted $f_k$'s and $g_k$'s, as well? Prediction error
 bounds seem quite relevant due to possible model misspecification when
 $f_0$ is not actually a sum of univariate convex functions.}
 
+To minimize predictive error, we can refit a non-additive convex function after selecting a sparse model. Comparing the predictive accuracy of $f^*_k$'s and $g^*_k$'s against the non-additive true regression function $f_0$ is beyond the scope of our paper, but we do compare the finite sample estimate $\hat{f}_k$ and $\hat{g}_k$ against the population level $f^*_k$ and $g^*_k$. The analysis we do to control false negatives also shows that $\mathbb{E}\left(\sum_{k=1}^p (f^*_k(X_k) - \hat{f}_k(X_k))\right)^2 \rightarrow 0$ and likewise for the DC stage.
+
 \item \rc{In order to improve clarity, the authors should define the convex
 additive model at the top of page 5: $f(x_i) = \sum_{k=1}^p f_k(x_{ik})$, where the
 $f_k$'s are convex.  Otherwise, the notation in equation (2.3) is
@@ -185,7 +187,7 @@ faithfulness'' (maybe ``Population- level results''?).}
 \subsection*{Reviewer 2}
 
 
-We are grateful to the reviewer for the detailed reading. We have corrected the mistakes found and further proof-read the paper. We discuss some of the issues raised. 
+We are grateful to the reviewer for the detailed reading. We have corrected the mistakes found and further proof-read the paper. We discuss the nontrivial issues here.  
 
 \rc{I found many (unimportant) mistakes in the proofs (I
   did not mention them all in the minor comments), which need to be
@@ -324,32 +326,48 @@ removed on $\alpha_-$.}
 The square is not an error. We have a stronger requirement on the signal strength for the DC stage. This is because the $\hat{g}_k$'s are fitted onto the finite sample residual and thus, we need $\hat{f}$ to be close to $f^*$ in order to be able to prove something about the $\hat{g}_k$'s.
 
 \item \rc{On page 25, after the statement of Corollary 5.1 : I do not understand
-why ``$p = O(exp(n^c)$'' is written instead of ``$p = O(exp(cn)$.}
-\item \rc{On page 26, in the first paragraph ``the relevant variable set'' and
-in the third paragraph, ``seting''.}
+why ``$p = O(exp(n^c)$'' is written instead of ``$p = O(exp(cn)$''.}
+
+We have changed it to $\exp(cn)$.
+
+%\item \rc{On page 26, in the first paragraph ``the relevant variable set'' and
+%in the third paragraph, ``seting''.}
+
 \item \rc{I really did not understand what was represented in figures 5(a) and
 5(b) (axis?). Besides it does not seem to correspond with what is
 described at the bottom of page 26 and at the top of page 27. The
 notation $\|\cdot\|_{\infty,1}$ is not defined.}
-\item \rc{On page 31, at the top of the page, ``see discussion at beginning of
-Section 5'' : I think it should be ``at the beginning''. In (8.1),
-same problem as before with the indices : ``$\nu_{ki} d_{ki}$ `` must be replaced
-with ``$\nu_{ik}d_{ik}$'' (see for instance page 20). At the bottom of the page,
-$v_{ki}$ must be replaced by $\nu_{ki}$.}
+
+We have further explained the old figure 5a and 5b (now figure 7a and 7b) in the experiment section. The following has been added to the paper:
+
+... we plot on the y-axis the norm $\|f^{(t)}_j\|_{\infty}$ of every column $j$ against the regularization strength $\lambda^{(t)}$. Instead of plotting the value of $\lambda^{(t)}$ on the x-axis however, we plot the total norm at $\lambda^{(t)}$ normalized against the total norm at $\lambda^{(1)}$: $\frac{\sum_j \|f^{(t)}_j\|_{\infty}}{\sum_j \|f^{(1)}\|_{\infty}}$. Thus, as x-axis moves from 0 to 1, the regularization goes from strong to weak.
+
+%\item \rc{On page 31, at the top of the page, ``see discussion at beginning of
+%Section 5'' : I think it should be ``at the beginning''. In (8.1),
+%same problem as before with the indices : ``$\nu_{ki} d_{ki}$ '' must be replaced
+%with ``$\nu_{ik}d_{ik}$'' (see for instance page 20). At the bottom of the page,
+%$v_{ki}$ must be replaced by $\nu_{ki}$.} 
+
 \item \rc{On page 32, on the first line of the second paragraph, ``$d_k = 0 \mbox{for $k
 \in S$}$'', $S$ must be replaced by $S^c$ and $\|\mu\|$ by $\|\mu\|_1$ and ``It clear
 that''. Next, the third paragraph (``to ease notational ....'') should
 be placed at the beginning of the proof (it is used from the beginning
 of the proof, cf conditions on $d_k$).}
+
+We cannot move the third paragraph to the beginning because it is not clear at that point that $k$ is fixed. We have corrected all the notations before the third paragraph so that the notations are consistent.
+
 \item \rc{On page 33, I find that $[\lambda\Delta_k^Tu]_1 = \lambda((X_{kn} −X_{k1})\kappa$. ( If $\kappa$ is be defined
-in the following way : $\kappa =
-\frac{1}{\lambda_n(X_{kn}-X_{k1})}[\Delta_k^T u]_1$, then everything
+in the following way : $\kappa = \frac{1}{\lambda_n(X_{kn}-X_{k1})}[\Delta_k^T u]_1$, then everything
 goes well).}
 
-\item \rc{On page 33, on the second line, ``other rows of stationarity
-condition holds'' and in the third paragraph : ``following our strategy, We''.}
-\item \rc{On page 34, at the bottom of the page, the parentheses in the
-denominator of the fraction.}
+We have redefined $\kappa$. 
+
+%\item \rc{On page 33, on the second line, ``other rows of stationarity
+%condition holds'' and in the third paragraph : ``following our strategy, We''.}
+
+%\item \rc{On page 34, at the bottom of the page, the parentheses in the
+%denominator of the fraction.}
+
 \item \rc{On page 35, in the third paragraph, ``as a function of $\nu$'' : it is
 $\zeta$, not $\nu$. In the fourth paragraph, $\nu$ is not defined. In the fifth
 paragraph, in the equation, remove the sum $\sum_{k=1}^p
@@ -357,16 +375,25 @@ paragraph, in the equation, remove the sum $\sum_{k=1}^p
 it by the vector ̄ˆ with componen$(\bar\Delta_k^T u_k)_{k=1,\ldots, p}$ In the sixth paragraph,
 in $\bar\Delta \hat d_k = \bar\Delta\hat d$ replace $\hat d_k$ by
 $\hat d'$.}
+
+We have corrected the expression. The sum has been replaced by a vector.
+
 \item \rc{On page 36, maybe it would be better to replace $d$ by $c$ here. Add
 ``for $k\in S^c$ after''to show that $\hat c_k =0$''.}
+
+We have replaced $d$ by $c$. 
+
 \item \rc{On page 37, In the first paragraph, I do not understand why $p$ appears
 here. In the last paragraph, I find 4 instead of 2 on the first term of
 the second line (and then 12 instead of 8 on the third line) .}
-\item \rc{on page 38, In the sixth paragraph, in the inequality, the sign
-should be $\leq$. In the eighth paragraph, $c''$ must be replaced by $c$. In
-the ninth paragraph, ``Taking an union''.}
-\item \rc{On page 40, on the fifth line, ``empricial''. In the last paragraph,
-``whose size is bounded'' : it is the log of the size.}
+
+We have removed mentions of $p$ here and corrected the constants.
+
+%\item \rc{on page 38, In the sixth paragraph, in the inequality, the sign
+%should be $\leq$. In the eighth paragraph, $c''$ must be replaced by $c$. In
+%the ninth paragraph, ``Taking an union''.}
+%\item \rc{On page 40, on the fifth line, ``empricial''. In the last paragraph,
+%``whose size is bounded'' : it is the log of the size.}
 
 \item \rc{I had a problem with the definition of an ε-bracketing. First, in the
 definition 8.1, on page 49, `` we define a bracketing'' should be
@@ -375,6 +402,9 @@ f_U ) \leq \epsilon$ and that the corresponding size is $N(\epsilon,C,\rho)$. Bu
 Proposition 8.3 (and almost everywhere else), when $N(2\epsilon,L_2(P),\rho)$ is
 used, it is written $\|f_L − f_U \|_{L_2} \leq \epsilon$ (instead of $2\epsilon$. ) (same thing in
 Corollary 8.4 for instance : $\epsilon$-bracketing with a size $N(2\epsilon,...)$)}
+
+
+
 \item \rc{On page 41, problem with $\epsilon$ (same as the previous item).}
 \item \rc{On page 40, I think the functions in $G$ are bounded by $2sB$ (not $sB$.).}
 \item \rc{On page 49, in Definition 8.1, $f^U$ and $f^L$ must be replaced by $f_U$ and
