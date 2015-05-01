@@ -122,8 +122,8 @@ setting of convex regression.
 
 \begin{stheorem}
   Let $p(\mathbf{x})$ be a positive density supported on $C=[0,1]^p$ that
-  satisfies the boundary flatness property. If $f$ is convex and twice
-  differentiable, then $f$ is additively faithful under $p$.
+  satisfies the boundary flatness property. If $f$ is convex and continuously twice
+  differentiable on an open set around $C$, then $f$ is additively faithful under $p$.
 \end{stheorem}
 
 % We give the full proof in Section~\ref{sec:faithful_proof} of the
@@ -156,7 +156,7 @@ Our next result states that a convex additive fit, combined with a series of uni
 \label{thm:summary_acdc_population}
 Suppose $p(\mathbf{x})$ is a positive
 density on $C=[0,1]^p$ that satisfies the boundary flatness
-condition. Suppose that $f$ is convex and twice-differentiable.
+condition. Suppose that $f$ is convex and continuously twice-differentiable on an open set around $C$.
 and that $\partial_{x_k} f$, $\partial_{x_k} p( \mathbf{x}_{-k}
 \given x_k )$, and $\partial_{x_k}^2 p( \mathbf{x}_{-k} \given x_k)$
 are all continuous as functions on $C$.
@@ -249,7 +249,7 @@ strategy.
 Each of our theorems uses a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
-\item[A2:] $f_0$ is convex and twice-differentiable. $\E f_0(X) = 0$.
+\item[A2:] $f_0$ is convex and continuously twice-differentiable. $\E f_0(X) = 0$.
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\|f^*_k \| \leq B$ for all $k$.
 \item[A4:] The noise is mean-zero sub-Gaussian, independent of $X$.
 \item[A5:] The density $p(\mathbf{x})$ is bounded away from 0 and satisfies the boundary flatness condition.

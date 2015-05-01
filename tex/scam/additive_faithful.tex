@@ -200,7 +200,7 @@ Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. We say that $p(\mathbf{
 
 \end{definition}
 
-The boundary flatness condition intuitively states that two conditional densities $p(\mathbf{x}_{-j} \given x_j)$ and $p(\mathbf{x}_{-j} \given x_j')$ are similar when $x_j$ and $x_j'$ are both close to $0$ or both close to $1$. Product densities satisfy boundary flatness trivially. Boundary flatness is a weak condition because it affects only an $\epsilon$-small region around the boundary; $p(\mathbf{x}_{-j} \given x_j)$ can take arbitrary shapes away from the boundary. Boundary flatness also allows arbitrary correlation structure between the variables (provided $p(\mathbf{x}) >0$). In Section~\ref{sec:boundary_flat}, we give a detailed discussion of the boundary flatness condition and show many examples of boundary flat distributions; in particular, we show that any distribution supported on a compact set can be approximated arbitrarily well by boundary flat distributions.
+The boundary flatness condition intuitively states that two conditional densities $p(\mathbf{x}_{-j} \given x_j)$ and $p(\mathbf{x}_{-j} \given x_j')$ are similar when $x_j$ and $x_j'$ are both close to $0$ or both close to $1$. Product densities satisfy boundary flatness trivially. Boundary flatness is a weak condition because it affects only an $\epsilon$-small region around the boundary; $p(\mathbf{x}_{-j} \given x_j)$ can take arbitrary shapes away from the boundary. Boundary flatness also allows arbitrary correlation structure between the variables (provided $p(\mathbf{x}) >0$). In Section~\ref{sec:boundary_flat}, we give a detailed discussion of the boundary flatness condition and show examples of boundary flat densities; in particular, we show that any density supported on a compact set can be approximated arbitrarily well by boundary flat densities.
 
 
 
@@ -217,10 +217,12 @@ The following theorem is the main result of this section.
 
 \begin{theorem}
 \label{thm:convex_faithful}
-Let $p(\mathbf{x})$ be a density supported on $C=[0,1]^p$ and bounded away from $0/\infty$ that satisfies
-the boundary flatness property. 
-If $f$ is convex and continuously twice differentiable, then $f$ is additively faithful under $p(\mathbf{x})$.
+Let $p(\mathbf{x})$ be a density supported on $C=[0,1]^p$ and bounded away from $0/\infty$ that satisfies the boundary flatness property. 
+
+Suppose $f$ is a convex and continuously twice differentiable on an open set containing $C$, then $f$ is additively faithful under $p(\mathbf{x})$.
 \end{theorem}
+
+We let the domain of $f$ be slightly larger than $C$ for a technical reason--it is so we can say in the proof that the Hessian of $f$ is positive semidefinite even at the boundary of $C$. 
 
 % We give the full proof in Section~\ref{sec:faithful_proof} of the
 % Appendix, but pause here to provide some intuition. 
@@ -359,42 +361,47 @@ In this section, we give more examples of boundary flat densities (see Definitio
 
 \begin{example}
 \label{ex:joint_density_flat}
-Boundary flatness is satisfied if the joint density becomes flat at the boundary. To be precise, let $p(\mathbf{x})$ be a joint density bounded away from $0/\infty$. Suppose, for all $j$,  $\partial_{x_j} p(x_j, \mathbf{x}_{-j})$ and $\partial^2_{x_j} p(x_j, \mathbf{x}_{-j})$ exist and are bounded for all $\mathbf{x}_{-j}$ and for all $x_j \in [0, \epsilon) \cup (1-\epsilon, 1]$ for some $\epsilon >0$.
+Boundary flatness is satisfied if the joint density becomes flat at the boundary. To be precise, let $p(\mathbf{x})$ be a joint density bounded away from $0/\infty$ with a bounded second derivative.
 
 Suppose also, for all $j$,
 $$
 \partial_{x_j} p(x_j,\mathbf{x}_{-j}) =
-\partial_{x_j}^2 p(x_j, \mathbf{x}_{-j}) = 0\quad  \trm{at $x_j = 0, 1$,}
+\partial_{x_j}^2 p(x_j, \mathbf{x}_{-j}) = 0\quad  \trm{at $x_j = 0, 1$,}.
 $$
-then it is straightforward to show that $\partial_{x_j} p(\mathbf{x}_{-j} \given x_j) = \partial_{x_j}^2 p(\mathbf{x}_{-j} \given x_j) = 0$ at $x_j = 0,1$ as well. One need only see that the derivatives of the marginal densities are zero at the boundary and apply the quotient rule.
+It is then straightforward to show boundary flatness. One can first verify that the derivatives of the marginal density $p(x_j)$ vanishes at $x_j = 0,1$ and then apply the quotient rule on $\frac{p(x_j,\mathbf{x}_{-j}}{p(x_j)}$ to show that $\partial_{x_j} p(\mathbf{x}_{-j} \given x_j) = \partial_{x_j}^2 p(\mathbf{x}_{-j} \given x_j) = 0$ at $x_j = 0,1$ as well. 
 \end{example}
 
-The next example shows that any bounded density over a hypercube can be approximated arbitrarily well by some boundary flat distributions. 
+The next example shows that any bounded density over a hypercube can be approximated arbitrarily well by boundary flat densities. 
 
 \begin{example}
 \label{ex:mixture_approx}
-Suppose $p(\mathbf{x})$ is a bounded density over $[\epsilon, 1-\epsilon]^p$ for some $0 < \epsilon < 1/2$. Let $q(\mathbf{x})$ be a boundary flat density over $[0,1]^p$. Define a mixture $p_{\lambda, \epsilon}(\mathbf{x}) = \lambda q(\mathbf{x}) + (1-\lambda) p(\mathbf{x})$ where $0 < \lambda \leq 1$, then $p_{\lambda, \epsilon}(\mathbf{x})$ is boundary flat over $[0,1]^p$. Furthermore, $\epsilon$ and $\lambda$ can be made arbitrarily small and therefore, $p(\mathbf{x})$ can be approximated arbitrarily well (in $L_1$ for example) by a boundary flat distribution. 
+Suppose $p_\epsilon(\mathbf{x})$ is a bounded density over $[\epsilon, 1-\epsilon]^p$ for some $0 < \epsilon < 1/2$. Let $q(\mathbf{x})$ be an arbitrary boundary flat density over $[0,1]^p$ (one can take the uniform density for instance). Define a mixture $p_{\lambda, \epsilon}(\mathbf{x}) = \lambda q(\mathbf{x}) + (1-\lambda) p_\epsilon(\mathbf{x})$ where $0 < \lambda \leq 1$, then $p_{\lambda, \epsilon}(\mathbf{x})$ is boundary flat over $[0,1]^p$. 
+
+Now, let $p(\mathbf{x})$ be a bounded density over $[0,1]^p$. Let $p_\epsilon(\mathbf{x})$ be the density formed from truncating $p(\mathbf{x})$ in $[\epsilon, 1-\epsilon]^p$. The corresponding mixture $p_{\lambda,\epsilon}(\mathbf{x})$ then approximates $p(\mathbf{x})$ when $\lambda$ and $\epsilon$ are both small.
+
+Since $p_{\lambda,\epsilon}(\mathbf{x})$ remains boundary flat for arbitrarily small $\epsilon$ and $\lambda$, $p(\mathbf{x})$ can be approximated arbitrarily well (in $L_1$ for example) by boundary flat densities. 
 \end{example}
 
-The result in Example~\ref{ex:joint_density_flat} further shows that boundary flat densities can arise from monotone marginal transformations of more general random vectors. This gives another way of approximating general densities by boundary flat densities.
 
-\begin{example}
-Let $X = (X_1,...,X_p)$ be drawn from a density supported on $[0,1]^p$, bounded away from $0/\infty$, and with a bounded second derivative. Let $\phi : [0,1] \rightarrow [0,1]$ be a monotonically increasing transformation. We will show that under certain conditions on $\phi$, the density of $(\phi(X_1), ..., \phi(X_p))$ is boundary flat.
+% The result in Example~\ref{ex:joint_density_flat} further shows that boundary flat densities can arise from monotone marginal transformations of more general random vectors. This gives another way of approximating general densities by boundary flat densities.
 
-Suppose $\phi^{-1}$ has a bounded third derivative on some neighborhood around the boundary, say $[0, \epsilon) \cup (1-\epsilon, 1]$ and suppose $\phi^{-1\prime}(z) = \phi^{-1\prime\prime}(z) = \phi^{-1\prime\prime\prime}(z) = 0$ at $z=0,1$.
+% \begin{example}
+% Let $X = (X_1,...,X_p)$ be drawn from a density supported on $[0,1]^p$, bounded away from $0/\infty$, and with a bounded second derivative. Let $\phi : [0,1] \rightarrow [0,1]$ be a monotonically increasing transformation. We will show that under certain conditions on $\phi$, the density of $(\phi(X_1), ..., \phi(X_p))$ is boundary flat.
 
-Then, the density $p(z_1,...,z_p)$ of the transformed variables $z_j = \phi(x_j)$ is 
-$$ 
-p(z_1,...,z_p) = p_X(\phi^{-1}(z_1), ..., \phi^{-1}(z_p)) \prod_{j=1}^p \phi^{-1\prime}(z_j),
-$$ where $p_X(\cdot,...,\cdot)$ is the density of $X$.
-One can use the product rule and the chain rule to differentiate $p(z_1,...,z_p)$ and verify that $\partial_{z_j} p(\mathbf{z}) = \partial^2_{z_j} p(\mathbf{z}) = 0$ at $z_j = 0,1$ and thus show that $p(z_1,...,z_p)$ satisfies boundary flatness by Example~\ref{ex:joint_density_flat}.
+% Suppose $\phi^{-1}$ has a bounded third derivative on some neighborhood around the boundary, say $[0, \epsilon) \cup (1-\epsilon, 1]$ and suppose $\phi^{-1\prime}(z) = \phi^{-1\prime\prime}(z) = \phi^{-1\prime\prime\prime}(z) = 0$ at $z=0,1$.
 
-As a concrete example, we can use the following transformation $\phi_\epsilon$, defined in term of its inverse:
-$$\phi_\epsilon^{-1}(z) = \left\{ \begin{array}{cc} z^4 & \trm{if $z \leq \epsilon$} \\ 
-                     \frac{1-2\epsilon^4}{1-2\epsilon} z - \frac{ \epsilon + \epsilon^4}{1-2\epsilon} & \trm{if $\epsilon \leq z \leq 1-\epsilon$} \\
-                      1-(1-z)^4 & \trm{if $z \geq 1-\epsilon$} \end{array} \right.$$
-for any $1/2 > \epsilon > 0$. As $\epsilon$ becomes small, $\phi_\epsilon$ becomes close to the identity and so $(\phi_\epsilon(X_1), ..., \phi_\epsilon(X_p))$ closely approximates the original random variable $(X_1,...,X_p)$. Intuitively, $\phi$ stretches $X$ near the boundary so that changes in the transformed variable $z$ near the boundary corresponds to much smaller change in original variable $x$. 
-\end{example}
+% Then, the density $p(z_1,...,z_p)$ of the transformed variables $z_j = \phi(x_j)$ is 
+% $$ 
+% p(z_1,...,z_p) = p_X(\phi^{-1}(z_1), ..., \phi^{-1}(z_p)) \prod_{j=1}^p \phi^{-1\prime}(z_j),
+% $$ where $p_X(\cdot,...,\cdot)$ is the density of $X$.
+% One can use the product rule and the chain rule to differentiate $p(z_1,...,z_p)$ and verify that $\partial_{z_j} p(\mathbf{z}) = \partial^2_{z_j} p(\mathbf{z}) = 0$ at $z_j = 0,1$ and thus show that $p(z_1,...,z_p)$ satisfies boundary flatness by Example~\ref{ex:joint_density_flat}.
+
+% As a concrete example, we can use the following transformation $\phi_\epsilon$, defined in term of its inverse:
+% $$\phi_\epsilon^{-1}(z) = \left\{ \begin{array}{cc} z^4 & \trm{if $z \leq \epsilon$} \\ 
+%                      \frac{1-2\epsilon^4}{1-2\epsilon} z - \frac{ \epsilon + \epsilon^4}{1-2\epsilon} & \trm{if $\epsilon \leq z \leq 1-\epsilon$} \\
+%                       1-(1-z)^4 & \trm{if $z \geq 1-\epsilon$} \end{array} \right.$$
+% for any $1/2 > \epsilon > 0$. As $\epsilon$ becomes small, $\phi_\epsilon$ becomes close to the identity and so $(\phi_\epsilon(X_1), ..., \phi_\epsilon(X_p))$ closely approximates the original random variables $(X_1,...,X_p)$. Intuitively, $\phi$ stretches $X$ near the boundary so that a change in the transformed variable $z$ near the boundary corresponds to a much smaller change in original variable $x$. 
+% \end{example}
 
 In our discussion so far, we have restricted ourselves to densities supported and positive on the hypercube $[0,1]^p$ to minimize extraneous technical details. It may be possible to extend the analysis to densities whose support is a convex and compact set so long as the marginal density $p(x_j) > 0$ for all $x_j$ in the support. 
 
@@ -479,8 +486,7 @@ g^*_k = \arg\min \Big\{
 \begin{theorem}
 \label{thm:acdc_faithful}
 Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from $0/\infty$ that
-satisfies the boundary flatness condition. Suppose that $f$ is convex
-and continuously twice differentiable. Let $f^*_k$ and $g^*_k$ be as defined in equations
+satisfies the boundary flatness condition. Suppose that $f$ is convex and continuously twice differentiable on an open set around $C$. Let $f^*_k$ and $g^*_k$ be as defined in equations
 \eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}, then the $f^*_k$'s and the $g^*_k$'s are unique. Furthermore, 
 $f^*_k = 0$ and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x})
 = 0$, that is, $f$ does not depend on~$x_k$. 
@@ -491,7 +497,7 @@ Before we can prove the theorem, we need a lemma that generalizes Theorem~\ref{t
 \begin{lemma}
 \label{cor:faithfulness_extension}
 Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from $0/\infty$ satisfying the boundary flatness condition.
-Let $f(\mathbf{x})$ be a convex and continuously twice differentiable function on $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
+Let $f(\mathbf{x})$ be a convex and continuously twice differentiable function on an open set around $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
  \begin{align}
 h^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X) 
            - \phi(X_{-k}) - h_k(X_k) \bigr)^2\Bigr]

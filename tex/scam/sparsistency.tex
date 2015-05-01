@@ -117,10 +117,10 @@ The $\hat{g}_k$'s are unique minimizers as well. We let $S = \{ k = 1,\ldots,p \
 Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
-\item[A2:] $f_0$ is convex and twice-differentiable. $\E f_0(X) = 0$.
+\item[A2:] $f_0$ is convex and continuously twice-differentiable on an open set around $[-1,1]^p$. $\E f_0(X) = 0$.
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\| f^*_k \|_\infty \leq B$ for all $k$.
 \item[A4:] $W$ is mean-zero sub-Gaussian, independent of $X$, with scale $\sigma$; i.e., for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
-\item[A5:] The density $p(\mathbf{x})$ is bounded away from 0 and satisfies the boundary flatness condition. (Definition~\ref{defn:boundary-point})
+\item[A5:] The density $p(\mathbf{x})$ satisfies the boundary flatness condition (Definition~\ref{defn:boundary-point}), and $0 < c_l \leq \inf p(\mathbf{x}) \leq \sup p(\mathbf{x}) \leq c_u < \infty$ for two constants $c_l, c_u$. 
 \end{packed_enum}
 By assumption A1, $f^*_k$ must be zero for $k\notin S$.
 We define $\alpha_{+}, \alpha_{-}$ as a measure of the signal strength of the weakest variable:
@@ -153,7 +153,7 @@ of the procedure. If $X$ is independent, then $\alpha_+$ can be simplified to $\
 
 \begin{theorem}[Controlling false positives]
 \label{thm:false_positive}
-Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$ and define $\mathsf{range}_k = X_{\pi_k(n)k} - X_{\pi_k(1)k}$. Suppose $p \leq O\big( \exp(c n) \big)$ and $n \geq C$ for some positive constants $0 < c <1$ and $C$.  Suppose also
+Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$ and define $\mathsf{range}_k = X_{\pi_k(n)k} - X_{\pi_k(1)k}$. Suppose $p \leq O\big( \exp(c n) \big)$ and $n \geq C$ for some positive constants $C$ and $0 < c < \frac{c_l}{32}$.  Suppose also
 \begin{equation}
 \lambda_n \geq 768 s \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
 \end{equation}  
@@ -192,9 +192,9 @@ and that $n$ is sufficiently large so that, for some constant $c' > 1$,
 Assume that the signal-to-noise ratio satisfies
 \begin{align}
 \frac{\alpha_{+}}{\tilde{\sigma}} & \geq c B^2
-\sqrt{\frac{s^5}{n^{4/5}} \log^2 np}\\
+\sqrt{\frac{s^5 c_u^{1/2}}{n^{4/5}} \log^2 np}\\
 \frac{\alpha_{-}^2}{\tilde{\sigma}} &\geq c B^2
-\sqrt{\frac{s^5}{n^{4/5}} \log^2 np}
+\sqrt{\frac{s^5 c_u^{1/2}}{n^{4/5}} \log^2 np}
 \end{align}
 where $c$ is a constant.  Then with probability at least $1 -
 \frac{C}{n}$ for some constant $C$, 

@@ -178,7 +178,7 @@ variables selected via the entire AC/DC algorithm. This would help
 illustrate the necessity of the concave fitting step in addition to
 the convex additive fit alone.}
 
-
+We have added an additional simulation comparing the variables selected via the AC stage and the DC stage. Please see the last paragraph in Section 6.1 as well as Figure 6. The DC stage is slightly helpful in recovering the true variables but its effect is insignificant. We believe that the DC stage is important in theory but not so in practice. 
 
 Minor typos:
 \begin{enumerate}[(i)]
@@ -257,7 +257,7 @@ $\frac{\partial^2 f(x_{-j} |  x_j)}{\partial x_j^2}$
 are bounded (they are not supposed to be continuous)}
 
 
-We have modified the definition of boundary flatness so that $p(\mathbf{x_{-j}} \,|\, x_j)$ is bounded and has a bounded first and second derivative for all $x_j$ in some open set around the boundary points and for all $\mathbf{x}_{-j}$. Dominated convergenc theorem holds without problems because we only exchange the derivative and the integral at $x_j = 0,1$. Just to make sure, we have verified in detail that the domination condition holds in the newly added Section 8.3.4.
+We indeed need a bounded condition here. We have modified the definition of boundary flatness so that $p(\mathbf{x_{-j}} \,|\, x_j)$ is bounded and has a bounded first and second derivative for all $x_j$ in some open set around the boundary points and for all $\mathbf{x}_{-j}$. Dominated convergenc theorem holds without problems because we only exchange the derivative and the integral at $x_j = 0,1$. We have verified in detail that the domination condition holds in the newly added Section 8.4.1.
 
 %\item \rc{On page 13, on line 6, ``this this''.}
 
@@ -418,34 +418,61 @@ Proposition 8.3 (and almost everywhere else), when $N(2\epsilon,L_2(P),\rho)$ is
 used, it is written $\|f_L − f_U \|_{L_2} \leq \epsilon$ (instead of $2\epsilon$. ) (same thing in
 Corollary 8.4 for instance : $\epsilon$-bracketing with a size $N(2\epsilon,...)$)}
 
+We have corrected this problem by replacing all instances of $N(2\epsilon,...)$ with $N(\epsilon, ...)$ and updating the bound for $\log N(...)$ accordingly. 
 
-
-\item \rc{On page 41, problem with $\epsilon$ (same as the previous item).}
+%\item \rc{On page 41, problem with $\epsilon$ (same as the previous item).}
 \item \rc{On page 40, I think the functions in $G$ are bounded by $2sB$ (not $sB$.).}
+
+This has been noted and corrected across the proofs.
+
 \item \rc{On page 49, in Definition 8.1, $f^U$ and $f^L$ must be replaced by $f_U$ and
 $f_L$. On the last line of the page, ``additive convex functions with $s$
 components'' : add ``components bounded by $B$''.}
+
+We have corrected the instances in which we erroneously omitted ``... components bounded by $B$''.
+
 \item \rc{On page 49, ``$\int p(x)^2dx \leq (\int p(x)dx)^2$ ``??}
-\item \rc{On page 50, a constant 2 is missing in $\epsilon_n$.}
+
+We have corrected this mistake by placing an upper bound $c_u$ on the density $p(\mathbf{x})$ and incorporating that upper bound into this derivation. We now use the correct bound $\sqrt{ \int p(x)^2 dx } \leq c_u$.
+
+%\item \rc{On page 50, a constant 2 is missing in $\epsilon_n$.}
 \item \rc{On page 41, in the second paragraph, I think the bound on $\sup_{h_L} |⟨w,h_L⟩_n|$ is
 wrong. I would have used the fact that the variables $h_L(X_i) W_i$ are
 independent, centered and sub-Gaussian with a scale smaller than
 $2\sigma s B$. It gives a bound of order $sB\sigma \sqrt{\frac{\log\frac{2}{\delta}}{n}}$.}
+
+We have updated this derivation.
+
 \item \rc{The term $\epsilon$ supposed to balance the two terms is not correct (for
 instance it does not contain $\delta$). There are many small mistakes in the
 calculations. In particular, the exponent in $s$ is not the right one.}
+
+The $\epsilon$ we choose is sufficient to get the bounds we want but it does not exactly balance the terms. We left dependence on $\delta$ out of the $\epsilon$ intentionally because we need to verify that $\epsilon$ satisfies certain conditions, see Equation (8.12) for instance. These conditions are much easier to verify if $\epsilon$ does not depend on $\delta$, which we set to be $1/n$ only at the end. We have updated the paper to clearly state that we use a suboptimal $\epsilon$.
+
 \item \rc{In the proof of Theorem 8.4 : too many small mistakes in
 calculations, but the final result is OK.}
+
+TODO
+
 \item \rc{On page 45, the term $\epsilon$ supposed to balance the terms is not correct
 (same remark about $\delta$). In the last equations, on the first line (bottom
 of the page) $n$ is missing in one of the scalar products.}
-\item \rc{On page 46: ``taking a union bound and we have that''}
+
+We also use a suboptimal $\epsilon$ here for convenience. We have updated the paper to clearly state that.
+
+%\item \rc{On page 46: ``taking a union bound and we have that''}
 \item \rc{In Lemma 8.3, I do not see why the functions are continuous : the
 functions $x_{-k} \rightarrow p(x_{-k} | x_k)$ are not supposed to be continuous .}
+
+The old Lemma 8.3 has been removed. We now just need $x_{-k} \rightarrow p(x_{-k} \,|\, x_k)$ to be bounded, which has been added as a condition. (We now assume for convenience that the joint density $p(\mathbf{x})$ be bounded away from 0 and $\infty$.)
+
 \item \rc{On page 47, in the proof of Lemma 8.4 : notation $\phi_{-j}$
   has not been defined.
 In the definition of $A_+$, the sign should be $>$, not $\geq$. Remove ``both'' .}
-\item \rc{On page 47, ``a sub-exponential random is''.}
+
+The old Lemma 8.4 (now Lemma 8.3) has been updated. 
+
+%\item \rc{On page 47, ``a sub-exponential random is''.}
 
 \end{enumerate}
 

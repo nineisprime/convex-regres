@@ -387,7 +387,7 @@ Thus, we have that $\mathsf{range}_k \geq 2 - 1/8 \geq 1$ and that for all $i$,
 
 Taking a union bound for each $k \in S^c$, the probability of that all $\mathcal{E}_k$ hold is at least $1 - p 64 \left( 1 - \frac{1}{32} c_l \right)^n$.
 
-$p64 \left( 1 - \frac{1}{32} c_l \right)^n = 64 p \exp( - c' n)$ for some positive constants $0< c' < 1$ dependent on $c_l$. Therefore, if $p \leq exp( c n)$ for some $0<c < c'$ and if $n$ is larger than some constant $C$, $64 p \exp( - c' n) \leq 64 \exp( - (c' - c) n) \leq \frac{12}{n}$.
+$p64 \left( 1 - \frac{1}{32} c_l \right)^n = 64 p \exp( - c' n)$ where $c' = -\log(1-\frac{c_l}{32}) > \frac{c_l}{32}$ since $c_l < 1$. Therefore, if $p \leq exp( c n)$ for some $0<c < \frac{c_l}{32}$ and if $n$ is larger than some constant $C$, $64 p \exp( - c' n) \leq 64 \exp( - (c' - c) n) \leq \frac{12}{n}$.
 
 Taking a union bound with the event that $\lambda_n$ upper bounds the partial sums of $\hat{r}$ and we establish the claim. 
 
@@ -988,7 +988,8 @@ Therefore, with probability at least $1 - 2\delta$,
 %%
 %%%%%%%%%%%%%%%%%%%% 
 
-% \subsection{Supporting Technical Material}
+\subsection{Supporting Technical Material}
+
 \subsubsection{Detail for Proof of Theorem~\ref{thm:convex_faithful}} 
 \label{sec:dominated_condition}
 
@@ -1054,6 +1055,7 @@ We just need to remember that $p''(\mathbf{x}_{-k} \given x_k)$ is bounded for a
 % This proves that $h^*_k(x_k)$ is twice-differentiable. To see that the second derivative is lower bounded, we note that $f''(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k)$ is non-negative and the other terms in the second-derivative are all continuous functions on a compact set and thus bounded. 
 % \end{proof}
 
+\subsubsection{Uniqueness of the Additive Components}
  
 \begin{lemma}
 \label{lem:additive_uniqueness}
