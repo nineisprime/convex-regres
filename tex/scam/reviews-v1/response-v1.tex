@@ -117,7 +117,9 @@ In the finite sample analysis, the assumptions would not change except that A3 w
 it easy to add this condition as a regularization term and incorporate
 it into the analysis?}
 
-Smoothness can be incorporated by using B-spline basis with uniformly spaced knots. The details are described in a paper by Pya and Wood which we cited. We chose not to discuss estimating smooth convex functions because it would introduce an additional tuning parameter, which negates some of the advantages of doing shape-constrained estimation.
+Smoothness can be incorporated by using B-spline basis with uniformly spaced knots. The details are described in a 2014 paper by Pya and Wood which we have cited in the introduction. We chose not to discuss estimating smooth convex functions because it would introduce an additional tuning parameter.
+
+The analysis may require much more work if one uses a B-spline basis in the estimation. B-splines may significantly complicate the false positive analysis, which rely on the particular form of the optimization. The false negative analysis may not be affected much because it mainly uses bracketing entropy.
 
 \item \rc{Assuming model selection consistency, can one derive prediction
 error bounds using the fitted $f_k$'s and $g_k$'s, as well? Prediction error
@@ -159,17 +161,24 @@ paragraph on page 22 should state that Theorem 5.1 controls false
 positives alone, whereas Theorem 5.3 (to follow) provides
 finite-sample results controlling the false negative rate.}
 
+We have made the suggested modifications except for the one in the second sentence. The $B$-boundedness condition is used in both Theorem 5.2 and Theorem 5.3. It is relied upon critically in Theorem 5.3 and used for convenience in Theorem 5.2. 
+
+
 \item \rc{At the top
 of page 23, the remark regarding mutual incoherence conditions is a
 bit confusing. Aren’t the conditions imposed in Theorem 5.1 on the
 covariates essentially analogous to the mutual incoherence conditions
 in this case? }
 
+The conditions in Theorem 5.1 are indeed analogous and we have edited the remark accordingly. The conditions in Theorem 5.1 are much more strict than the mutual incoherence condition though.
+
 \item \rc{In the simulation section, the authors might consider comparing the
 set of variables selected after the AC step only with the set of
 variables selected via the entire AC/DC algorithm. This would help
 illustrate the necessity of the concave fitting step in addition to
 the convex additive fit alone.}
+
+
 
 Minor typos:
 \begin{enumerate}[(i)]

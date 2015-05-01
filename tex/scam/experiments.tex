@@ -18,7 +18,7 @@ represents the set of relevant variables, and
 $\epsilon_i$ is additive noise drawn from $\mathcal{N}(0,\sigma)$. For 
 all simulations, we set $\sigma$ such that the signal-to-noise ratio(SNR, $\frac{\trm{std}(Y)}{\sigma}$) is 5. Also, for all simulations except the sixth, we choose the set of relevant variables $S$ uniformly at random among all variables $\{1,...,p\}$.
 
-The purpose of the simulations is to see how the probability of variable selection scales with the number of samples $n$, the ambient dimension $p$, and the sparsity level $s$. We study both the independent case where $P = N(0, I_p)$ and the correlated case where $P$ is a correlated Gaussian Copula modified slightly to satisfy boundary flatness. We measure the probability of exact selection in the independent case and the probability of screening in the correlated case. We also study both cases where the regression function is parametric (quadratic) and cases where the regression function is nonparametric (softmax of linear forms). In all our experiments, we mark a variable as selected if either the AC estimate $\| \hat{f}_j \|_\infty$ or the DC estimate $\| \hat{g}_k \|_\infty$ is larger than $10^{-6}$. We set $\lambda = 0.5 \sqrt{\frac{\log^2 np}{n}}$ for all the simulations.
+We study both the independent case where $P = N(0, I_p)$ and the correlated case where $P$ is a correlated Gaussian Copula modified slightly to satisfy the boundary flatness condition. We measure the probability of exact selection in the independent case and the probability of screening in the correlated case. We also study both cases where the regression function is parametric (quadratic) and cases where the regression function is nonparametric (softmax of linear forms). In all our experiments, we mark a variable as selected if either the AC estimate $\| \hat{f}_j \|_\infty$ or the DC estimate $\| \hat{g}_k \|_\infty$ is larger than $10^{-6}$. We set $\lambda = 0.5 \sqrt{\frac{\log^2 np}{n}}$ for all the simulations.
 
 For the first three simulations, we will use the quadratic form as our true regression function.
 \[
@@ -49,7 +49,7 @@ in Figure \ref{Support}(b). The results demonstrate that AC/DC performs
 consistent variable selection even if the true function is not additive (but
 still convex). 
 
-In the third and fourth simulation, we use a correlated design. We generate $X$ from a non-Gaussian boundary flat distribution with covariance $\Sigma$. The distribution we used is a mixture of a uniform distribution and a Gaussian Copula.
+In the third, fourth, and fifth simulation, we use a correlated design. We generate $X$ from a non-Gaussian boundary flat distribution with covariance $\Sigma$. The distribution we used is a mixture of a uniform distribution and a Gaussian Copula.
 \[
 X \sim \gamma U([-2, 2]^p) + (1-\gamma) \trm{Copula}(0, \Sigma, F)
 \]
@@ -63,17 +63,17 @@ The Gaussian Copula is a way to customize the marginal distributions of a Gaussi
 
 In the \textbf{third simulation} (Figure~\ref{Support}d,e), we use the non-Gaussian distribution described above and set the covariance $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0, 0.2, 0.5, 0.9$. We use the non-additive $\Q$, same as in the first experiment, with $\alpha=0.5$ and fix $p=128, s=5$. We measure success not through exact recovery but through faithful recovery. We say that a trial is a successful if (1) all relevant variables were recovered and (2) fewer than $20$ variables were marked as relevant overall (true sparsisty $s=5$). We use the same $\lambda$ as before. The probabilities of success are computed from 40 independent trials and plotted against various values of $\nu$ in Figure~\ref{Support}(d). Additionally, for $\nu = 0.5$, we show the number of selected variables versus the sample size as a box-and-whisker plot in Figure~\ref{Support}(e). As seen, for small to moderate correlations, AC/DC can successfully recover the relevant variables with only a small number of false positives. 
 
-In the fourth, fifth, and sixth simulation, we use a softmax function as the ground truth
-\[
+In the fourth and fifth simulation, we use a softmax function as the ground truth
+\begin{align}
 f_0(x_{iS}) = \log \left( \sum_{k=1}^K \exp( \beta_k^\tran x_{iS} ) \right) - \mu
-\]
+\end{align}
 We generate random unit vectors as $\{\beta_k \in \R^s\}_{k=1,...,K}$ and choose $\mu$ so that $f_0$ has mean-zero. We set $K = 7$ for all the experiments. 
 
 For the \textbf{fourth simulation} (Figure~\ref{Support}f,g), we let $f_0$ be the softmax function and let $X$ be drawn from the boundary flat mixture distribution described earlier with the Toeplitz covariance $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0.5$. We set $s=5$ and vary $p=128,256,512$. We use the same faithful recovery criteria as the third simulation and plot the probability of faithful recovery against the number of samples in Figure~\ref{Support}(f). The probabilities are computed over 30 independent trials. Also, for $p=256$, we show the number of selected variables versus the sample size as a box-and-whisker plot in Figure~\ref{Support}(g). The softmax function is more challenging to estimate than the quadratic function; the softmax function requires about $n > 1500$ to achieve the same success probability as the quadratic function with $n=1000$. Regardless, we see that increasing the ambient dimension $p$ does not signficantly affect the recovery probability.
 
-For the \textbf{fifth experiment} (Figure~\ref{Support}h), we vary the true sparsity level $s$. We let $f_0$ be the softmax function, $X \sim N(0, I)$, and set $p=128$. We compute the probability of exact recovery over 40 independent trials and plot the results in Figure~\ref{Support}(h).  
+%For the \textbf{fifth experiment} (Figure~\ref{Support}h), we vary the true sparsity level $s$. We let $f_0$ be the softmax function, $X \sim N(0, I)$, and set $p=128$. We compute the probability of exact recovery over 40 independent trials and plot the results in Figure~\ref{Support}(h).  
 
-For the \textbf{sixth experiment} (Figure~\ref{fig:ac_v_dc}), we compare the variables selected via the AC stage and the variables selected via the DC stage. We use the softmax regression function and $X$ drawn from the boundary flat mixture distribution with a Toeplitz covariance and correlation level $\nu = -0.7$. We set $s=5, n=500, p=128$. We perform 30 independent trials and plot the frequency of variable selection in Figure~\ref{fig:ac_v_dc}. The true variables are $X_j$ for $j=5,6,7,8,9,10$. We plot the frequency of selection among only the first 20 variables, that is, $X_j$ for $j=1,...,20$. We do not plot selection frequencies for variables 21 to 128 because they are almost never selected by either AC or DC. As can be seen, the DC stage is slightly helpful in recovering the true variables but its effect is not significant. We thus believe that the DC stage, though important in theory, is not as important in practice; it may be omitted without significant detriment to the overall result. 
+For the \textbf{fifth simulation} (Figure~\ref{fig:ac_v_dc}), we compare the variables selected via the AC stage and the variables selected via the DC stage. We use the softmax regression function and $X$ drawn from the boundary flat mixture distribution with a Toeplitz covariance and correlation level $\nu = -0.7$. We set $s=5, n=500, p=128$. We perform 30 independent trials and plot the frequency of variable selection in Figure~\ref{fig:ac_v_dc}. The true variables are $X_j$ for $j=5,6,7,8,9,10$. We plot the frequency of selection among only the first 20 variables, that is, $X_j$ for $j=1,...,20$. We do not plot selection frequencies for variables 21 to 128 because they are almost never selected by either AC or DC. As can be seen, the DC stage is slightly helpful in recovering the true variables but its effect is not significant. We thus believe that the DC stage, though important in theory, is not as important in practice; it may be omitted without significant detriment to the overall result. 
 
 \begin{figure*}[!t]
 \begin{center}
@@ -91,12 +91,12 @@ For the \textbf{sixth experiment} (Figure~\ref{fig:ac_v_dc}), we compare the var
 \includegraphics[width=.42\textwidth]{figs/C_support_box} & 
 \includegraphics[width=.42\textwidth]{figs/CurveS}\\
 (e) recovered support size for $\nu=0.5$ in (d) & (f) softmax $f_0$, correlated $X$, varying $p$ \\
-\includegraphics[width=0.42\textwidth]{figs/S_support_box} & \\
-(g) recovered support size for $p=256$ in (f) & (h) softmax $f_0$, correlated $X$, varying $s$ 
+%\includegraphics[width=0.42\textwidth]{figs/S_support_box} & \\
+%(g) recovered support size for $p=256$ in (f) & (h) softmax $f_0$, correlated $X$, varying $s$ 
 \end{tabular}
 \end{center}
-\caption{Support recovery results where the additive assumption is
-  correct (a), incorrect (b), (c), and with correlated design (d).}\label{Support}
+\caption{Support recovery results.}
+\label{Support}
 \vskip10pt
 \end{figure*}
 

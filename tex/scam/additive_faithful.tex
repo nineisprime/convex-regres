@@ -187,12 +187,11 @@ a consistent variable screening.
 
 We now show that under a general class of distributions which we
 characterize below, convex multivariate functions are additively
-faithful.
+faithful. To simplify presentation, we restrict our attention to densities bounded away from $0/\infty$, that is, $p(\mathbf{x})$ such that $0 < \inf p(\mathbf{x}) \leq \sup p(\mathbf{x}) < \infty$. 
 
 \begin{definition}
 \label{defn:boundary-point}
-Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. $p(\mathbf{x})$ satisfies
-the \emph{boundary flatness condition} if $0 < \inf_{\mathbf{x}} p(\mathbf{x}) \leq \sup_{\mathbf{x}} p(\mathbf{x}) < \infty$, and for all $j$, there exists some $\epsilon > 0$ such that for all $\mathbf{x}_{-j}$, and for all $x_j \in [0, \epsilon) \cup (1-\epsilon, 1]$, $p(\mathbf{x}_{-j} \given x_j)$ is twice differentiable in $x_j$, that $p(\mathbf{x}_{-j} \given x_j), \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}, \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j) }{\partial^2 x_j}$ are bounded, and that
+Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. We say that $p(\mathbf{x})$ satisfies the \emph{boundary flatness condition} if for all $j$, there exists some $\epsilon > 0$ such that for all $\mathbf{x}_{-j}$, and for all $x_j \in [0, \epsilon) \cup (1-\epsilon, 1]$, $p(\mathbf{x}_{-j} \given x_j)$ is twice differentiable in $x_j$, that $p(\mathbf{x}_{-j} \given x_j), \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}, \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j) }{\partial^2 x_j}$ are bounded, and that
 \begin{equation}
 \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
 \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0
@@ -201,28 +200,9 @@ the \emph{boundary flatness condition} if $0 < \inf_{\mathbf{x}} p(\mathbf{x}) \
 
 \end{definition}
 
-The boundary flatness condition intuitively states that
-the conditional effect of $X_k$ weakens as $\mathbf{x}$ approaches the boundary. It is a weak condition because it affects only an $\epsilon$-small region around the boundary; $p(\mathbf{x}_{-j} \given x_j)$ can take arbitrary shapes away from the boundary; it can induce arbitrary correlation structure (provided $p(\mathbf{x}) >0$) and need not be continuous. Before presenting the main theorem, let us see some examples of boundary flat distributions.
+The boundary flatness condition intuitively states that two conditional densities $p(\mathbf{x}_{-j} \given x_j)$ and $p(\mathbf{x}_{-j} \given x_j')$ are similar when $x_j$ and $x_j'$ are both close to $0$ or both close to $1$. Product densities satisfy boundary flatness trivially. Boundary flatness is a weak condition because it affects only an $\epsilon$-small region around the boundary; $p(\mathbf{x}_{-j} \given x_j)$ can take arbitrary shapes away from the boundary. Boundary flatness also allows arbitrary correlation structure between the variables (provided $p(\mathbf{x}) >0$). In Section~\ref{sec:boundary_flat}, we give a detailed discussion of the boundary flatness condition and show many examples of boundary flat distributions; in particular, we show that any distribution supported on a compact set can be approximated arbitrarily well by boundary flat distributions.
 
-\begin{example} The following densities satisfy boundary flatness.
-\begin{enumerate}
-\item If $\mathbf{p}$ is a product density, then boundary flatness is trivially
-satisfied.
-\item Let $p(\mathbf{x})$ be a joint density such that $0 < \inf_{\mathbf{x}} p(\mathbf{x}) \leq \sup_{\mathbf{x}} p(\mathbf{x}) < \infty$. Suppose $p(\mathbf{x})$ has a bounded second derivative for all $\mathbf{x}$. If, for all $j$,
-$\partial_{x_j} p(x_j,\mathbf{x}_{-j}) =
-\partial_{x_j}^2 p(x_j, \mathbf{x}_{-j}) = 0$ at $x_j = 0, 1$. Then it is possible to show that the two derivatives of $p(\mathbf{x}_{-j} \given x_j) = \frac{p(x_j, \mathbf{x}_{-j})}{p(x_j)}$ are 0 at $x_j = 0,1$; boundary flatness thus holds.
-\item Suppose $p(\mathbf{x})$ is a bounded density over $[\epsilon, 1-\epsilon]^p$ for some $0 < \epsilon < 1/2$. Let $q(\mathbf{x})$ be a boundary flat density over $[0,1]^p$, take the uniform distribution for instance. Define a mixture $p_{\lambda, \epsilon}(\mathbf{x}) = \lambda q(\mathbf{x}) + (1-\lambda) p(\mathbf{x})$ where $0 < \lambda \leq 1$, then $p_{\lambda, \epsilon}(\mathbf{x})$ is boundary flat over $[0,1]^p$. Furthermore, $\epsilon$ and $\lambda$ can be made arbitrarily small and therefore, any bounded density over a hypercube can be approximated arbitrarily well by a boundary flat distribution.
 
-% $$
-% p'(\mathbf{x}_{-j} \given x_j) = \frac{ p(x_j, \mathbf{x}_{-j}) p'(x_j) - 
-%    p'(x_j, \mathbf{x}_{-j}) p(x_j)}{ p(x_j)^2 } = 0 
-% $$
-% \begin{align*}
-% p''(\mathbf{x}_{-j} \given x_j) = &
-%     \frac{ p(x_j)^2 \left( p(x_j, x_{-j}) p''(x_j) - p''(x_j, x_{-j}) p(x_j) \right) - 2p(x_j)p'(x_j) \left(p(x_j, x_{-j})p'(x_j) - p'(x_j, x_{-j}) p(x_j)  \right) }{p(x_j)^4}
-%  \end{align*}
-\end{enumerate}
-\end{example}
 
 
 % For instance, it is
@@ -237,7 +217,7 @@ The following theorem is the main result of this section.
 
 \begin{theorem}
 \label{thm:convex_faithful}
-Let $p(\mathbf{x})$ be a positive density supported on $C=[0,1]^p$ that satisfies
+Let $p(\mathbf{x})$ be a density supported on $C=[0,1]^p$ and bounded away from $0/\infty$ that satisfies
 the boundary flatness property. 
 If $f$ is convex and continuously twice differentiable, then $f$ is additively faithful under $p(\mathbf{x})$.
 \end{theorem}
@@ -372,13 +352,57 @@ additive.
 In Theorem~\ref{thm:convex_faithful}, we do not assume a parametric form for the additive components; the additive approximations may not be faithful if we take a parametric form. For example, suppose we approximate a mean-zero convex function $f(X)$ by a linear form $X \beta$. The optimal linear function in the population setting is $\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$ where $\Sigma$ is the covariance matrix. Suppose the $X$'s are independent, follow a symmetric distribution, have unit variance, and suppose $f(\mathbf{x}) = x_1^2 - \E[X_1^2]$, then $\beta^*_1 = \E[ X_1 f(X)] = \E[ X_1^3 - X_1 \E[X_1^2]] = 0$.
 \end{remark}
 
+\subsection{Boundary Flatness Examples}
+\label{sec:boundary_flat}
 
-\begin{remark}
-It is possible to get a similar result for distributions with
+In this section, we give more examples of boundary flat densities (see Definition~\ref{defn:boundary-point}) and discuss extending the notion of boundary flatness to densities with a more general support. We first start with an sufficient condition on the \emph{joint density} that ensures boundary flatness.
+
+\begin{example}
+\label{ex:joint_density_flat}
+Boundary flatness is satisfied if the joint density becomes flat at the boundary. To be precise, let $p(\mathbf{x})$ be a joint density bounded away from $0/\infty$. Suppose, for all $j$,  $\partial_{x_j} p(x_j, \mathbf{x}_{-j})$ and $\partial^2_{x_j} p(x_j, \mathbf{x}_{-j})$ exist and are bounded for all $\mathbf{x}_{-j}$ and for all $x_j \in [0, \epsilon) \cup (1-\epsilon, 1]$ for some $\epsilon >0$.
+
+Suppose also, for all $j$,
+$$
+\partial_{x_j} p(x_j,\mathbf{x}_{-j}) =
+\partial_{x_j}^2 p(x_j, \mathbf{x}_{-j}) = 0\quad  \trm{at $x_j = 0, 1$,}
+$$
+then it is straightforward to show that $\partial_{x_j} p(\mathbf{x}_{-j} \given x_j) = \partial_{x_j}^2 p(\mathbf{x}_{-j} \given x_j) = 0$ at $x_j = 0,1$ as well. One need only see that the derivatives of the marginal densities are zero at the boundary and apply the quotient rule.
+\end{example}
+
+The next example shows that any bounded density over a hypercube can be approximated arbitrarily well by some boundary flat distributions. 
+
+\begin{example}
+\label{ex:mixture_approx}
+Suppose $p(\mathbf{x})$ is a bounded density over $[\epsilon, 1-\epsilon]^p$ for some $0 < \epsilon < 1/2$. Let $q(\mathbf{x})$ be a boundary flat density over $[0,1]^p$. Define a mixture $p_{\lambda, \epsilon}(\mathbf{x}) = \lambda q(\mathbf{x}) + (1-\lambda) p(\mathbf{x})$ where $0 < \lambda \leq 1$, then $p_{\lambda, \epsilon}(\mathbf{x})$ is boundary flat over $[0,1]^p$. Furthermore, $\epsilon$ and $\lambda$ can be made arbitrarily small and therefore, $p(\mathbf{x})$ can be approximated arbitrarily well (in $L_1$ for example) by a boundary flat distribution. 
+\end{example}
+
+The result in Example~\ref{ex:joint_density_flat} further shows that boundary flat densities can arise from monotone marginal transformations of more general random vectors. This gives another way of approximating general densities by boundary flat densities.
+
+\begin{example}
+Let $X = (X_1,...,X_p)$ be drawn from a density supported on $[0,1]^p$, bounded away from $0/\infty$, and with a bounded second derivative. Let $\phi : [0,1] \rightarrow [0,1]$ be a monotonically increasing transformation. We will show that under certain conditions on $\phi$, the density of $(\phi(X_1), ..., \phi(X_p))$ is boundary flat.
+
+Suppose $\phi^{-1}$ has a bounded third derivative on some neighborhood around the boundary, say $[0, \epsilon) \cup (1-\epsilon, 1]$ and suppose $\phi^{-1\prime}(z) = \phi^{-1\prime\prime}(z) = \phi^{-1\prime\prime\prime}(z) = 0$ at $z=0,1$.
+
+Then, the density $p(z_1,...,z_p)$ of the transformed variables $z_j = \phi(x_j)$ is 
+$$ 
+p(z_1,...,z_p) = p_X(\phi^{-1}(z_1), ..., \phi^{-1}(z_p)) \prod_{j=1}^p \phi^{-1\prime}(z_j),
+$$ where $p_X(\cdot,...,\cdot)$ is the density of $X$.
+One can use the product rule and the chain rule to differentiate $p(z_1,...,z_p)$ and verify that $\partial_{z_j} p(\mathbf{z}) = \partial^2_{z_j} p(\mathbf{z}) = 0$ at $z_j = 0,1$ and thus show that $p(z_1,...,z_p)$ satisfies boundary flatness by Example~\ref{ex:joint_density_flat}.
+
+As a concrete example, we can use the following transformation $\phi_\epsilon$, defined in term of its inverse:
+$$\phi_\epsilon^{-1}(z) = \left\{ \begin{array}{cc} z^4 & \trm{if $z \leq \epsilon$} \\ 
+                     \frac{1-2\epsilon^4}{1-2\epsilon} z - \frac{ \epsilon + \epsilon^4}{1-2\epsilon} & \trm{if $\epsilon \leq z \leq 1-\epsilon$} \\
+                      1-(1-z)^4 & \trm{if $z \geq 1-\epsilon$} \end{array} \right.$$
+for any $1/2 > \epsilon > 0$. As $\epsilon$ becomes small, $\phi_\epsilon$ becomes close to the identity and so $(\phi_\epsilon(X_1), ..., \phi_\epsilon(X_p))$ closely approximates the original random variable $(X_1,...,X_p)$. Intuitively, $\phi$ stretches $X$ near the boundary so that changes in the transformed variable $z$ near the boundary corresponds to much smaller change in original variable $x$. 
+\end{example}
+
+In our discussion so far, we have restricted ourselves to densities supported and positive on the hypercube $[0,1]^p$ to minimize extraneous technical details. It may be possible to extend the analysis to densities whose support is a convex and compact set so long as the marginal density $p(x_j) > 0$ for all $x_j$ in the support. 
+
+It may also possible to extend similar result to densities with an
 unbounded support, by using a limit condition $\lim_{|x_k| \rightarrow
   \infty} \frac{\partial p(\mathbf{\scriptstyle x}_{-k} \given x_k)}{\partial x_k}
-= 0$.  Such a limit condition however is not obeyed by many common distributions such as the multivariate Gaussian distribution. The next example shows that certain convex functions are not additively faithful under certain multivariate Gaussian distributions.
-\end{remark}
+= 0$.  Such a limit condition however is not obeyed by a correlated multivariate Gaussian distribution. 
+The next example shows that certain convex functions are not additively faithful under certain multivariate Gaussian distributions.
 
 \begin{example}
 \label{examp:gaussian_counterexample}
@@ -393,7 +417,7 @@ Where $T_1 = H_{11} + 2H_{12} \alpha + H_{22} \alpha^2$, $T_2 = H_{22} + 2H_{12}
 and additive faithfulness is violated, if $\alpha > \frac{1}{2}$, then $f^*_1$ is a concave function. We take the setting where $\alpha=-0.5$, compute the optimal additive functions via numerical simulation, and show the results in Figure~\ref{fig:gaussian_example}--$f^*_1$ is zero as expected.
 \end{example}
 
-Although the Gaussian distribution does not satisfy the boundary flatness condition, it is possible to approximate the Gaussian distribution arbitrarily well with distributions that do satisfy the boundary flatness conditions.
+Although the Gaussian distribution does not satisfy the boundary flatness condition, it is possible to approximate the Gaussian distribution arbitrarily well with distributions that do satisfy the boundary flatness conditions. We use the similar idea as that of Example~\ref{ex:mixture_approx}.
 
 \begin{example} 
 \label{examp:boundaryflat_example}
@@ -454,7 +478,7 @@ g^*_k = \arg\min \Big\{
 
 \begin{theorem}
 \label{thm:acdc_faithful}
-Suppose $p(\mathbf{x})$ is a positive density on $C=[0,1]^p$ that
+Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from $0/\infty$ that
 satisfies the boundary flatness condition. Suppose that $f$ is convex
 and continuously twice differentiable. Let $f^*_k$ and $g^*_k$ be as defined in equations
 \eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}, then the $f^*_k$'s and the $g^*_k$'s are unique. Furthermore, 
@@ -466,7 +490,7 @@ Before we can prove the theorem, we need a lemma that generalizes Theorem~\ref{t
 
 \begin{lemma}
 \label{cor:faithfulness_extension}
-Suppose $p(\mathbf{x})$ is a positive density on $C=[0,1]^p$ satisfying the boundary flatness condition.
+Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from $0/\infty$ satisfying the boundary flatness condition.
 Let $f(\mathbf{x})$ be a convex and continuously twice differentiable function on $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
  \begin{align}
 h^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X) 

@@ -11,7 +11,7 @@ and analysis, we let $c,
 C$ represent absolute constants; the actual values of $c,C$ may change from line to line. We derived two equivalent optimizations for AC/DC: \eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and \eqref{opt:alternate_opt} outputs the second derivatives $\hat{d}_k$. Their equivalence is established in Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and $\hat{f}_k$ in our analysis. We will also assume in this section that the true regression function $f_0$ has mean-zero and therefore, we will omit the intercept term $\hat{\mu}$ from our estimation procedure.
 
 In our analysis, we assume that an upper bound $B$ to $\| \hat{f}_k \|_\infty$ 
-is imposed in the optimization procedure, where $B$ is chosen to also upper bound $\| f^*_k \|_\infty$. This $B$-boundedness constraint is added so that we may use the convex function bracketing results from~\cite{kim2014global} to establish uniform convergence between the empirical risk and the population risk. We emphasize that this constraint is not needed in practice and we do not use it for any of our simulations. 
+is imposed in the optimization procedure, where $B$ is chosen to also upper bound $\| f^*_k \|_\infty$ (same $B$ as in Assumption A3 in Section~\ref{sec:probabilistic_setting}). This $B$-boundedness constraint is added so that we may use the convex function bracketing results from~\cite{kim2014global} to establish uniform convergence between the empirical risk and the population risk. We emphasize that this constraint is not needed in practice and we do not use it for any of our simulations. 
 
 
 \subsection{Deterministic Setting}
@@ -67,19 +67,21 @@ The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:determi
 
 Theorem~\ref{thm:deterministic} allows us to separately analyze the false negative
 rates and false positive rates. To control false positives,
-we analyze the condition on $\lambda_n$ for $k \in S^c$. To control
-false negatives, we need only analyze the restricted regression with only $|S|$ variables.
+Theorem~\ref{thm:false_positive} verifies that the conditions in Theorem~\ref{thm:deterministic} hold in a stochastic setting. To control
+false negatives, Theorem~\ref{thm:false_negative} analyzes the restricted regression with only $|S|$ variables.
 
 The proof of Theorem~\ref{thm:deterministic} analyses the KKT
 conditions of optimization~\eqref{opt:alternate_opt}.  This parallels
 the now standard \emph{primal-dual witness}
-technique~\citep{wainwright2009sharp}. However, we cannot derive analogous
-\emph{mutual incoherence} conditions because the estimation is
+technique~\citep{wainwright2009sharp}. The conditions in Theorem~\ref{thm:deterministic} is our analogue to the \emph{mutual incoherence} condition. Our conditions are much more strict however because the estimation is
 nonparametric---even the low dimensional restricted regression has
-$s(n-1)$ variables. The details of the proof are given in
+$s(n-1)$ variables. 
+
+The details of the proof are given in
 Section~\ref{sec:deterministic_proof} of the Appendix.
 
 \subsection{Probabilistic Setting}
+\label{sec:probabilistic_setting}
 
 In the probabilistic setting we treat the covariates as random.  We
 adopt the following standard setup:
@@ -151,16 +153,16 @@ of the procedure. If $X$ is independent, then $\alpha_+$ can be simplified to $\
 
 \begin{theorem}[Controlling false positives]
 \label{thm:false_positive}
-Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$ and define $\mathsf{range}_k = X_{k \pi_k(n)} - X_{k \pi_k(1)}$. Suppose $p \leq O\big( \exp(c n) \big)$ and $n \geq C$ for some positive constants $0 < c <1$ and $C$.  Suppose also
+Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$ and define $\mathsf{range}_k = X_{\pi_k(n)k} - X_{\pi_k(1)k}$. Suppose $p \leq O\big( \exp(c n) \big)$ and $n \geq C$ for some positive constants $0 < c <1$ and $C$.  Suppose also
 \begin{equation}
-\lambda_n \geq 512 s \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
+\lambda_n \geq 768 s \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
 \end{equation}  
 Then with probability at least $ 1 - \frac{24}{n}$, for all $k \in
 S^c$, for all $i=1,\ldots,n$,
 \begin{equation}
 \lambda_n \geq \mathsf{range}_k \Big| \frac{32}{n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big| ,
 \end{equation}
-$\max_{i'} \frac{X_{k\pi_k(i'+1)} - X_{k \pi_k(i')}}{\mathsf{range}_k} \leq \frac{1}{16}$, $\mathsf{range}_k \geq 1$, and both the AC solution $\hat{f}_k$ from optimization~\eqref{opt:alternate_opt} and the DC solution $\hat{g}_k$ from optimization~\eqref{opt:alternate_opt_concave} are zero. 
+$\max_{i'} \frac{X_{\pi_k(i'+1)k} - X_{\pi_k(i')k}}{\mathsf{range}_k} \leq \frac{1}{16}$, $\mathsf{range}_k \geq 1$, and both the AC solution $\hat{f}_k$ from optimization~\eqref{opt:alternate_opt} and the DC solution $\hat{g}_k$ from optimization~\eqref{opt:alternate_opt_concave} are zero. 
 \end{theorem}
 
 The proof of Theorem~\ref{thm:false_positive} exploits independence of
