@@ -379,11 +379,13 @@ We have further explained the old figure 5a and 5b (now figure 7a and 7b) in the
 
 ... we plot on the y-axis the norm $\|f^{(t)}_j\|_{\infty}$ of every column $j$ against the regularization strength $\lambda^{(t)}$. Instead of plotting the value of $\lambda^{(t)}$ on the x-axis however, we plot the total norm at $\lambda^{(t)}$ normalized against the total norm at $\lambda^{(1)}$: $\frac{\sum_j \|f^{(t)}_j\|_{\infty}}{\sum_j \|f^{(1)}\|_{\infty}}$. Thus, as x-axis moves from 0 to 1, the regularization goes from strong to weak.
 
-%\item \rc{On page 31, at the top of the page, ``see discussion at beginning of
-%Section 5'' : I think it should be ``at the beginning''. In (8.1),
-%same problem as before with the indices : ``$\nu_{ki} d_{ki}$ '' must be replaced
-%with ``$\nu_{ik}d_{ik}$'' (see for instance page 20). At the bottom of the page,
-%$v_{ki}$ must be replaced by $\nu_{ki}$.} 
+\item \rc{On page 31, at the top of the page, ``see discussion at beginning of
+Section 5'' : I think it should be ``at the beginning''. In (8.1),
+same problem as before with the indices : ``$\nu_{ki} d_{ki}$ '' must be replaced
+with ``$\nu_{ik}d_{ik}$'' (see for instance page 20). At the bottom of the page,
+$v_{ki}$ must be replaced by $\nu_{ki}$.} 
+
+The typo and the index notation inconsistency have been corrected.
 
 \item \rc{On page 32, on the first line of the second paragraph, ``$d_k = 0 \mbox{for $k
 \in S$}$'', $S$ must be replaced by $S^c$ and $\|\mu\|$ by $\|\mu\|_1$ and ``It clear
@@ -397,7 +399,7 @@ We cannot move the third paragraph to the beginning because it is not clear at t
 in the following way : $\kappa = \frac{1}{\lambda_n(X_{kn}-X_{k1})}[\Delta_k^T u]_1$, then everything
 goes well).}
 
-We have redefined $\kappa$. 
+The original definition of $\kappa$ was indeed wrong; we forgot to update $\kappa$ when we edited the proof. We have corrected this in the paper.
 
 %\item \rc{On page 33, on the second line, ``other rows of stationarity
 %condition holds'' and in the third paragraph : ``following our strategy, We''.}
@@ -429,8 +431,10 @@ We have removed mentions of $p$ here and corrected the constants.
 %\item \rc{on page 38, In the sixth paragraph, in the inequality, the sign
 %should be $\leq$. In the eighth paragraph, $c''$ must be replaced by $c$. In
 %the ninth paragraph, ``Taking an union''.}
+
 %\item \rc{On page 40, on the fifth line, ``empricial''. In the last paragraph,
 %``whose size is bounded'' : it is the log of the size.}
+
 
 \item \rc{I had a problem with the definition of an ε-bracketing. First, in the
 definition 8.1, on page 49, `` we define a bracketing'' should be
@@ -457,7 +461,10 @@ We have corrected the instances in which we erroneously omitted ``... components
 
 We have corrected this mistake by placing an upper bound $c_u$ on the density $p(\mathbf{x})$ and incorporating that upper bound into this derivation. We now use the correct bound $\sqrt{ \int p(x)^2 dx } \leq c_u$.
 
-%\item \rc{On page 50, a constant 2 is missing in $\epsilon_n$.}
+\item \rc{On page 50, a constant 2 is missing in $\epsilon_n$.}
+
+This mistake has been corrected across the proofs.
+
 \item \rc{On page 41, in the second paragraph, I think the bound on $\sup_{h_L} |⟨w,h_L⟩_n|$ is
 wrong. I would have used the fact that the variables $h_L(X_i) W_i$ are
 independent, centered and sub-Gaussian with a scale smaller than
@@ -511,6 +518,14 @@ is. The authors claim it is weak just after stating it and then
 present several straightforward examples in which it doesn't hold
 (e.g. $f(x_1,x_2)=x_1 x_2$) and multivariate Gaussian examples. Hence it is unclear to me how
 likely a given function is likely to fit into this framework.}
+
+The boundary flatness condition is not restrictive in the sense that for any density $p(x)$ supported on $[0,1]^p$, and for any $\epsilon > 0$, there exists a boundary flat density whose $L_1$ distance with $p(x)$ is at most $\epsilon$ (Please see the newly added Example 3.2). This is because boundary flatness places no restriction on what $p(x)$ looks like in the interior of the hypercube. Boundary flatness allows arbitrary correlation structure, provided that $p(x) > 0$. We have added Section 3.2 to the paper to give a more detailed discussion on boundary flatness. 
+
+$f(x_1,x_2) = x_1 x_2$ is non-convex and it is an example of how non-convex functions may not be additively faithful under the uniform distribution; it is not an example in which boundary flatness doesn't hold. The multivariate Gaussian is a counterexample but it is to show that boundary flatness may not extend easily to densities with unbounded support. 
+
+We acknowledge that many distributions are not boundary flat. We present boundary flatness as a significant generalization of the product density, under which nonparametric variable selection is already very difficult.
+
+Boundary flatness is not a contrived condition. We initially proved additive faithfulness only for product densities and then went back and gradually weakened the condition on the density over many iterations of refinement. 
 
 \item \rc{Following on from the previous point, the simulation study also does
 not add any further insight to this issue since the simulations are
