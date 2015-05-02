@@ -516,18 +516,18 @@ Plugging in $y = f_0 + w$, we obtain
     \lambda \sum_{k=1}^s \Big( \| \hat{f}_k \|_\infty - 
  \| f^*_k - \bar{f}^*_k \|_\infty \Big) &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle.
 \end{align*}
-The middle term can be bounded under the assumption that $\|f^*_k -
-\bar{f}^*_k \|_\infty \leq 2B$; thus,
+The middle term can be bounded since $\|f^*_k -
+\bar{f}^*_k \|_\infty \leq B$; thus,
 \begin{align*}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* + \bar{f}^* \|_n^2 
-   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 2 s B .
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda s B .
 \end{align*}
 Using Lemma~\ref{lem:remove_centering}, we can remove $\bar{f}^*$ from
 the lefthand side. Thus with probability at least $1 - \delta$,
 \begin{align}
 \label{eqn:first_step_inequality}
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
-   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda 2 s B + c(sB)^2 \frac{1}{n} \log \frac{2}{\delta}.
+   &\leq 2 \langle w, \hat{f} - f^* + \bar{f}^* \rangle + \lambda  s B + c(sB)^2 \frac{1}{n} \log \frac{2}{\delta}.
 \end{align}
 
 %[TOOD: at this point, we still have to choose a value for $\lambda$]\\
@@ -645,13 +645,13 @@ we get that, with probability at least $1 - 2\delta$,
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
    &\leq c sB \sigma \sqrt{ 
    \frac{s (sBc_u)^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
-   + \lambda 2 s B + c (sB)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
+   + \lambda s B + c (sB)^2 \frac{1}{n} \log \frac{2}{\delta} \nonumber\\
 \|f_0 - \hat{f} \|_n^2 - \| f_0 - f^* \|_n^2 
    &\leq c B^2 \sigma \sqrt{ 
    \frac{s^4 c_u^{1/2} \log^2 \frac{Cn}{\delta}}{n^{4/5}}}
-   + \lambda 2 s B \nonumber\\   
+   + \lambda s B \nonumber\\   
    &\leq c B^2 \sigma 
-    \sqrt{ \frac{s^4 c_u^{1/2}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 2 sB
+    \sqrt{ \frac{s^4 c_u^{1/2}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda sB
 \label{eqn:second_step_inequality}
 \end{align}
 
@@ -672,9 +672,9 @@ that, with probability at least $1-3\delta$,
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
    &\leq cB^2 \sigma 
     \sqrt{ \frac{s^4c_u^{1/2}}{n^{4/5}} \log^2 \frac{Cn}{\delta}}
- +\lambda 2 s B + c B^3 \sqrt{ \frac{s^5c_u^{1/2}}{n^{4/5}} \log \frac{2}{\delta}}
+ +\lambda s B + c B^3 \sqrt{ \frac{s^5c_u^{1/2}}{n^{4/5}} \log \frac{2}{\delta}}
     \nonumber \\
-&\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5c_u^{1/2}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda 2 sB \nonumber
+&\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5c_u^{1/2}}{n^{4/5}} \log^2 \frac{Cn}{\delta}} + \lambda sB \nonumber
 \end{align}
 Substituting in $\lambda \leq 768 s \tilde{\sigma} \sqrt{\frac{1}{n}
   \log^2 np}$ and $\delta = \frac{C}{n}$ we obtain the statement of
@@ -692,17 +692,17 @@ the theorem.
 \label{thm:concave_consistent}
 Let $\hat{g}_k$ denote the minimizer of the concave postprocessing
 step with $\lambda_n \leq 768 s\tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}$. Let $\tilde{\sigma} \equiv \max(\sigma, B)$.
-Suppose $n$ is sufficiently large that $\frac{n^{4/5}}{\log^2 np} \geq c' B^4 \tilde{\sigma}^2 s^5$ where $c' \geq 1$ is a constant.
+Suppose $n$ is sufficiently large that $\frac{n^{4/5}}{\log^2 np} \geq c' B^4 \tilde{\sigma}^2 s^5 c_u^{1/2}$ where $c' \geq 1$ is a constant.
 Then with probability at least $1- \frac{C}{n}$, for all $k=1,...,s$,
 \[
-\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  c B^2 \tilde{\sigma}^{1/2} \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 np}.
+\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 \leq  c B^2 \tilde{\sigma}^{1/2} \sqrt[4]{ \frac{s^5c_u^{1/2}}{n^{4/5}} \log^2 np}.
 \]
 \end{theorem}
 
 \begin{proof}
 This proof is similar to that of Theorem \ref{thm:convex_consistent}; it requires a few more steps because $\hat{g}_k$ is fitted against $f_0 - \hat{f}$ instead of $f_0 - f^*$. We start with the following decomposition:
 \begin{align}
-\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 = & \underbrace{\| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \| f_0 - \hat{f} - g^*_k \|_P^2}_{\trm{term 1}} + \nonumber \\
+\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2 = & \underbrace{\| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \| f_0 - \hat{f} - g^*_k  \|_P^2}_{\trm{term 1}} + \nonumber \\
    & \underbrace{\| f_0 - f^* - \hat{g}_k \|_P^2 - \| f_0 - \hat{f} - \hat{g}_k \|_P^2}_{\trm{term 2}} + \nonumber \\
    & \underbrace{\| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k \|_P^2}_{\trm{term 3}}  \label{eqn:concave_init_decomposition}.
 \end{align}
@@ -712,35 +712,37 @@ We now bound each of the terms. The proof proceeds almost identically to that of
 $\hat{g}_k$ and obtain
 \begin{align*}
 \| y - \hat{f} - \hat{g}_k \|_n^2 + \lambda_n \| \hat{g} \|_\infty &\leq
-   \| y - \hat{f} - g^*_k \|_n^2 + \lambda_n \| g^* \|_\infty \\
-\| y - \hat{f} - \hat{g}_k \|_n^2 &\leq \| y - \hat{f} - g^*_k \|_n^2 + \lambda_n 2B \\[10pt]
-\| f_0 - \hat{f} - \hat{g}_k + w\|_n^2 & \leq \| f_0 - \hat{f} - g^*_k + w \|_n^2 
-   +\lambda_n 2 B \\
-\| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 -\hat{f} - g^*_k\|_n^2 &\leq
-   2 \langle w, \hat{g}_k - g^*_k \rangle_n + \lambda_n 2B.
+   \| y - \hat{f} - (g^*_k - \bar{g}^*_k) \|_n^2 + \lambda_n \| (g^*-\bar{g}^*_k) \|_\infty \\
+\| y - \hat{f} - \hat{g}_k \|_n^2 &\leq \| y - \hat{f} - (g^*_k-\bar{g}^*_k) \|_n^2 + \lambda_n B \\[10pt]
+\| f_0 - \hat{f} - \hat{g}_k + w\|_n^2 & \leq \| f_0 - \hat{f} - (g^*_k-\bar{g}^*_k) + w \|_n^2 
+   +\lambda_n B \\
+\| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 -\hat{f} - (g^*_k-\bar{g}^*_k) \|_n^2 &\leq
+   2 \langle w, \hat{g}_k - (g^*_k-\bar{g}^*_k) \rangle_n + \lambda_n B.
 \end{align*}
+$\bar{g}^*_k = \frac{1}{n} \sum_{i=1}^n g^*_k(X_{ik})$; we subtract it from $g^*_k$ again so that $g^*_k$ is empirically mean-zero. 
+
 Using the same bracketing analysis as in Step 2 of the proof of Theorem~\ref{thm:convex_consistent} but setting $s=1$, we have, with probability at least $1-\delta$,
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_n^2 - \|f_0 - \hat{f} - g^*_k \|_n^2 &\leq
-  c B^2 \sigma \sqrt{ \frac{1}{n^{4/5}} \log \frac{C}{\delta} }+ \lambda_n 2 B.
+  c B^2 \sigma \sqrt{ \frac{c_u^{1/2}}{n^{4/5}} \log \frac{nC}{\delta} }+ \lambda_n B.
 \end{align*}
 The condition $n \geq c_1 s\sqrt{sB}$ in the proof of Theorem~\ref{thm:convex_consistent} is satisfied here because we assume that $n^{4/5} \geq c_1 B^4 \tilde{\sigma}^2 s^5 \log^2 np$ in the statement of the theorem.
 Using the uniform convergence result of Lemma~\ref{lem:uniform_convergence}, with probability at least $1-\delta$,
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &\leq
-  c B^2 \sigma \sqrt{ \frac{1}{n} \log \frac{Cn}{\delta} }+ \lambda_n 2 B +
-  c B^3 \sqrt{\frac{s^5}{n^{4/5}} \log \frac{2}{\delta} } \\
- &\leq c B^2 \tilde{\sigma} \sqrt{\frac{s^5}{n^{4/5}} \log \frac{C}{\delta}}+ \lambda_n 2B
+  c B^2 \sigma \sqrt{ \frac{1}{n} \log \frac{Cn}{\delta} }+ \lambda_n B +
+  c B^3 \sqrt{\frac{c_u^{1/2}}{n^{4/5}} \log \frac{2}{\delta} } \\
+ &\leq c B^2 \tilde{\sigma} \sqrt{\frac{c_u^{1/2}}{n^{4/5}} \log \frac{C}{\delta}}+ \lambda_n B
 \end{align*}
 
-Finally, plugging in $\lambda_n \leq 9 s \tilde{\sigma} \sqrt{
+Finally, plugging in $\lambda_n \leq 768 s \tilde{\sigma} \sqrt{
   \frac{1}{n} \log^2 np}$, we obtain
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
-\leq c B^2 \tilde{\sigma} \sqrt{\frac{s^5}{n^{4/5}} \log \frac{C}{\delta}}+ 
-    2s B \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}\\
+\leq c B^2 \tilde{\sigma} \sqrt{\frac{c_u^{1/2}}{n^{4/5}} \log \frac{C}{\delta}}+ 
+    c s B \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}\\
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
-\leq c B^2 \tilde{\sigma} \sqrt{\frac{s^5}{n^{4/5}} \log^2 \frac{Cnp}{\delta}}
+\leq c B^2 \tilde{\sigma} \sqrt{\frac{s^2 c_u^{1/2}}{n^{4/5}} \log^2 \frac{Cnp}{\delta}}
 \end{align*}
 with probability at least $1-\delta$.
 
@@ -749,39 +751,34 @@ with probability at least $1-\delta$.
 \| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 &\leq 
     \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle_P
    + 2 \langle f_0 - f^*, g^*_k \rangle_P \\
- &\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} + 
+ &\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5 c_u^{1/2}}{n^{4/5}} \log^2 np} + 
     2 | \langle \hat{f} - f^*, g^*_k \rangle_P |  \\
- &\leq  c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} +
+ &\leq  c B^2 \tilde{\sigma} \sqrt{ \frac{s^5 c_u^{1/2}}{n^{4/5}} \log^2 np} +
     2 \| \hat{f} - f^* \|_P \| g^*_k \|_P \\
-&\leq  c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} +
+&\leq  c B^2 \tilde{\sigma} \sqrt{ \frac{s^5 c_u^{1/2}}{n^{4/5}} \log^2 np} +
    c B \sqrt{B^2 \tilde{\sigma} \sqrt{ 
-                   \frac{s^5}{n^{4/5}} \log^2 np} }\\
+                   \frac{s^5 c_u^{1/2}}{n^{4/5}} \log^2 np} }\\
 &\leq  cB^2 \tilde{\sigma}^{1/2} \sqrt[4]{ 
-                   \frac{s^5}{n^{4/5}} \log^2 np} 
+                   \frac{s^5 c_u^{1/2}}{n^{4/5}} \log^2 np} 
 \end{align*}
 with probability at least $1-\frac{C}{n}$, by
 Theorem~\ref{thm:convex_consistent}. To obtain the fourth inequality,
-we used the fact that $\| \hat{f} - f^* \|^2 \leq \| f_0 - \hat{f}
+we used the fact that $\| \hat{f} - f^* \|_P^2 \leq \| f_0 - \hat{f}
 \|_P^2 - \|f_0 - f^*\|_P^2$, which follows from the fact that $f^*$ is the
 projection of $f_0$ onto the set of additive convex functions and the
 set of additive convex functions is convex itself.
-The last inequality holds because there is a condition in the theorem which states $n$
-is large enough such that $B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 np} \leq 1$.
+The last inequality holds because the conditions of the theorem stipulate $n$
+is large enough such that $B^2 \tilde{\sigma} \sqrt{ \frac{s^5c_u^{1/2}}{n^{4/5}} \log^2 np} \leq 1$.
 The same derivation and the same bound likewise holds for term 2.
 
 \textbf{Step 3.} Collecting the results and plugging them into equation~\eqref{eqn:concave_init_decomposition}, we have, with probability at least $1-2\delta$:
 \begin{align*}
 \| f_0 - f^* - \hat{g}_k \|_P^2 - \|f_0 - f^* - g^*_k \|_P^2 \leq
    c B^2 \tilde{\sigma}^{1/2} 
-     \sqrt[4]{ \frac{s^5}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
+     \sqrt[4]{ \frac{s^5c_u^{1/2}}{n^{4/5}} \log^2 \frac{4np}{\delta}} 
 \end{align*}
 Taking a union bound across the $s$ dimensions completes the result.
 \end{proof}
-
-
-
-
-
 
 
 

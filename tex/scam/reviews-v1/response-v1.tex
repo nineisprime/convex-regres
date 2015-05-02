@@ -130,14 +130,14 @@ error bounds using the fitted $f_k$'s and $g_k$'s, as well? Prediction error
 bounds seem quite relevant due to possible model misspecification when
 $f_0$ is not actually a sum of univariate convex functions.}
 
-To minimize predictive error, we can refit a non-additive convex function after selecting a sparse model. Comparing the predictive accuracy of $f^*_k$'s and $g^*_k$'s against the non-additive true regression function $f_0$ is beyond the scope of our paper, but we do compare the finite sample estimate $\hat{f}_k$ and $\hat{g}_k$ against the population level $f^*_k$ and $g^*_k$. The analysis we do to control false negatives also shows that $\mathbb{E}\left(\sum_{k=1}^p (f^*_k(X_k) - \hat{f}_k(X_k))\right)^2 \rightarrow 0$ and likewise for the DC stage.
+To minimize predictive error, we can refit a non-additive convex function after selecting a sparse model. Comparing the predictive accuracy of $f^*_k$'s and $g^*_k$'s against the non-additive true regression function $f_0$ is beyond the scope of our paper, but we do compare the finite sample estimate $\hat{f}_k$ and $\hat{g}_k$ against the population level $f^*_k$ and $g^*_k$. The analysis we do to control false negatives also shows that $$\left| \mathbb{E}\left( f_0(X)  - \sum_{k=1}^p f^*_k(X_k) \right)^2 - \mathbb{E} \left( f_0(X) - \sum_{k=1}^p \hat{f}_k(X_k))\right)^2 \right| \rightarrow 0$$ and likewise for the $\hat{g}_k$'s. Please see Theorem 8.3 and 8.4 in the supplement. 
 
 \item \rc{In order to improve clarity, the authors should define the convex
 additive model at the top of page 5: $f(x_i) = \sum_{k=1}^p f_k(x_{ik})$, where the
 $f_k$'s are convex.  Otherwise, the notation in equation (2.3) is
 initially a bit confusing.}
 
-We have removed the old equation (2.3) and any discussion of convex additive model at the top of page 5 because everything there is discussed again on page 6. 
+We have removed the old equation (2.3) and any discussion of convex additive model at the top of page 5. Everything there is discussed on page 6, after AC/DC has been introduced.
 
 \item \rc{Another notational comment: the use of the
 distribution function $F$ seems unnecessary (e.g., Lemma 3.1 and
@@ -485,7 +485,7 @@ The $\epsilon$ we choose is sufficient to get the bounds we want but it does not
 \item \rc{In the proof of Theorem 8.4 : too many small mistakes in
 calculations, but the final result is OK.}
 
-TODO
+We have carefully proof-read and edited the proof of Theorem 8.4. 
 
 \item \rc{On page 45, the term $\epsilon$ supposed to balance the terms is not correct
 (same remark about $\delta$). In the last equations, on the first line (bottom
@@ -550,7 +550,12 @@ Minor comments:
   since it feels very repetitive and slightly confusing that parts of
   the text are repeated almost verbatim. I would suggest removing this section.}
 
+Section 2 is repetitive but we believe it has value in highlighting the big picture, which could otherwise be overwhelmed by the technical details. 
+
 \item \rc{Page 2, second last paragraph `and and.'}
+
+We have corrected this.
+
 \end{enumerate}
 
 

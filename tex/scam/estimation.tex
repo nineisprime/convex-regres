@@ -64,6 +64,8 @@ sparse estimates, such as a penalty on the derivative of each of the
 component functions.  The $\|\cdot\|_\infty$ norm is convenient for both
 theoretical analysis and implementation.
 
+After selecting the variable set $\hat{S}$, one can refit a low-dimensional non-additive convex function to build the best predictive model. If refitting is undesirable for whatever reason, the AC/DC outputs can also be used for prediction. Given a new sample $\mathbf{x}$, we let $\hat{y} = \sum_k \hat{f}_k(\mathbf{x}_k) + \sum_k \hat{g}_k(\mathbf{x}_k)$. Note that $\hat{g}_k = 0$ for $k$ such that $\hat{f}_k \neq 0$ in AC/DC. The next section describes how to compute this function evaluation.
+
 The optimization in \eqref{eqn:scam2} appears to be infinite
 dimensional, but it is equivalent to a finite dimensional quadratic
 program.  In the following section, we give the details
