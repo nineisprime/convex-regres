@@ -153,6 +153,8 @@ require $p(x)$ to be strictly positive. Assumption (A5) seems like it
 could also be interpreted as a sort of minimum signal strength
 requirement for successful variable selection.}
 
+We have added the dependence on the lower bound $c_l$ of $p(x)$ in Theorem 5.2, where we require that $p \leq O(\exp(cn))$ for $c < \frac{c_l}{32}$. We have also added the dependence on the upper bound $c_u$ of the density in Theorem 5.3. The lower and upper bounds $c_l, c_u$ do not directly play the role of the signal level; they are used to simplify technicalities in the presentation and the proof of the theorems. For example, Theorem 5.2 should also go through if one assumes only that the marginal densities $p(x_j)$'s are positive on a sub-interval of $[-1,1]$. 
+
 \item \rc{It would be good to point to Assumption (A3) at the beginning of
 Section 5 when discussing the $B$-boundedness condition. In the third
 paragraph, the authors might note that the $B$-boundedness condition
@@ -194,13 +196,27 @@ The missing subscript is added.
 
 \item \rc{The parameter $\sigma$ is never defined in Section 2.3. Reading ahead,
 it seems to be the sub-Gaussian parameter of the additive noise.}
+
+$\sigma$ has been defined in Section 2.3.
+
 \item \rc{Perhaps Section 3 should be titled something other than ``Additive
 faithfulness'' (maybe ``Population- level results''?).}
+
+TODO
+
 \item \rc{The first paragraph of Section 5 should read
   ``Figure 3'' rather than ``Algorithm 3.''}
 
+Corrected.
+
 \item \rc{The second paragraph of Section 5 has $m\hat{}u$ instead of $\hat\mu$.}
+
+Corrected.
+
 \item \rc{The first sentence of Section 5.1 should read optimization (4.8).}
+
+Corrected.
+
 \end{enumerate}
 
 \end{enumerate}
