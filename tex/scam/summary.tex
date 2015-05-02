@@ -195,7 +195,16 @@ sample statistical performance.
 
 \subsection{Optimization}
 
-In Section~\ref{sec:optimization} we present optimization algorithms for the additive convex regression stage.
+Given samples $(y_i, X_i)$, AC/DC becomes the following optimization.
+\begin{align*}
+\{\hat{f}_k\}_{k=1}^p &= \arg\min_{\{f_k \in \mathcal{C}^1\}} \frac{1}{n}\sum_{i=1}^n \left(
+        y_i - \bar{y} - \sum_{k=1}^p f_k(X_{ik}) \right)^2 + \lambda \sum_{k=1}^p \| f_k \|_\infty \\
+\forall k, \, \hat{g}_k &= \arg\min_{g_k \in \mathcal{C}^1} \frac{1}{n} \sum_{i=1}^n \left(
+    y_i - \bar{y} - \sum_{k' \neq k} \hat{f}_{k'}(X_{ik'}) - g_k(X_{ik}) \right)^2 + \lambda \| g_k \|_\infty
+\end{align*}
+where $\bar{y}$ is the empirical mean of $y$. Our estimate of the relevant variables is $\hat{S} = \{ k \,:\, \| \hat{f}_k \| > 0 \trm{ or } \| \hat{g}_k \| > 0\}$.
+
+We present the optimization algorithms in Section~\ref{sec:optimization}.
 The convex constraints for the additive functions, analogous to 
 the multivariate constraints \eqref{eq:convreg},
 are  that each component $f_{k}(\cdot)$ 
@@ -226,9 +235,8 @@ are given in Section~\ref{sec:optimization}.
 
 
 In Section~\ref{sec:finitesample} 
-we analyze the finite sample variable selection consistency of convex
-additive modeling, without assuming that the true
-regression function $f_0$ is additive.  Our analysis first establishes
+we analyze the finite sample variable selection consistency of AC/DC, without assuming that the true
+regression function $f_0$ is additive. Our analysis first establishes
 a sufficient deterministic condition for variable selection 
 consistency, and then considers a stochastic setting.
 Our proof technique decomposes the KKT conditions for the optimization
@@ -246,11 +254,13 @@ To control false negatives, we analyze the restricted regression
 where the variables in $S^c$ are zeroed out, following the primal-dual
 strategy.  
 
+
+
 Each of our theorems uses a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
 \item[A2:] $f_0$ is convex and continuously twice-differentiable. $\E f_0(X) = 0$.
-\item[A3:] $\|f_0\|_\infty \leq sB$ and $\|f^*_k \| \leq B$ for all $k$.
+\item[A3:] $\|f_0\|_\infty \leq sB$ and $\|f^*_k \|_\infty \leq B$ for all $k$.
 \item[A4:] The noise is mean-zero sub-Gaussian, independent of $X$.
 \item[A5:] The density $p(\mathbf{x})$ is bounded away from 0 and satisfies the boundary flatness condition.
 \end{packed_enum}
