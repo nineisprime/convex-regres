@@ -34,7 +34,7 @@ function $p(\mathbf{x})$. Let $f: C \rightarrow \R$ be in $L^2(P)$. Let
 \begin{align*}
 f^*_1,...,&f^*_p, \mu^* \coloneqq  \\
 &\arg\min \left\{ \E \Bigl( f(X) - \mu - \sum_{k=1}^p f_k(X_k)\Bigr)^2 \,:\,
-f_k \in L^2(F),\, \E f_k(X_k) = 0,\; k=1,\ldots, p \right\}.
+f_k \in L^2(P),\, \E f_k(X_k) = 0,\; k=1,\ldots, p \right\}.
 \end{align*}
 With $\mu^* = \E f(X)$, 
 \begin{equation}
@@ -54,7 +54,7 @@ a proof as our results build on it.
 % perhaps include this in an appendix??
 
 \begin{proof}
-  Let $f^*_1,...,f^*_p, \mu^*$ be the minimizers as defined; they exist since the set of mean zero additive functions is a closed subspace of $L^2(F)$.  We first
+  Let $f^*_1,...,f^*_p, \mu^*$ be the minimizers as defined; they exist since the set of mean zero additive functions is a closed subspace of $L^2(P)$.  We first
   show that the optimal $\mu$ is $\mu^* = \E f(X)$ for any $f_1, ...,
   f_k$ such that $\E f_k(X_k) = 0$. This follows from the stationarity
   condition, which states that $\mu^* = \E[ f(X) - \sum_k f_k(X_k)] =
@@ -187,11 +187,11 @@ a consistent variable screening.
 
 We now show that under a general class of distributions which we
 characterize below, convex multivariate functions are additively
-faithful. To simplify presentation, we restrict our attention to densities bounded away from $0/\infty$, that is, $p(\mathbf{x})$ such that $0 < \inf p(\mathbf{x}) \leq \sup p(\mathbf{x}) < \infty$. 
+faithful. To simplify presentation, we restrict our attention to densities bounded away from $0/\infty$, that is, $0 < \inf p(\mathbf{x}) \leq \sup p(\mathbf{x}) < \infty$. 
 
 \begin{definition}
 \label{defn:boundary-point}
-Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. We say that $p(\mathbf{x})$ satisfies the \emph{boundary flatness condition} if for all $j$, there exists some $\epsilon > 0$ such that for all $\mathbf{x}_{-j}$, and for all $x_j \in [0, \epsilon) \cup (1-\epsilon, 1]$, $p(\mathbf{x}_{-j} \given x_j)$ is twice differentiable in $x_j$, that $p(\mathbf{x}_{-j} \given x_j), \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}, \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j) }{\partial^2 x_j}$ are bounded, and that
+Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. We say that $p(\mathbf{x})$ satisfies the \emph{boundary flatness condition} if for all $j$, for all $\mathbf{x}_{-j}$, and for all $x_j \in [0, \epsilon) \cup (1-\epsilon, 1]$ for some arbitrarily small $\epsilon > 0$, $p(\mathbf{x}_{-j} \given x_j)$ is twice differentiable in $x_j$, that $p(\mathbf{x}_{-j} \given x_j), \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}, \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j) }{\partial^2 x_j}$ are bounded, and that
 \begin{equation}
 \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
 \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0
@@ -200,7 +200,7 @@ Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. We say that $p(\mathbf{
 
 \end{definition}
 
-The boundary flatness condition intuitively states that two conditional densities $p(\mathbf{x}_{-j} \given x_j)$ and $p(\mathbf{x}_{-j} \given x_j')$ are similar when $x_j$ and $x_j'$ are both close to $0$ or both close to $1$. Product densities satisfy boundary flatness trivially. Boundary flatness is a weak condition because it affects only an $\epsilon$-small region around the boundary; $p(\mathbf{x}_{-j} \given x_j)$ can take arbitrary shapes away from the boundary. Boundary flatness also allows arbitrary correlation structure between the variables (provided $p(\mathbf{x}) >0$). In Section~\ref{sec:boundary_flat}, we give a detailed discussion of the boundary flatness condition and show examples of boundary flat densities; in particular, we show that any density supported on a compact set can be approximated arbitrarily well by boundary flat densities.
+The boundary flatness condition intuitively states that two conditional densities $p(\mathbf{x}_{-j} \given x_j)$ and $p(\mathbf{x}_{-j} \given x_j')$ are similar when $x_j$ and $x_j'$ are both close to the same boundary point. It is thus much more general than product densities. Boundary flatness is a weak condition because it affects only an $\epsilon$-small region around the boundary; $p(\mathbf{x}_{-j} \given x_j)$ can take arbitrary shapes away from the boundary. Boundary flatness also allows arbitrary correlation structure between the variables (provided $p(\mathbf{x}) >0$). In Section~\ref{sec:boundary_flat}, we give a detailed discussion of the boundary flatness condition and show examples of boundary flat densities; in particular, we show that any density supported on a compact set can be approximated arbitrarily well by boundary flat densities.
 
 
 
@@ -219,7 +219,7 @@ The following theorem is the main result of this section.
 \label{thm:convex_faithful}
 Let $p(\mathbf{x})$ be a density supported on $C=[0,1]^p$ and bounded away from $0/\infty$ that satisfies the boundary flatness property. 
 
-Suppose $f$ is a convex and continuously twice differentiable on an open set containing $C$, then $f$ is additively faithful under $p(\mathbf{x})$.
+Suppose $f$ is a convex with a bounded second derivative on an open set containing $C$, then $f$ is additively faithful under $p(\mathbf{x})$.
 \end{theorem}
 
 We let the domain of $f$ be slightly larger than $C$ for a technical reason--it is so we can say in the proof that the Hessian of $f$ is positive semidefinite even at the boundary of $C$. 
@@ -228,14 +228,13 @@ We let the domain of $f$ be slightly larger than $C$ for a technical reason--it 
 % Appendix, but pause here to provide some intuition. 
 
 We pause to give some intuition before we present the full proof.
-Suppose that the underlying distribution has a product density.
-Then we know from Lemma~\ref{lem:general_int_reduction} that the
+Suppose that the underlying density is a product density first.
+We know from Lemma~\ref{lem:general_int_reduction} that the
 additive approximation zeroes out $k$ when, fixing $x_k$, every
-``slice'' of $f$ integrates to zero. We prove
-Theorem~\ref{thm:convex_faithful} by showing that ``slices'' of convex
+``slice'' of $f$ integrates to zero, but ``slices'' of convex
 functions that integrate to zero cannot be ``glued together'' while
-still maintaining convexity.
-
+still maintaining convexity. Since the behavior of the whole convex function is constrained by its behavior at the boundary, 
+the same result holds even if the underlying density is not a product density but merely resembles a product density at the boundary, which is exactly the notion formalized by the boundary flatness condition.
 
 \begin{proof}
 
@@ -403,7 +402,7 @@ Since $p_{\lambda,\epsilon}(\mathbf{x})$ remains boundary flat for arbitrarily s
 % for any $1/2 > \epsilon > 0$. As $\epsilon$ becomes small, $\phi_\epsilon$ becomes close to the identity and so $(\phi_\epsilon(X_1), ..., \phi_\epsilon(X_p))$ closely approximates the original random variables $(X_1,...,X_p)$. Intuitively, $\phi$ stretches $X$ near the boundary so that a change in the transformed variable $z$ near the boundary corresponds to a much smaller change in original variable $x$. 
 % \end{example}
 
-In our discussion so far, we have restricted ourselves to densities supported and positive on the hypercube $[0,1]^p$ to minimize extraneous technical details. It may be possible to extend the analysis to densities whose support is a convex and compact set so long as the marginal density $p(x_j) > 0$ for all $x_j$ in the support. 
+In our discussion so far, we have restricted ourselves to densities supported and positive on the hypercube $[0,1]^p$ to minimize extraneous technical details. It may be possible to extend the analysis to densities whose support is a convex and compact set so long as the marginal density $p(x_j) > 0$ for all $x_j$ in the support. A rigorous analysis of this however is beyond the scope of this paper.
 
 It may also possible to extend similar result to densities with an
 unbounded support, by using a limit condition $\lim_{|x_k| \rightarrow
@@ -486,7 +485,7 @@ g^*_k = \arg\min \Big\{
 \begin{theorem}
 \label{thm:acdc_faithful}
 Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from $0/\infty$ that
-satisfies the boundary flatness condition. Suppose that $f$ is convex and continuously twice differentiable on an open set around $C$. Let $f^*_k$ and $g^*_k$ be as defined in equations
+satisfies the boundary flatness condition. Suppose that $f$ is convex with a bounded second derivative on an open set around $C$. Let $f^*_k$ and $g^*_k$ be as defined in equations
 \eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}, then the $f^*_k$'s and the $g^*_k$'s are unique. Furthermore, 
 $f^*_k = 0$ and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x})
 = 0$, that is, $f$ does not depend on~$x_k$. 
@@ -497,7 +496,7 @@ Before we can prove the theorem, we need a lemma that generalizes Theorem~\ref{t
 \begin{lemma}
 \label{cor:faithfulness_extension}
 Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from $0/\infty$ satisfying the boundary flatness condition.
-Let $f(\mathbf{x})$ be a convex and continuously twice differentiable function on an open set around $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
+Let $f(\mathbf{x})$ be a convex function with a bounded second derivative on an open set around $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
  \begin{align}
 h^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X) 
            - \phi(X_{-k}) - h_k(X_k) \bigr)^2\Bigr]
@@ -543,7 +542,7 @@ where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either conv
  \E[ \E[ f(X) - \phi(X_{-k}) \given X_k] X^2_k] = 0
 \end{align*}
 
-We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$. $f(\mathbf{x})$ and $\phi(\mathbf{x}_{-k})$ are both bounded and so $h^*_k(x_k)$ is bounded as well. Therefore, $h^*_k$ is square integrable and there exists a fourier series $s_n(x_k)$ convergent to $h^*_k$ in $L_2$. Since $p(\mathbf{x})$ is bounded, $\lim_{n \rightarrow \infty} \E ( s_n(X_k) - h^*_k(X_k )^2 \rightarrow 0$ as well.
+We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$. $f(\mathbf{x})$ and $\phi(\mathbf{x}_{-k})$ are both bounded and so $h^*_k(x_k)$ is bounded as well. Therefore, $h^*_k$ is square integrable and there exists a fourier series $s_n(x_k)$ convergent to $h^*_k$ in $L_2$. Since $p(\mathbf{x})$ is bounded, $$\lim_{n \rightarrow \infty} \E \left( s_n(X_k) - h^*_k(X_k ) \right)^2 \rightarrow 0$$ as well.
 
 %Under the derivative continuity conditions in the theorem, we apply Lemma~\ref{lem:acdc_derivative_bound} in the appendix and know that $h^*_k(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$. Therefore, for a large enough positive scalar $\alpha$, $h^*_k(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex.
 

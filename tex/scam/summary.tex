@@ -122,8 +122,7 @@ setting of convex regression.
 
 \begin{stheorem}
   Let $p(\mathbf{x})$ be a positive density supported on $C=[0,1]^p$ that
-  satisfies the boundary flatness property. If $f$ is convex and continuously twice
-  differentiable on an open set around $C$, then $f$ is additively faithful under $p$.
+  satisfies the boundary flatness property. If $f$ is convex with a bounded second derivative on an open set around $C$, then $f$ is additively faithful under $p$.
 \end{stheorem}
 
 % We give the full proof in Section~\ref{sec:faithful_proof} of the
@@ -259,10 +258,10 @@ strategy.
 Each of our theorems uses a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
-\item[A2:] $f_0$ is convex and continuously twice-differentiable. $\E f_0(X) = 0$.
+\item[A2:] $f_0$ is convex with a bounded second derivative. $\E f_0(X) = 0$.
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\|f^*_k \|_\infty \leq B$ for all $k$.
 \item[A4:] The noise is mean-zero sub-Gaussian with scale $\sigma$, independent of $X$.
-\item[A5:] The density $p(\mathbf{x})$ is bounded away from 0 and satisfies the boundary flatness condition.
+\item[A5:] The density $p(\mathbf{x})$ is bounded away from $0/\infty$ and satisfies the boundary flatness condition.
 \end{packed_enum}
 In Assumption A3, $f^*=\sum_k f^*_k$ denotes the optimal additive projection of $f_0$ in the population setting.
 
@@ -317,7 +316,7 @@ Then, for sufficiently large $n$, with probability at least $1-\frac{1}{n}$:
 \end{stheorem}
 
 This shows that variable selection consistency is achievable under
-exponential scaling of the ambient dimension, $p = O(\exp(n^c))$
+exponential scaling of the ambient dimension, $p = O(\exp(cn))$
 for some $0<c<1$, as for linear models. The cost of nonparametric estimation is
 reflected in the scaling with respect to $s=|S|$, which can grow only
 as $o(n^{4/25})$.

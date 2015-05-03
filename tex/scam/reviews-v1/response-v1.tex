@@ -63,7 +63,13 @@ this condition.  Reviewer 3 raises some concerns about when it holds,
 especially for functions that are not necessarily supported on the
 unit hypercube.  See also the point below.}
 
-We have added commentary on this here and here.
+We have added a new Section 3.2 to the paper to further discuss the boundary flatness condition as well as giving more examples. The following paragraph has been added to briefly discuss extending the same additive faithfulness analysis to densities whose support is not a hypercube:
+
+``In our discussion so far, we have restricted ourselves to densities supported and positive on the hypercube $[0,1]^p$ to minimize extraneous technical details. It may be possible to extend the analysis to densities whose support is a convex and compact set so long as the marginal density $p(x_j) > 0$ for all $x_j$ in the support. A rigorous analysis of this however is beyond the scope of this paper.''
+
+The original paper also briefly discussed extending boundary flatness to densities with an unbounded support.
+
+The key ideas behind our analysis do not depend critically on the fact that the support is a hypercube. The hypercube assumption is made for convenience, to minimize technical details.
 
 \item \rc{Intuitively, variable selection is very closely related to
 estimating a function (or possibly its partial derivatives) in the
@@ -90,13 +96,17 @@ The intuition behind our result is the following: start with the fact that conve
 
 What we think is that, for functions with shape-constraints such as convexity, the metric entropy alone does not determine the hardness of variable selection; the shape-constraint too plays a direct role. 
 
+We have further expanded the paragraph discussing the intuition behind additive faithfulness in the paper--the second paragraph right below Theorem 3.1.
+
 \item \rc{Writing and proofs need to be tidied up in places to make it easier
 to follow.  See various comments of referees, particularly the
 detailed ones of R2.  Also, in Theorem 3, please remind the author of
 when/where the AC/DC estimators were defined.  (I was forced to dig
 back through.)}
 
-We have tidied up.
+We have added a concise definition of AC/DC in Section 2.2, before Theorem 3. 
+
+We have corrected all the minor mistakes found by the reviewers.
 
 \end{enumerate}
 
@@ -132,12 +142,14 @@ $f_0$ is not actually a sum of univariate convex functions.}
 
 To minimize predictive error, we can refit a non-additive convex function after selecting a sparse model. Comparing the predictive accuracy of $f^*_k$'s and $g^*_k$'s against the non-additive true regression function $f_0$ is beyond the scope of our paper, but we do compare the finite sample estimate $\hat{f}_k$ and $\hat{g}_k$ against the population level $f^*_k$ and $g^*_k$. The analysis we do to control false negatives also shows that $$\left| \mathbb{E}\left( f_0(X)  - \sum_{k=1}^p f^*_k(X_k) \right)^2 - \mathbb{E} \left( f_0(X) - \sum_{k=1}^p \hat{f}_k(X_k))\right)^2 \right| \rightarrow 0$$ and likewise for the $\hat{g}_k$'s. Please see Theorem 8.3 and 8.4 in the supplement. 
 
+We have added a paragraph in Section 3.4 that discusses prediction. 
+
 \item \rc{In order to improve clarity, the authors should define the convex
 additive model at the top of page 5: $f(x_i) = \sum_{k=1}^p f_k(x_{ik})$, where the
 $f_k$'s are convex.  Otherwise, the notation in equation (2.3) is
 initially a bit confusing.}
 
-We have removed the old equation (2.3) and any discussion of convex additive model at the top of page 5. Everything there is discussed on page 6, after AC/DC has been introduced.
+We have removed the old equation (2.3) and any discussion of convex additive model at the top of page 5. Everything there is discussed now on page 6, after AC/DC has been introduced.
 
 \item \rc{Another notational comment: the use of the
 distribution function $F$ seems unnecessary (e.g., Lemma 3.1 and
@@ -176,7 +188,7 @@ bit confusing. Aren’t the conditions imposed in Theorem 5.1 on the
 covariates essentially analogous to the mutual incoherence conditions
 in this case? }
 
-The conditions in Theorem 5.1 are indeed analogous and we have edited the remark accordingly. The conditions in Theorem 5.1 are much more strict than the mutual incoherence condition though.
+The conditions in Theorem 5.1 are indeed analogous and we have edited the remark in the paper accordingly. The conditions in Theorem 5.1 are much more strict than the mutual incoherence condition however. 
 
 \item \rc{In the simulation section, the authors might consider comparing the
 set of variables selected after the AC step only with the set of
@@ -206,7 +218,7 @@ $\sigma$ has been defined in Section 2.3.
 \item \rc{Perhaps Section 3 should be titled something other than ``Additive
 faithfulness'' (maybe ``Population- level results''?).}
 
-TODO
+We have changed the title of Section 3 to the suggested one.
 
 \item \rc{The first paragraph of Section 5 should read
   ``Figure 3'' rather than ``Algorithm 3.''}
@@ -538,7 +550,9 @@ with covariance seem more suitable. It is puzzling to me that the
 authors did not consider non-parametric examples where the additive
 model framework seems more suitable.}
 
-We consider only densities with support in a hypercube. We have modified old experiments and added new experiments to use boundary flat distributions instead of the correlated multivariate Gaussian distribution. 
+We have removed old experiments that use correlated multivariate Gaussian and replaced them instead with new experiments that use boundary flat Gaussian Copula mixture distributions. Please see Section 6.1; Figure 4 in particular shows the bimodal marginal density of the new joint density that we use. Figure 5d, 5e, 5f show the result of simulations using the new non-Gaussian density.
+
+We have also added new experiments that use nonparametric true regression function instead of the quadratic form. We use a log-sum-exp (softmax) of linear forms (please see Equation 6.1). Figure 5f and 6 show the results of experiments using the softmax as the true regression function: AC/DC is still effective under the high-dimensional scaling. 
 
 
 \end{enumerate}
@@ -550,7 +564,7 @@ Minor comments:
   since it feels very repetitive and slightly confusing that parts of
   the text are repeated almost verbatim. I would suggest removing this section.}
 
-Section 2 is repetitive but we believe it has value in highlighting the big picture, which could otherwise be overwhelmed by the technical details. 
+Section 2 is repetitive but we believe it has value in highlighting the big picture, which could otherwise be drowned out by the technical details. 
 
 \item \rc{Page 2, second last paragraph `and and.'}
 

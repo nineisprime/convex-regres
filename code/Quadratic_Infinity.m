@@ -1,6 +1,16 @@
+% ADMM
+
 function [beta,D,h,obj] = Quadratic_Infinity(X,y,lambda,gamma,mu,maxit)
-[p,n] = size(X); beta = zeros(p,n); S = zeros(n,n); W = zeros(n,n); 
-M = zeros(p,2*n); iter = 0; obj = []; C = zeros(p,2*n); D = zeros(p,n);
+
+[p,n] = size(X); 
+beta = zeros(p,n); 
+S = zeros(n,n); 
+
+W = zeros(n,n); 
+M = zeros(p,2*n); 
+iter = 0; obj = []; 
+C = zeros(p,2*n); 
+D = zeros(p,n);
 
 num_lambda = length(lambda);
 if (num_lambda < p)
@@ -14,7 +24,9 @@ end
 
 while iter < maxit 
     iter = iter + 1;
-    for j = 1:p, C(j,:) = Piecewise_Inf([beta(j,:),D(j,:)]-1/mu*M(j,:),lambda(j)/mu); end
+    for j = 1:p, 
+        C(j,:) = Piecewise_Inf([beta(j,:),D(j,:)]-1/mu*M(j,:),lambda(j)/mu); 
+    end
     
     Dexpand = permute(repmat(D,[1,1,n]),[1,3,2]);
     tmp = reshape(Delta.*Dexpand,[p,n*n]);
@@ -41,7 +53,9 @@ while iter < maxit
     for i = 1:n
         Xi = X - repmat(X(:,i),[1,n]); 
         beta(:,i) = (eye(p)+Xi*Xi')\(C(:,i)+1./mu*M(:,i)+Xi*(h-h(i)-DDelta(:,i)-S(:,i)+1/mu*W(:,i)));
-        xbi = Xi'*beta(:,i); S(:,i) = max(h-h(i)-xbi-DDelta(:,i)+1/mu*W(:,i)-gamma,0);
+        
+        xbi = Xi'*beta(:,i); 
+        S(:,i) = max(h-h(i)-xbi-DDelta(:,i)+1/mu*W(:,i)-gamma,0);
         %xbi is (n--by--1)
         
         %update for D
@@ -58,8 +72,10 @@ while iter < maxit
     if mod(iter,100)==0, 
         disp(['   Iter ' num2str(iter) ' Obj ' num2str(obj(iter)) ' sparsity: ' num2str(sum(max(abs(C),[],2) < 1e-6))]);
         disp(['admm error: ' num2str(norm(C-[beta,D],'fro'))]);
-        figure(999); subplot(2,1,1); plot(1:n,y,'ko',1:n,h,'r+');
-        subplot(2,1,2); plot(max(abs(C),[],2),'r.'); drawnow;
+        figure(999); 
+        subplot(2,1,1); plot(1:n,y,'ko',1:n,h,'r+');
+        subplot(2,1,2); plot(max(abs(C),[],2),'r.'); 
+        drawnow;
     end
         
 end

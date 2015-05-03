@@ -88,7 +88,7 @@ adopt the following standard setup:
 
 \begin{enumerate}
 \item The data $X^{(1)},\ldots, X^{(n)} \sim P$ are iid from
-a distribution $P$ with a density $p(\mathbf{x})$ that is supported and strictly positive on $\mathcal{X}=[-1,1]^p$.
+a distribution $P$ with a density $p(\mathbf{x})$ that is supported on $\mathcal{X}=[-1,1]^p$.
 \item The response is $Y = f_0(X) + W$ where $W$ is
   independent, zero-mean noise; thus $Y^{(i)} = f_0(X^{(i)}) + W^{(i)}$.
 \item The regression function $f_0$ satisfies
@@ -117,7 +117,7 @@ The $\hat{g}_k$'s are unique minimizers as well. We let $S = \{ k = 1,\ldots,p \
 Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
-\item[A2:] $f_0$ is convex and continuously twice-differentiable on an open set around $[-1,1]^p$. $\E f_0(X) = 0$.
+\item[A2:] $f_0$ is convex with a bounded second derivative on an open set around $[-1,1]^p$. $\E f_0(X) = 0$.
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\| f^*_k \|_\infty \leq B$ for all $k$.
 \item[A4:] $W$ is mean-zero sub-Gaussian, independent of $X$, with scale $\sigma$; i.e., for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
 \item[A5:] The density $p(\mathbf{x})$ satisfies the boundary flatness condition (Definition~\ref{defn:boundary-point}), and $0 < c_l \leq \inf p(\mathbf{x}) \leq \sup p(\mathbf{x}) \leq c_u < \infty$ for two constants $c_l, c_u$. 
@@ -183,7 +183,7 @@ $\hat{g}_k$ be any DC solution to the restricted regression with
 $B$-boundedness constraint. Let $\tilde{\sigma}$ denote $\max(\sigma,
 B)$.  Suppose 
 \begin{equation}
-\lambda_n \leq 768 s \tilde{\sigma} \sqrt{\frac{\log^2 np}{n}}
+\lambda_n \leq  768 s \tilde{\sigma} \sqrt{\frac{\log^2 np}{n}}
 \end{equation}
 and that $n$ is sufficiently large so that, for some constant $c' > 1$,
 \begin{equation}

@@ -110,20 +110,21 @@ return
 num_versions = 18;
 prob = zeros(1,num_versions); 
 supp = zeros(nrun, num_versions);
-epsil = 1e-6;
-
-success_supp = 20;
+epsil = 1e-5;
+%success_supp = 20;
 
 for version = 1:num_versions
-    load(['mat/S_' num2str(version) '.mat']);
+    if (version == 10 || version == 18)
+        continue
+    end
+    
+    load(['mat/K_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
-        cur_supp = sum(Ln(:,run) > 1e-5);
         if min(Ln(J(:,run),run)) > epsil && ...
-            cur_supp < success_supp
+           max(Ln(~J(:,run), run)) < epsil
             suc = suc + 1;
         end
-        supp(run,version) = cur_supp;
     end
     prob(version) = suc/nrun;
 end
