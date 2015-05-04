@@ -92,7 +92,7 @@ restrictive.  Could the authors comment on these issues?}
 
 The boundary flatness doesn't artificially make the variable selection easy. Boundary flatness is much more general than the product density and Comminges and Dalalyan showed that, even under a product density, variable selection for general two-smooth functions is hard. Any bounded density with compact support can be approximated arbitrary well by a boundary flat density (see the newly added Example 3.2).
 
-The intuition behind our result is the following: start with the fact that convex functions are additively faithful under a product density (see paragraphs below Theorem 3.1 for an intuition of this). The behavior of a convex function everywhere is constrained by its behavior at the boundary. Therefore, we need only that the underlying density resembles a product density at the boundary, which is exactly the notion that boundary flatness formalizes.
+The intuition behind our result is the following: start with the fact that convex functions are additively faithful under a product density. The behavior of a convex function everywhere is constrained by its behavior at the boundary. Therefore, we need only that the underlying density resembles a product density at the boundary, which is exactly the notion that boundary flatness formalizes.
 
 What we think is that, for functions with shape-constraints such as convexity, the metric entropy alone does not determine the hardness of variable selection; the shape-constraint too plays a direct role. 
 
@@ -131,9 +131,9 @@ In the finite sample analysis, the assumptions would not change except that A3 w
 it easy to add this condition as a regularization term and incorporate
 it into the analysis?}
 
-Smoothness can be incorporated by using B-spline basis with uniformly spaced knots. The details are described in a 2014 paper by Pya and Wood which we have cited in the introduction. We chose not to discuss estimating smooth convex functions because it would introduce an additional tuning parameter.
+Smoothness can be incorporated by using B-spline basis with uniformly spaced knots. The details are described in a 2014 paper by Pya and Wood which we have cited in the introduction. We chose not to add smoothness into the estimation because it would introduce an additional tuning parameter.
 
-The analysis may require much more work if one uses a B-spline basis in the estimation. B-splines may significantly complicate the false positive analysis, which rely on the particular form of the optimization. The false negative analysis may not be affected much because it mainly uses bracketing entropy.
+The analysis may require much more work if one uses a B-spline basis in the estimation. B-splines may complicate the false positive analysis, which rely on the particular form of the optimization objective. The false negative analysis may not be affected much because it mainly uses bracketing entropy.
 
 \item \rc{Assuming model selection consistency, can one derive prediction
 error bounds using the fitted $f_k$'s and $g_k$'s, as well? Prediction error
@@ -285,7 +285,7 @@ $\frac{\partial(x_{-j},x_j)}{\partial x_j} = \frac{\partial^2 p(x_{-j},
 I think the condition ``$p(x_{−j}, x_j ) = 0$ at the boundary points'' is
 missing.}
 
-It is not necessary that $p(\mathbf{x}_{-j}, x_j) = 0$ at $x_j = 0,1$; it is necessary that $p(\mathbf{x}_{-j}, x_j) > 0$. We have however, added an additional condition that $p(\mathbf{x})$ has a bounded second derivative. This condition ensures that the marginal density $p(x_j)$ is twice differentiable and $p'(x_j) = p''(x_j) = 0$ at $x_j = 0,1$. With this, it is valid to apply the quotient rule for differentiation to show that boundary flatness holds. Please see the second item in Example 3.2 for the relevant modifications. 
+It is necessary that $p(\mathbf{x}_{-j}, x_j) > 0$. We have added an additional condition that $p(\mathbf{x})$ has a bounded second derivative. This condition ensures that the marginal density $p(x_j)$ is twice differentiable and $p'(x_j) = p''(x_j) = 0$ at $x_j = 0,1$. With this, it is valid to apply the quotient rule for differentiation to show that boundary flatness holds. Please see Example 3.2 for the relevant edits.
 
 
 \item \rc{On page 12, I did not understand why the functions 
@@ -295,7 +295,7 @@ $\frac{\partial^2 f(x_{-j} |  x_j)}{\partial x_j^2}$
 are bounded (they are not supposed to be continuous)}
 
 
-We indeed need a bounded condition here. We have modified the definition of boundary flatness so that $p(\mathbf{x_{-j}} \,|\, x_j)$ is bounded and has a bounded first and second derivative for all $x_j$ in some open set around the boundary points and for all $\mathbf{x}_{-j}$. Dominated convergenc theorem holds without problems because we only exchange the derivative and the integral at $x_j = 0,1$. We have verified in detail that the domination condition holds in the newly added Section 8.4.1.
+We do need a boundedness condition here. We have modified the definition of boundary flatness so that $p(\mathbf{x_{-j}} \,|\, x_j)$ is bounded and has a bounded first and second derivative for all $x_j$ in some open set around the boundary points and for all $\mathbf{x}_{-j}$. Dominated convergenc theorem holds without problems because we only exchange the derivative and the integral at $x_j = 0,1$. We have verified in detail that the domination condition holds in the newly added Section 8.4.1.
 
 %\item \rc{On page 13, on line 6, ``this this''.}
 
@@ -393,7 +393,7 @@ notation $\|\cdot\|_{\infty,1}$ is not defined.}
 
 We have further explained the old figure 5a and 5b (now figure 7a and 7b) in the experiment section. The following has been added to the paper:
 
-... we plot on the y-axis the norm $\|f^{(t)}_j\|_{\infty}$ of every column $j$ against the regularization strength $\lambda^{(t)}$. Instead of plotting the value of $\lambda^{(t)}$ on the x-axis however, we plot the total norm at $\lambda^{(t)}$ normalized against the total norm at $\lambda^{(1)}$: $\frac{\sum_j \|f^{(t)}_j\|_{\infty}}{\sum_j \|f^{(1)}\|_{\infty}}$. Thus, as x-axis moves from 0 to 1, the regularization goes from strong to weak.
+``... we plot on the y-axis the norm $\|f^{(t)}_j\|_{\infty}$ of every column $j$ against the regularization strength $\lambda^{(t)}$. Instead of plotting the value of $\lambda^{(t)}$ on the x-axis however, we plot the total norm at $\lambda^{(t)}$ normalized against the total norm at $\lambda^{(1)}$: $\frac{\sum_j \|f^{(t)}_j\|_{\infty}}{\sum_j \|f^{(1)}\|_{\infty}}$. Thus, as x-axis moves from 0 to 1, the regularization goes from strong to weak.''
 
 \item \rc{On page 31, at the top of the page, ``see discussion at beginning of
 Section 5'' : I think it should be ``at the beginning''. In (8.1),
@@ -535,13 +535,13 @@ present several straightforward examples in which it doesn't hold
 (e.g. $f(x_1,x_2)=x_1 x_2$) and multivariate Gaussian examples. Hence it is unclear to me how
 likely a given function is likely to fit into this framework.}
 
-The boundary flatness condition is not restrictive in the sense that for any density $p(x)$ supported on $[0,1]^p$, and for any $\epsilon > 0$, there exists a boundary flat density whose $L_1$ distance with $p(x)$ is at most $\epsilon$ (Please see the newly added Example 3.2). This is because boundary flatness places no restriction on what $p(x)$ looks like in the interior of the hypercube. Boundary flatness allows arbitrary correlation structure, provided that $p(x) > 0$. We have added Section 3.2 to the paper to give a more detailed discussion on boundary flatness. 
+The boundary flatness condition is not restrictive in the sense that for any density $p(x)$ supported on $[0,1]^p$, and for any $\epsilon > 0$, there exists a boundary flat density whose $L_1$ distance with $p(x)$ is at most $\epsilon$ (Please see the newly added Example 3.3). This is because boundary flatness places no restriction on what $p(x)$ looks like in the interior of the hypercube. Boundary flatness allows arbitrary correlation structure, provided that $p(x) > 0$. We have added Section 3.2 to the paper to give a more detailed discussion on boundary flatness. 
 
 $f(x_1,x_2) = x_1 x_2$ is non-convex and it is an example of how non-convex functions may not be additively faithful under the uniform distribution; it is not an example in which boundary flatness doesn't hold. The multivariate Gaussian is a counterexample but it is to show that boundary flatness may not extend easily to densities with unbounded support. 
 
 We acknowledge that many distributions are not boundary flat. We present boundary flatness as a significant generalization of the product density, under which nonparametric variable selection is already very difficult.
 
-Boundary flatness is not a contrived condition. We initially proved additive faithfulness only for product densities. But then, knowing that the behavior of a convex function everywhere is constrained by its behavior at the boundary, we conjectured that underlying density may only need to ``look like'' a product density at the boundary. Attempts to formalize this notion led us to the definition of boundary flatness.
+Boundary flatness is not a contrived condition. We initially proved additive faithfulness only for product densities. Then, knowing that the behavior of a convex function everywhere is constrained by its behavior at the boundary, we conjectured that underlying density may only need to ``look like'' a product density at the boundary. Attempts to formalize this notion led us to the definition of boundary flatness.
 
 \item \rc{Following on from the previous point, the simulation study also does
 not add any further insight to this issue since the simulations are
