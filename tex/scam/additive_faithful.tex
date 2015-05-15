@@ -241,13 +241,16 @@ We let the domain of $f$ be slightly larger than $C$ for a technical reason--it 
 % Appendix, but pause here to provide some intuition. 
 
 We pause to give some intuition before we present the full proof.
-Suppose that the underlying density is a product density first.
-We know from Lemma~\ref{lem:general_int_reduction} that the
-additive approximation zeroes out $k$ when, fixing $x_k$, every
-``slice'' of $f$ integrates to zero, but ``slices'' of convex
-functions that integrate to zero cannot be ``glued together'' while
-still maintaining convexity. Since the behavior of the whole convex function is constrained by its behavior at the boundary, 
-the same result holds even if the underlying density is not a product density but merely resembles a product density at the boundary, which is exactly the notion formalized by the boundary flatness condition.
+Suppose that the underlying density is a product density.  We know
+from Lemma~\ref{lem:general_int_reduction} that the additive
+approximation zeroes out $k$ when, fixing $x_k$, every ``slice'' of
+$f$ integrates to zero, but ``slices'' of convex functions that
+integrate to zero cannot be ``glued together'' while still maintaining
+convexity. Since the behavior of the whole convex function is
+constrained by its behavior at the boundary, the same result holds
+even if the underlying density is not a product density but merely
+resembles a product density at the boundary, which is exactly the
+notion formalized by the boundary flatness condition.
 
 \begin{proof}
 
@@ -528,7 +531,7 @@ distribution closely approximates the Gaussian distribution.
 Although convex functions are additively faithful---under appropriate conditions---it is difficult to
 estimate the optimal additive functions $f^*_k$s as defined in
 equation~\eqref{eqn:unconstrained_additive}.  The reason is that $f^*_k$ need not be
-a convex function, as example~\ref{examp:gaussian_counterexample} and example~\ref{examp:boundaryflat_example} 
+a convex function, as Example~\ref{examp:gaussian_counterexample} and Example~\ref{examp:boundaryflat_example} 
 show. It may be possible to estimate $f^*_k$ via smoothing, but we prefer an approach that is free of smoothing parameters. 
 %The function $f^*_k$ can be shown to be smooth but it is preferable to use
 %shape-constraints whenever possible to avoid the introduction of the
@@ -556,19 +559,26 @@ g^*_k = \arg\min \Big\{
 
 \begin{theorem}
 \label{thm:acdc_faithful}
-Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from $0/\infty$ that
-satisfies the boundary flatness condition. Suppose that $f$ is convex with a bounded second derivative on an open set around $C$. Let $f^*_k$ and $g^*_k$ be as defined in equations
-\eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}, then the $f^*_k$'s and the $g^*_k$'s are unique. Furthermore, 
-$f^*_k = 0$ and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x})
-= 0$, that is, $f$ does not depend on~$x_k$. 
+Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from
+$0/\infty$ that satisfies the boundary flatness condition. Suppose
+that $f$ is convex with a bounded second derivative on an open set
+around $C$. Let $f^*_k$ and $g^*_k$ be as defined in equations
+\eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}, then
+the $f^*_k$'s and the $g^*_k$'s are unique. Furthermore, $f^*_k = 0$
+and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x}) = 0$, that
+is, $f$ does not depend on~$x_k$.
 \end{theorem}
 
 Before we can prove the theorem, we need a lemma that generalizes Theorem~\ref{thm:convex_faithful}.
 
 \begin{lemma}
 \label{cor:faithfulness_extension}
-Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from $0/\infty$ satisfying the boundary flatness condition.
-Let $f(\mathbf{x})$ be a convex function with a bounded second derivative on an open set around $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded function that does not depend on $x_k$. Then, we have that the unconstrained univariate function
+Suppose $p(\mathbf{x})$ is a density on $C=[0,1]^p$ bounded away from
+$0$ and~$\infty$ satisfying the boundary flatness condition.  Let
+$f(\mathbf{x})$ be a convex function with a bounded second derivative
+on an open set around $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded
+function that does not depend on $x_k$. Then the
+unconstrained univariate function
  \begin{align}
 h^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X) 
            - \phi(X_{-k}) - h_k(X_k) \bigr)^2\Bigr]
@@ -589,7 +599,11 @@ and $ h^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x}) = 0$.
 
 Fix $k$. Let $f^*_k$ and $g^*_k$ be defined as in
 equation~\ref{eqn:convex_additive} and
-equation~\ref{eqn:concave_postprocess}. Let $\phi(\mathbf{x}_{-k}) \equiv \sum_{k' \neq k} f^*_{k'}(x_{k'})$. Each $f^*_{k'}$ is convex and thus continuous on $(0,1)$. $f^*_{k'}(x_{k'})$ is defined at $x_{k'} = 0,1$; thus, $f^*_{k'}$ must be bounded and $\phi(\mathbf{x}_{-k})$ is bounded.
+equation~\ref{eqn:concave_postprocess}. Let $\phi(\mathbf{x}_{-k})
+\equiv \sum_{k' \neq k} f^*_{k'}(x_{k'})$. Each $f^*_{k'}$ is convex
+and thus continuous on $(0,1)$. The function $f^*_{k'}(x_{k'})$ is defined at
+$x_{k'} = 0,1$; thus, $f^*_{k'}$ must be bounded and
+$\phi(\mathbf{x}_{-k})$ is bounded.
 
 We have that
 \begin{align}
