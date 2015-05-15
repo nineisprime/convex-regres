@@ -193,20 +193,16 @@ faithful. To simplify presentation, we restrict our attention to densities bound
 \label{defn:boundary-point}
 Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. We say that
 $p(\mathbf{x})$ satisfies the \emph{boundary flatness condition} if
-for all $j$, for all $\mathbf{x}_{-j}$, and for all $x_j \in [0,
-  \epsilon) \cup (1-\epsilon, 1]$ for some arbitrarily small $\epsilon
-> 0$, 
+for all $j$ and for all $\mathbf{x}_{-j}$, 
 \begin{enumerate}[(i)]
-\item $p(\mathbf{x}_{-j} \given x_j)$ is twice differentiable in
-$x_j$,
-\item $p(\mathbf{x}_{-j} \given x_j), \frac{\partial
+\item the derivatives $\frac{\partial
   p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}, \frac{\partial^2
-  p(\mathbf{x}_{-j} \given x_j) }{\partial^2 x_j}$ are bounded,
+  p(\mathbf{x}_{-j} \given x_j) }{\partial^2 x_j}$ exist and are bounded,
+for all $x_j \in [0,  \epsilon) \cup (1-\epsilon, 1]$ 
+with $\epsilon > 0$ arbitrarily small,
 \item for $x_j=0$ and $x_j=1$,
-\begin{equation}
-\frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
-\frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0.
-\end{equation}
+$\frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
+\frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0$.
 \end{enumerate}
 
 \end{definition}
