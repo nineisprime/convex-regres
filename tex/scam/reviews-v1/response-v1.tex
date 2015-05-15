@@ -632,10 +632,27 @@ The old Lemma 8.4 (now Lemma 8.3) has been updated.
 
 \subsection*{Reviewer 3}
 
-
-Major comments:
-
 \begin{enumerate}
+
+\item \rc{I don't see why one would use convex regression to do
+  variable screening when other parametric approaches seem more
+  appropriate (e.g. clean and screen methods by Ke et al. and
+  others). This method and others were compared with and so it again
+  raised the question of what class of interesting examples would this
+  method be useful for.}
+
+Our methods are appropriate in settings where one expects the
+regression function to be convex, for example in utility function
+estimation in economics. The power of our results is that
+using convex additive models results in consistent variable selection.
+In more general settings, without this shape constraint,
+approaches based on the lasso (``screen and clean'') or nonparametric 
+additive models do not have such guarantees. 
+
+Also note that we have replaced the multivariate Gaussian examples with 
+nonparametric examples; please see point 3 below.
+
+
 \item \rc{The basis of all the results seem to be the boundary flatness
 condition. This condition seems to be an artifact of the analysis and
 based on my reading, it is unclear how restrictive this assumption
