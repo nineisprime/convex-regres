@@ -628,7 +628,7 @@ where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either conv
  \E[ \E[ f(X) - \phi(X_{-k}) \given X_k] X^2_k] = 0
 \end{align*}
 
-We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$. $f(\mathbf{x})$ and $\phi(\mathbf{x}_{-k})$ are both bounded and so $h^*_k(x_k)$ is bounded as well. Therefore, $h^*_k$ is square integrable and there exists a fourier series $s_n(x_k)$ convergent to $h^*_k$ in $L_2$. Since $p(\mathbf{x})$ is bounded, $$\lim_{n \rightarrow \infty} \E \left( s_n(X_k) - h^*_k(X_k ) \right)^2 \rightarrow 0$$ as well.
+We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$. $f(\mathbf{x})$ and $\phi(\mathbf{x}_{-k})$ are both bounded and so $h^*_k(x_k)$ is bounded as well. Therefore, $h^*_k$ is square integrable and there exists a Fourier series $s_n(x_k)$ convergent to $h^*_k$ in $L_2$. Since $p(\mathbf{x})$ is bounded, $$\lim_{n \rightarrow \infty} \E \left( s_n(X_k) - h^*_k(X_k ) \right)^2 \rightarrow 0$$ as well.
 
 %Under the derivative continuity conditions in the theorem, we apply Lemma~\ref{lem:acdc_derivative_bound} in the appendix and know that $h^*_k(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$. Therefore, for a large enough positive scalar $\alpha$, $h^*_k(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex.
 
