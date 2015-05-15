@@ -40,15 +40,16 @@
 \parskip12pt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\baselinestretch}{1.02}
 
 \begin{document}
 
 \vspace*{5pt}
 
-We thank the reviewers for their helpful comments regarding our
-submission. We have carefully addressed all these comments. The
-following describes the revisions made to the manuscript in response
-to the reviews.
+We thank the reviewers for their careful reading of our paper and many
+helpful comments. We have carefully addressed all these comments. The
+following describes the revisions made to the manuscript, with 
+responses to each of the points made in the reviews.
 
 \subsection*{Associate Editor}
 
@@ -63,7 +64,13 @@ this condition.  Reviewer 3 raises some concerns about when it holds,
 especially for functions that are not necessarily supported on the
 unit hypercube.  See also the point below.}
 
-We have added a new Section 3.2 to the paper to further discuss the boundary flatness condition as well as giving more examples. Extending our analysis to densities who support is not hypercube is beyond the scope of our paper although we think it is do-able. The key ideas behind our analysis do not depend critically on the fact that the support is a hypercube. The hypercube assumption is made for convenience, to minimize technical details.
+We have added a new Section 3.2 ``Boundary Flatness Examples'' to the
+paper to further discuss the boundary flatness condition.
+Extending our analysis to densities whose support
+is not a hypercube is beyond the scope of our paper, although we think it
+is possible. The key ideas behind our analysis do not depend critically
+on the fact that the support is a hypercube. The hypercube assumption
+is made only for convenience, to minimize technical details.
 
 \item \rc{Intuitively, variable selection is very closely related to
 estimating a function (or possibly its partial derivatives) in the
@@ -84,13 +91,29 @@ the additive faithfulness (AF) condition, or one of the sufficient
 conditions for AF (namely boundary flatness) are somehow very
 restrictive.  Could the authors comment on these issues?}
 
-The boundary flatness doesn't artificially make the variable selection easy. Boundary flatness is much more general than the product density and Comminges and Dalalyan showed that, even under a product density, variable selection for general two-smooth functions is hard. Any bounded density with compact support can be approximated arbitrary well by a boundary flat density (see the newly added Example 3.2).
+Boundary flatness doesn't artificially make variable selection
+easy. Boundary flatness is much more general than the product density,
+and Comminges and Dalalyan showed that even under a product density
+variable selection for general two-smooth functions is hard. Any
+bounded density with compact support can be approximated arbitrary
+well by a boundary flat density (see the newly added Example 3.2).
 
-The intuition behind our result is the following: start with the fact that convex functions are additively faithful under a product density. The behavior of a convex function everywhere is constrained by its behavior at the boundary. Therefore, we need only that the underlying density resembles a product density at the boundary, which is exactly the notion that boundary flatness formalizes.
+The intuition behind our result is the following. Start with the fact
+that convex functions are additively faithful under a product
+density. Next observed that the behavior of a convex function is constrained
+by its behavior at the boundary; in particular, it is identically zero
+if it's zero on the boundary. Therefore, it is sufficient if the 
+underlying density resembles a product density at the boundary.  This is
+exactly the notion that boundary flatness formalizes.
 
-What we think is that, for functions with shape-constraints such as convexity, the metric entropy alone does not determine the hardness of variable selection; the shape-constraint too plays a direct role. 
+At a high level, our results show that for functions with
+shape-constraints such as convexity, the metric entropy alone does not
+determine the hardness of variable selection.  The shape constraints
+also play a direct role.
 
-We have further expanded the paragraph discussing the intuition behind additive faithfulness in the paper--the second paragraph right below Theorem 3.1.
+We have expanded the paragraph discussing the intuition behind
+additive faithfulness in the paper. Please see the second paragraph
+after Theorem 3.1.
 
 \item \rc{Writing and proofs need to be tidied up in places to make it easier
 to follow.  See various comments of referees, particularly the
@@ -98,9 +121,10 @@ detailed ones of R2.  Also, in Theorem 3, please remind the author of
 when/where the AC/DC estimators were defined.  (I was forced to dig
 back through.)}
 
-We have added a concise definition of AC/DC in Section 2.2, before Theorem 3. 
 
 We have corrected all the minor mistakes found by the reviewers.
+We have added a concise definition of AC/DC in Section 2.2, before Theorem 3. 
+
 
 \end{enumerate}
 
@@ -116,7 +140,11 @@ hold? Similarly, is there a simpler version of Theorem 3 that can be
 stated when $f_0$ is actually a sum of univariate convex functions? This
 would seem to depend on an appropriate statement for Assumption (A3).}
 
-If the true regression function is a convex additive function, then additive faithfulness holds trivially--the best additive approximation to an additive function is the function itself. The estimation procedure becomes simpler--the DC stage is no longer necessary and can be safely removed. 
+If the true regression function is a convex additive function, then
+additive faithfulness holds----the best additive approximation
+to an additive function is the function itself. The estimation
+procedure becomes simpler.  In this case the DC stage is no longer necessary and can
+be safely removed.
 
 In the finite sample analysis, the assumptions would not change except that A3 would be $\| f^*_k \|_\infty \leq B$ for all $k$ since $f_0 = f^*$ in this case. The signal strength definition can be made simpler: $\alpha^+ = \min_k \mathbb{E}( f^*_k(X_k)^2 )$. The rates would not improve.
 
@@ -125,25 +153,45 @@ In the finite sample analysis, the assumptions would not change except that A3 w
 it easy to add this condition as a regularization term and incorporate
 it into the analysis?}
 
-Smoothness can be incorporated by using B-spline basis with uniformly spaced knots. The details are described in a 2014 paper by Pya and Wood which we have cited in the introduction. We chose not to add smoothness into the estimation because it would introduce an additional tuning parameter.
+Smoothness can be incorporated by using a B-spline basis with uniformly
+spaced knots. The details are described in a 2014 paper by Pya and
+Wood which we have cited in the introduction. We choose not to add
+smoothness into the estimation because it introduces 
+additional tuning parameters, which are difficult to set for
+additive models.
 
-The analysis may require much more work if one uses a B-spline basis in the estimation. B-splines may complicate the false positive analysis, which rely on the particular form of the optimization objective. The false negative analysis may not be affected much because it mainly uses bracketing entropy.
+The analysis would require much more work if one were to use a B-spline basis
+in the estimation. In particular, B-splines may complicate the false positive
+analysis, which relies on the particular form of the optimization
+objective. The false negative analysis may however not be affected much,
+because it is mainly based on bracketing entropy.
 
 \item \rc{Assuming model selection consistency, can one derive prediction
-error bounds using the fitted $f_k$'s and $g_k$'s, as well? Prediction error
+error bounds using the fitted $f_k$s and $g_k$s, as well? Prediction error
 bounds seem quite relevant due to possible model misspecification when
 $f_0$ is not actually a sum of univariate convex functions.}
 
-To minimize predictive error, we can refit a non-additive convex function after selecting a sparse model. Comparing the predictive accuracy of $f^*_k$'s and $g^*_k$'s against the non-additive true regression function $f_0$ is beyond the scope of our paper, but we do compare the finite sample estimate $\hat{f}_k$ and $\hat{g}_k$ against the population level $f^*_k$ and $g^*_k$. The analysis we do to control false negatives also shows that $$\left| \mathbb{E}\left( f_0(X)  - \sum_{k=1}^p f^*_k(X_k) \right)^2 - \mathbb{E} \left( f_0(X) - \sum_{k=1}^p \hat{f}_k(X_k))\right)^2 \right| \rightarrow 0$$ and likewise for the $\hat{g}_k$'s. Please see Theorem 8.3 and 8.4 in the supplement. 
+To minimize predictive error, we can refit a non-additive convex
+function after selecting a sparse model. Comparing the predictive
+accuracy of the $f^*_k$s and $g^*_k$s against the non-additive true
+regression function $f_0$ is beyond the scope of our paper, but we do
+compare the finite sample estimate $\hat{f}_k$ and $\hat{g}_k$ against
+the population level $f^*_k$ and $g^*_k$. Our analysis to
+control false negatives also shows that $$\left| \mathbb{E}\left(
+f_0(X) - \sum_{k=1}^p f^*_k(X_k) \right)^2 - \mathbb{E} \left( f_0(X)
+- \sum_{k=1}^p \hat{f}_k(X_k))\right)^2 \right| \rightarrow 0$$ and
+likewise for the $\hat{g}_k$s. Please see Theorem 8.3 and 8.4 in the
+supplement.
 
 We have added a paragraph in Section 3.4 that discusses prediction. 
 
 \item \rc{In order to improve clarity, the authors should define the convex
 additive model at the top of page 5: $f(x_i) = \sum_{k=1}^p f_k(x_{ik})$, where the
-$f_k$'s are convex.  Otherwise, the notation in equation (2.3) is
+$f_k$s are convex.  Otherwise, the notation in equation (2.3) is
 initially a bit confusing.}
 
-We have removed the old equation (2.3) and any discussion of convex additive model at the top of page 5. Everything there is discussed now on page 6, after AC/DC has been introduced.
+We have removed the old equation (2.3), and moved discussion of convex
+additive models to after AC/DC has been introduced, on page 6.
 
 \item \rc{Another notational comment: the use of the
 distribution function $F$ seems unnecessary (e.g., Lemma 3.1 and
@@ -152,9 +200,17 @@ joint density function $p(x)$. (An additional suggestion would be to use
 a different letter to represent the joint density function, since $p$ is
 already used to represent the dimensionality of the distribution.)}
 
-We sometimes need a notation for the distribution because we want to write $L^2(P), L_2(P)$ to represent, respectively, the Hilbert space of square integrable functions and the $L_2$-norm with respect to the distribution $P$. We have removed any mention of the distribution where it is not necessary.
+We sometimes prefer notation involving the distribution because we want to
+write, for example, $L^2(P)$ to represent the Hilbert space
+of square integrable functions with respect to the
+distribution $P$. We have removed any mention of the distribution
+where it is not necessary.
 
-We have changed all ``F'' to ``P'' to represent the distribution, and, to avoid confusing the density with the dimensionality, we now write $p(x)$ instead of just $p$ whenever we refer to the density. We believe that this change, along with the context, are enough to disambiguate the two quantities. 
+We have changed all $F$ notation to $P$ notation to represent the
+distribution. To avoid confusing the density with the
+dimension, we now write $p(x)$ instead of just $p$ whenever we
+refer to the density. We believe that this change, along with the
+context, should be enough to disambiguate the two quantities.
 
 \item \rc{I would suggest including the dependence on the positive-valued lower
 bound on $p(x)$ (as assumed in (A5)) in the statement of Theorem 3. This
@@ -163,7 +219,15 @@ require $p(x)$ to be strictly positive. Assumption (A5) seems like it
 could also be interpreted as a sort of minimum signal strength
 requirement for successful variable selection.}
 
-We have added the dependence on the lower bound $c_l$ of $p(x)$ in Theorem 5.2, where we require that $p \leq O(\exp(cn))$ for $c < \frac{c_l}{32}$. We have also added the dependence on the upper bound $c_u$ of the density in Theorem 5.3. The lower and upper bounds $c_l, c_u$ do not directly play the role of the signal level; they are used to simplify technicalities in the presentation and the proof of the theorems. For example, Theorem 5.2 should also go through if one assumes only that the marginal densities $p(x_j)$'s are positive on a sub-interval of $[-1,1]$. 
+We have added the dependence on the lower bound $c_l$ of $p(x)$ in
+Theorem 5.2, where we require that $p \leq O(\exp(cn))$ for $c <
+\frac{c_l}{32}$. We have also added the dependence on the upper bound
+$c_u$ of the density in Theorem 5.3. The lower and upper bounds $c_l,
+c_u$ do not directly play the role of the signal level; they are used
+to simplify technicalities in the presentation and the proof of the
+theorems. For example, Theorem 5.2 should also go through if one
+assumes only that the marginal densities $p(x_j)$ are positive on a
+sub-interval of $[-1,1]$.
 
 \item \rc{It would be good to point to Assumption (A3) at the beginning of
 Section 5 when discussing the $B$-boundedness condition. In the third
@@ -190,7 +254,12 @@ variables selected via the entire AC/DC algorithm. This would help
 illustrate the necessity of the concave fitting step in addition to
 the convex additive fit alone.}
 
-We have added an additional simulation comparing the variables selected via the AC stage and the DC stage. Please see the last paragraph in Section 6.1 as well as Figure 6. The DC stage is slightly helpful in recovering the true variables but its effect is insignificant. We believe that the DC stage is important in theory but not so in practice. 
+We have added an additional simulation comparing the variables
+selected via the AC stage and the DC stage. Please see the last
+paragraph in Section 6.1 as well as Figure 6. The DC stage is slightly
+helpful in recovering the true variables but its effect is
+insignificant. We believe that the DC stage is important in theory, but
+not in practice.
 
 Minor typos:
 \begin{enumerate}[(i)]
@@ -242,18 +311,22 @@ We are grateful to the reviewer for the detailed reading. We have corrected the 
 
 \begin{enumerate}
 \item \rc{I have a problem with the assertion of
-  uniqueness in Lemma 3.1 and Therorem 3.2. First, in Lemma 3.1, it is
+  uniqueness in Lemma 3.1 and Theorem 3.2. First, in Lemma 3.1, it is
   clear that $f^∗$ is unique. But $(f_1^∗, \ldots, f_p^∗)$ is not. What is
   shown is that, for $k$ fixed and given $(f_j^*)_{j\neq k}$, $f_k^*$ is unique. Next,
   in Theorem 3.2, the proof of uniqueness (bottom of page 16 and top
   of page 17) is not at all correct.
-   Now, to see why I think that, with the assumtions made on $X$, there is
+   Now, to see why I think that, with the assumptions made on $X$, there is
    not uniqueness, simply suppose for instance that $p = 2$ and $X_2 = g(X_1)$
    for a certain function $g$. Then if $(f_1^∗, f_2^∗)$ is a solution,
    $(f_1^∗ + f_2^* \circ g, 0)$ is also a solution.}
 
 
-We have corrected the proof of Lemma 3.1 and we have given a more rigorous proof that the components $f^*_k$'s are unique in a new Lemma 8.3 (old Lemma 8.3 was removed). Our result requires that the density $p(\mathbf{x}) > 0$ and thus, the $X_2 = g(X_1)$ example raised by the reviewer is ruled out. 
+We have corrected the proof of Lemma 3.1 and we have given a more
+rigorous proof that the component $f^*_k$s are unique in a new Lemma
+8.3 (old Lemma 8.3 was removed). Our result requires that the density
+is strictly positive, and thus, the $X_2 = g(X_1)$ example raised by the
+reviewer is ruled out.
 
 %\item \rc{In the definition of $g_k^∗$ on pages 6 and 15, it would be more precise to
 %write $g_k(X_k)$ in the sum instead of $g_k$.}
@@ -272,7 +345,7 @@ We have corrected the proof of Lemma 3.1 and we have given a more rigorous proof
 
 %\item \rc{On page 11, at the bottom of the page, ``before we presenting''}
 
-\item \rc{On page 11, after Deônition 3.2, it is written ``when the joint
+\item \rc{On page 11, after Definition 3.2, it is written ``when the joint
 density satisfies the property that
 $\frac{\partial(x_{-j},x_j)}{\partial x_j} = \frac{\partial^2 p(x_{-j},
   x_j)}{\partial x_j^2} = 0$ at boundary points''.
@@ -284,17 +357,24 @@ It is necessary that $p(\mathbf{x}_{-j}, x_j) > 0$. We have added an additional 
 
 \item \rc{On page 12, I did not understand why the functions 
 $\frac{\partial^2 p(x_{-j} |  x_j)}{\partial x_j^2}$
-and adn 
+and 
 $\frac{\partial^2 f(x_{-j} |  x_j)}{\partial x_j^2}$
 are bounded (they are not supposed to be continuous)}
 
 
-We do need a boundedness condition here. We have modified the definition of boundary flatness so that $p(\mathbf{x_{-j}} \,|\, x_j)$ is bounded and has a bounded first and second derivative for all $x_j$ in some open set around the boundary points and for all $\mathbf{x}_{-j}$. Dominated convergenc theorem holds without problems because we only exchange the derivative and the integral at $x_j = 0,1$. We have verified in detail that the domination condition holds in the newly added Section 8.4.1.
+We do need a boundedness condition here. We have modified the
+definition of boundary flatness so that $p(\mathbf{x_{-j}} \,|\, x_j)$
+is bounded and has a bounded first and second derivative for all $x_j$
+in some open set around the boundary points and for all
+$\mathbf{x}_{-j}$. The dominated convergence theorem holds 
+because we only exchange the derivative and the integral at $x_j =
+0,1$. We have verified in detail that the domination condition holds
+in the newly added Section 8.4.1.
 
 %\item \rc{On page 13, on line 6, ``this this''.}
 
 \item \rc{On page 13, on line 23, I do not think $\Sigma$ has been defined. Besides it
-is not speciôed that $Var(X_1) = 1$.}
+is not specified that $Var(X_1) = 1$.}
 
 $\Sigma$ has been defined as the covariance matrix with diagonal entries equal to 1.
 
@@ -306,7 +386,7 @@ parameter $\mu$ should be introduced as before.}
 
 We have added the $\E f(X) = 0$ assumption.
 
-%\item \rc{On page 16, in the expresson of $c^∗$, the
+%\item \rc{On page 16, in the expression of $c^∗$, the
 %  denominator should be $\E X_k^2 −m_k^2$.}
 
 \item \rc{On page 16, in the proof of Theorem 3.2, Lemma 8.3 is used. This
@@ -329,7 +409,9 @@ $\mu$ has been added.
 \item \rc{On page 19, $\sum_{i} f_{ik}$ instead of $\sum_i
   f_{ki}$.}
 
-This has been fixed. We have also gone through the paper and corrected all instances of the $f_{ik}, f_{ki}$ notation inconsistency so that $i$ always come before $k$.
+This has been fixed. We have also gone through the paper and corrected
+all instances of the $f_{ik}, f_{ki}$ notation inconsistency so that
+$i$ always comes before $k$.
 
 %\item \rc{On page 20, in the third paragraph, on the second, third and fourth
 %lines, $j$ and $j − 1$ must be replaced by $j + 1$ and $j$ respectively in
@@ -344,7 +426,7 @@ This has been fixed. We have also gone through the paper and corrected all insta
 %our estimation procedure''.}
 
 
-%\item \rc{On page 22, in Deônition 5.1, the inequalities
+%\item \rc{On page 22, in Definition 5.1, the inequalities
 %  about $d_k$ must be replaced by the same inequalities as in Proposition 4.1.}
 
 \item \rc{On page 22 (and on page 31), in the statement of Theorem
@@ -363,14 +445,25 @@ We have corrected all instances of this notation inconsistency.
 not understand this statement (there is an infimum, not a minimum in
 the definition of $\alpha_{+}$.)}
 
-The infimum is achieved by some $f \neq f^*$ since the constraint set $\{ f \in \mathcal{C}^p_1 \,:\, \textrm{supp}(f) \subsetneq \textrm{supp}(f^*)\}$ is a finite union of closed convex sets. It is $\bigcup_k \{ f \in \mathcal{C}^p_1 \,:\, \textrm{supp}(f) = \textrm{supp}(f^*) - \{k\}\}$. Therefore, the infimum is the minimum of a finite number of projections onto closed convex sets. We have changed the ``inf'' to ``min'' and added an explanation in the paper to remove the confusion.
+The infimum is achieved by some $f \neq f^*$ since the constraint set
+$\{ f \in \mathcal{C}^p_1 \,:\, \textrm{supp}(f) \subsetneq
+\textrm{supp}(f^*)\}$ is a finite union of closed convex sets. It is
+$\bigcup_k \{ f \in \mathcal{C}^p_1 \,:\, \textrm{supp}(f) =
+\textrm{supp}(f^*) - \{k\}\}$. Therefore, the infimum is the minimum
+of a finite number of projections onto closed convex sets. We have
+changed the ``inf'' to ``min'' and added an explanation in the paper
+to remove the confusion.
 
 %\item \rc{On page 24, in Remark 5.1, ``In important direction''.}
 
 \item \rc{On page 25, in the statement of Theorem 5.3, the square must be
 removed on $\alpha_-$.}
 
-The square is not an error. We have a stronger requirement on the signal strength for the DC stage. This is because the $\hat{g}_k$'s are fitted onto the finite sample residual and thus, we need $\hat{f}$ to be close to $f^*$ in order to be able to prove something about the $\hat{g}_k$'s.
+The square is not an error. We have a stronger requirement on the
+signal strength for the DC stage. This is because the $\hat{g}_k$s
+are fitted onto the finite sample residual and thus, we need $\hat{f}$
+to be close to $f^*$ in order to be able to prove something about the
+$\hat{g}_k$s.
 
 \item \rc{On page 25, after the statement of Corollary 5.1 : I do not understand
 why ``$p = O(exp(n^c)$'' is written instead of ``$p = O(exp(cn)$''.}
@@ -385,9 +478,18 @@ We have changed it to $\exp(cn)$.
 described at the bottom of page 26 and at the top of page 27. The
 notation $\|\cdot\|_{\infty,1}$ is not defined.}
 
-We have further explained the old figure 5a and 5b (now figure 7a and 7b) in the experiment section. The following has been added to the paper:
+We have further explained the old Figures 5a and 5b (now Figure 7a and
+7b) in the experiment section. The following has been added to the
+paper:
 
-``... we plot on the y-axis the norm $\|f^{(t)}_j\|_{\infty}$ of every column $j$ against the regularization strength $\lambda^{(t)}$. Instead of plotting the value of $\lambda^{(t)}$ on the x-axis however, we plot the total norm at $\lambda^{(t)}$ normalized against the total norm at $\lambda^{(1)}$: $\frac{\sum_j \|f^{(t)}_j\|_{\infty}}{\sum_j \|f^{(1)}\|_{\infty}}$. Thus, as x-axis moves from 0 to 1, the regularization goes from strong to weak.''
+``... we plot on the $y$-axis the norm $\|f^{(t)}_j\|_{\infty}$ of every
+column $j$ against the regularization strength
+$\lambda^{(t)}$. Instead of plotting the value of $\lambda^{(t)}$ on
+the $x$-axis however, we plot the total norm at $\lambda^{(t)}$
+normalized against the total norm at $\lambda^{(1)}$: $\frac{\sum_j
+  \|f^{(t)}_j\|_{\infty}}{\sum_j \|f^{(1)}\|_{\infty}}$. Thus, as
+$x$ moves from 0 to 1, the regularization goes from strong to
+weak.''
 
 \item \rc{On page 31, at the top of the page, ``see discussion at beginning of
 Section 5'' : I think it should be ``at the beginning''. In (8.1),
@@ -403,7 +505,10 @@ that''. Next, the third paragraph (``to ease notational ....'') should
 be placed at the beginning of the proof (it is used from the beginning
 of the proof, cf conditions on $d_k$).}
 
-We cannot move the third paragraph to the beginning because it is not clear at that point that $k$ is fixed. We have corrected all the notations before the third paragraph so that the notations are consistent.
+We cannot move the third paragraph to the beginning because it is not
+clear at that point that $k$ is fixed. We have corrected all of the
+notation before the third paragraph to be
+consistent.
 
 \item \rc{On page 33, I find that $[\lambda\Delta_k^Tu]_1 = \lambda((X_{kn} −X_{k1})\kappa$. ( If $\kappa$ is be defined
 in the following way : $\kappa = \frac{1}{\lambda_n(X_{kn}-X_{k1})}[\Delta_k^T u]_1$, then everything
@@ -465,7 +570,7 @@ This has been noted and corrected across the paper.
 $f_L$. On the last line of the page, ``additive convex functions with $s$
 components'' : add ``components bounded by $B$''.}
 
-We have corrected the instances in which we erroneously omitted ``... components bounded by $B$''.
+We have corrected the instances in which we erroneously omitted ``...components bounded by $B$''.
 
 \item \rc{On page 49, ``$\int p(x)^2dx \leq (\int p(x)dx)^2$ ``??}
 
@@ -486,7 +591,14 @@ We have updated this part of the proof.
 instance it does not contain $\delta$). There are many small mistakes in the
 calculations. In particular, the exponent in $s$ is not the right one.}
 
-The $\epsilon$ we choose is sufficient to get the bounds we want but it does not exactly balance the terms. We left dependence on $\delta$ out of the $\epsilon$ intentionally because we need to verify that $\epsilon$ satisfies certain conditions, see Equation (8.12) for instance. These conditions are much easier to verify if $\epsilon$ does not depend on $\delta$, which we set to be $1/n$ only at the end. We have updated the paper to clearly state that we use a suboptimal $\epsilon$.
+The $\epsilon$ we choose is sufficient to get the bounds we want but
+it does not exactly balance the terms. We left dependence on $\delta$
+out of the $\epsilon$ intentionally because we need to verify that
+$\epsilon$ satisfies certain conditions; see Equation (8.12) for
+instance. These conditions are much easier to verify if $\epsilon$
+does not depend on $\delta$, which we set to be $1/n$ only at the
+end. We have updated the paper to clearly state that we use a
+suboptimal $\epsilon$.
 
 \item \rc{In the proof of Theorem 8.4 : too many small mistakes in
 calculations, but the final result is OK.}
@@ -497,13 +609,16 @@ We have carefully proof-read and edited the proof of Theorem 8.4.
 (same remark about $\delta$). In the last equations, on the first line (bottom
 of the page) $n$ is missing in one of the scalar products.}
 
-We also use a suboptimal $\epsilon$ here for convenience. We have updated the paper to clearly state that.
+We also use a suboptimal $\epsilon$ here for convenience. We have updated the paper to clearly state this.
 
 %\item \rc{On page 46: ``taking a union bound and we have that''}
 \item \rc{In Lemma 8.3, I do not see why the functions are continuous : the
 functions $x_{-k} \rightarrow p(x_{-k} | x_k)$ are not supposed to be continuous .}
 
-The old Lemma 8.3 has been removed. We now just need $x_{-k} \rightarrow p(x_{-k} \,|\, x_k)$ to be bounded, which has been added as a condition. (We now assume for convenience that the joint density $p(\mathbf{x})$ be bounded away from 0 and $\infty$.)
+The old Lemma 8.3 has been removed. We now just need $x_{-k}
+\rightarrow p(x_{-k} \,|\, x_k)$ to be bounded, which has been added
+as a condition. (We now assume for convenience that the joint density
+$p(\mathbf{x})$ is bounded away from 0 and $\infty$.)
 
 \item \rc{On page 47, in the proof of Lemma 8.4 : notation $\phi_{-j}$
   has not been defined.
@@ -523,19 +638,38 @@ Major comments:
 \begin{enumerate}
 \item \rc{The basis of all the results seem to be the boundary flatness
 condition. This condition seems to be an artifact of the analysis and
-based on my reading, it is unclear how restrctive this assumption
+based on my reading, it is unclear how restrictive this assumption
 is. The authors claim it is weak just after stating it and then
 present several straightforward examples in which it doesn't hold
 (e.g. $f(x_1,x_2)=x_1 x_2$) and multivariate Gaussian examples. Hence it is unclear to me how
 likely a given function is likely to fit into this framework.}
 
-The boundary flatness condition is not restrictive in the sense that for any density $p(x)$ supported on $[0,1]^p$, and for any $\epsilon > 0$, there exists a boundary flat density whose $L_1$ distance with $p(x)$ is at most $\epsilon$ (Please see the newly added Example 3.3). This is because boundary flatness places no restriction on what $p(x)$ looks like in the interior of the hypercube. Boundary flatness allows arbitrary correlation structure, provided that $p(x) > 0$. We have added Section 3.2 to the paper to give a more detailed discussion on boundary flatness. 
+The boundary flatness condition is not restrictive in the sense that
+for any density $p(x)$ supported on $[0,1]^p$, and for any $\epsilon >
+0$, there exists a boundary flat density whose $L_1$ distance with
+$p(x)$ is at most $\epsilon$. Please see the newly added Example
+3.3. This is because boundary flatness places no restriction on what
+$p(x)$ looks like in the interior of the hypercube. Boundary flatness
+allows arbitrary correlation structure, provided that $p(x) > 0$. We
+have added Section 3.2 to the paper to give a more detailed discussion
+of boundary flatness.
 
-$f(x_1,x_2) = x_1 x_2$ is non-convex and it is an example of how non-convex functions may not be additively faithful under the uniform distribution; it is not an example in which boundary flatness doesn't hold. The multivariate Gaussian is a counterexample but it is to show that boundary flatness may not extend easily to densities with unbounded support. 
+$f(x_1,x_2) = x_1 x_2$ is non-convex and it is an example of how
+non-convex functions may not be additively faithful under the uniform
+distribution; it is not an example for which boundary flatness fails
+to hold. The multivariate Gaussian counterexample is used to show
+that boundary flatness may not extend easily to densities with
+unbounded support.
 
 We acknowledge that many distributions are not boundary flat. We present boundary flatness as a significant generalization of the product density, under which nonparametric variable selection is already very difficult.
 
-Boundary flatness is not a contrived condition. We initially proved additive faithfulness only for product densities. Then, knowing that the behavior of a convex function everywhere is constrained by its behavior at the boundary, we conjectured that underlying density may only need to ``look like'' a product density at the boundary. Attempts to formalize this notion led us to the definition of boundary flatness.
+Boundary flatness is not a contrived condition. We initially proved
+additive faithfulness only for product densities. Then, knowing that
+the behavior of a convex function everywhere is constrained by its
+behavior at the boundary, we conjectured that the underlying density may
+only need to ``look like'' a product density at the boundary. Attempts
+to formalize this notion led us to the definition of boundary
+flatness.
 
 \item \rc{Following on from the previous point, the simulation study also does
 not add any further insight to this issue since the simulations are
@@ -544,10 +678,19 @@ with covariance seem more suitable. It is puzzling to me that the
 authors did not consider non-parametric examples where the additive
 model framework seems more suitable.}
 
-We have removed old experiments that use correlated multivariate Gaussian and replaced them instead with new experiments that use boundary flat Gaussian Copula mixture distributions. Please see Section 6.1; Figure 4 in particular shows the bimodal marginal density of the new joint density that we use. Figure 5d, 5e, 5f show the result of simulations using the new non-Gaussian density.
+We have replaced the experiments that use correlated multivariate
+Gaussians with new experiments that use
+boundary flat Gaussian Copula mixture distributions. Please see
+Section 6.1; Figure 4 in particular shows the bimodal marginal density
+of the new joint density that we use. Figures 5d, 5e, and 5f show the
+result of simulations using the new non-Gaussian density.
 
-We have also added new experiments that use nonparametric true regression function instead of the quadratic form. We use a log-sum-exp (softmax) of linear forms (please see Equation 6.1). Figure 5f and 6 show the results of experiments using the softmax as the true regression function: AC/DC is still effective under the high-dimensional scaling. 
-
+We have also added new experiments that use nonparametric 
+regression functions instead of the quadratic form. We use a
+log-sum-exp (softmax) of linear forms (please see Equation
+6.1). Figures 5f and 6 show the results of experiments using the
+softmax as the true regression function: AC/DC is still effective
+under a high-dimensional scaling.
 
 \end{enumerate}
 
@@ -558,7 +701,9 @@ Minor comments:
   since it feels very repetitive and slightly confusing that parts of
   the text are repeated almost verbatim. I would suggest removing this section.}
 
-Section 2 is repetitive but we believe it has value in highlighting the big picture, which could otherwise be drowned out by the technical details. 
+Section 2 is repetitive but we believe it has value in highlighting
+the big picture, which could otherwise be obscured by the technical
+details.
 
 \item \rc{Page 2, second last paragraph `and and.'}
 

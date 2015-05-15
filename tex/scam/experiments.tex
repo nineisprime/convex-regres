@@ -120,18 +120,27 @@ ranging from $\lambda^{(1)} = 0$ (no regularization) to $2$. For each $\lambda^{
 we obtain a function value matrix $\bds{f}^{(t)}$ with $p=13$
 columns and $n=506$ rows. The non-zero columns in this matrix indicate the variables selected using $\lambda^{(t)}$.  
 
-In Figure~\ref{Boston}(a), we plot on the y-axis the norm $\|\bds{f}^{(t)}_j\|_{\infty}$ of every column $j$ against the regularization strength $\lambda^{(t)}$. Instead of plotting the value of $\lambda^{(t)}$ on the x-axis however, we plot the total norm at $\lambda^{(t)}$ normalized against the total norm at $\lambda^{(1)}$: $\frac{\sum_j \|\bds{f}^{(t)}_j\|_{\infty}}{\sum_j \|\bds{f}^{(1)}\|_{\infty}}$. Thus, as x-axis moves from 0 to 1, the regularization goes from strong to weak. For comparison, we
-plot the LASSO/LARS result in a similar way in Figure \ref{Boston}(b).
-From the figures we observe that the first three variables selected by
+In Figure~\ref{Boston}(a), we plot on the $y$-axis the norm
+$\|\bds{f}^{(t)}_j\|_{\infty}$ of every column $j$ against the
+regularization strength $\lambda^{(t)}$. Instead of plotting the value
+of $\lambda^{(t)}$ on the $x$-axis,  however, we plot the total norm at
+$\lambda^{(t)}$ normalized against the total norm at $\lambda^{(1)}$:
+$\frac{\sum_j \|\bds{f}^{(t)}_j\|_{\infty}}{\sum_j
+  \|\bds{f}^{(1)}\|_{\infty}}$. Thus, as $x$ moves from 0 to 1, the
+regularization goes from strong to weak. For comparison, we plot the
+LASSO/LARS result in a similar way in Figure \ref{Boston}(b).  From
+the figures we observe that the first three variables selected by
 AC/DC and LASSO are the same: \tts{LSTAT}, \tts{RM} and \tts{PTRATIO},
 consistent with previous findings~\citep{SpAM:07}.  The fourth
 variable selected by AC/DC is \tts{INDUS} (with $\lambda^{(t)}=0.7$).
 We then refit AC/DC with only these four variables without
 regularization, and plot the estimated additive functions in Figure
-\ref{Boston}(d). When refitting, we constrain a component to be convex if it is non-zero in the AC stage and concave if it is non-zero in the DC stage. As can be seen, these functions contain clear
-nonlinear effects which cannot be captured by LASSO. The shapes of
-these functions, including the concave shape of the \tts{PTRATIO} function, are in agreement with those obtained by
-SpAM~\citep{SpAM:07}. 
+\ref{Boston}(d). When refitting, we constrain a component to be convex
+if it is non-zero in the AC stage and concave if it is non-zero in the
+DC stage. As can be seen, these functions contain clear nonlinear
+effects which cannot be captured by LASSO. The shapes of these
+functions, including the concave shape of the \tts{PTRATIO} function,
+are in agreement with those obtained by SpAM~\citep{SpAM:07}.
 
 Next, in order to quantitatively study the predictive performance, we
 run 3 times 5-fold cross validation, following the same procedure
