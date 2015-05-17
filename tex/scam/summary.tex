@@ -107,8 +107,10 @@ additively faithful
 under the following assumption on the distribution of the data.
 \begin{definition}
   Let $p(\mathbf{x})$ be a density supported on $[0,1]^p$. Then $p$
-  satisfies the \emph{boundary flatness condition} if it satisfies certain regularity conditions (see precise statement in Definition~\ref{defn:boundary-point}) and if for all $j$, and
-  for all $\mathbf{x}_{-j}$,
+  satisfies the \emph{boundary flatness condition} if it satisfies
+  certain regularity conditions (see the precise statement in
+  Definition~\ref{defn:boundary-point}) and if for all $j$, and for
+  all $\mathbf{x}_{-j}$,
 \[
 \frac{\partial p(\mathbf{x}_{-j} \given x_j)}{\partial x_j}  =  
 \frac{\partial^2 p(\mathbf{x}_{-j} \given x_j)}{\partial x_j^2} = 0
@@ -155,8 +157,8 @@ Our next result states that a convex additive fit, combined with a series of uni
 \label{thm:summary_acdc_population}
 Suppose $p(\mathbf{x})$ is a positive
 density on $C=[0,1]^p$ that satisfies the boundary flatness
-condition. Suppose that $f$ is convex and continuously twice-differentiable on an open set around $C$.
-and that $\partial_{x_k} f$, $\partial_{x_k} p( \mathbf{x}_{-k}
+condition. Suppose that $f$ is convex and continuously twice-differentiable on an open set around $C$
+and that the derivatives $\partial_{x_k} f$, $\partial_{x_k} p( \mathbf{x}_{-k}
 \given x_k )$, and $\partial_{x_k}^2 p( \mathbf{x}_{-k} \given x_k)$
 are all continuous as functions on $C$.
 Define
@@ -165,7 +167,7 @@ Define
 \E\Bigl( f(X) - \mu - \sum_{k=1}^s f_k(X_k) \Bigr)^2 \,:\, f_k \in
 \mathcal{C}^1, \, \E f_k(X_k) = 0 \Big \}
 \end{equation} where $\mathcal{C}^1$ is the set of univariate convex
-functions, and, with respective to $f^*_k$'s from above, define
+functions.  Using the $f^*_k$s above, define
 \begin{equation}
 g^*_k = \arg\min_{g_k} \Big\{ \E\Bigl( f(X) - \mu^* - 
 \sum_{k' \neq k} f^*_{k'}(X_{k'}) - g_k(X_k) \Bigr)^2 \,:\, g_k \in \mh
@@ -194,7 +196,7 @@ sample statistical performance.
 
 \subsection{Optimization}
 
-Given samples $(y_i, X_i)$, AC/DC becomes the following optimization.
+Given samples $(y_i, X_i)$, AC/DC becomes the following optimization:
 \begin{align*}
 \{\hat{f}_k\}_{k=1}^p &= \arg\min_{\{f_k \in \mathcal{C}^1\}} \frac{1}{n}\sum_{i=1}^n \left(
         y_i - \bar{y} - \sum_{k=1}^p f_k(X_{ik}) \right)^2 + \lambda \sum_{k=1}^p \| f_k \|_\infty \\
@@ -303,8 +305,7 @@ Suppose in addition that
   \log^2 2np}.
 \end{gather} 
 where $\tilde{\sigma} \equiv \max(\sigma, B)$ and $c$ is a constant dependent only on $b, c_1$.
-
-Then, for sufficiently large $n$, with probability at least $1-\frac{1}{n}$:
+Then, for sufficiently large $n$, with probability at least $1-\frac{1}{n}$,
 \begin{align*}
 \hat{f}_k \neq 0 \trm{ or } \hat{g}_k \neq 0 &\trm{ for all } k \in S\\
 \hat{f}_k = 0 \trm{ and } \hat{g}_k = 0 & \trm{ for all } k \notin S.
@@ -321,9 +322,8 @@ for some $0<c<1$, as for linear models. The cost of nonparametric estimation is
 reflected in the scaling with respect to $s=|S|$, which can grow only
 as $o(n^{4/25})$.
 
-We remark that \citet{dalalyan:12} show that, even with the product distribution,
- under traditional smoothness
-constraints, variable selection is achievable only if $n > O(e^s)$. 
+We remark that \citet{dalalyan:12} show that, even under the product distribution,
+variable selection is achievable under traditional smoothness constraints only if $n > O(e^s)$. 
 Here we demonstrate that convexity yields the scaling $n =
 O(\textrm{poly}(s))$.
 
