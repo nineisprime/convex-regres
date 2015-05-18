@@ -338,8 +338,8 @@ Because $f(x_k, \mathbf{x}_{-k})$ as a function of $x_k$ is convex, it must be t
     f'(x_k^1, \mathbf{x}_{-k}) = 0
 \end{equation}
 Therefore $f$ does not depend on $x_k$.
+\end{proof}
 % Now we apply the first-order condition of convex functions to any two points $(x_k, \mathbf{x}_{-k})$ and $(x'_k, \mathbf{x}_{-k})$ where $x_k, x'_k \in [0,1]$:
-
 % \begin{align*}
 % \forall \mathbf{x}_{-k}, f(x'_k, \mathbf{x}_{-k}) & \leq f(x_k, \mathbf{x}_{-k}) 
 %   + f'(x_k, \mathbf{x}_{-k}) ( x'_k - x_k) \\ 
@@ -350,7 +350,6 @@ Therefore $f$ does not depend on $x_k$.
 % \end{align*}
 
 % We thus have that $f(x_k, \mathbf{x}_{-k}) = f(x'_k, \mathbf{x}_{-k})$ for all $\mathbf{x}_{-k}$ and all pairs $x_k, x'_k \in (0,1)$. This proves that $f$ does not depend on $x_k$.
-\end{proof}
 
 Theorem~\ref{thm:convex_faithful} plays an important role in our
 finite sample analysis, where we show that the additive
@@ -534,7 +533,7 @@ distribution closely approximates the Gaussian distribution.
 \end{example}
 
 
-\begin{figure*}[htp]
+\begin{figure*}[t]
 \vskip-10pt
 	\centering
 	\subfigure[Gaussian distribution]{
