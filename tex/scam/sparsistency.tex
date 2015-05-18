@@ -1,17 +1,38 @@
 \section{Analysis of Variable Screening Consistency}
 \label{sec:finitesample}
 
-Our goal is to show that variable screening consistency. That is, as $n,p \rightarrow \infty$, $\mathbb{P}( \hat{S} = S)$ approaches 0 where $\hat{S}$ is the set of variables outputted by AC/DC in the finite sample setting (Figure~\ref{fig:backfitting:algo}) and $S$ is the set of variables outputted in the population setting~\eqref{eqn:acdc_vars_pop}.
+Our goal is to show variable screening consistency. That is, as
+$n,p \rightarrow \infty$, $\mathbb{P}( \hat{S} = S)$ approaches 0
+where $\hat{S}$ is the set of variables output by AC/DC in the
+finite sample setting (Figure~\ref{fig:backfitting:algo}) and $S$ is
+the set of variables output in the population
+setting~\eqref{eqn:acdc_vars_pop}.
 
 We divide our analysis into two parts. We first establish a sufficient
 deterministic condition for consistency of the sparsity pattern
-screening procedure.  We then consider the stochastic setting and argue that the 
-deterministic conditions hold with high probability. Note that in all of our results 
-and analysis, we let $c,
-C$ represent absolute constants; the actual values of $c,C$ may change from line to line. We derived two equivalent optimizations for AC/DC: \eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and \eqref{opt:alternate_opt} outputs the second derivatives $\hat{d}_k$. Their equivalence is established in Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and $\hat{f}_k$ in our analysis. We will also assume in this section that the true regression function $f_0$ has mean-zero and therefore, we will omit the intercept term $\hat{\mu}$ from our estimation procedure.
+screening procedure.  We then consider the stochastic setting and
+argue that the deterministic conditions hold with high
+probability. Note that in all of our results and analysis, we let $c,
+C$ represent absolute constants; the actual values of $c,C$ may change
+from line to line. We derived two equivalent optimizations for AC/DC:
+\eqref{np} outputs $\hat{f}_k, \hat{g}_k$ and
+\eqref{opt:alternate_opt} outputs the second derivatives
+$\hat{d}_k$. Their equivalence is established in
+Proposition~\ref{prop:alt_opt_form} and we use both $\hat{d}_k$ and
+$\hat{f}_k$ in our analysis. We will also assume in this section that
+the true regression function $f_0$ has mean-zero and therefore, we
+will omit the intercept term $\hat{\mu}$ in our estimation
+procedure.
 
-In our analysis, we assume that an upper bound $B$ to $\| \hat{f}_k \|_\infty$ 
-is imposed in the optimization procedure, where $B$ is chosen to also upper bound $\| f^*_k \|_\infty$ (same $B$ as in Assumption A3 in Section~\ref{sec:probabilistic_setting}). This $B$-boundedness constraint is added so that we may use the convex function bracketing results from~\cite{kim2014global} to establish uniform convergence between the empirical risk and the population risk. We emphasize that this constraint is not needed in practice and we do not use it for any of our simulations. 
+In our analysis, we assume that an upper bound $B$ to $\| \hat{f}_k
+\|_\infty$ is imposed in the optimization procedure, where $B$ is
+chosen to also upper bound $\| f^*_k \|_\infty$ (same $B$ as in
+Assumption A3 in Section~\ref{sec:probabilistic_setting}). This
+$B$-boundedness constraint is added so that we may use the convex
+function bracketing results from~\cite{kim2014global} to establish
+uniform convergence between the empirical risk and the population
+risk. We emphasize that this constraint is not needed in practice and
+we do not use it for any of our simulations.
 
 
 \subsection{Deterministic Setting}
@@ -60,10 +81,22 @@ Then the following two statements hold.
 
 \end{theorem}
 
-Theorem~\ref{thm:deterministic} states that the estimator produces no false positive so long as $\lambda_n$ upper bounds the partial sums of the residual $\hat{r}$ and that the maximum gap between ordered values of $X_k$ is small. 
+Theorem~\ref{thm:deterministic} states that the estimator produces no
+false positive so long as $\lambda_n$ upper bounds the partial sums of
+the residual $\hat{r}$ and that the maximum gap between ordered values
+of $X_k$ is small.
 
-This result holds regardless of whether or not we impose the boundedness conditions in optimization~\eqref{opt:alternate_opt} and~\eqref{opt:alternate_opt_concave}.
-The full proof of Theorem~\ref{thm:deterministic} is in Section~\ref{sec:deterministic_proof} of the Appendix. We allow $S$ in Theorem~\ref{thm:deterministic} to be any set containing the relevant variables; in Lasso analysis, $S$ is taken to be the set of relevant variables; we will take $S$ to be the set of variables chosen by the additive convex and decoupled concave procedure in the population setting, which is guaranteed to contain the relevant variables because of additive faithfulness.
+This result holds regardless of whether or not we impose the
+boundedness conditions in optimization~\eqref{opt:alternate_opt}
+and~\eqref{opt:alternate_opt_concave}.  The full proof of
+Theorem~\ref{thm:deterministic} is in
+Section~\ref{sec:deterministic_proof} of the Appendix. We allow $S$ in
+Theorem~\ref{thm:deterministic} to be any set containing the relevant
+variables; in Lasso analysis, $S$ is taken to be the set of relevant
+variables; we will take $S$ to be the set of variables chosen by the
+additive convex and decoupled concave procedure in the population
+setting, which is guaranteed to contain the relevant variables because
+of additive faithfulness.
 
 Theorem~\ref{thm:deterministic} allows us to separately analyze the false negative
 rates and false positive rates. To control false positives,
@@ -115,7 +148,11 @@ $f^*$ is the unique minimizer by Theorem~\ref{thm:acdc_faithful}. Similarly, we 
 g^*_k = \arg\min_{g_k \in \mh \mathcal{C}^1} \E \big( f_0(X) - f^*(X)
 - g_k(X_k) \big)^2.
 \end{equation}
-The $\hat{g}_k$'s are unique minimizers as well. We let $S = \{ k = 1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$ and let $s = |S|$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it must be that $S_0 \subset S$ and thus $s \geq s_0$. In some cases, such as when $X_{S_0}, X_{S^c_0}$ are independent, we have $S = S_0$.
+The $\hat{g}_k$s are unique minimizers as well. We let $S = \{ k =
+1,\ldots,p \,:\, f^*_k \neq 0 \trm{ or } g^*_k \neq 0\}$ and let $s =
+|S|$. By additive faithfulness (Theorem~\ref{thm:acdc_faithful}), it
+must be that $S_0 \subset S$ and thus $s \geq s_0$. In some cases,
+such as when $X_{S_0}, X_{S^c_0}$ are independent, we have $S = S_0$.
 Each of our theorems will use a subset of the following assumptions:
 \begin{packed_enum}
 \item[A1:] $X_S, X_{S^c}$ are independent. 
@@ -134,11 +171,24 @@ We define $\alpha_{+}, \alpha_{-}$ as a measure of the signal strength of the we
       \Big\{ \mathbb{E} \big( f_0(X) - f^*(X) \big)^2 - 
     \mathbb{E} \big( f_0(X) - f^*(X) - g^*_k(X_k) \big)^2 \Big\} \nonumber
 \end{align}
-$\alpha_+$ is a lower bound on the excess risk incurred by any additive convex function whose support is strictly smaller than $f^*$. $\alpha_+$ is achieved by some $f \neq f^*$ because the set $\{f\in \mathcal{C}_1^p\,:\, \trm{supp}(f) \subsetneq \textrm{supp}(f^*)\}$ is a finite union of closed convex sets. $\alpha_+ > 0$ since $f^*$ is the unique risk minimizer. Likewise, $\alpha_-$ lower bounds the excess risk of any decoupled concave fit of the residual $f_0 - f^*$ that is strictly more sparse than the optimal decoupled concave fit $\{\hat{g}_k^*\}$; $\alpha_- > 0$ by the uniqueness of $\{g^*_k\}$ as well. These quantities play the role of the absolute value of the smallest nonzero coefficient in the true linear model in lasso theory.  Intuitively, if
-$\alpha_{+}$ is small, then it is easier to make a false omission in the
-additive convex stage of the procedure. If $\alpha_{-}$ is small, then
-it is easier to make a false omission in the decoupled concave stage
-of the procedure. If $X$ is independent, then $\alpha_+$ can be simplified to $\min_{k \,:\, f^*_k \neq 0} \E f^*_k(X)^2$ and $\alpha_-$ becomes unnecessary.
+The term $\alpha_+$ is a lower bound on the excess risk incurred by
+any additive convex function whose support is strictly smaller than
+$f^*$. $\alpha_+$ is achieved by some $f \neq f^*$ because the set
+$\{f\in \mathcal{C}_1^p\,:\, \trm{supp}(f) \subsetneq
+\textrm{supp}(f^*)\}$ is a finite union of closed convex
+sets. $\alpha_+ > 0$ since $f^*$ is the unique risk
+minimizer. Likewise, $\alpha_-$ lower bounds the excess risk of any
+decoupled concave fit of the residual $f_0 - f^*$ that is strictly
+more sparse than the optimal decoupled concave fit $\{\hat{g}_k^*\}$;
+$\alpha_- > 0$ by the uniqueness of $\{g^*_k\}$ as well. These
+quantities play the role of the absolute value of the smallest nonzero
+coefficient in the true linear model in lasso theory.  Intuitively, if
+$\alpha_{+}$ is small, then it is easier to make a false omission in
+the additive convex stage of the procedure. If $\alpha_{-}$ is small,
+then it is easier to make a false omission in the decoupled concave
+stage of the procedure. If $X$ is independent, then $\alpha_+$ can be
+simplified to $\min_{k \,:\, f^*_k \neq 0} \E f^*_k(X)^2$ and
+$\alpha_-$ becomes unnecessary.
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make
