@@ -45,13 +45,17 @@ additive;
 otherwise the true function is convex but not additive.
 
 \subsubsection{First simulation}
-In the \textrm{first simulation} (Figure~\ref{Support}a), we vary the ambient dimension $p$. We set $Q$ as one on the diagonal and $1/2$ on the off-diagonal with $0.5$ probability, set $s=5$, and $p=64,128,256$ and $512$. We draw $X \sim N(0, I_p)$.
-For each $(n,p)$ combination, we generate $100$ independent trials. 
-In Figure~\ref{Support}(a), we plot the probability of exact
-support recovery. We observe that the algorithm performs consistent variable selection even if the dimensionality is large. To give the reader a
-sense of the running speed, for a 
-data set with $n=1000$ and $p=512$, the code runs in roughly two 
-minutes on a machine with 2.3 GHz Intel Core i5 CPU and 4 GB memory. 
+In the \textrm{first simulation} (Figure~\ref{Support}a), we vary the
+ambient dimension $p$. We set $Q$ to be one on the diagonal and $1/2$ on
+the off-diagonal with $0.5$ probability, set $s=5$, and $p=64,128,256$
+and $512$. We draw $X \sim N(0, I_p)$.  For each $(n,p)$ combination,
+we generate $100$ independent trials.  In Figure~\ref{Support}(a), we
+plot the probability of exact support recovery. We observe that the
+algorithm performs consistent variable selection even if the
+dimensionality is large. To give the reader a sense of the running
+speed, for a dataset with $n=1,000$ and $p=512$, the code runs in
+roughly two minutes on a machine with a 2.3 GHz Intel Core i5 CPU and 4
+GB memory.
 
 
 \subsubsection{Second simulation}
