@@ -4,7 +4,7 @@
 
 For a general regression function, an additive approximation may result in a
 relevant variable being incorrectly marked as irrelevant. Such
-mistakes are inherent to the approximation and may persist even in
+mistakes are inherent in the approximation and may persist even in
 the population setting.  In this section we give
 examples of this phenomenon, and then show how the convexity
 assumption
@@ -96,8 +96,9 @@ f_k(x_k) &= \int_{\mathbf{x}_{-k}}
 
 To prove uniqueness, suppose $\tilde{f} = \sum_{j=1}^p \tilde{f}_j$ is another additive function that achieves the same square error. Let $\nu \in [0,1]$, consider $\E\left( f(X) - \mu^* - (f^* + \nu (\tilde{f} - f^*)) \right)^2$ as a function of $\nu$. The objective is strongly convex if $\E (\tilde{f} - f^*)^2$, and so $\E( \tilde{f} - f^*)^2 = 0$ by the assumption that $f^*$ and $\tilde{f}$ are both optimal solutions. By Lemma~\ref{lem:additive_uniqueness}, we conclude that $\E( f^*_j - \tilde{f}_j )^2 = 0$ as well and thus, $f^*_j = \tilde{f}_j$ almost everywhere.
 
-We note that $\E[ f(X) -\sum_{k'\neq k} f^*_{k'}(X_{k'}) | x_k] - \E f(X)$ has mean zero as a function of $x_k$, which shows that $f^*_k$'s are feasible. 
-
+We note that $\E[ f(X) -\sum_{k'\neq k} f^*_{k'}(X_{k'}) | x_k] - \E
+f(X)$ has mean zero as a function of $x_k$, which shows that the $f^*_k$s
+are feasible.
 \end{proof} 
 
 In the case that the distribution in
@@ -187,7 +188,9 @@ a consistent variable screening.
 
 We now show that under a general class of distributions which we
 characterize below, convex multivariate functions are additively
-faithful. To simplify presentation, we restrict our attention to densities bounded away from $0/\infty$, that is, $0 < \inf p(\mathbf{x}) \leq \sup p(\mathbf{x}) < \infty$. 
+faithful. To simplify the presentation, we restrict our attention to
+densities bounded away from $0/\infty$, that is, $0 < \inf
+p(\mathbf{x}) \leq \sup p(\mathbf{x}) < \infty$.
 
 \begin{definition}
 \label{defn:boundary-point}
@@ -211,16 +214,16 @@ The boundary flatness condition intuitively states that two
 conditional densities $p(\mathbf{x}_{-j} \given x_j)$ and
 $p(\mathbf{x}_{-j} \given x_j')$ are similar when $x_j$ and $x_j'$ are
 both close to the same boundary point. It is thus much more general
-than product densities. Boundary flatness is a weak condition because
-it affects only an $\epsilon$-small region around the boundary;
-$p(\mathbf{x}_{-j} \given x_j)$ can take arbitrary shapes away from
-the boundary. Boundary flatness also allows arbitrary correlation
-structure between the variables (provided $p(\mathbf{x}) >0$). In
-Section~\ref{sec:boundary_flat}, we give a detailed discussion of the
-boundary flatness condition and show examples of boundary flat
-densities. In particular, we show that any density supported on a
-compact set can be approximated arbitrarily well by boundary flat
-densities.
+than requiring the density to be a product density. Boundary flatness
+is a weak condition because it affects only an $\epsilon$-small region
+around the boundary; $p(\mathbf{x}_{-j} \given x_j)$ can take
+arbitrary shapes away from the boundary. Boundary flatness also allows
+arbitrary correlation structure between the variables (provided
+$p(\mathbf{x}) >0$). In Section~\ref{sec:boundary_flat}, we give a
+detailed discussion of the boundary flatness condition and show
+examples of boundary flat densities. In particular, we show that any
+density supported on a compact set can be approximated arbitrarily
+well by boundary flat densities.
 
 
 
@@ -237,12 +240,15 @@ The following theorem is the main result of this section.
 
 \begin{theorem}
 \label{thm:convex_faithful}
-Let $p(\mathbf{x})$ be a density supported on $C=[0,1]^p$ and bounded away from $0/\infty$ that satisfies the boundary flatness property. 
-
-Suppose $f$ is a convex with a bounded second derivative on an open set containing $C$, then $f$ is additively faithful under $p(\mathbf{x})$.
+Let $p(\mathbf{x})$ be a density supported on $C=[0,1]^p$ and bounded
+away from $0/\infty$ that satisfies the boundary flatness property.  
+Suppose $f$ is a convex function with bounded second derivatives on an
+open set containing $C$. Then $f$ is additively faithful under $p(\mathbf{x})$.
 \end{theorem}
 
-We let the domain of $f$ be slightly larger than $C$ for a technical reason--it is so we can say in the proof that the Hessian of $f$ is positive semidefinite even at the boundary of $C$. 
+We let the domain of $f$ be slightly larger than $C$ for a technical
+reason--it is so we can say in the proof that the Hessian of $f$ is
+positive semidefinite even at the boundary of $C$.
 
 % We give the full proof in Section~\ref{sec:faithful_proof} of the
 % Appendix, but pause here to provide some intuition. 
@@ -283,7 +289,10 @@ $\frac{\partial^2 p(\mathbf{\scriptstyle x}_{-k} \given x_k)}{\partial x_k^2}$ a
 likewise for $f'(x_k, \mathbf{x}_{-k})$ and $f''(x_k,
 \mathbf{x}_{-k})$. \\
 
-We differentiate with respect to $x_k$ at $x_k = 0,1$ under the integral. The detail necessary to verify the validity of this operation is technical and given in Section~\ref{sec:dominated_condition} of the supplementary material.
+We differentiate with respect to $x_k$ at $x_k = 0,1$ under the
+integral. The details necessary to verify the validity of this
+operation are technical and given in
+Section~\ref{sec:dominated_condition} of the supplementary material.
 
 \begin{gather}
 \int_{\mathbf{x}_{-k}} p'(\mathbf{x}_{-k} \given x_k) 
@@ -396,25 +405,44 @@ that ensures boundary flatness.
 
 \begin{example}
 \label{ex:joint_density_flat}
-Boundary flatness is satisfied if the joint density becomes flat at the boundary. To be precise, let $p(\mathbf{x})$ be a joint density bounded away from $0/\infty$ with a bounded second derivative.
-
+Boundary flatness is satisfied if the joint density becomes flat at
+the boundary. To be precise, let $p(\mathbf{x})$ be a joint density
+bounded away from $0/\infty$ with a bounded second derivative.
 Suppose also, for all $j$,
 $$
 \partial_{x_j} p(x_j,\mathbf{x}_{-j}) =
-\partial_{x_j}^2 p(x_j, \mathbf{x}_{-j}) = 0\quad  \trm{at $x_j = 0, 1$,}.
-$$
-It is then straightforward to show boundary flatness. One can first verify that the derivatives of the marginal density $p(x_j)$ vanishes at $x_j = 0,1$ and then apply the quotient rule on $\frac{p(x_j,\mathbf{x}_{-j}}{p(x_j)}$ to show that $\partial_{x_j} p(\mathbf{x}_{-j} \given x_j) = \partial_{x_j}^2 p(\mathbf{x}_{-j} \given x_j) = 0$ at $x_j = 0,1$ as well. 
+\partial_{x_j}^2 p(x_j, \mathbf{x}_{-j}) = 0\quad  \trm{at $x_j = 0, 1$}.
+$$ It is then straightforward to show boundary flatness. One can first
+verify that the derivatives of the marginal density $p(x_j)$ vanish
+at $x_j = 0,1$ and then apply the quotient rule on
+$\frac{p(x_j, \mathbf{\scriptstyle x}_{-j})}{p(x_j)}$ to show that $\partial_{x_j}
+p(\mathbf{x}_{-j} \given x_j) = \partial_{x_j}^2 p(\mathbf{x}_{-j}
+\given x_j) = 0$ at $x_j = 0,1$ as well.
 \end{example}
 
-The next example shows that any bounded density over a hypercube can be approximated arbitrarily well by boundary flat densities. 
+The next example shows that any bounded density over a hypercube can
+be approximated arbitrarily well by boundary flat densities.
 
 \begin{example}
 \label{ex:mixture_approx}
-Suppose $p_\epsilon(\mathbf{x})$ is a bounded density over $[\epsilon, 1-\epsilon]^p$ for some $0 < \epsilon < 1/2$. Let $q(\mathbf{x})$ be an arbitrary boundary flat density over $[0,1]^p$ (one can take the uniform density for instance). Define a mixture $p_{\lambda, \epsilon}(\mathbf{x}) = \lambda q(\mathbf{x}) + (1-\lambda) p_\epsilon(\mathbf{x})$ where $0 < \lambda \leq 1$, then $p_{\lambda, \epsilon}(\mathbf{x})$ is boundary flat over $[0,1]^p$. 
+Suppose $p_\epsilon(\mathbf{x})$ is a bounded density over $[\epsilon,
+  1-\epsilon]^p$ for some $0 < \epsilon < 1/2$. Let $q(\mathbf{x})$ be
+an arbitrary boundary flat density over $[0,1]^p$ (one can take the
+uniform density for instance). Define a mixture $p_{\lambda,
+  \epsilon}(\mathbf{x}) = \lambda q(\mathbf{x}) + (1-\lambda)
+p_\epsilon(\mathbf{x})$ where $0 < \lambda \leq 1$; then $p_{\lambda,
+  \epsilon}(\mathbf{x})$ is boundary flat over $[0,1]^p$.
 
-Now, let $p(\mathbf{x})$ be a bounded density over $[0,1]^p$. Let $p_\epsilon(\mathbf{x})$ be the density formed from truncating $p(\mathbf{x})$ in $[\epsilon, 1-\epsilon]^p$. The corresponding mixture $p_{\lambda,\epsilon}(\mathbf{x})$ then approximates $p(\mathbf{x})$ when $\lambda$ and $\epsilon$ are both small.
+Now, let $p(\mathbf{x})$ be a bounded density over $[0,1]^p$. Let
+$p_\epsilon(\mathbf{x})$ be the density formed from truncating
+$p(\mathbf{x})$ in $[\epsilon, 1-\epsilon]^p$. The corresponding
+mixture $p_{\lambda,\epsilon}(\mathbf{x})$ then approximates
+$p(\mathbf{x})$ when $\lambda$ and $\epsilon$ are both small.
 
-Since $p_{\lambda,\epsilon}(\mathbf{x})$ remains boundary flat for arbitrarily small $\epsilon$ and $\lambda$, $p(\mathbf{x})$ can be approximated arbitrarily well (in $L_1$ for example) by boundary flat densities. 
+Since $p_{\lambda,\epsilon}(\mathbf{x})$ remains boundary flat for
+arbitrarily small $\epsilon$ and $\lambda$, $p(\mathbf{x})$ can be
+approximated arbitrarily well (in $L_1$ for example) by boundary flat
+densities.
 \end{example}
 
 
@@ -552,9 +580,15 @@ Since the true regression function $f$ is convex, we approximate the additive mo
 \end{equation}
 where $\mathcal{C}^1$ is the set of univariate convex functions. 
 
-If $p(\mathbf{x})$ is a product density, then $\E[ f(X) \given x_k]$ is convex in $x_k$ and the additive projection is simultaneously the convex additive projection. Thus, in this case, additive faithfulness trivially holds for the convex additive projection.  For a general boundary flat density $p(\mathbf{x})$ however, the additive projection need not be convex and we thus cannot say anything about additive faithfulness of the convex additive projection.
+If $p(\mathbf{x})$ is a product density, then $\E[ f(X) \given x_k]$
+is convex in $x_k$ and the additive projection is simultaneously the
+convex additive projection. Thus, in this case, additive faithfulness
+trivially holds for the convex additive projection.  For a general
+boundary flat density $p(\mathbf{x})$ however, the additive projection
+need not be convex and we thus cannot say anything about additive
+faithfulness of the convex additive projection.
 
-Luckily, we can restore faithfulness by coupling the $f^*_k$'s with a set of univariate concave fits on the \emph{residual} $f - f^*$:
+Luckily, we can restore faithfulness by coupling the $f^*_k$s with a set of univariate concave fits on the \emph{residual} $f - f^*$:
 \begin{equation}
 \label{eqn:concave_postprocess}
 g^*_k = \arg\min \Big\{
@@ -571,7 +605,7 @@ $0/\infty$ that satisfies the boundary flatness condition. Suppose
 that $f$ is convex with a bounded second derivative on an open set
 around $C$. Let $f^*_k$ and $g^*_k$ be as defined in equations
 \eqref{eqn:convex_additive} and \eqref{eqn:concave_postprocess}, then
-the $f^*_k$'s and the $g^*_k$'s are unique. Furthermore, $f^*_k = 0$
+the $f^*_k$s and the $g^*_k$s are unique. Furthermore, $f^*_k = 0$
 and $g^*_k = 0$ implies that $\partial_{x_k} f(\mathbf{x}) = 0$, that
 is, $f$ does not depend on~$x_k$.
 \end{theorem}
@@ -635,22 +669,34 @@ where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either conv
  \E[ \E[ f(X) - \phi(X_{-k}) \given X_k] X^2_k] = 0
 \end{align*}
 
-We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given x_k]$. $f(\mathbf{x})$ and $\phi(\mathbf{x}_{-k})$ are both bounded and so $h^*_k(x_k)$ is bounded as well. Therefore, $h^*_k$ is square integrable and there exists a Fourier series $s_n(x_k)$ convergent to $h^*_k$ in $L_2$. Since $p(\mathbf{x})$ is bounded, $$\lim_{n \rightarrow \infty} \E \left( s_n(X_k) - h^*_k(X_k ) \right)^2 \rightarrow 0$$ as well.
+We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given
+  x_k]$.  Since $f(\mathbf{x})$ and $\phi(\mathbf{x}_{-k})$ are both bounded,
+$h^*_k(x_k)$ is bounded as well. Therefore, $h^*_k$ is square
+integrable and there exists a Fourier series $s_n(x_k)$ convergent to
+$h^*_k$ in $L_2$. Since $p(\mathbf{x})$ is bounded, $$\lim_{n
+  \rightarrow \infty} \E \left( s_n(X_k) - h^*_k(X_k ) \right)^2
+\rightarrow 0$$ as well.
 
 %Under the derivative continuity conditions in the theorem, we apply Lemma~\ref{lem:acdc_derivative_bound} in the appendix and know that $h^*_k(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$. Therefore, for a large enough positive scalar $\alpha$, $h^*_k(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex.
 
-If we can show that $\E h^*_k(X_k)^2 = 0$, we would apply Lemma~\ref{cor:faithfulness_extension} and finish the proof. So let us suppose for sake of contradiction that $\E h^*_k(X_k)^2 > 0$.\\
+If we can show that $\E h^*_k(X_k)^2 = 0$, we can apply
+Lemma~\ref{cor:faithfulness_extension} and finish the proof. So let us
+suppose for sake of contradiction that $\E h^*_k(X_k)^2 > 0$.
 
 Let $0 < \epsilon < 1$ be fixed and let $n$ be large enough such that $\E( s_n(X_k) - h^*_k(X_k))^2 \leq \epsilon \E h^*_k(X_k)^2 $.
-
-Since $s_n(x_k)$ is twice-differentiable and has a second derivative bounded away from $-\infty$, there exist some positive scalar $\alpha$ such that $s_n(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second derivative and is thus convex. 
+Since $s_n(x_k)$ is twice-differentiable and has a second derivative
+bounded away from $-\infty$, there exists a positive scalar $\alpha$
+such that $s_n(x_k) + \alpha(x_k^2 - m_k^2)$ has a non-negative second
+derivative and is thus convex.
 
 Because we assumed $f^* = g^* = 0$, it must be that
 \[
 \argmin_{c \in \R} 
 \E\Big( f(X) - \phi(X_{-k}) - c\big( s_n(X_k) + \alpha(X_k^2 - m_k^2)\big) \Big)^2 = 0
 \]
-This is because $c\big( s_n(x_k) + \alpha(x_k^2 - m_k^2) \big)$ is convex for $c \geq 0$ and concave for $c \leq 0$ and it is a centered function.
+This is because $c\big( s_n(x_k) + \alpha(x_k^2 - m_k^2) \big)$ is
+convex for $c \geq 0$ and concave for $c \leq 0$ and it is a centered
+function.
 
 Again, $c^* = \frac{\mathbb{E}[(f(X)-\phi(X_{-k}))\big( 
            s_n(X_k) + \alpha (X_k^2 - m_k^2) \big)]}{\mathbb{E}
@@ -670,7 +716,18 @@ Lemma~\ref{cor:faithfulness_extension} with $\phi(\mathbf{x}_{-k}) =
 f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})$ and conclude that
 $f^*_k = 0$ and $g^*_k = 0$ together imply that $f$ does not depend on $x_k$.\\
 
-Now we turn to uniqueness. Suppose for sake of contradiction that $f^*$ and $\tilde{f}$ are optimal solutions to (\ref{eqn:convex_additive}) and $\E (\tilde{f} - f^*)^2 > 0$.  $f^* + \lambda ( \tilde{f}  - f^*)$ for any $\lambda \in [0,1]$ must then also be an optimal solution by convexity of the objective and constraint. However, the second derivative of the objective $\E( f - f^* - \lambda(\tilde{f} - f^*))^2$ with respect to $\lambda$ is $2 \E( \tilde{f} - f^*)^2 > 0$. The objective is thus strongly convex and $\E(f^* - \tilde{f})^2 = 0$. We now apply Lemma~\ref{lem:additive_uniqueness} by letting $\phi_k = f^*_k - \tilde{f}_k$. We conclude that $\E (f^*_k - \tilde{f}_k)^2 = 0$ for all $k$. The uniqueness of $g^*$ is proved similarly.
+Now we turn to uniqueness. Suppose for sake of contradiction that
+$f^*$ and $\tilde{f}$ are optimal solutions to
+(\ref{eqn:convex_additive}) and $\E (\tilde{f} - f^*)^2 > 0$.  $f^* +
+\lambda ( \tilde{f} - f^*)$ for any $\lambda \in [0,1]$ must then also
+be an optimal solution by convexity of the objective and
+constraint. However, the second derivative of the objective $\E( f -
+f^* - \lambda(\tilde{f} - f^*))^2$ with respect to $\lambda$ is $2 \E(
+\tilde{f} - f^*)^2 > 0$. The objective is thus strongly convex and
+$\E(f^* - \tilde{f})^2 = 0$. We now apply
+Lemma~\ref{lem:additive_uniqueness} by letting $\phi_k = f^*_k -
+\tilde{f}_k$. We conclude that $\E (f^*_k - \tilde{f}_k)^2 = 0$ for
+all $k$. The uniqueness of $g^*$ is proved similarly.
 \end{proof}
 
 
