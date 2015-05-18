@@ -59,21 +59,24 @@ GB memory.
 
 
 \subsubsection{Second simulation}
-In the \textrm{second simulation} (Figure~\ref{Support}b,c), we vary the sparsity of the $Q$ matrix, that is, we vary the extent to which the true function is non-additive. We generate four $\Q$ matrices
-plotted in Figure \ref{Support}(c), where the diagonal elements are all one and
-the off-diagonal elements are $\frac{1}{2}$ with probability $\alpha$
-($\alpha=0,0.2,0.5,1$ for the four cases). We show the 4 $\Q$ matrices we used in Figure~\ref{Support}(c).
-We fix $p=128$, $s=5$, and $X \sim N(0,I_p)$.  We again run the AC/DC optimization on $100$
-independent trials and plot the probability of exact recovery
-in Figure \ref{Support}(b). The results demonstrate that AC/DC performs
-consistent variable selection even if the true function is not additive (but
-still convex). 
+In the \textrm{second simulation} (Figure~\ref{Support}b,c), we vary
+the sparsity of the $Q$ matrix, thus varying the extent to which
+the true function is non-additive. We generate four $\Q$ matrices
+plotted in Figure \ref{Support}(c), where the diagonal elements are
+all one and the off-diagonal elements are $\frac{1}{2}$ with
+probability $\alpha$ ($\alpha=0,0.2,0.5,1$ for the four cases). We
+show the four $\Q$ matrices we used in Figure~\ref{Support}(c).  We fix
+$p=128$, $s=5$, and $X \sim N(0,I_p)$.  We again run the AC/DC
+optimization on $100$ independent trials and plot the probability of
+exact recovery in Figure \ref{Support}(b). The results demonstrate
+that AC/DC performs consistent variable selection even if the true
+function is not additive (but still convex).
 
-In the third, fourth, and fifth simulation, we use a correlated design. We generate $X$ from a non-Gaussian boundary flat distribution with covariance $\Sigma$. The distribution we used is a mixture of a uniform distribution and a Gaussian Copula.
+In the third, fourth, and fifth simulation, we use a correlated design. We generate $X$ from a non-Gaussian boundary flat distribution with covariance $\Sigma$. The distribution we used is a mixture of a uniform distribution and a Gaussian copula,
 \[
-X \sim \gamma U([-2, 2]^p) + (1-\gamma) \trm{Copula}(0, \Sigma, F)
+X \sim \gamma U([-2, 2]^p) + (1-\gamma) \trm{Copula}(0, \Sigma, F).
 \]
-The Gaussian Copula is a way to customize the marginal distributions of a Gaussian random variable while maintaining the same covariance. Gaussian Copula results when one applies a monotone transformation $F^{-1} \Phi$ onto each of the variables of a Gaussian random vector where $\Phi$ is the normal CDF and $F$ is the CDF of the new marginal distribution. In all our experiments, we set $\gamma = 0.05$ and set the marginal CDF $F$ so that marginal density of the Copula is bimodal and supported on $[-1.8, 1.8]$. The resulting marginal density of the mixture is shown in Figure~\ref{fig:copula_marginal}. Notice that boundary flatness holds because the distribution is uniform in the boundary area $[-2,2]^p \backslash [-1.8, 1.8]^p$.
+The Gaussian copula is a way to customize the marginal distributions of a Gaussian random variable while maintaining the same covariance. Gaussian copula results when one applies a monotone transformation $F^{-1} \Phi$ onto each of the variables of a Gaussian random vector where $\Phi$ is the normal CDF and $F$ is the CDF of the new marginal distribution. In all our experiments, we set $\gamma = 0.05$ and set the marginal CDF $F$ so that marginal density of the copula is bimodal and supported on $[-1.8, 1.8]$. The resulting marginal density of the mixture is shown in Figure~\ref{fig:copula_marginal}. Notice that boundary flatness holds because the distribution is uniform in the boundary area $[-2,2]^p \backslash [-1.8, 1.8]^p$.
 
 \begin{figure*}
 \includegraphics[width=.4\textwidth]{figs/copula_marginal}
