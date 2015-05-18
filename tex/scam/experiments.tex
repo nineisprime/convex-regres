@@ -21,7 +21,7 @@ noise drawn from $\mathcal{N}(0,\sigma^2)$. For all simulations, we set
 $\sigma^2$ so that the signal-to-noise ratio(SNR,
 $\frac{\trm{std}(Y)}{\sigma}$) is 5. Also, for all simulations except
 the sixth, we choose the set of relevant variables $S$ uniformly at
-random among all variables $\{1,...,p\}$.
+random among all variables $\{1,\ldots,p\}$.
 
 We study both the independent case where $P = N(0, I_p)$ and the
 correlated case where $P$ is a correlated Gaussian Copula modified
@@ -53,7 +53,7 @@ we generate $100$ independent trials.  In Figure~\ref{Support}(a), we
 plot the probability of exact support recovery. We observe that the
 algorithm performs consistent variable selection even if the
 dimensionality is large. To give the reader a sense of the running
-speed, for a dataset with $n=1,000$ and $p=512$, the code runs in
+speed, for a dataset with $n=1{,}000$ and $p=512$, the code runs in
 roughly two minutes on a machine with a 2.3 GHz Intel Core i5 CPU and 4
 GB memory.
 
@@ -72,7 +72,10 @@ exact recovery in Figure \ref{Support}(b). The results demonstrate
 that AC/DC performs consistent variable selection even if the true
 function is not additive (but still convex).
 
-In the third, fourth, and fifth simulation, we use a correlated design. We generate $X$ from a non-Gaussian boundary flat distribution with covariance $\Sigma$. The distribution we used is a mixture of a uniform distribution and a Gaussian copula,
+In the third, fourth, and fifth simulation, we use a correlated
+design. We generate $X$ from a non-Gaussian boundary flat distribution
+with covariance $\Sigma$. The distribution we used is a mixture of a
+uniform distribution and a Gaussian copula,
 \[
 X \sim \gamma U([-2, 2]^p) + (1-\gamma) \trm{Copula}(0, \Sigma, F).
 \]
@@ -85,21 +88,63 @@ The Gaussian copula is a way to customize the marginal distributions of a Gaussi
 \end{figure*}
 
 \subsubsection{Third simulation}
-In the \textrm{third simulation} (Figure~\ref{Support}d,e), we use the non-Gaussian distribution described above and set the covariance $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0, 0.2, 0.5, 0.9$. We use the non-additive $\Q$, same as in the first experiment, with $\alpha=0.5$ and fix $p=128, s=5$. We measure success not through exact recovery but through faithful recovery. We say that a trial is a successful if (1) all relevant variables were recovered and (2) fewer than $20$ variables were marked as relevant overall (true sparsity $s=5$). We use the same $\lambda$ as before. The probabilities of success are computed from 40 independent trials and plotted against various values of $\nu$ in Figure~\ref{Support}(d). Additionally, for $\nu = 0.5$, we show the number of selected variables versus the sample size as a box-and-whisker plot in Figure~\ref{Support}(e). As seen, for small to moderate correlations, AC/DC can successfully recover the relevant variables with only a small number of false positives. 
+In the \textrm{third simulation} (Figure~\ref{Support}d,e), we use the
+non-Gaussian distribution described above and set the covariance
+to be $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0, 0.2, 0.5, 0.9$. We use the
+non-additive $\Q$, same as in the first experiment, with $\alpha=0.5$
+and fix $p=128, s=5$. We measure success not through exact recovery
+but through faithful recovery. We say that a trial is a successful if
+(1) all relevant variables were recovered and (2) fewer than $20$
+variables were marked as relevant overall (true sparsity $s=5$). We
+use the same $\lambda$ as before. The probabilities of success are
+computed from 40 independent trials and plotted against various values
+of $\nu$ in Figure~\ref{Support}(d). Additionally, for $\nu = 0.5$, we
+show the number of selected variables versus the sample size as a
+box plot in Figure~\ref{Support}(e). As seen, for small to
+moderate correlations, AC/DC can successfully recover the relevant
+variables with only a small number of false positives.
 
-In the fourth and fifth simulation, we use a softmax function as the ground truth
+In the fourth and fifth simulation, we use a softmax function as the ground truth,
 \begin{align}
-f_0(x_{iS}) = \log \left( \sum_{k=1}^K \exp( \beta_k^\tran x_{iS} ) \right) - \mu
+f_0(x_{iS}) = \log \left( \sum_{k=1}^K \exp( \beta_k^\tran x_{iS} ) \right) - \mu.
 \end{align}
-We generate random unit vectors as $\{\beta_k \in \R^s\}_{k=1,...,K}$ and choose $\mu$ so that $f_0$ has mean-zero. We set $K = 7$ for all the experiments. 
+We generate random unit vectors as $\{\beta_k \in \R^s\}_{k=1,\ldots,K}$ and choose $\mu$ so that $f_0$ has mean-zero. We set $K = 7$ for all the experiments. 
 
 \subsubsection{Fourth simulation}
-For the \textrm{fourth simulation} (Figure~\ref{Support}f,g), we let $f_0$ be the softmax function and let $X$ be drawn from the boundary flat mixture distribution described earlier with the Toeplitz covariance $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0.5$. We set $s=5$ and vary $p=128,256,512$. We use the same faithful recovery criteria as the third simulation and plot the probability of faithful recovery against the number of samples in Figure~\ref{Support}(f). The probabilities are computed over 30 independent trials. Also, for $p=256$, we show the number of selected variables versus the sample size as a box-and-whisker plot in Figure~\ref{Support}(g). The softmax function is more challenging to estimate than the quadratic function; the softmax function requires about $n > 1500$ to achieve the same success probability as the quadratic function with $n=1000$. Regardless, we see that increasing the ambient dimension $p$ does not significantly affect the recovery probability.
+For the \textrm{fourth simulation} (Figure~\ref{Support}f,g), we let
+$f_0$ be the softmax function and let $X$ be drawn from the boundary
+flat mixture distribution described earlier with the Toeplitz
+covariance $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0.5$. We set $s=5$ and
+vary $p=128,256,512$. We use the same faithful recovery criteria as in
+the third simulation and plot the probability of faithful recovery
+against the number of samples in Figure~\ref{Support}(f). The
+probabilities are computed over 30 independent trials. Also, for
+$p=256$, we show the number of selected variables versus the sample
+size as a box plot in Figure~\ref{Support}(g). The softmax function is
+more challenging to estimate than the quadratic function; the softmax
+function requires about $n > 1{,}500$ samples to achieve the same success
+probability as the quadratic function with $n=1{,}000$. Regardless, we
+see that increasing the ambient dimension $p$ does not significantly
+affect the recovery probability.
 
 %For the \textbf{fifth experiment} (Figure~\ref{Support}h), we vary the true sparsity level $s$. We let $f_0$ be the softmax function, $X \sim N(0, I)$, and set $p=128$. We compute the probability of exact recovery over 40 independent trials and plot the results in Figure~\ref{Support}(h).  
 
 \subsubsection{Fifth simulation}
-For the \textrm{fifth simulation} (Figure~\ref{fig:ac_v_dc}), we compare the variables selected via the AC stage and the variables selected via the DC stage. We use the softmax regression function and $X$ drawn from the boundary flat mixture distribution with a Toeplitz covariance and correlation level $\nu = -0.7$. We set $s=5, n=500, p=128$. We perform 30 independent trials and plot the frequency of variable selection in Figure~\ref{fig:ac_v_dc}. The true variables are $X_j$ for $j=5,6,7,8,9,10$. We plot the frequency of selection among only the first 20 variables, that is, $X_j$ for $j=1,...,20$. We do not plot selection frequencies for variables 21 to 128 because they are almost never selected by either AC or DC. As can be seen, the DC stage is slightly helpful in recovering the true variables but its effect is not significant. We thus believe that the DC stage, though important in theory, is not as important in practice; it may be omitted without significant detriment to the overall result. 
+For the \textrm{fifth simulation} (Figure~\ref{fig:ac_v_dc}), we
+compare the variables selected via the AC stage and the variables
+selected via the DC stage. We use the softmax regression function and
+$X$ drawn from the boundary flat mixture distribution with a Toeplitz
+covariance and correlation level $\nu = -0.7$. We set $s=5$, $n=500$,
+and $p=128$. We perform 30 independent trials and plot the frequency of
+variable selection in Figure~\ref{fig:ac_v_dc}. The true variables are
+$X_j$ for $j=5,6,7,8,9,10$. We plot the frequency of selection among
+only the first 20 variables, that is, $X_j$ for $j=1,\ldots,20$. We do
+not plot selection frequencies for variables 21 to 128 because they
+are almost never selected by either the AC or DC stage. As can be
+seen, the DC stage is slightly helpful in recovering the true
+variables but its effect is not significant. We thus believe that the
+DC stage, though important in theory, is not as important in practice;
+it may be omitted without significant detriment to the overall result.
 
 \begin{figure*}[!t]
 \begin{center}
@@ -128,17 +173,19 @@ For the \textrm{fifth simulation} (Figure~\ref{fig:ac_v_dc}), we compare the var
 
 \begin{figure*}
 \includegraphics[width=0.5\textwidth]{figs/ACvDC}
-\caption{Frequency of variable selection among the first 20 variables ($X_j$ for $j=1,...,20$) in the AC stage vs. in the DC stage. The true variables are [5,6,7,8,9,10].}
+\caption{Frequency of variable selection among the first 20 variables ($X_j$ for $j=1,\ldots,20$) in the AC stage vs. in the DC stage. The true variables are [5,6,7,8,9,10].}
 \label{fig:ac_v_dc}
 \end{figure*}
 
 
 \subsection{Boston housing data}
 
-We next use the Boston housing data rather than simulated data. This data set
-contains 13 covariates, 506 samples and one response variable
-indicating housing values in suburbs of Boston. The data and detailed description
-can be found on the UCI Machine Learning Repository website\footnote{\url{http://archive.ics.uci.edu/ml/datasets/Housing}}. 
+We next use the Boston housing data rather than simulated data. This
+data set contains 13 covariates, 506 samples and one response variable
+indicating housing values in suburbs of Boston. The data and a
+detailed description can be found on the UCI Machine Learning
+Repository
+website\footnote{\url{http://archive.ics.uci.edu/ml/datasets/Housing}}.
 
 We first use all $n=506$ samples (with standardization) in the AC/DC algorithm,
 using a set of candidate regularization parameters $\{\lambda^{(t)}\}$
@@ -169,7 +216,7 @@ functions, including the concave shape of the \tts{PTRATIO} function,
 are in agreement with those obtained by SpAM~\citep{SpAM:07}.
 
 Next, in order to quantitatively study the predictive performance, we
-run 3 times 5-fold cross validation, following the same procedure
+run 5-fold cross validation three times, following the same procedure
 described above---training, variable selection and refitting.  A plot
 of the mean and standard deviation of the predictive mean squared
 error (MSE) is shown in Figure \ref{Boston}(c). Since for AC/DC the same
