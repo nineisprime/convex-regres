@@ -595,7 +595,7 @@ Putting this together, we have that
 On the last line, we have assumed that conditions~\ref{cond:simplify_covering_number} hold so that $ \frac{sK^{**}(sBc_u)^{1/2}}{\epsilon^{1/2}} + \log 1/\delta \leq \frac{sK^{**} (sBc_u)^{1/2}}{\epsilon^{1/2}} \log 1/\delta$.
 
 We choose $\epsilon = \left( \frac{(sB)^2 (s
-    K^{**} (sBc_u)^{1/2})}{n} \right)^{2/5}$. This choice of $\epsilon$ is a bit suboptimal but it is convenient and it is sufficient for our results. It is easy to verify that
+    K^{**} (sBc_u)^{1/2})}{n} \right)^{2/5}$. This choice of $\epsilon$ is not optimal but it is convenient and it is sufficient for our results. It is easy to verify that
 if $n \geq c_1 s \sqrt{sB}$ for some absolute constant $c_1$, then 
 $\epsilon \in (0, sB \epsilon_3c_u]$ for some absolute constant $\epsilon_3$ as required by the bracketing number statement (Corollary~\ref{cor:convexadditive_lp}). Furthermore, conditions~\eqref{cond:simplify_covering_number} also hold. 
 
@@ -730,16 +730,16 @@ The condition $n \geq c_1 s\sqrt{sB}$ in the proof of Theorem~\ref{thm:convex_co
 Using the uniform convergence result of Lemma~\ref{lem:uniform_convergence}, with probability at least $1-\delta$,
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &\leq
-  c B^2 \sigma \sqrt{ \frac{1}{n} \log \frac{Cn}{\delta} }+ \lambda_n B +
+  c B^2 \sigma \sqrt{ \frac{c_u^{1/2}}{n^{4/5}} \log \frac{Cn}{\delta} }+ \lambda_n B +
   c B^3 \sqrt{\frac{c_u^{1/2}}{n^{4/5}} \log \frac{2}{\delta} } \\
- &\leq c B^2 \tilde{\sigma} \sqrt{\frac{c_u^{1/2}}{n^{4/5}} \log \frac{C}{\delta}}+ \lambda_n B
+ &\leq c B^2 \tilde{\sigma} \sqrt{\frac{c_u^{1/2}}{n^{4/5}} \log \frac{nC}{\delta}}+ \lambda_n B
 \end{align*}
 
 Finally, plugging in $\lambda_n \leq 768 s \tilde{\sigma} \sqrt{
   \frac{1}{n} \log^2 np}$, we obtain
 \begin{align*}
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
-\leq c B^2 \tilde{\sigma} \sqrt{\frac{c_u^{1/2}}{n^{4/5}} \log \frac{C}{\delta}}+ 
+\leq c B^2 \tilde{\sigma} \sqrt{\frac{c_u^{1/2}}{n^{4/5}} \log \frac{nC}{\delta}}+ 
     c s B \tilde{\sigma} \sqrt{\frac{1}{n} \log^2 np}\\
 \| f_0 - \hat{f} - \hat{g}_k \|_P^2 - \|f_0 - \hat{f} - g^*_k \|_P^2 &
 \leq c B^2 \tilde{\sigma} \sqrt{\frac{s^2 c_u^{1/2}}{n^{4/5}} \log^2 \frac{Cnp}{\delta}}
@@ -866,7 +866,7 @@ Using our bound on the $L_1(P)$ norm of $\psi_U^2 - \psi_L^2$, we have
 (2sB)^2 \sqrt{ \frac{ sK^{**} (sBc_u)^{1/2} \log \frac{2}{\delta}}{ \epsilon^{1/2} n} }
 \end{align*}
 
-We choose $\epsilon = \left( \frac{ (sB)^2 sK^{**} (sBc_u)^{1/2}}{n} \right)^{2/5}$. This choice of $\epsilon$ is a bit suboptimal but it is convenient and it is sufficient for our result.
+We choose $\epsilon = \left( \frac{ (sB)^2 sK^{**} (sBc_u)^{1/2}}{n} \right)^{2/5}$. This choice of $\epsilon$ is not optimal but it is convenient and it is sufficient for our result.
 
 One can easily verify that $\epsilon \leq sB \epsilon_3 c_u$ when $n \geq c_1 s \sqrt{sB}$ for some absolute constant $c_1$, thus, the $\epsilon$-bracketing number we used is valid. 
 
@@ -1056,14 +1056,14 @@ We just need to remember that $p''(\mathbf{x}_{-k} \given x_k)$ is bounded for a
  
 \begin{lemma}
 \label{lem:additive_uniqueness}
-Let $p(\mathbf{x})$ be a positive density over $[0,1]^p$. Let $f(\mathbf{x}) = \sum_{j=1}^p f_j(x_j)$ and $h(\mathbf{x}) = \sum_{j=1}^d h_j(x_j)$ be two additive functions such that $\E( f(X) - h(X) )^2 = 0$. Suppose also that $\E f_j(X_j) = 0, \E h_j(X_j) = 0$ for all $j$. Then, it must be that $\E( f_j(X_j) - h_j(X_j))^2 = 0$ for all $j$.
+Let $p(\mathbf{x})$ be a positive density over $[0,1]^p$. Let $f(\mathbf{x}) = \sum_{j=1}^p f_j(x_j)$ and $h(\mathbf{x}) = \sum_{j=1}^p h_j(x_j)$ be two additive functions such that $\E( f(X) - h(X) )^2 = 0$. Suppose also that $\E f_j(X_j) = 0, \E h_j(X_j) = 0$ for all $j$. Then, it must be that $\E( f_j(X_j) - h_j(X_j))^2 = 0$ for all $j$.
 \end{lemma}
 
 \begin{proof}
 
 Let $\phi(\mathbf{x}) = f(\mathbf{x}) - g(\mathbf{x})$ and it is clear that $\phi(\mathbf{x}) = \sum_{j=1}^d \phi_j(x_j)$ with $\phi_j(x_j) = f_j(x_j) - h_j(x_j)$ and $\E \phi_j(X_j) = 0$. It is also immediate that $E \phi(X)^2 = 0$. \\
 
-Let $P$ be the probability measure induced by the density $p(\mathbf{x})$, so that $P(A) = \int_A p(\mathbf{x}) d\lambda$ where $\lambda$ is the Lebesgue measure. Since $p > 0$, $\lambda(A) > 0$ implies that $P(A) > 0$ as well. \\
+Let $P$ be the probability measure induced by the density $p(\mathbf{x})$, so that $P(A) = \int_A p(\mathbf{x}) d\lambda$ where $\lambda$ is the Lebesgue measure. Since $p(\mathbf{x}) > 0$, $\lambda(A) > 0$ implies that $P(A) > 0$ as well. \\
 
 For sake of contradiction, let us assume that for some $j$, $\E \phi_j(X_j)^2 > 0$. Then, $P(A_j ) > 0$ where $A_j = \{ \mathbf{x} \in [0,1]^p \,:\, \phi_j(x_j) > 0 \}$. To see this, suppose that $\phi_j \leq 0$ almost surely. Then, $\E \phi_j = 0$ implies that $\phi_j = 0$ almost surely, contradicting the assumption that $\E \phi_j(X_j)^2 > 0$.\\
 
