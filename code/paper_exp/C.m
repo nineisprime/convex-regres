@@ -7,7 +7,7 @@ function C(version)
 %
 addpath('../simdata');
 
-clc; close all; format long; randn('state',0); rand('state',0); 
+clc; close all; format long; randn('state',1); rand('state',1); 
 switch version
     case 01, n = 200; v = 0.0;
     case 02, n = 400; v = 0.0;
@@ -51,8 +51,8 @@ lambda = 0.5*sqrt(1/n)*log(n*p); % MODIFY
 
 alpha = 0.5;
 
-maxit = 20; tol = 10^-6;
-nrun = 40; % MODIFY
+maxit = 50; tol = 10^-8;
+nrun = 60; % MODIFY
 J = ones(p,nrun)==0; Ln = zeros(p,nrun); 
 
 
@@ -109,7 +109,7 @@ for version = 1:num_versions
     load(['mat/C_' num2str(version) '.mat']);
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
-        cur_supp = sum(Ln(:,run) > 1e-5);
+        cur_supp = sum(Ln(:,run) > 1e-5); %was 1e-5
         if min(Ln(J(:,run),run)) > epsil && ...
             cur_supp < success_supp
             suc = suc + 1;

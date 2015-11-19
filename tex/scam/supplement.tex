@@ -15,7 +15,7 @@ Let $\hat{r} \coloneqq Y - \sum_{k \in S} \bar{\Delta}_k \hat{d}_k$ be the restr
 
 Let $\pi_k(i)$ be an reordering of $X_k$ in ascending order so that $X_{\pi_k(n)k}$ is the largest entry. Let $\mathbf{1}_{\pi_k(i:n)}$ be 1 on the coordinates $\pi_k(i),\pi_k(i+1),...,\pi_k(n)$ and 0 elsewhere. Define $\mathsf{range}_k = X_{\pi_k(n)k} - X_{\pi_k(1)k}$.
 
-Suppose for all $k\in S^c$ and for all $i=1,...,n$, $\lambda_n \geq \mathsf{range}_k | \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$, and $\max_{i=1,...,n-1} \frac{X_{\pi_k(i+1)k} - X_{\pi_k(i)k}}{\mathsf{range}_k} \geq \frac{1}{16}$, and $\mathsf{range}_k \geq 1$.
+Suppose for all $k\in S^c$ and for all $i=1,...,n$, $\lambda_n \geq \mathsf{range}_k | \frac{32}{n} \hat{r}^\tran \mathbf{1}_{\pi_k(i:n)}|$, and $\max_{i=1,...,n-1} \frac{X_{\pi_k(i+1)k} - X_{\pi_k(i)k}}{\mathsf{range}_k} \leq \frac{1}{16}$, and $\mathsf{range}_k \geq 1$.
 
 Then the following are true:
 \begin{enumerate}
@@ -481,7 +481,7 @@ Then with probability at least $1-\frac{C}{n}$,
 \|f_0 - \hat{f} \|_P^2 - \| f_0 - f^* \|_P^2 
 &\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5}{n^{4/5}} \log^2 Cnp},
 \end{align}
-where $c_1$ is an absolute constant and $c, C$ are constants possibly dependent on $b$.
+where $c_1$ is an absolute constant and $c, C$ are constants dependent on $b$.
 \end{theorem}
 
 
@@ -711,7 +711,7 @@ We now bound each of the terms. The proof proceeds almost identically to that of
 \textbf{Step 1.} To bound term 1, we start from the definition of
 $\hat{g}_k$ and obtain
 \begin{align*}
-\| y - \hat{f} - \hat{g}_k \|_n^2 + \lambda_n \| \hat{g} \|_\infty &\leq
+\| y - \hat{f} - \hat{g}_k \|_n^2 + \lambda_n \| \hat{g}_k \|_\infty &\leq
    \| y - \hat{f} - (g^*_k - \bar{g}^*_k) \|_n^2 + \lambda_n \| (g^*-\bar{g}^*_k) \|_\infty \\
 \| y - \hat{f} - \hat{g}_k \|_n^2 &\leq \| y - \hat{f} - (g^*_k-\bar{g}^*_k) \|_n^2 + \lambda_n B \\[10pt]
 \| f_0 - \hat{f} - \hat{g}_k + w\|_n^2 & \leq \| f_0 - \hat{f} - (g^*_k-\bar{g}^*_k) + w \|_n^2 
@@ -841,7 +841,7 @@ with probability at least $1-\delta$,, for all $\psi_L$ (and likewise $\psi_U$)
 \left| \frac{1}{n} \sum_{i=1}^n \psi_L(X_i)^2 - 
    \E \psi_L(X)^2 \right| &\leq (2sB)^2 \sqrt{ \frac{sK^{**} (4sBc_u)^{1/2}}{\epsilon^{1/2}2n} + \frac{\log\frac{2}{\delta}}{2n}} 
 \end{align*}
-To simplify the expression, we will suppose that $\frac{sK^{**} (4sBc_u)^{1/2}}{\epsilon^{1/2}} \geq 2$ and that $\log \frac{2}{\delta} \geq 2$. The second supposition holds by assumption in the theorem. Once we calculate the proper values of $\epsilon$, we will verify that these first supposition holds under the assumption of the theorem also. Under these two suppositions, we have
+To simplify the expression, we will suppose that $\frac{sK^{**} (4sBc_u)^{1/2}}{\epsilon^{1/2}} \geq 2$ and that $\log \frac{2}{\delta} \geq 2$. The second supposition holds by assumption in the theorem. Once we calculate the proper values of $\epsilon$, we will verify that the first supposition holds under the assumption of the theorem also. Under these two suppositions, we have
 \begin{align}
 \label{eqn:simplified_psi_concentration}
 \left| \frac{1}{n} \sum_{i=1}^n \psi_L(X_i)^2 - 
@@ -1069,7 +1069,7 @@ For sake of contradiction, let us assume that for some $j$, $\E \phi_j(X_j)^2 > 
 
 For $j' \neq j$, define $B_{j'} = \{ \mathbf{x} \in [0,1]^p \,:\, \phi_{j'}(x_{j'}) \geq 0 \}$. $P( B_{j'} ) > 0$ because, if not, then $\phi_{j'} < 0$ almost surely and that contradicts the $\E \phi_{j'}(X_{j'}) = 0$ assumption. \\
 
-Since the probability measure $P$ is absolutely continuous with respect to the Lebesgue measure on $[0, 1]^p$, $\lambda (A_j) > 0$. Let $\lambda_1$ be the one dimensional Lebesgue measure on $[0,1]$ and let $A^1_j = \{ x_j \in [0,1] \,:\, \phi_j(x_j) > 0\}$. From the fact that $\lambda(A_j) > 0$, and that $A_j = A^1_j \times [0,1]^{p-1}$, $\lambda_1(A^1_j) > 0$. Same reasoning show that $\lambda_1(B^1_{j'}) > 0$ where $B^1_{j'}$ is similarly defined.\\
+Since the probability measure $P$ is absolutely continuous with respect to the Lebesgue measure on $[0, 1]^p$, $\lambda (A_j) > 0$. Let $\lambda_1$ be the one dimensional Lebesgue measure on $[0,1]$ and let $A^1_j = \{ x_j \in [0,1] \,:\, \phi_j(x_j) > 0\}$. From the fact that $\lambda(A_j) > 0$, and that $A_j = A^1_j \times [0,1]^{p-1}$, $\lambda_1(A^1_j) > 0$. Same reasoning shows that $\lambda_1(B^1_{j'}) > 0$ where $B^1_{j'}$ is similarly defined.\\
 
 $A_j \cap \left( \bigcap_{j'} B_{j'} \right) = A^1_j \times \prod_{j'} B^1_{j'}$. Therefore, $\lambda ( A_j \cap \left( \bigcap_{j'} B_{j'} \right) ) = \lambda_1(A^1_j)  \prod_{j'} \lambda_1 (B_{j'}) > 0$. Since the density of $P$ is positive, $P( A_j \cap \left( \bigcap_{j'} B_{j'} \right) ) > 0$ and since $\phi > 0$ on this event, we conclude that $\E \phi(X)^2 > 0$, thus giving us the desired contradiction.
 
@@ -1306,6 +1306,63 @@ where $T_1 = H_{11} + 2H_{12} \alpha + H_{22} \alpha^2$ and $T_2 = H_{22} + 2H_{
 It is then simple to solve the system and verify that $a_1, a_2$ are as specified.
 \end{proof}
 
+
+\section{Simplifications when $p(\mathbf{x})$ is a product density}
+\label{sec:prod_density_simplification}
+
+If we assume that $p(\mathbf{x})$, the density over the covariates, is a product density, then some of the results can be strengthened and some can be simplified. Note that product densities satisfy the boundary flatness condition (definition~\ref{defn:boundary-point}) trivially and thus are settings under which convex functions are additively faithful. We suppose without loss of generality that the true function $f_0$ is convex and has mean-zero.
+
+First, we will show that the unconstrained additive projection is convex under a product density and thus, the DC stage of the algorithm is not necessary. Let $\{ f^*_k \}$ be the unconstrained additive projection components.
+\begin{align*}
+ f^*_k &= \E[ f_0(X) - \sum_{k' \neq k} f^*_{k'}(X_{k'}) \given x_k ] \quad 
+\textrm{(by Lemma~\ref{lem:general_int_reduction})} \\
+     &= \E[ f_0(X) \given x_k ] \quad \textrm{(by independence of $X_k, X_{k'}$)} \\
+  &= \int f_0(\mathbf{x}) p(\mathbf{x}_{-k} \given x_k ) d \mathbf{x}_{-k} \\
+  &= \int f_0(\mathbf{x}) p(\mathbf{x}_{-k}) d\mathbf{x}_{-k} \quad
+   \textrm{(by independence again)}
+\end{align*}
+
+If we see $f_0(\mathbf{x})$ as a set of functions $f_0(x_k, \mathbf{x}_{-k})$ of just $x_k$ indexed by $\mathbf{x}_{-k}$, we see that $f^*_k(x_k)$ is a weighted average of $f_0(x_k, \mathbf{x}_{-k})$'s and is thus convex. 
+
+Therefore, the unconstrained additive projection and the convex additive projection yield the same solution. Thus, the convex additive projection is also faithful and no additional concave postprocessing is needed.  
+
+Second, we can simplify the definition of the signal strength ($\alpha_+, \alpha_-$ from equation~\ref{eqn:signal_level_defn}) under a product density. $\alpha_-$ is no longer needed at all since the DC stage is unnecessary. As for $\alpha_+$, we have the following proposition:
+
+\begin{proposition}
+Let $\alpha_+$ be defined as in equation~\ref{eqn:signal_level_defn}. If $p(\mathbf{x})$ is a product density, then $\alpha_+ = \min_{k \,:\, f^*_k \neq 0} \E f^*_k(X_k)^2$. 
+\end{proposition}
+
+\begin{proof}
+
+For any convex additive function $f$, we have that
+\[
+\alpha_+ = \E (f_0(X) - f(X))^2 - \E (f_0(X) - f^*(X))^2 \geq \E (f(X) - f^*(X))^2
+\]
+because $f^*$ is the orthogonal projection of $f_0$ onto the set of convex additive functions, which is itself a convex set. 
+
+Next, suppose that $f$ is a convex additive function such that $\supp(f) \subsetneq \supp(f^*)$, i.e., $f_k \neq 0 \Rightarrow f^*_k \neq 0$ but there exists some $k$ such that $f^*_k \neq 0$ and $f_k = 0$. 
+\begin{align*}
+\E (f(X) - f^*(X))^2 & = \E \left( \sum_{k=1}^p f_k(X_k) - f^*_k(X_k) \right)^2 \\
+   &= \sum_{k=1}^p \E (f_k(X) - f^*_k(X))^2  \quad \textrm{(since $X_k, \perp X_{k'}$ for $k \neq k'$)} \\
+   &\geq \min_{k \,:\, f^*_k \neq 0} \E f^*_k(X_k)^2 
+\end{align*}
+
+Now, let $k^* = \arg\min_k \E f^*_k(X_k)^2$ and let $f(\mathbf{x}) = \sum_{k\neq k^*} f_k^*(x_k)$. Then,
+
+\begin{align*}
+& \E (f_0(X) - f(X))^2 - \E (f_0(X) - f^*(X))^2 \\
+ &=
+   \E \big(f_0(X) - f^*(X) + f^*_{k^*}(X_{k^*}) \big)^2 - \E( f_0(X) - f^*(X))^2 \\
+ &= \E \big[ 2(f_0(X) - f^*(X)) f^*_{k^*} (X_{k^*}) \big] + \E f^*_{k^*}(X_{k^*})^2 \\
+ &= \E\big[ \E[ 2(f_0(X) - f^*(X)) \given X_{k^*}] f^*_{k^*}(X_{k^*}) \big] + \E f^*_{k^*}(X_{k^*})^2 \\
+ &= \E f^*_{k^*}(X_{k^*})^2 
+\end{align*}
+
+In the second to last equality, we used the fact that $\E[ f_0(X) - f^*(X) \given X_{k^*}] = 0$ since $f^*_{k^*}(X_{k^*}) = \E[ f_0(X) \given X_{k^*} ]$ under a product density. 
+
+Thus, we have shown that $\alpha_+ \geq \min_{k \,:\, f^*_k \neq 0} \E f_k^*(X_k)^2$ and that equality is attained with $f(\mathbf{x}) = \sum_{k\neq k^*} f_k^*(x_k)$. 
+
+\end{proof}
 
 % \subsubsection{Covering Number for Lipschitz Convex Functions}
 

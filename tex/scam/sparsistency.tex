@@ -2,7 +2,7 @@
 \label{sec:finitesample}
 
 Our goal is to show variable screening consistency. That is, as
-$n,p \rightarrow \infty$, $\mathbb{P}( \hat{S} = S)$ approaches 0
+$n,p \rightarrow \infty$, $\mathbb{P}( \hat{S} = S)$ approaches 1
 where $\hat{S}$ is the set of variables output by AC/DC in the
 finite sample setting (Figure~\ref{fig:backfitting:algo}) and $S$ is
 the set of variables output in the population
@@ -158,7 +158,7 @@ Each of our theorems will use a subset of the following assumptions:
 \item[A1:] $X_S, X_{S^c}$ are independent. 
 \item[A2:] $f_0$ is convex with a bounded second derivative on an open set around $[-1,1]^p$. $\E f_0(X) = 0$.
 \item[A3:] $\|f_0\|_\infty \leq sB$ and $\| f^*_k \|_\infty \leq B$ for all $k$.
-\item[A4:] $W$ is mean-zero sub-Gaussian, independent of $X$, with scale $\sigma$; i.e., for all $t \in \R$, $\E e^{t \epsilon} \leq e^{\sigma^2 t^2 / 2}$.
+\item[A4:] $W$ is mean-zero sub-Gaussian, independent of $X$, with scale $\sigma$; i.e., for all $t \in \R$, $\E e^{t W} \leq e^{\sigma^2 t^2 / 2}$.
 \item[A5:] The density $p(\mathbf{x})$ satisfies the boundary flatness condition (Definition~\ref{defn:boundary-point}), and $0 < c_l \leq \inf p(\mathbf{x}) \leq \sup p(\mathbf{x}) \leq c_u < \infty$ for two constants $c_l, c_u$. 
 \end{packed_enum}
 By assumption A1, $f^*_k$ must be zero for $k\notin S$.
@@ -188,7 +188,7 @@ the additive convex stage of the procedure. If $\alpha_{-}$ is small,
 then it is easier to make a false omission in the decoupled concave
 stage of the procedure. If $X$ is independent, then $\alpha_+$ can be
 simplified to $\min_{k \,:\, f^*_k \neq 0} \E f^*_k(X)^2$ and
-$\alpha_-$ becomes unnecessary.
+$\alpha_-$ becomes unnecessary (see section~\ref{sec:prod_density_simplification} in the supplementary material). 
 
 \begin{remark}
   We make strong assumptions on the covariates in A1 in order to make
@@ -210,12 +210,13 @@ Suppose assumptions A1-A5 hold. Define $\tilde{\sigma} \equiv \max(\sigma, B)$ a
 \lambda_n \geq 768 s \tilde{\sigma}  \sqrt{ \frac{\log^2 np}{n}}.
 \end{equation}  
 Then with probability at least $ 1 - \frac{24}{n}$, for all $k \in
-S^c$, for all $i=1,\ldots,n$,
+S^c$, for all $i'=1,\ldots,n$,
 \begin{equation}
 \lambda_n \geq \mathsf{range}_k \Big| \frac{32}{n}\hat{r}^\tran \mathbf{1}_{(i':n)_k} \Big| ,
 \end{equation}
 $\max_{i'} \frac{X_{\pi_k(i'+1)k} - X_{\pi_k(i')k}}{\mathsf{range}_k} \leq \frac{1}{16}$, $\mathsf{range}_k \geq 1$, and both the AC solution $\hat{f}_k$ from optimization~\eqref{opt:alternate_opt} and the DC solution $\hat{g}_k$ from optimization~\eqref{opt:alternate_opt_concave} are zero. 
 \end{theorem}
+Here, we use $\mathbf{1}_{(i':n)}$ to denote a vector that is 1 on the $i'$-th to the $n$-th coordinates and 0 elsewhere.
 
 The proof of Theorem~\ref{thm:false_positive} exploits independence of
 $\hat{r}$ and $X_k$ under assumption A1; when $\hat{r}$ and $X_k$ are independent,

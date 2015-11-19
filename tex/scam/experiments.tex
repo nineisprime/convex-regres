@@ -11,12 +11,12 @@ We perform both synthetic and real data experiments.
 \subsection{Simulations}
 We first illustrate our methods using a simulation of the model
 \begin{equation}\nonumber
-         Y_i = f_0(\x_{iS}) + \epsilon_i \quad (i=1,2,\ldots,n).
+         Y_i = f_0(\x_{iS}) + w_i \quad (i=1,2,\ldots,n).
 \end{equation}
 Here $\x_{i}$ denotes data sample $i$ drawn from some distribution
 $P$, and $f_0$ is the true regression function. The variables
 $\x_{iS}$ are a subset of $\x_i$ with dimension $|S|=s$, where $S$
-represents the set of relevant variables, and $\epsilon_i$ is additive
+represents the set of relevant variables, and $w_i$ is additive
 noise drawn from $\mathcal{N}(0,\sigma^2)$. For all simulations, we set
 $\sigma^2$ so that the signal-to-noise ratio(SNR,
 $\frac{\trm{std}(Y)}{\sigma}$) is 5. Also, for all simulations except
@@ -93,7 +93,7 @@ non-Gaussian distribution described above and set the covariance
 to be $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0, 0.2, 0.5, 0.9$. We use the
 non-additive $\Q$, same as in the first experiment, with $\alpha=0.5$
 and fix $p=128, s=5$. We measure success not through exact recovery
-but through faithful recovery. We say that a trial is a successful if
+but through faithful recovery. We say that a trial is successful if
 (1) all relevant variables were recovered and (2) fewer than $20$
 variables were marked as relevant overall (true sparsity $s=5$). We
 use the same $\lambda$ as before. The probabilities of success are

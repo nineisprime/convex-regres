@@ -386,8 +386,8 @@ form for the additive components; the additive approximations may not
 be faithful if we take a parametric form. For example, suppose we
 approximate a mean-zero convex function $f(X)$ by a linear form $X
 \beta$. The optimal linear function in the population setting is
-$\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$ where $\Sigma$ is the
-covariance matrix. Suppose the $X$s are independent, have a
+$\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$ where $\Sigma = X^\tran X$ is the
+covariance matrix. Suppose the $X$'s are independent, centered, and have a
 symmetric distribution with unit variance, and suppose $f(\mathbf{x})
 = x_1^2 - \E[X_1^2]$. Then $\beta^*_1 = \E[ X_1 f(X)] = \E[ X_1^3 -
   X_1 \E[X_1^2]] = 0$.
@@ -434,7 +434,7 @@ p_\epsilon(\mathbf{x})$ where $0 < \lambda \leq 1$; then $p_{\lambda,
 
 Now, let $p(\mathbf{x})$ be a bounded density over $[0,1]^p$. Let
 $p_\epsilon(\mathbf{x})$ be the density formed from truncating
-$p(\mathbf{x})$ in $[\epsilon, 1-\epsilon]^p$. The corresponding
+$p(\mathbf{x})$ in $[\epsilon, 1-\epsilon]^p$ and proper re-normalization. The corresponding
 mixture $p_{\lambda,\epsilon}(\mathbf{x})$ then approximates
 $p(\mathbf{x})$ when $\lambda$ and $\epsilon$ are both small.
 
@@ -467,7 +467,7 @@ densities.
 
 In the discussion so far, we have restricted our attention to
 densities supported and positive on the hypercube $[0,1]^p$ to
-minimize extraneous technical details. It may be possible to extend
+minimize extraneous technical details. It may also be possible to extend
 the analysis to densities whose support is a convex and compact set so
 long as the marginal density $p(x_j) > 0$ for all $x_j$ in the
 support. A rigorous analysis of this however is beyond the scope of
@@ -570,7 +570,9 @@ show. It may be possible to estimate $f^*_k$ via smoothing, but we prefer an app
 %The function $f^*_k$ can be shown to be smooth but it is preferable to use
 %shape-constraints whenever possible to avoid the introduction of the
 %additional smoothing bandwidth.
-Since the true regression function $f$ is convex, we approximate the additive model with a \emph{convex} additive model. We abuse notation and, for the rest of the paper, use the notation $f^*_k$ to represent convex additive fits:
+Since the true regression function $f$ is convex, we approximate the additive model with a \emph{convex} additive model. Without loss of generality, we assume in this section that $\E f(X) = 0$. 
+
+We abuse notation and, for the rest of the paper, use the notation $f^*_k$ to represent convex additive fits:
 %it is natural to ask when it is sufficient to estimate an convex additive model
 \begin{equation}
 \label{eqn:convex_additive}
@@ -620,7 +622,7 @@ on an open set around $C$. Let $\phi(\mathbf{x}_{-k})$ be a bounded
 function that does not depend on $x_k$. Then the
 unconstrained univariate function
  \begin{align}
-h^*_k = \arg\min_{f_k} \mathbb{E} \Bigl[\bigl( f(X) 
+h^*_k = \arg\min_{h_k} \mathbb{E} \Bigl[\bigl( f(X) 
            - \phi(X_{-k}) - h_k(X_k) \bigr)^2\Bigr]
 \end{align}
 is given by $h^*_k(x_k) = \mathbb{E}\bigl[ f(X) - \phi(X_{-k}) \,|\, x_k\bigr]$,
@@ -661,7 +663,7 @@ Let us suppose that $f^*_k = g^*_k = 0$. It must be then that
 \begin{align*}
 \argmin_{c \in \R} \E \left( f(X) - \phi(X_{-k}) - c (X_k^2 - m_k^2) \right)^2 = 0
 \end{align*}
-where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either convex or concave in $x_k$ and it is centered, i.e. $\E[ X_k^2 - m_k^2] = 0$. Since the optimum has a closed form $c^* = \frac{\E\big[(f(X) -\phi(X_{-k}))(X_k^2 - m^2_k)\big]}{\E X_k^2 - m^2_k}$, we deduce that 
+where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either convex or concave in $x_k$ and it is centered, i.e. $\E[ X_k^2 - m_k^2] = 0$. Since the optimum has a closed form $c^* = \frac{\E\big[(f(X) -\phi(X_{-k}))(X_k^2 - m^2_k)\big]}{(\E X_k^2 - m^2_k)^2}$, we deduce that 
 \begin{align*}
 \E \big[ (f(X) - \phi(X_{-k})) &(X_k^2 - m_k^2) \big] \\
    &= \E[ (f(X) - \phi(X_{-k})) X^2_k] = 
@@ -691,17 +693,17 @@ derivative and is thus convex.
 Because we assumed $f^* = g^* = 0$, it must be that
 \[
 \argmin_{c \in \R} 
-\E\Big( f(X) - \phi(X_{-k}) - c\big( s_n(X_k) + \alpha(X_k^2 - m_k^2)\big) \Big)^2 = 0
+\E\Big( f(X) - \phi(X_{-k}) - c\big( s_n(X_k) - \E s_n(X_k) + \alpha(X_k^2 - m_k^2)\big) \Big)^2 = 0
 \]
-This is because $c\big( s_n(x_k) + \alpha(x_k^2 - m_k^2) \big)$ is
+This is because $c\big( s_n(x_k) - \E s_n(X_k) + \alpha(x_k^2 - m_k^2) \big)$ is
 convex for $c \geq 0$ and concave for $c \leq 0$ and it is a centered
 function.
 
 Again, $c^* = \frac{\mathbb{E}[(f(X)-\phi(X_{-k}))\big( 
-           s_n(X_k) + \alpha (X_k^2 - m_k^2) \big)]}{\mathbb{E}
-       \big( s_n(X_k) + \alpha (X_k^2 - m_k^2) \big)^2} = 0$, so
+           s_n(X_k) - \E s_n(X_k)  + \alpha (X_k^2 - m_k^2) \big)]}{\mathbb{E}
+       \big( s_n(X_k) - \E s_n(X_k) + \alpha (X_k^2 - m_k^2) \big)^2} = 0$, so
 \begin{align*}
-\mathbb{E}[ (f(X)-\phi(X_{-k})) \big( s_n(X_k) + \alpha (X_k^2-m_k^2) \big) ] &= 
+\mathbb{E}[ (f(X)-\phi(X_{-k})) \big( s_n(X_k)- \E s_n(X_k) + \alpha (X_k^2-m_k^2) \big) ] &= 
 \mathbb{E}[ (f(X) - \phi(X_{-k})) s_n(X_k) ] \\
 & = \mathbb{E}\Big[ \mathbb{E}[ f(X) - \phi(X_{-k}) \given X_k]  s_n(X_k) \Big] \\
 & = \mathbb{E} h^*_k(X_k) s_n(X_k)  = 0
@@ -712,7 +714,7 @@ We have chosen $s_n$ such that $\E(h^*_k(X_k) - s_n(X_k))^2 \leq \epsilon \E h^*
 
 Now we use
 Lemma~\ref{cor:faithfulness_extension} with $\phi(\mathbf{x}_{-k}) =
-f(\mathbf{x}) - \sum_{k' \neq k} f^*_{k'} (x_{k'})$ and conclude that
+\sum_{k' \neq k} f^*_{k'} (x_{k'})$ and conclude that
 $f^*_k = 0$ and $g^*_k = 0$ together imply that $f$ does not depend on $x_k$.\\
 
 Now we turn to uniqueness. Suppose for sake of contradiction that
