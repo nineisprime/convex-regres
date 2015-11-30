@@ -88,44 +88,36 @@ The Gaussian copula is a way to customize the marginal distributions of a Gaussi
 \end{figure*}
 
 \subsubsection{Third simulation}
-In the \textrm{third simulation} (Figure~\ref{Support}d,e), we use the
+In the \textrm{third simulation} (figure~\ref{Support}d, figure~\ref{fig:support_size}f), we use the
 non-Gaussian distribution described above and set the covariance
 to be $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0, 0.2, 0.5, 0.9$. We use the
 non-additive $\Q$, same as in the first experiment, with $\alpha=0.5$
-and fix $p=128, s=5$. We measure success not through exact recovery
-but through faithful recovery. We say that a trial is successful if
-(1) all relevant variables were recovered and (2) fewer than $20$
-variables were marked as relevant overall (true sparsity $s=5$). We
+and fix $p=128, s=5$. In figure~\ref{Support}d, we say that a trial is successful 
+if all relevant variables were recovered, i.e., there are no false negatives. In figure~\ref{fig:support_size}f, we also show the total number of selected variables versus the sample size as boxplots; since the true sparsity level is 5, these plots show the number of false positives. We
 use the same $\lambda$ as before. The probabilities of success are
 computed from 40 independent trials and plotted against various values
-of $\nu$ in Figure~\ref{Support}(d). Additionally, for $\nu = 0.5$, we
-show the number of selected variables versus the sample size as a
-box plot in Figure~\ref{Support}(e). As seen, for small to
-moderate correlations, AC/DC can successfully recover the relevant
-variables with only a small number of false positives.
+of $\nu$ in Figure~\ref{Support}(d). As seen, for all correlation levels, AC/DC can successfully recover the relevant
+variables with only a small number of false positives. For $\nu = 0, 0.2, 0.5$, the number of false positives steadily decrease with the sample size, but for $\nu = 0.9$, the number of false positives stays roughly constant. The latter phenomenon does not contradict our theory, which assumes $X_S \perp X_{S^c}$ for some set $S \supset S_0$, but it does demonstrate a weakness of our method when the design is highly correlated. 
 
 In the fourth and fifth simulation, we use a softmax function as the ground truth,
 \begin{align}
 f_0(x_{iS}) = \log \left( \sum_{k=1}^K \exp( \beta_k^\tran x_{iS} ) \right) - \mu.
 \end{align}
-We generate random unit vectors as $\{\beta_k \in \R^s\}_{k=1,\ldots,K}$ and choose $\mu$ so that $f_0$ has mean-zero. We set $K = 7$ for all the experiments. 
+We generate $K$ random unit vectors $\{\beta_k \in \R^s\}_{k=1,\ldots,K}$ and choose $\mu$ so that $f_0$ has mean-zero. We set $K = 7$ for all the experiments. 
 
 \subsubsection{Fourth simulation}
-For the \textrm{fourth simulation} (Figure~\ref{Support}f,g), we let
+For the \textrm{fourth simulation} (figure~\ref{Support}e, figure~\ref{fig:support_size}g), we let
 $f_0$ be the softmax function and let $X$ be drawn from the boundary
 flat mixture distribution described earlier with the Toeplitz
 covariance $\Sigma_{ij}=\nu^{|i-j|}$ for $\nu = 0.5$. We set $s=5$ and
-vary $p=128,256,512$. We use the same faithful recovery criteria as in
+vary $p=128,256,512$. We use the same faithful recovery criterion as in
 the third simulation and plot the probability of faithful recovery
-against the number of samples in Figure~\ref{Support}(f). The
-probabilities are computed over 30 independent trials. Also, for
-$p=256$, we show the number of selected variables versus the sample
-size as a box plot in Figure~\ref{Support}(g). The softmax function is
-more challenging to estimate than the quadratic function; the softmax
-function requires about $n > 1{,}500$ samples to achieve the same success
-probability as the quadratic function with $n=1{,}000$. Regardless, we
+against the number of samples in Figure~\ref{Support}(e). The
+probabilities are computed over 30 independent trials. Also, we show the number of selected variables versus the sample
+size as boxplots in Figure~\ref{fig:support_size}(g). The softmax function is
+more challenging to estimate than the quadratic function, regardless, we
 see that increasing the ambient dimension $p$ does not significantly
-affect the recovery probability.
+affect the recovery probability. We also see from figure~\ref{fig:support_size}(g) that larger $p$ does not lead to more number of false positives. 
 
 %For the \textbf{fifth experiment} (Figure~\ref{Support}h), we vary the true sparsity level $s$. We let $f_0$ be the softmax function, $X \sim N(0, I)$, and set $p=128$. We compute the probability of exact recovery over 40 independent trials and plot the results in Figure~\ref{Support}(h).  
 
@@ -159,9 +151,10 @@ it may be omitted without significant detriment to the overall result.
 %\hskip-10pt
 \includegraphics[width=.42\textwidth]{figs/CurveC}  \\
 (c) four $\Q$ matrices used in (b) & (d) quadratic $f_0$, correlated $X$, varying correlation $\nu$ \\
-\includegraphics[width=.42\textwidth]{figs/C_support_box} & 
-\includegraphics[width=.42\textwidth]{figs/CurveS}\\
-(e) recovered support size for $\nu=0.5$ in (d) & (f) softmax $f_0$, correlated $X$, varying $p$ \\
+%\multicolumn{2}{c}{\includegraphics[width=.8\textwidth]{figs/C_support_box}}\\
+%\multicolumn{2}{c}{(e) recovered support size in (d)} \\
+\multicolumn{2}{c}{\includegraphics[width=.42\textwidth]{figs/CurveS}} \\
+\multicolumn{2}{c}{(e) softmax $f_0$, correlated $X$, varying $p$} \\
 %\includegraphics[width=0.42\textwidth]{figs/S_support_box} & \\
 %(g) recovered support size for $p=256$ in (f) & (h) softmax $f_0$, correlated $X$, varying $s$ 
 \end{tabular}
@@ -169,6 +162,19 @@ it may be omitted without significant detriment to the overall result.
 \caption{Support recovery results.}
 \label{Support}
 \vskip10pt
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+\begin{tabular}{c}
+\includegraphics[width=.84\textwidth]{figs/C_support_box}\\
+(f) recovered support sizes for figure~\ref{Support}(d) \\
+\includegraphics[width=0.84\textwidth]{figs/S_support_box}\\
+(g) recovered support sizes for figure~\ref{Support}(e)
+\end{tabular}
+\end{center}
+\caption{Recovered support size in correlated design cases}
+\label{fig:support_size}
 \end{figure*}
 
 \begin{figure*}

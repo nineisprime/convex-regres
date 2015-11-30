@@ -44,7 +44,7 @@ SNR = 5;
 
 maxit = 20; tol = 10^-6;
 
-nrun = 15; % MODIFY
+nrun = 30; % MODIFY
 
 J = ones(p,nrun)==0; Ln = zeros(p,nrun); 
 
@@ -96,7 +96,7 @@ prob = zeros(1,num_versions);
 supp = zeros(nrun, num_versions);
 epsil = 1e-6;
 
-success_supp = 20;
+success_supp = 1e5;
 
 for version = 1:num_versions
     load(['mat/S_' num2str(version) '.mat']);
@@ -112,11 +112,8 @@ for version = 1:num_versions
     prob(version) = suc/nrun;
 end
 
-% correction
-prob(5) = 0.9;
 
 % figures need to be edited
-
 samples = [200,500,800,1100,1500,2000];
 
 figure(2); set(gca,'FontSize',14); 
@@ -181,6 +178,55 @@ set(gcf, 'PaperUnits','centimeters');
 set(gcf, 'PaperSize', [pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
 set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition',[0 0 pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
+
+h = gcf;
+saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/S_support_box.pdf');
+
+%% better box plot
+
+samples = [200, 500, 800, 1100, 1500, 2000];
+%% box plots
+figure;
+set(gca,'FontSize',16); 
+
+G = []
+v1 = []
+v2 = []
+
+% 3 lines
+for ii = 1:3
+    
+    % 6 different sample sizes to try
+    for jj = 1:6
+        G = [G, supp(:, jj + (6*(ii-1)))']
+        % 15 nruns
+        v1 = [v1, repmat(samples(jj), 1, 30)]
+    end
+end
+
+v2 = [repmat({'p=128'}, 1, 180), repmat({'p=256'}, 1, 180), ...
+      repmat({'p=512'}, 1, 180)]
+  
+boxplot(G', {v2'; v1'}, 'factorseparator',1, 'factorgap',5,...
+    'colorgroup',v2', 'labelverbosity','majorminor')
+
+title('Number of selected variables')
+
+
+
+
+set(gca, 'units', 'centimeters')
+outpos = get(gca, 'OuterPosition')
+
+outpos(4) = outpos(4)*0.8
+outpos(3) = outpos(3)*1.4 %width
+set(gca, 'OuterPosition', outpos)
+
+
+set(gcf, 'PaperUnits', 'centimeters')
+set(gcf, 'PaperSize', [outpos(3), outpos(4)])
+set(gcf, 'PaperPositionMode', 'manual')
+set(gcf, 'PaperPosition', [0,0, outpos(3), outpos(4)])
 
 h = gcf;
 saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/S_support_box.pdf');

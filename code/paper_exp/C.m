@@ -98,18 +98,20 @@ return
 %% Reading the result:
 %clc; clear all; close all; 
 num_versions = 28;
+nrun = 40;
 prob = zeros(1,num_versions); 
 supp = zeros(nrun, num_versions);
 
-success_supp = 20;
+success_supp = 128;
 
 epsil = 1e-6;
 
 for version = 1:num_versions
     load(['mat/C_' num2str(version) '.mat']);
+    
     nrun = size(Ln,2); suc = 0; 
     for run = 1:nrun
-        cur_supp = sum(Ln(:,run) > 1e-5); %was 1e-5
+        cur_supp = sum(Ln(:,run) > 1e-4); %was 1e-5
         if min(Ln(J(:,run),run)) > epsil && ...
             cur_supp < success_supp
             suc = suc + 1;
@@ -119,8 +121,12 @@ for version = 1:num_versions
     prob(version) = suc/nrun;
 end
 
+nrun_cut = 40
+supp = supp(1:nrun_cut, :)
 
 samples = 200:200:1400;
+
+%% begin plots
 
 % much of the figures still need to be edited
 figure(2); set(gca,'FontSize',14); 
@@ -153,36 +159,46 @@ set(gcf, 'PaperPosition',[0 0 pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
 h = gcf;
 saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/CurveC.pdf');
 
+
 %% box plots
 figure;
-set(gca,'FontSize',14);
+set(gca,'FontSize',16); 
 
-boxplot(supp(:,15:21));
-set(gca, 'XTick', 1:7);
-set(gca, 'XTickLabel', {'200','400','600','800','1000','1200','1400'});
+G = []
+v1 = []
+v2 = []
+
+for ii = 1:4
+    
+    for jj = 1:7
+        G = [G, supp(:, jj + (7*(ii-1)))']
+        v1 = [v1, repmat(samples(jj), 1, 40)]
+    end
+end
+
+v2 = [repmat({'v=0'}, 1, 280), repmat({'v=0.2'}, 1, 280), ...
+      repmat({'v=0.5'}, 1, 280), repmat({'v=0.9'}, 1, 280)]  
+  
+boxplot(G', {v2'; v1'}, 'factorseparator',1, 'factorgap',5,...
+    'colorgroup',v2', 'labelverbosity','majorminor')
+
+title('Number of selected variables')
 
 
-xlabel('Number of Samples');
-ylabel('Number of Selected Variables');
-title('Number of Selected Variables, \nu=0.5');
 
-%print settings
-tightInset = get(gca, 'TightInset');
-tightInset(2) = tightInset(2) + 0.05;
-position(1) = tightInset(1);
-position(2) = tightInset(2);
-position(3) = 1 - tightInset(1) - tightInset(3);
-position(4) = 1 - tightInset(2) - tightInset(4);
-set(gca, 'Position', position);
-set(gca,'units','centimeters')
 
-pos = get(gca,'Position');
-ti = get(gca,'TightInset');
-ti(2) = ti(2) + 1;
-set(gcf, 'PaperUnits','centimeters');
-set(gcf, 'PaperSize', [pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
-set(gcf, 'PaperPositionMode', 'manual');
-set(gcf, 'PaperPosition',[0 0 pos(3)+ti(1)+ti(3) pos(4)+ti(2)+ti(4)]);
+set(gca, 'units', 'centimeters')
+outpos = get(gca, 'OuterPosition')
+
+outpos(4) = outpos(4)*0.8
+outpos(3) = outpos(3)*1.5 %width
+set(gca, 'OuterPosition', outpos)
+
+
+set(gcf, 'PaperUnits', 'centimeters')
+set(gcf, 'PaperSize', [outpos(3), outpos(4)])
+set(gcf, 'PaperPositionMode', 'manual')
+set(gcf, 'PaperPosition', [0,0, outpos(3), outpos(4)])
 
 h = gcf;
 saveas(h, '/Users/minxu/dropbox/minx/research/convex_regr/tex/scam/figs/C_support_box.pdf');
