@@ -121,8 +121,8 @@ for version = 1:num_versions
     prob(version) = suc/nrun;
 end
 
-nrun_cut = 40
-supp = supp(1:nrun_cut, :)
+nrun_cut = 40;
+supp = supp(1:nrun_cut, :);
 
 samples = 200:200:1400;
 

@@ -99,7 +99,7 @@ Because $\hat{r}$ and $\mathbf{u}$ are both centered vectors, $\bar{\Delta}_k^\t
 
 With our explicitly defined form of $\mathbf{u}$, we can characterize $\Delta_k^\tran \mathbf{u}$. Note that under sample reordering, the $j$-th column of $\Delta_k$ is $(0, ..., x_{(j+1)k} - x_{jk},\, x_{(j+2)k} - x_{jk},\, ...,\, x_{nk} - x_{jk} )$ where the first $j$-th entries are all 0. 
 \begin{align*}
-\Delta_k^\tran \mathbf{u}]_j &= \sum_{i > j} (X_{ik} - X_{jk}) \mathbf{u}_i \\
+[\Delta_k^\tran \mathbf{u}]_j &= \sum_{i > j} (X_{ik} - X_{jk}) \mathbf{u}_i \\
   &= \mathbf{u}_{i^*} (X_{i^*k} - X_{jk}) \delta_{i^* \geq j} + \mathbf{u}_n (X_{nk} - X_{jk})\\ 
   &= -a (X_{i^*k} - X_{jk}) \delta_{i^* \geq j} + a' (X_{nk} - X_{jk}) \\
 \end{align*}
@@ -1358,7 +1358,7 @@ Now, let $k^* = \arg\min_k \E f^*_k(X_k)^2$ and let $f(\mathbf{x}) = \sum_{k\neq
  &= \E f^*_{k^*}(X_{k^*})^2 
 \end{align*}
 
-In the second to last equality, we used the fact that $\E[ f_0(X) - f^*(X) \given X_{k^*}] = 0$ since $f^*_{k^*}(X_{k^*}) = \E[ f_0(X) \given X_{k^*} ]$ under a product density. 
+In the second to last equality, we used the fact that $\E[ f_0(X) - f^*(X) \given X_{k^*}] = 0$ since $f^*_{k^*}(X_{k^*}) = \E[ f_0(X) \given X_{k^*} ]$ under a product density. (See the discussion right before the statement of the proposition)
 
 Thus, we have shown that $\alpha_+ \geq \min_{k \,:\, f^*_k \neq 0} \E f_k^*(X_k)^2$ and that equality is attained with $f(\mathbf{x}) = \sum_{k\neq k^*} f_k^*(x_k)$. 
 
