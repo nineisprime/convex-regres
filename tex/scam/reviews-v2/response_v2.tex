@@ -46,7 +46,11 @@
 
 \vspace*{5pt}
 
-As with before, we are grateful to the reviewers for the careful reading and very helpful editing and suggestions. We have fixed all the typos found by the reviewers. We also have improved the paper in other minor aspects in response to the review -- these changes are described below. 
+As before, we are grateful to the reviewers for their careful reading
+and very helpful editing and suggestions. We have fixed all of the typos
+found by the reviewers. We also have improved the paper in other minor
+aspects in response to the reviews---these changes are described
+below.
 
 \subsection*{Review 4}
 
@@ -55,7 +59,11 @@ As with before, we are grateful to the reviewers for the careful reading and ver
 \item \rc{On page 30, I did not understand : ”we set $K = 7$ for all the experiments”, and then ”We set $s = 5$” and ”the true variables are $X_j$ for $j = 5,6,7,8,9,10$”.}
 
 Here, the true function is a soft-max of linear forms $\beta_k^T x$, i.e., 
-$f_0(x) = \log \left( \sum_{k=1}^K \exp( \beta_k^T x) \right) - \mu$ where the $\beta_k$'s are randomly generated unit vectors. $K$ is the number of linear pieces $\beta_k$'s and $s$ is the number of relevant variables. We have clarified this a bit more in section 6 of the paper.  
+$$f_0(x) = \log \left( \sum_{k=1}^K \exp( \beta_k^T x) \right) - \mu$$
+where the $\beta_k$s are randomly generated unit vectors. $K$ is the
+number of linear pieces and $s$ is the number of relevant
+variables. We have clarified this a bit more in Section 6 of the
+paper.
 \end{enumerate}
 
 
@@ -72,7 +80,7 @@ This has been fixed.
 
 \item \rc{In Assumption A4 at the bottom of page 25, the moment generating function should read $\E e^{tW}$ rather than $\E e^{t \epsilon}$. There is some change in notation in Section 6.1, where $W$ is replaced by $\epsilon$; perhaps it would be better to keep the notation consistent.}
 
-We have changed $\epsilon$ to $W$ across the paper to keep the notations consistent. 
+We have changed $\epsilon$ to $W$ across the paper to keep the notation consistent. 
 
 \item \rc{The last sentence of the first paragraph on page 26 is a bit hard to follow. What does “if $X$ is independent” mean (does this mean $p(x)$ is a product distribution)? I did not understand where the simplification came from.}
 
@@ -80,7 +88,19 @@ We have changed $\epsilon$ to $W$ across the paper to keep the notations consist
 
 \item \rc{The $\nu = 0.9$ curve in Figure 5(d) is rather ill-behaved compared to the other curves. However, if my understanding is correct, the probability of successful screening should still tend to 1 in this case. Perhaps the authors could consider plotting more samples to show eventual consistency for this curve, as well (and also take an average over more trials, since the behavior of the curve is somewhat noisy).}
 
-The probability of successful screening does tend to 1. That was not reflected in the old plot because the old plot describes the probability both that the number of false positives is 0 (successful screening) and that the number of false positives is less than 20. It was because of this latter criterion that the $\nu =0.9$ curve did not tend to 1 in the old plot. The threshold of 20 was arbitrarily chosen and we have revised the plots to remove it. The updated figures 5(d) and 5(e) show only the probability that the number of false negatives is 0; the number of false positives is reflected in the newly added figures 6(f) and 6(g), which show that total number of variables selected in the experiments that correspond to figures 5(d) and 5(e). We have also updated the discussion in section 6.1.3 and 6.1.4.
+The probability of successful screening does tend to one. That was not
+reflected in the old plot because the old plot describes the
+probability both that the number of false positives is zero (successful
+screening) and that the number of false positives is less than 20. It
+was because of this latter criterion that the $\nu =0.9$ curve did not
+tend to one in the old plot. The threshold of 20 was arbitrarily
+chosen; we have removed this restriction and revised the plots. The updated figures
+5(d) and 5(e) show only the probability that the number of false
+negatives is zero; the number of false positives is reflected in the
+newly added figures 6(f) and 6(g), which show that total number of
+variables selected in the experiments that correspond to figures 5(d)
+and 5(e). We have also updated the discussion in Sections 6.1.3 and
+6.1.4.
 
 \end{enumerate}
 
