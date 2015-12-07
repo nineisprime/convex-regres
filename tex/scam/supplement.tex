@@ -1,12 +1,57 @@
+\documentclass[12pt,pdftex,aos,noinfoline,addressasfootnote]{imsart}
+%\documentclass[12pt,pdftex,generic,noinfoline]{imsart}
 
-\section{Supplement:  Proofs of Technical Results}
+\RequirePackage[OT1]{fontenc}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb}
+\RequirePackage{hypernat}
+\usepackage[ruled,section]{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{graphicx}
+%\usepackage[hscale=0.7,vscale=0.8]{geometry}
+\usepackage[text={6.0in,8.6in},centering]{geometry}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{yhmath}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{shadecolor}{gray}{0.9}
+\definecolor{shadecolor}{gray}{0.9}
+\hypersetup{citecolor=MidnightBlue}
+\hypersetup{linkcolor=MidnightBlue}
+\hypersetup{urlcolor=MidnightBlue}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{xr}
+\externaldocument{main}
+
+\renewcommand{\baselinestretch}{1.00}
+%\parskip12pt
+%\parindent0pt
+\setcounter{tocdepth}{2}
+
+\input{macros}
+\begin{document}
+
+\begin{supplement}
+%\sname{Supplement A}
+\stitle{Supplement to Faithful Variable Screening for High-Dimensional Convex Regression}
+\slink[doi]{doi}
+\sdatatype{.pdf}
+\sdescription{We provide detailed proofs of certain technical results,
+together with further explanation of the Gaussian example
+and simplifications when the density is a product.}
+\end{supplement}
+
+\section{Proofs of Technical Results}
  
  
  \subsection{Proof of the Deterministic Condition for Sparsistency}
  \label{sec:deterministic_proof}
  
 We restate Theorem~\ref{thm:deterministic} first for convenience. 
-The following holds regardless of whether we impose the $B$-boundedness condition (see discussion at the beginning of Section~\ref{sec:finitesample} for definition of the $B$-boundedness condition).
+The following holds regardless of whether we impose the
+$B$-boundedness condition  $\|f_k^*\|_\infty \leq B$
+used in the consistency analysis.
  
 \begin{theorem} 
 Let $\{\hat{d}_k \}_{k \in S}$ be a minimizer of the restricted regression, that is, the solution to optimization (\ref{opt:alternate_opt}) where we restrict $k \in S$. 
@@ -1431,3 +1476,7 @@ Thus, we have shown that $\alpha_+ \geq \min_{k \,:\, f^*_k \neq 0} \E f_k^*(X_k
 %%% TeX-master: "paper-submit.tex" ***
 %%% End: ***
 
+\bibliographystyle{imsart-nameyear}
+\bibliography{local}
+
+\end{document}
