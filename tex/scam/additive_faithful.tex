@@ -34,7 +34,7 @@ function $p(\mathbf{x})$. Let $f: C \rightarrow \R$ be in $L^2(P)$. Let
 \begin{align*}
 f^*_1,...,&f^*_p, \mu^* \coloneqq  \\
 &\arg\min \left\{ \E \Bigl( f(X) - \mu - \sum_{k=1}^p f_k(X_k)\Bigr)^2 \,:\,
-f_k \in L^2(P),\, \E f_k(X_k) = 0,\; k=1,\ldots, p \right\}.
+f_k \in L^2(P),\, \E f_k(X_k) = 0,\; \forall k\right\}.
 \end{align*}
 With $\mu^* = \E f(X)$, 
 \begin{equation}
@@ -94,7 +94,15 @@ f_k(x_k) &= \int_{\mathbf{x}_{-k}}
  \end{align}
 
 
-To prove uniqueness, suppose $\tilde{f} = \sum_{j=1}^p \tilde{f}_j$ is another additive function that achieves the same square error. Let $\nu \in [0,1]$, consider $\E\left( f(X) - \mu^* - (f^* + \nu (\tilde{f} - f^*)) \right)^2$ as a function of $\nu$. The objective is strongly convex if $\E (\tilde{f} - f^*)^2$, and so $\E( \tilde{f} - f^*)^2 = 0$ by the assumption that $f^*$ and $\tilde{f}$ are both optimal solutions. By Lemma~\ref{lem:additive_uniqueness}, we conclude that $\E( f^*_j - \tilde{f}_j )^2 = 0$ as well and thus, $f^*_j = \tilde{f}_j$ almost everywhere.
+To prove uniqueness, suppose $\tilde{f} = \sum_{j=1}^p \tilde{f}_j$ is
+another additive function that achieves the same square error. Let
+$\nu \in [0,1]$, and consider the expectation $\E\left( f(X) - \mu^* - (f^* + \nu
+(\tilde{f} - f^*)) \right)^2$ as a function of $\nu$. The objective is
+strongly convex if $\E (\tilde{f} - f^*)^2$, and so $\E( \tilde{f} -
+f^*)^2 = 0$ by the assumption that $f^*$ and $\tilde{f}$ are both
+optimal solutions. By Lemma~\ref{lem:additive_uniqueness}, we conclude
+that $\E( f^*_j - \tilde{f}_j )^2 = 0$ as well and thus, $f^*_j =
+\tilde{f}_j$ almost everywhere.
 
 We note that $\E[ f(X) -\sum_{k'\neq k} f^*_{k'}(X_{k'}) | x_k] - \E
 f(X)$ has mean zero as a function of $x_k$, which shows that the $f^*_k$s
@@ -301,7 +309,8 @@ p(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) d \mathbf{x}_{-k}  = 0
 \label{eqn:integral1a} \\
 \int_{\mathbf{x}_{-k}} p''(\mathbf{x}_{-k} \given x_k) 
 \big( f(\mathbf{x}) - r(\mathbf{x}_{-k}) \big) 
-    + 2 p'(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) +
+   + 2 p'(\mathbf{x}_{-k} \given x_k) f'(x_k, \mathbf{x}_{-k}) \\
+\nonumber \mbox{\ } +
 p(\mathbf{x}_{-k} \given x_k) f''(x_k, \mathbf{x}_{-k}) d\mathbf{x}_{-k}  = 0 .
 \end{gather}
 
@@ -666,9 +675,9 @@ Let us suppose that $f^*_k = g^*_k = 0$. It must be then that
 \end{align*}
 where $m_k^2 \equiv \E X_k^2$; this is because $c(x_k^2 - m_k^2)$ is either convex or concave in $x_k$ and it is centered, i.e. $\E[ X_k^2 - m_k^2] = 0$. Since the optimum has a closed form $c^* = \frac{\E\big[(f(X) -\phi(X_{-k}))(X_k^2 - m^2_k)\big]}{(\E X_k^2 - m^2_k)^2}$, we deduce that 
 \begin{align*}
-\E \big[ (f(X) - \phi(X_{-k})) &(X_k^2 - m_k^2) \big] \\
-   &= \E[ (f(X) - \phi(X_{-k})) X^2_k] = 
- \E[ \E[ f(X) - \phi(X_{-k}) \given X_k] X^2_k] = 0
+\E \big[ (f(X) - \phi(X_{-k})) (X_k^2 - m_k^2) \big] 
+   &= \E[ (f(X) - \phi(X_{-k})) X^2_k] \\
+&= \E[ \E[ f(X) - \phi(X_{-k}) \given X_k] X^2_k] = 0.
 \end{align*}
 
 We denote $h^*_k(x_k) = \E[ f(X) - \phi(X_{-k}) \given
@@ -704,7 +713,9 @@ Again, $c^* = \frac{\mathbb{E}[(f(X)-\phi(X_{-k}))\big(
            s_n(X_k) - \E s_n(X_k)  + \alpha (X_k^2 - m_k^2) \big)]}{\mathbb{E}
        \big( s_n(X_k) - \E s_n(X_k) + \alpha (X_k^2 - m_k^2) \big)^2} = 0$, so
 \begin{align*}
-\mathbb{E}[ (f(X)-\phi(X_{-k})) \big( s_n(X_k)- \E s_n(X_k) + \alpha (X_k^2-m_k^2) \big) ] &= 
+\mathbb{E}[ (f(X)-\phi(X_{-k}))& \big( s_n(X_k)- \E s_n(X_k) + \alpha
+  (X_k^2-m_k^2) \big) ] \\
+& = 
 \mathbb{E}[ (f(X) - \phi(X_{-k})) s_n(X_k) ] \\
 & = \mathbb{E}\Big[ \mathbb{E}[ f(X) - \phi(X_{-k}) \given X_k]  s_n(X_k) \Big] \\
 & = \mathbb{E} h^*_k(X_k) s_n(X_k)  = 0

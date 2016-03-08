@@ -1,41 +1,24 @@
-\documentclass[12pt,pdftex,aos,noinfoline,addressasfootnote]{imsart}
-%\documentclass[12pt,pdftex,generic,noinfoline]{imsart}
+\documentclass[pdftex,aos]{imsart}
 
 \RequirePackage[OT1]{fontenc}
-\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,custom_math,amssymb}
-\RequirePackage{hypernat}
-\usepackage[ruled,section]{algorithm}
-\usepackage[noend]{algorithmic}
-\usepackage{graphicx}
-%\usepackage[hscale=0.7,vscale=0.8]{geometry}
-\usepackage[text={6.0in,8.6in},centering]{geometry}
+\RequirePackage{amsthm,amsmath}
+\usepackage{amsfonts,mathtools,custom_math,amssymb}
+\RequirePackage[numbers]{natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
 \usepackage{subfigure}
 \usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{yhmath}
-\usepackage[usenames,dvipsnames]{xcolor}
-\definecolor{shadecolor}{gray}{0.9}
-\definecolor{shadecolor}{gray}{0.9}
-\hypersetup{citecolor=MidnightBlue}
-\hypersetup{linkcolor=MidnightBlue}
-\hypersetup{urlcolor=MidnightBlue}
 \usepackage{enumerate}
 \usepackage{multirow}
 \usepackage{xr}
-\externaldocument{main}
+\externaldocument{faithful}
 
-\renewcommand{\baselinestretch}{1.00}
-%\parskip12pt
-%\parindent0pt
-\setcounter{tocdepth}{2}
-\setattribute{journal}{name}{}
 
 \input{macros}
 \begin{document}
 
 
 \begin{frontmatter}
-\title{Supplement to Faithful Variable Screening for\\ High-Dimensional Convex Regression}
+\title{Supplement to Faithful Variable Screening for High-Dimensional Convex Regression}
 \runtitle{Supplement to Faithful Variable Screening for Convex Regression}
 \end{frontmatter}
 
@@ -792,9 +775,10 @@ Finally, plugging in $\lambda_n \leq 768 s \tilde{\sigma} \sqrt{
 \end{align*}
 with probability at least $1-\delta$.
 
-\textbf{Step 2.} We now bound term 3.
+\textbf{Step 2.} We now bound term 3, by writing
 \begin{align*}
-\| f_0 - \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 &\leq 
+\| f_0 - & \hat{f} - g^*_k \|_P^2 - \| f_0 - f^* - g^*_k\|_P^2 \\
+& \leq 
     \| f_0 - \hat{f} \|_P^2 - \|f_0 - f^*\|_P^2 - 2\langle f_0 - \hat{f}, g^*_k \rangle_P
    + 2 \langle f_0 - f^*, g^*_k \rangle_P \\
  &\leq c B^2 \tilde{\sigma} \sqrt{ \frac{s^5 c_u^{1/2}}{n^{4/5}} \log^2 np} + 
