@@ -64,7 +64,7 @@
 % Requires Latex2e, ver.2000.06
 
 \def\imsfmt@name{imsart}
-\def\imsfmt@version{2014/02/20}
+\def\imsfmt@version{2014/10/16}
 
 \ProvidesFile{imsart.sty}
         [\imsfmt@version IMS article style (VS)]
@@ -233,8 +233,7 @@
 
 \DeclareOption{aos}{%
    \def\journal@id{-aos}
-   \def\journal@name{Submitted to the Annals of Statistics}
-%   \def\journal@name{}
+   \def\journal@name{Submitted to the  Annals of Statistics }
    \def\journal@url{http://www.imstat.org/aos/}
    \set@page@layout{30pc}{550pt}% 30pc * 46 line
    \@twosidetrue
@@ -242,7 +241,7 @@
    \@amsmath@leqnotrue
    \@historyasfootnotetrue
    \@keywordsasfootnotetrue
-%   \@addressatendtrue
+   \@addressatendtrue
    \@imslayouttrue
    \@autosecdottrue
 }
@@ -829,6 +828,18 @@
 
 \def\doi@base{http://dx.doi.org/}
 
+\protected\def\relateddoi{\@ifnextchar[{\@tempswatrue\@relateddoi}{\@tempswafalse\@relateddoi[]}}
+\def\@relateddoi[#1]#2#3{\protect\ims@href{\doi@base#3}{#3}}%
+
+\protected\def\relateddois{\@ifnextchar[{\@tempswatrue\@relateddois}{\@tempswafalse\@relateddois[]}}
+\def\@relateddois[#1]#2#3{%
+  \@thankslabel[#1]{#2}%
+  \bgroup%
+     \protected@xdef\@thanks{\@thanks\protect\thanks@thefnmark{#2thanks}%
+     \protect\@footnotetext{\thanks@hypertarget{#2}#3}}%
+  \egroup%
+}%
+
 % arXiv
 
 
@@ -1085,6 +1096,22 @@
   \fi
 }
 
+\def\qq#1{%
+  \bgroup%
+    \ifx.#1.\relax%
+      \ifmmode%
+        \mbox{\normalfont\textbf{???}}
+      \else%
+        \normalfont\textbf{???}\fi
+    \else%
+      \ifmmode%
+        \mbox{\normalfont\textbf{#1}}%
+      \else%
+        \normalfont\textbf{#1}%
+      \fi%
+    \fi%
+  \egroup%
+}
 
 % \phantomsection is defined in hyperref
 \let\phantomsection\relax
@@ -2783,6 +2810,8 @@
 
 \def\bptok#1{\ignorespaces}
 
+\ifx\OrigBibText\undefined \long\def\OrigBibText#1\endOrigBibText{}\fi
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% appendix
 
 \if@imslayout
@@ -3015,6 +3044,10 @@
 \endinput
 %%
 %% History:
+2014.10.16 - added \qq{} 
+2014.10.13 - added \OrigBibText and \endOrigBibText 
+2014.07.30 - removed \raggedright from \relateddois 
+2014.07.23 - added \relateddoi and \relateddois
 2014.02.20 - "Submitted to the Bernoulli" changed to "Submitted to Bernoulli"; 
 2014.01.08 - "Submitted to the Statistical Science" changed to "Submitted to Statistical Science"; 
 2013.05.28 - keyword key MSC added (MSC 2010 subject classifications:);

@@ -1,0 +1,144 @@
+\documentclass[pdftex,aos]{imsart}
+
+\RequirePackage[OT1]{fontenc}
+\RequirePackage{amsthm,amsmath}
+\usepackage{amsfonts,mathtools,custom_math,amssymb}
+\RequirePackage[numbers]{natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{xr}
+\externaldocument{supplement}
+
+% settings
+%\pubyear{2005}
+%\volume{0}
+%\issue{0}
+%\firstpage{1}
+%\lastpage{8}
+\arxiv{arXiv:0000.0000}
+
+\startlocaldefs
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\endlocaldefs
+
+\input{macros}
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Faithful Variable Screening for High-Dimensional Convex Regression}
+\runtitle{Faithful Variable Screening for Convex Regression}
+
+\begin{aug}
+\author{\fnms{Min} \snm{Xu}\thanksref{t1,m1}\ead[label=e1]{min.cut@gmail.com}},
+\author{\fnms{Minhua} \snm{Chen}\thanksref{m2}\ead[label=e2]{minhua@somewhere.com}}
+\and
+\author{\fnms{John} \snm{Lafferty}\thanksref{t1,m3}\ead[label=e3]{lafferty@galton.uchicago.edu}}
+
+\thankstext{t1}{Research supported in part by NSF grants IIS-1116730 and DMS-1513594,
+AFOSR grant FA9550-09-1-0373, ONR grant N00014-12-10762, and an Amazon
+AWS in Education Machine Learning Research grant.}
+\runauthor{M.~Xu, M.~Chen and J.~Lafferty}
+
+\affiliation{University of Pennsylvania\thanksmark{m1}, Amazon.com\thanksmark{m2}, and University of Chicago\thanksmark{m3}}
+
+\address{Address of M.~Xu\\
+Department of Statistics\\
+The Wharton School\\
+University of Pennsylvania\\
+Philadelphia, Pennsylvania 19104\\
+USA\\
+\printead{e1}\\
+}
+
+\address{Address of M.~Chen\\
+Amazon.com\\
+410 Terry Avenue North\\
+Seattle, Washington 98109\\
+USA\\
+\printead{e2}\\}
+
+\address{Address of J.~Lafferty\\
+Department of Statistics\\
+University of Chicago\\
+5734 South University Avenue\\
+Chicago, Illinois 60637\\
+USA\\
+\printead{e3}\\}
+
+\end{aug}
+
+\begin{abstract}
+  We study the problem of variable selection in convex nonparametric
+  regression.  Under the assumption that the true regression function
+  is convex and sparse, we develop a screening procedure to select a
+  subset of variables that contains the relevant variables. Our
+  approach is a two-stage quadratic programming method that estimates
+  a sum of one-dimensional convex functions, followed by
+  one-dimensional concave regression fits on the residuals.  In
+  contrast to previous methods for sparse additive models, the
+  optimization is finite dimensional and requires no tuning parameters
+  for smoothness. Under appropriate assumptions, we prove that the
+  procedure is faithful in the population setting, yielding no false
+  negatives.  We give a finite sample statistical analysis, and
+  introduce algorithms for efficiently carrying out the required
+  quadratic programs. The approach leads to computational and
+  statistical advantages over fitting a full model, and provides an
+  effective, practical approach to variable screening in convex
+  regression.
+\end{abstract}
+
+\begin{keyword}[class=MSC]
+\kwd[Primary ]{62G08}
+\kwd[; secondary ]{52A41}
+\end{keyword}
+
+\begin{keyword}
+\kwd{nonparametric regression}
+\kwd{convex regression}
+\kwd{variable selection}
+\kwd{quadratic programming}
+\kwd{additive model}
+\end{keyword}
+
+\end{frontmatter}
+
+
+\input{introduction}
+\input{summary}
+\input{additive_faithful}
+\input{estimation}
+\input{optimization}
+\input{sparsistency}
+\input{experiments}
+\input{discussion}
+
+
+
+\section*{Acknowledgements}
+The authors thank  Ming Yuan for valuable discussions and suggestions
+on this research. The authors are also grateful to the anonymous
+reviewers whose careful proofreading and helpful comments significantly
+improved the quality of the paper.
+
+
+\begin{supplement}[id=suppA]
+%\sname{Supplement A}
+\stitle{Supplement to Faithful Variable Screening for High-Dimensional Convex Regression}
+\slink[doi]{doi}
+\sdatatype{.pdf}
+\sdescription{The supplement provides detailed proofs of certain technical results,
+together with further explanation of the Gaussian example
+and simplifications when the density is a product.}
+\end{supplement}
+
+%\clearpage
+\bibliographystyle{imsart-nameyear}
+\bibliography{local}
+
+\end{document}
