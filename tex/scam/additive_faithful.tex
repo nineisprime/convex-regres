@@ -395,7 +395,7 @@ form for the additive components; the additive approximations may not
 be faithful if we take a parametric form. For example, suppose we
 approximate a mean-zero convex function $f(X)$ by a linear form $X
 \beta$. The optimal linear function in the population setting is
-$\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$ where $\Sigma = X^\tran X$ is the
+$\beta^* = \Sigma^{-1} \trm{Cov}(X, f(X))$ where $\Sigma = \E X^\tran X$ is the
 covariance matrix. Suppose the $X$'s are independent, centered, and have a
 symmetric distribution with unit variance, and suppose $f(\mathbf{x})
 = x_1^2 - \E[X_1^2]$. Then $\beta^*_1 = \E[ X_1 f(X)] = \E[ X_1^3 -
